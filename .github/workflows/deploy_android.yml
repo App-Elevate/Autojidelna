@@ -11,7 +11,7 @@ jobs:
     name: Create version number and extract applicationId
     runs-on: ubuntu-latest
     outputs:
-        app_id: ${{ steps.extract_app_id.outputs.APPLICATION_ID }}
+      app_id: ${{ steps.extract_app_id.outputs.APPLICATION_ID }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
