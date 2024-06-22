@@ -61,11 +61,6 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: pubspec
-    - name: Upload pubspec.yaml
-      uses: actions/upload-artifact@v4
-      with:
-        name: pubspec2
-        path: pubspec.yaml
     - name: Download Android keystore
       id: android_keystore
       uses: timheuer/base64-to-file@v1.2.4
@@ -83,7 +78,6 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: "12.x"
-        cache: 'gradle'
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
