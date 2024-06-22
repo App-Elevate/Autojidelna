@@ -118,16 +118,12 @@ jobs:
     name: Upload debug symbols
     needs: 
     - build
-    - version
     runs-on: ubuntu-latest
     steps:
     - name: Get Android debug symbols from artifacts
       uses: actions/download-artifact@v4
       with:
         name: symbolsAndroid
-    - name: Set User Login to Firebase
-      run: |
-        echo "GCP_SA_KEY=${{ secrets.FIREBASE_CRASHALYTICS_KEY }}" >> $GITHUB_ENV
     - name: GitHub Action for Firebase
       uses: w9jds/firebase-action@v13.11.4
       with:
