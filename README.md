@@ -53,6 +53,11 @@ sh ./compile_android.sh
 
 Pro kompilaci do release Módu stačí použít klasicky `flutter build ios` nebo `flutter build ipa`. Stále je potřeba mít vlastní vývojářský klíč. 
 
+Pro změnu klíče stačí otevřít projekt v Xcode a změnit klíč v targetu Runner:
+```bash
+open ios/Runner.xcworkspace
+```
+
 Pro přípravu na App Store je připraven skript `compile_ios.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribučnímu klíči.
 
 ```bash
@@ -64,6 +69,11 @@ Po spuštění skriptu stačí jen nahrát soubor na App Store pomocí aplikace 
 ### macos
 
 Pro kompilaci do release Módu stačí použít klasicky `flutter build macos`. Stále je potřeba mít vlastní vývojářský klíč.
+
+Pro změnu klíče stačí otevřít projekt v Xcode a změnit klíč v targetu Runner:
+```bash
+open macos/Runner.xcworkspace
+```
 
 Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribučnímu klíči.
 
@@ -84,3 +94,17 @@ Pro kompilaci do release Módu stačí použít klasicky `flutter build web --re
 Web se vám postaví do složky `build/web` a tuto složku můžete nahrát na server.
 
 V main branchi je nastavený automatický deployment na cloudflare pages pomocí branche production
+
+Pro manuální deployment je potřeba si nainstalovat peanut:
+
+```bash
+flutter pub global activate peanut
+```
+
+následně stačí spustit:
+
+připravený skript `compile_web.sh`:
+
+```bash
+sh ./compile_web.sh
+```
