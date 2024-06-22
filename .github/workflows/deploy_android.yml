@@ -74,7 +74,10 @@ jobs:
         channel: 'stable'
         cache: true
     - name: Start release build
-      run: flutter build appbundle
+      run: |
+        flutter config --no-analytics
+        flutter config --no-cli-animations
+        flutter build appbundle
     - name: Artifact Upload
       uses: actions/upload-artifact@v4
       with:
