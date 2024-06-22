@@ -37,7 +37,7 @@ jobs:
     - name: Get applicationId
       id: extract_app_id
       run: |
-        application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' app/build.gradle)
+        application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
         echo "applicationId=$application_id"
         echo "APPLICATION_ID=$application_id" >> $GITHUB_ENV
   build:
