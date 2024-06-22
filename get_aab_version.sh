@@ -1,0 +1,1 @@
+java -jar ~/Downloads/bundletool-all.jar dump manifest --bundle=~/Downloads/app-release.aab --output=./output.xml
