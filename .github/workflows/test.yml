@@ -51,3 +51,9 @@ jobs:
 
     - name: Use mobilesdk_app_id
       run: echo "The mobilesdk_app_id is ${{ env.firebase_id }}"
+  job2:
+    needs: version
+    runs-on: ubuntu-latest
+    steps:
+    - name: print firebase_id
+      run: echo "The mobilesdk_app_id is ${{ needs.version.outputs.firebase_id }}"
