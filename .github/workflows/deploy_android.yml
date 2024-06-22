@@ -97,5 +97,5 @@ jobs:
         serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
         packageName: ${{ vars.ANDROID_PACKAGE_NAME }}
         releaseFiles: app-release.aab
-        track: qa
+        track: internal
         status: completed
