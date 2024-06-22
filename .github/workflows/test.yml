@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
   workflow_dispatch:
 jobs:
-  job1:
+  version:
     runs-on: ubuntu-latest
     # Map a step output to a job output
     outputs:
@@ -16,10 +16,10 @@ jobs:
     - name: Get applicationId
       id: extract_app_id
       run: echo "app_id=hello" >> "$GITHUB_OUTPUT"
-  job2:
+  build:
     runs-on: ubuntu-latest
-    needs: job1
+    needs: version
     steps:
       - env:
-          app_id: ${{needs.job1.outputs.app_id}}
-        run: echo "$OUTPUT1"
+          app_id: ${{needs.version.outputs.app_id}}
+        run: echo "$app_id"
