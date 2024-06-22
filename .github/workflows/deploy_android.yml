@@ -1,10 +1,10 @@
 name: Android Release
 
 on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+  #push:
+    #branches: [ "main" ]
+  #pull_request:
+    #branches: [ "main" ]
   workflow_dispatch:
 jobs:
   version:
@@ -130,7 +130,7 @@ jobs:
       env:
         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       with:
-        args: login:list #crashlytics:symbols:upload --app=1:939051306678:android:01036b4a8805db6784e017 symbolsAndroid
+        args: crashlytics:symbols:upload --app=1:466976066624:android:804f4c712efa78d15423a5 symbolsAndroid
 
 
 
