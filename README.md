@@ -39,7 +39,7 @@ flutter build apk -PuseDebugSigningConfig=true
 Nebo
 
 ```bash
-flutter build aab -PuseDebugSigningConfig=true
+flutter build appbundle -PuseDebugSigningConfig=true
 ```
 
 Pro přípravu na Google Play Store je připraven skript `compile_android.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribičnímu klíči. Následně stačí jen přidat release notes a nahrát soubor na Google Play Store.

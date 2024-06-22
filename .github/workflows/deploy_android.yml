@@ -35,10 +35,10 @@ jobs:
 
       # Runs a set of commands using the runners shell
     - name: Start release build
-      run: flutter build appbundle
+      run: flutter build appbundle -PuseDebugSigningConfig=true
       
     - name: Artifact Upload
       uses: actions/upload-artifact@v3
       with:
         name: app-release.aab
-        path: build/app/outputs/flutter-apk/app-release.aab
+        path: build/app/outputs/bundle/release/app-release.aab
