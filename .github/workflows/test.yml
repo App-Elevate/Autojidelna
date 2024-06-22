@@ -48,7 +48,7 @@ jobs:
     - name: Extract mobilesdk_app_id
       id: extract_mobilesdk_app_id
       run: |
-        mobilesdk_app_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' google-services.json)
+        mobilesdk_app_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
         echo "mobilesdk_app_id=$mobilesdk_app_id" >> $GITHUB_ENV
 
     - name: Use mobilesdk_app_id
