@@ -48,9 +48,6 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - env:
-        app_id: ${{needs.version.outputs.app_id}}
-      run: echo "$app_id"
     - name: Get pubspec
       uses: actions/download-artifact@v4
       with:
@@ -100,9 +97,10 @@ jobs:
         path: symbolsAndroid
   deploy:
     name: Deploy Android Build
-    needs: build
+    needs: 
+    - build
+    - version
     runs-on: ubuntu-latest
-
     steps:
     - name: Get Android Build from artifacts
       uses: actions/download-artifact@v4
@@ -112,7 +110,7 @@ jobs:
       uses: r0adkll/upload-google-play@v1
       with:
         serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-        packageName: ${{ needs.version.outputs.app_id }}
+        packageName: ${{needs.version.outputs.app_id}}
         releaseFiles: app-release.aab
         track: internal
         status: draft
