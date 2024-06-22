@@ -10,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
+      firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -39,17 +40,14 @@ jobs:
         application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
         echo "app_id=$application_id"
         echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
-    #- name: Get Firebase app ID
-      #id: extract_firebase_app_id
-      #run
     - name: Install jq
       run: sudo apt-get install -y jq
 
-    - name: Extract mobilesdk_app_id
-      id: extract_mobilesdk_app_id
+    - name: Get Firebase app id
+      id: firebase_id
       run: |
-        mobilesdk_app_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
-        echo "mobilesdk_app_id=$mobilesdk_app_id" >> $GITHUB_ENV
+        firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
+        echo "firebase_id=$firebase_id" >> $GITHUB_ENV
 
     - name: Use mobilesdk_app_id
-      run: echo "The mobilesdk_app_id is ${{ env.mobilesdk_app_id }}"
+      run: echo "The mobilesdk_app_id is ${{ env.firebase_id }}"
