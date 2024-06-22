@@ -11,7 +11,7 @@ jobs:
     name: Create version number and extract applicationId
     runs-on: ubuntu-latest
     outputs:
-      app_id: ${{ steps.extract_app_id.outputs.APPLICATION_ID }}
+      app_id: ${{ steps.extract_app_id.outputs.app_id }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -39,16 +39,16 @@ jobs:
       id: extract_app_id
       run: |
         application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
-        echo "applicationId=$application_id"
-        echo "APPLICATION_ID=$application_id" >> $GITHUB_ENV
+        echo "app_id=$application_id"
+        echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
+
   build:
     needs: version
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: show app id
-      env:
+    - env:
         app_id: ${{needs.version.outputs.app_id}}
       run: echo "$app_id"
     - name: Get pubspec
