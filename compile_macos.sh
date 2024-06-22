@@ -1,0 +1,1 @@
+flutter build macos --split-debug-info symbolsIos --obfuscate

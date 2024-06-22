@@ -1,0 +1,1 @@
+flutter build ipa --split-debug-info symbolsIos --obfuscate
