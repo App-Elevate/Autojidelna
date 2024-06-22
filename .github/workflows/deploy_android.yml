@@ -44,11 +44,11 @@ jobs:
     needs: version
     runs-on: ubuntu-latest
     steps:
-    - env:
-        app_id: ${{needs.version.outputs.app_id}}
     - name: Checkout code
       uses: actions/checkout@v4
     - name: Show App ID
+      env:
+        app_id: ${{needs.version.outputs.app_id}}
       run: echo "$app_id"
     - name: Get pubspec
       uses: actions/download-artifact@v4
