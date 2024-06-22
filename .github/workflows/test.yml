@@ -1,0 +1,55 @@
+name: test
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+jobs:
+  version:
+    name: Create version number and extract applicationId
+    runs-on: ubuntu-latest
+    outputs:
+      app_id: ${{ steps.extract_app_id.outputs.app_id }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v1.1.1
+      with:
+        versionSpec: "5.x"
+    - name: Use GitVersion
+      id: gitversion
+      uses: gittools/actions/gitversion/execute@v1.1.1
+    - name: Create version.txt with nuGetVersion
+      run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+    - name: Update version in YAML
+      run: |
+        sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
+    - name: Upload pubspec.yaml
+      uses: actions/upload-artifact@v4
+      with:
+        name: pubspec
+        path: pubspec.yaml
+
+    - name: Get applicationId
+      id: extract_app_id
+      run: |
+        application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
+        echo "app_id=$application_id"
+        echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
+    #- name: Get Firebase app ID
+      #id: extract_firebase_app_id
+      #run
+    - name: Install jq
+      run: sudo apt-get install -y jq
+
+    - name: Extract mobilesdk_app_id
+      id: extract_mobilesdk_app_id
+      run: |
+        mobilesdk_app_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' google-services.json)
+        echo "mobilesdk_app_id=$mobilesdk_app_id" >> $GITHUB_ENV
+
+    - name: Use mobilesdk_app_id
+      run: echo "The mobilesdk_app_id is ${{ env.mobilesdk_app_id }}"
