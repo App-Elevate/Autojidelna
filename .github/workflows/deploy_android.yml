@@ -41,46 +41,35 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    # 2   
     - name: Get version.txt
       uses: actions/download-artifact@v4
       with:
         name: gitversion
-    # 3
     - name: Create new file without newline char from version.txt
       run: tr -d '\n' < version.txt > version1.txt
-    # 4
-    - name: Read version
-      id: version
-      uses: juliangruber/read-file-action@v1
-      with:
-        path: version1.txt
-    # 5
     - name: Update version in YAML
       run: |
         sed -i "s/^version: .*/version: $(cat version.txt)+${{ github.run_number }}/" pubspec.yaml
-    # 6
     - name: Artifact Upload
       uses: actions/upload-artifact@v4
       with:
         name: pubspec
         path: pubspec.yaml
-
-    #- name: Setup Java
-      #uses: actions/setup-java@v4
-      #with:
-        #distribution: 'zulu'
-        #java-version: "12.x"
-        #cache: 'gradle'
-    #- name: Setup Flutter
-      #uses: subosito/flutter-action@v2
-      #with:
-        #channel: 'stable'
-        #cache: true
-    #- name: Start release build
-      #run: flutter build appbundle -PuseDebugSigningConfig=true
-    #- name: Artifact Upload
-      #uses: actions/upload-artifact@v4
-      #with:
-        #name: android.aab
-        #path: build/app/outputs/bundle/release/app-release.aab
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: "12.x"
+        cache: 'gradle'
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        cache: true
+    - name: Start release build
+      run: flutter build appbundle -PuseDebugSigningConfig=true
+    - name: Artifact Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: android.aab
+        path: build/app/outputs/bundle/release/app-release.aab
