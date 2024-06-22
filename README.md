@@ -29,7 +29,6 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 
 Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions
 
-
 ## Manuální Kompilace a distribuce
 
 ### Android
@@ -112,3 +111,28 @@ připravený skript `compile_web.sh`:
 ```bash
 sh ./compile_web.sh
 ```
+
+# Vytváření nové aplikace
+
+## Vytvoření nového projektu
+1. Vytvořte si nový repozitář na githubu (fork)
+2. změňte všechny výskyty `core` na název vaší aplikace
+3. změňte všechny výskyty `App Elevate Core` na název vaší aplikace
+4. [Vytvořte ikonky pro android/ios/macos](https://www.appicon.co/#app-icon) - JE důležité nahrát ikonku v JPG formátu a ne PNG. PNG je ok ale bez transparentního pozadí
+5. Vložte ikonky do složky [android/app/src/main/res](android/app/src/main/res) u android a [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
+6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
+7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`kl)
+8. Vložte favicony do složky [web/icons](web/icons)
+
+
+## První deployment
+
+### Android
+1. Vytvořte Google Play Store ucet
+2. Vytvořte nový projekt v Firebase a přidejte si do něj aplikaci pro Android, iOS a Web
+3. Přidejte Organizační secrety:
+- `ANDROID_KEYSTORE_BASE64`
+- `ANDROID_KEY_ALIAS`
+- `ANDROID_KEY_PASSWORD`
+- `ANDROID_STORE_PASSWORD`
+- `GOOGLE_PLAY_SERVICE_ACCOUNT`
