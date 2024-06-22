@@ -128,7 +128,7 @@ jobs:
     - name: GitHub Action for Firebase
       uses: w9jds/firebase-action@v13.11.4
       env:
-        GCP_SA_KEY: ${{ secrets.FIREBASE_CRASHALYTICS_SA_KEY }}
+        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       with:
         args: login:list #crashlytics:symbols:upload --app=1:939051306678:android:01036b4a8805db6784e017 symbolsAndroid
 
