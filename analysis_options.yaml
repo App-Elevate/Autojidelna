@@ -21,8 +21,48 @@ linter:
   # `// ignore_for_file: name_of_lint` syntax on the line or in the file
   # producing the lint.
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
+    # Importing packages
+    always_use_package_imports: true
+
+    # Performance
+    avoid_dynamic_calls: true
+    avoid_slow_async_io: true
+
+    # Mistakes, unfinished thoughts, and bad practices
+    avoid_empty_else: true
+    literal_only_boolean_expressions: true
+    throw_in_finally: true
+    unnecessary_statements: true
+    no_duplicate_case_values: true
+    no_wildcard_variable_uses: true
+    no_self_assignments: true
+    missing_code_block_language_in_doc_comment: true
+    deprecated_member_use_from_same_package: true
+    empty_statements: true
+    avoid_types_as_parameter_names: true
+    unrelated_type_equality_checks: true
+
+    # Unsafe code (null safety + memory safety + compatibility)
+    use_build_context_synchronously: true
+    use_key_in_widget_constructors: true
+    avoid_web_libraries_in_flutter: true
+    cancel_subscriptions: true
+    unsafe_html: true
+    prefer_void_to_null: true
+    avoid_type_to_string: true
+    discarded_futures: true
+    valid_regexps: true
+    no_logic_in_create_state: true
+    hash_and_equals: true
+    close_sinks: true
+    control_flow_in_finally: true
+    test_types_in_equals: true
+
+    # Readability
+    require_trailing_commas: true # Matej will love this
+    no_adjacent_strings_in_list: true
+    prefer_single_quotes: true
+    comment_references: true
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
