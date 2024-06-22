@@ -58,7 +58,7 @@ jobs:
     # 5
     - name: Update version in YAML
       run: |
-      sed -i "s/^version: .*/version: $(cat version.txt)+${{ github.run_number }}/" pubspec.yaml 
+        sed -i 's/^version: .*/version: $(cat version.txt)+${{ github.run_number }}/' pubspec.yaml
     # 6
     - name: Setup Java
       uses: actions/setup-java@v4
