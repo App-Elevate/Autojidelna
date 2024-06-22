@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
-      firebase_id: ${{ steps.firebase_id.outputs.app_id }}
+      firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -47,10 +47,11 @@ jobs:
       id: firebase_id
       run: |
         firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
+        echo "firebase_id=$firebase_id"
         echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   job2:
     needs: version
     runs-on: ubuntu-latest
     steps:
     - name: print firebase id
-      run: echo ${{ needs.version.outputs.app_id }}
+      run: echo ${{needs.version.outputs.firebase_id}}
