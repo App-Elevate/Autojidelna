@@ -53,4 +53,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: print firebase id
-      run: echo ${{ needs.version.outputs.firebase_id }}
+      run: echo ${{ needs.version.outputs.app_id }}
