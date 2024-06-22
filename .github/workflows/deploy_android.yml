@@ -20,7 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     # 2
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0.9.7
@@ -39,27 +39,27 @@ jobs:
         name: gitversion
         path: version.txt
   # 5
-  build:
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: "12.x"
-        cache: 'gradle'
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-        cache: true
-    - name: Start release build
-      run: flutter build appbundle -PuseDebugSigningConfig=true
+  #build:
+    #runs-on: ubuntu-latest
+    #steps:
+    #- name: Checkout code
+      #uses: actions/checkout@v4
+    #- name: Setup Java
+      #uses: actions/setup-java@v4
+      #with:
+        #distribution: 'zulu'
+        #java-version: "12.x"
+        #cache: 'gradle'
+    #- name: Setup Flutter
+      #uses: subosito/flutter-action@v2
+      #with:
+        #channel: 'stable'
+        #cache: true
+    #- name: Start release build
+      #run: flutter build appbundle -PuseDebugSigningConfig=true
       
-    - name: Artifact Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release.aab
-        path: build/app/outputs/bundle/release/app-release.aab
+    #- name: Artifact Upload
+      #uses: actions/upload-artifact@v4
+      #with:
+        #name: app-release.aab
+        #path: build/app/outputs/bundle/release/app-release.aab
