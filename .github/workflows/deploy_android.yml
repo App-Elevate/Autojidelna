@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
+      firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -41,7 +42,15 @@ jobs:
         application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
         echo "app_id=$application_id"
         echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
+    - name: Install jq
+      run: sudo apt-get install -y jq
 
+    - name: Get Firebase app id
+      id: firebase_id
+      run: |
+        firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
+        echo "firebase_id=$firebase_id"
+        echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   build:
     needs: version
     runs-on: ubuntu-latest
@@ -119,6 +128,7 @@ jobs:
     environment: Crashalytics
     needs: 
     - build
+    - version
     runs-on: ubuntu-latest
     steps:
     - name: Get Android debug symbols from artifacts
@@ -130,7 +140,7 @@ jobs:
       env:
         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       with:
-        args: crashlytics:symbols:upload --app=1:466976066624:android:804f4c712efa78d15423a5 symbolsAndroid
+        args: crashlytics:symbols:upload --app=$${{needs.version.outputs.firebase_id}} symbolsAndroid
 
 
 
