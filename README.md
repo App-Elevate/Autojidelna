@@ -2,7 +2,7 @@
 
 Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 
-## Spuštění
+## Spuštění aplikace
 
 ### Android
 
@@ -25,8 +25,12 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 1. Ověřte si instalaci Flutter Web pomocí `flutter doctor`
 2. Spusťte aplikaci pomocí `flutter run -d chrome` nebo `flutter run -d web-server --release`
 
+## Distribuce
 
-## Kompilace a distribuce
+Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions
+
+
+## Manuální Kompilace a distribuce
 
 ### Android
 

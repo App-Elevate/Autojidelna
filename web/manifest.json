@@ -1,6 +1,6 @@
 {
-    "name": "App Elevate core",
-    "short_name": "APPE core",
+    "name": "App Elevate Core",
+    "short_name": "APPE Core",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

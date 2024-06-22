@@ -45,11 +45,9 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: gitversion
-    - name: Create new file without newline char from version.txt
-      run: tr -d '\n' < version.txt > version1.txt
     - name: Update version in YAML
       run: |
-        sed -i "s/^version: .*/version: $(cat version.txt)+${{ github.run_number }}/" pubspec.yaml
+        sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
     - name: Download Android keystore
       id: android_keystore
       uses: timheuer/base64-to-file@v1.2.4
@@ -81,5 +79,23 @@ jobs:
     - name: Artifact Upload
       uses: actions/upload-artifact@v4
       with:
-        name: android.aab
+        name: android-release
         path: build/app/outputs/bundle/release/app-release.aab
+  deploy:
+    name: Deploy Android Build
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Get Android Build from artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: android-release
+    - name: Release Build to internal track
+      uses: r0adkll/upload-google-play@v1
+      with:
+        serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+        packageName: ${{ secrets.ANDROID_PACKAGE_NAME }}
+        releaseFiles: app-release.aab
+        track: qa
+        status: completed
