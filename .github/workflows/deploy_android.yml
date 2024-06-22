@@ -25,10 +25,12 @@ jobs:
         distribution: 'zulu'
         java-version: "12.x"
         cache: 'gradle'
-    - name: Setup Flutter and build
+    - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
+        channel: 'stable'
         cache: true
+    - name: Start release build
       run: flutter build appbundle -PuseDebugSigningConfig=true
       
     - name: Artifact Upload
