@@ -46,8 +46,6 @@ jobs:
   deploy:
     name: Deploy Web Build
     needs: build
-    permissions:
-      pages: write
     runs-on: ubuntu-latest
 
     steps:
