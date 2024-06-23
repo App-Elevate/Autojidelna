@@ -1,9 +1,8 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches:  [ "main" ]
-
+  #push:
+    #branches:  [ "main" ]
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -67,7 +66,7 @@ jobs:
     - name: Get Firebase app id
       id: firebase_id
       run: |
-        firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
+        firebase_id=$(grep -A 2 'static const FirebaseOptions android' lib/firebase_options.dart | grep 'appId' | awk -F"'" '{print $2}')
         echo "firebase_id=$firebase_id"
         echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   deploy:

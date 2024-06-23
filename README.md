@@ -157,3 +157,8 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 1. Zapněte Github Pages v nastavení repozitáře.
 2. Přidejte doménu do nastavení Github Pages
 3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
+
+
+# Omezení implementace CORU
+
+1. firebase_options.dart MUSÍ být v /lib/firebase_options.dart
