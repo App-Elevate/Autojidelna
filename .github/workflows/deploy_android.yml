@@ -130,8 +130,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: symbolsAndroid
-    - name: List Directory
-      run: ls -R
+        path: symbolsAndroid
     - name: GitHub Action for Firebase
       uses: w9jds/firebase-action@v13.11.4
       env:
