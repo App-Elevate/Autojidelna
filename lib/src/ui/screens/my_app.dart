@@ -10,7 +10,6 @@ class MainAppScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MyHomePage(
       title: 'Flutter Demo Home Page',
-      key: Key('k'),
     );
   }
 }
