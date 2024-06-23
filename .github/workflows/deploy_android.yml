@@ -96,7 +96,7 @@ jobs:
         rm sdk-tools.zip
         mkdir -p $ANDROID_HOME/cmdline-tools/latest
         mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
-        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
+      #$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
 
     - name: Update cache
       if: steps.cache-android-sdk.outputs.cache-hit != 'true'
