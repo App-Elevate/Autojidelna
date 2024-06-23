@@ -1,3 +1,3 @@
-flutter pub global run peanut -b production
+flutter pub global run peanut -b dist-cloudflare-pages
 sleep 2
-git push origin production:production
+git push origin dist-cloudflare-pages:dist-cloudflare-pages
