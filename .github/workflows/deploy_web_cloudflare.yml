@@ -69,7 +69,11 @@ jobs:
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
+      with:
+        # Fetch all history so all branches and tags are available
+        fetch-depth: 0
+
 
     - name: Get pubspec
       uses: actions/download-artifact@v4
@@ -90,9 +94,6 @@ jobs:
       run: |
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git config --global user.name "github-actions[bot]"
-        git config pull.rebase false  # merge
-        git fetch origin dist-cloudflare-pages || true
-        git pull origin dist-cloudflare-pages || true
 
     - name: Start release build
       run: |
