@@ -53,7 +53,7 @@ jobs:
   symbols:
     name: Upload debug symbols
     environment: Crashalytics
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs:
     - version
     steps:
