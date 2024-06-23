@@ -43,7 +43,7 @@ jobs:
         echo "app_id=$application_id"
         echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
     - name: Install jq
-      run: sudo apt-get install -y jq
+      run: apt-get install -y jq
 
     - name: Get Firebase app id
       id: firebase_id
@@ -92,8 +92,8 @@ jobs:
         ANDROID_HOME: /opt/android-sdk
         PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:${{ env.PATH }}
       run: |
-        sudo mkdir -p /opt/android-sdk
-        sudo chown $USER:$USER /opt/android-sdk
+        mkdir -p /opt/android-sdk
+        chown $USER:$USER /opt/android-sdk
         curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
         unzip sdk-tools.zip -d $ANDROID_HOME
         rm sdk-tools.zip
