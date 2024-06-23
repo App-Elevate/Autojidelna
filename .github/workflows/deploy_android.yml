@@ -166,14 +166,14 @@ jobs:
     - name: Install Firebase CLI
       run: npm install -g firebase-tools
     
-    - name: Download Google Service Account Key
-      uses: timheuer/base64-to-file@v1.2.4
-      with:
-        fileName: firebase-key.json
-        encodedString: ${{ secrets.CRASHLYTICS_KEY_BASE64 }}
+    #- name: Download Google Service Account Key
+      #uses: timheuer/base64-to-file@v1.2.4
+      #with:
+        #fileName: firebase-key.json
+        #encodedString: ${{ secrets.CRASHLYTICS_KEY_BASE64 }}
     
-    - name: Set GOOGLE_APPLICATION_CREDENTIALS
-      run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ github.workspace }}/firebase-key.json" >> $GITHUB_ENV
+    #- name: Set GOOGLE_APPLICATION_CREDENTIALS
+      #run: echo "GOOGLE_APPLICATION_CREDENTIALS=${{ github.workspace }}/firebase-key.json" >> $GITHUB_ENV
 
     - name: Upload Crashlytics Symbols
       run: |
