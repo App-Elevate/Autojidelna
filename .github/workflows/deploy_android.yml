@@ -91,7 +91,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: /usr/local/lib/android/sdk
-        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
         restore-keys: |
           ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
     - name: Start release build
@@ -154,7 +154,7 @@ jobs:
       env:
         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       with:
-        args: crashlytics:symbols:upload --app=${{needs.version.outputs.firebase_id}} symbolsAndroid
+        args: crashlytics:symbols:upload --non-interactive --app=${{needs.version.outputs.firebase_id}} symbolsAndroid     
 
 
 
