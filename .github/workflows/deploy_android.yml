@@ -87,10 +87,13 @@ jobs:
       with:
         channel: 'stable'
         cache: true
+    - uses: actions/cache/restore@v3
+      with:
+        path: /usr/local/lib/android/sdk
+        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
     - name: Cache Android SDK
       uses: actions/cache@v2
       with:
-        path: /usr/local/lib/android/sdk
         key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
         restore-keys: |
           ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
@@ -109,6 +112,10 @@ jobs:
       with:
         name: symbolsAndroid
         path: symbolsAndroid
+    - uses: actions/cache/save@v3
+      with:
+        path: /usr/local/lib/android/sdk
+        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
 
 
   deploy:
