@@ -93,7 +93,7 @@ jobs:
         PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:${{ env.PATH }}
       run: |
         /usr/bin/sudo mkdir -p /opt/android-sdk
-        /user/bin/sudo chown $USER:$USER /opt/android-sdk
+        /usr/bin/sudo chown $USER:$USER /opt/android-sdk
         curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
         unzip sdk-tools.zip -d $ANDROID_HOME
         rm sdk-tools.zip
