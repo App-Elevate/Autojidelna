@@ -79,6 +79,37 @@ jobs:
         distribution: 'zulu'
         java-version: "12.x"
         cache: 'gradle'
+    - name: Cache Android SDK
+      id: cache-android-sdk
+      uses: actions/cache@v2
+      with:
+        path: /opt/android-sdk
+        key: ${{ runner.os }}-android-sdk
+
+    - name: Install Android SDK Tools
+      if: steps.cache-android-sdk.outputs.cache-hit != 'true'
+      env:
+        ANDROID_HOME: /opt/android-sdk
+        PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:${{ env.PATH }}
+      run: |
+        sudo mkdir -p /opt/android-sdk
+        sudo chown $USER:$USER /opt/android-sdk
+        curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+        unzip sdk-tools.zip -d $ANDROID_HOME
+        rm sdk-tools.zip
+        mkdir -p $ANDROID_HOME/cmdline-tools/latest
+        mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
+        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
+
+    - name: Update cache
+      if: steps.cache-android-sdk.outputs.cache-hit != 'true'
+      uses: actions/cache@v2
+      with:
+        path: /opt/android-sdk
+        key: ${{ runner.os }}-android-sdk
+        restore-keys: |
+          ${{ runner.os }}-android-sdk
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
@@ -131,6 +162,8 @@ jobs:
       with:
         name: symbolsAndroid
         path: symbolsAndroid
+    - name: list the files
+      run: ls -R
     - name: GitHub Action for Firebase
       uses: w9jds/firebase-action@v13.11.4
       env:
