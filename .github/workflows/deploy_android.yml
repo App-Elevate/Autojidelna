@@ -91,14 +91,14 @@ jobs:
         ANDROID_HOME: /opt/android-sdk
         PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:${{ env.PATH }}
       run: |
-        /usr/bin/sudo mkdir -p /opt/android-sdk
-        /usr/bin/sudo chown $USER:$USER /opt/android-sdk
-        curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-        unzip sdk-tools.zip -d $ANDROID_HOME
-        rm sdk-tools.zip
-        mkdir -p $ANDROID_HOME/cmdline-tools/latest
-        mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
+        /usr/bin/sudo /usr/bin/mkdir -p /opt/android-sdk
+        /usr/bin/sudo /usr/bin/chown $USER:$USER /opt/android-sdk
+        /usr/bin/curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
+        /usr/bin/unzip sdk-tools.zip -d $ANDROID_HOME
+        /usr/bin/rm sdk-tools.zip
+        /usr/bin/mkdir -p $ANDROID_HOME/cmdline-tools/latest
+        /usr/bin/mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
+        /usr/bin/yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
         $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
 
     - name: Update cache
