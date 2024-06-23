@@ -60,7 +60,7 @@ jobs:
 
   build:
     needs: version
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
 
     - name: Checkout code
