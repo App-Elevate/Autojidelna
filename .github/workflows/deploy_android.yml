@@ -51,6 +51,8 @@ jobs:
         firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
         echo "firebase_id=$firebase_id"
         echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
+
+
   build:
     needs: version
     runs-on: ubuntu-latest
@@ -98,6 +100,8 @@ jobs:
       with:
         name: symbolsAndroid
         path: symbolsAndroid
+
+
   deploy:
     name: Deploy Android Build
     needs: 
@@ -132,6 +136,8 @@ jobs:
         path: symbolsAndroid
     - name: list the files
       run: ls -R
+    - name: echo firebase id
+      run: echo ${{needs.version.outputs.firebase_id}}
     - name: GitHub Action for Firebase
       uses: w9jds/firebase-action@v13.11.4
       env:

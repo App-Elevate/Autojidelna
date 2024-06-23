@@ -1,2 +1,3 @@
 flutter build appbundle --split-debug-info symbolsAndroid --obfuscate
-#firebase crashlytics:symbols:upload --app=1:939051306678:android:01036b4a8805db6784e017 symbolsAndroid
+firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json)
+firebase crashlytics:symbols:upload --app=$firebase_id symbolsAndroid
