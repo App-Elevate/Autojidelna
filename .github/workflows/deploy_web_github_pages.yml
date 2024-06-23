@@ -23,11 +23,15 @@ concurrency:
 
 
 jobs:
-  build:
+  deploy:
     name: Deploy to GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
     - name: Setup Pages
       uses: actions/configure-pages@v5
     - uses: subosito/flutter-action@v2
@@ -52,11 +56,11 @@ jobs:
           flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
         fi
     
-    - name: Upload Web Build Files
-      uses: actions/upload-artifact@v4
-      with:
-        name: github-pages
-        path: build/web/
+    - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: './build/web'
 
     - name: Deploy to GitHub Pages
       id: deployment
