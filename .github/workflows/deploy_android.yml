@@ -78,7 +78,6 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: "12.x"
-        cache: 'gradle'
     - name: Cache Android SDK
       id: cache-android-sdk
       uses: actions/cache@v2
