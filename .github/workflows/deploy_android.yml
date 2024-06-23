@@ -89,8 +89,8 @@ jobs:
         cache: true
     - uses: actions/cache/restore@v3
       with:
-        path: /usr/local/lib/android/sdk
-        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
+        path: /usr/local/lib/android/sdk/platform-tools
+        key: ${{ runner.os }}-android-sdk-platform-tools-${{ needs.version.outputs.version }}
     - name: Start release build
       run: |
         flutter config --no-analytics
@@ -108,8 +108,8 @@ jobs:
         path: symbolsAndroid
     - uses: actions/cache/save@v3
       with:
-        path: /usr/local/lib/android/sdk
-        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
+        path: /usr/local/lib/android/sdk/platform-tools
+        key: ${{ runner.os }}-android-sdk-platform-tools-${{ needs.version.outputs.version }}
 
 
   deploy:
