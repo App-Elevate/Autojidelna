@@ -60,9 +60,12 @@ jobs:
         echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
 
   build:
+    name: Build and deploy web to Cloudflare Pages
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
 
     - name: Checkout code
