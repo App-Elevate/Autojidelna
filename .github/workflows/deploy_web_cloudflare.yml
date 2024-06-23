@@ -69,16 +69,12 @@ jobs:
     steps:
 
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         # Fetch all history so all branches and tags are available
         fetch-depth: 0
 
 
-    - name: Get pubspec
-      uses: actions/download-artifact@v4
-      with:
-        name: pubspec
 
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
@@ -98,6 +94,11 @@ jobs:
         git checkout -B dist-cloudflare-pages
         git pull origin dist-cloudflare-pages --rebase
         git checkout -B main
+
+    - name: Get pubspec
+      uses: actions/download-artifact@v4
+      with:
+        name: pubspec
 
     - name: Start release build
       run: |
