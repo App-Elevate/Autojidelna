@@ -47,5 +47,4 @@ app.*.map.json
 
 # Firebase
 .crashlytics
-firebase.json
 firepit-log.txt
