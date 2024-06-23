@@ -25,6 +25,7 @@ jobs:
   test2:
     name: Test2
     runs-on: ubuntu-latest
+    needs: test
     steps:
     - name: download the folder
       uses: actions/download-artifact@v4
