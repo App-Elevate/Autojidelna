@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App Elevate Coree',
+      title: 'APPE Coree',
       theme: ThemeData(
         // This is the theme of your application.
         //

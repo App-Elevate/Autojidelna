@@ -122,7 +122,7 @@ sh ./deploy_cloudflare_pages.sh
 
 ## Vytvoření nového projektu
 1. Vytvořte si nový repozitář na githubu (fork)
-2. změňte všechny výskyty `App Elevate Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
+2. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
 3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
 4. [Vytvořte ikonky pro android/ios/macos](https://www.appicon.co/#app-icon) - JE důležité nahrát ikonku v JPG formátu a ne PNG. PNG je ok ale bez transparentního pozadí
 5. Vložte ikonky do složky [android/app/src/main/res](android/app/src/main/res) u android a [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
