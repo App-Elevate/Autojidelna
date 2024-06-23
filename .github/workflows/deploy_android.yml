@@ -13,6 +13,7 @@ jobs:
     outputs:
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
+      version: ${{ steps.gitversion.outputs.nuGetVersion }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -63,6 +64,7 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: pubspec
+
     - name: Download Android keystore
       id: android_keystore
       uses: timheuer/base64-to-file@v1.2.4
@@ -85,6 +87,13 @@ jobs:
       with:
         channel: 'stable'
         cache: true
+    - name: Cache Android SDK
+      uses: actions/cache@v2
+      with:
+        path: /usr/local/lib/android/sdk
+        key: ${{ runner.os }}-android-sdk-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
     - name: Start release build
       run: |
         flutter config --no-analytics
