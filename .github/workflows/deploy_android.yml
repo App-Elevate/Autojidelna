@@ -91,12 +91,6 @@ jobs:
       with:
         path: /usr/local/lib/android/sdk
         key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
-    - name: Cache Android SDK
-      uses: actions/cache@v2
-      with:
-        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
-        restore-keys: |
-          ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}
     - name: Start release build
       run: |
         flutter config --no-analytics
