@@ -92,12 +92,10 @@ jobs:
       run: |
         mkdir -p $ANDROID_HOME
         curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-        unzip sdk-tools.zip -d $ANDROID_HOME
-        echo "hellaskldjaskljdlkaasyduasdgasygbdgasduhbashudbhasbudbasjhbdjhasbdhjbjh----------------------------"
+        unzip sdk-tools.zip -d $ANDROID_HOME > /dev/null
         rm sdk-tools.zip
         mkdir -p $ANDROID_HOME/cmdline-tools/latest
         mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
-        yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
         $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
 
     - name: Update cache
