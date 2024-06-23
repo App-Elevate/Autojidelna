@@ -45,6 +45,8 @@ Nebo
 flutter build appbundle -PuseDebugSigningConfig=true
 ```
 
+V main branchi je nastavený automatický deployment na Google Play. 
+
 Pro přípravu na Google Play Store je připraven skript `compile_android.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribičnímu klíči. Následně stačí jen přidat release notes a nahrát soubor na Google Play Store.
 
 ```bash
@@ -94,11 +96,12 @@ open macos/Runner.xcworkspace
 
 Pro kompilaci do release Módu stačí použít klasicky `flutter build web --release`.
 
-Web se vám postaví do složky `build/web` a tuto složku můžete nahrát na server.
+Web se vám postaví do složky `build/web` a tuto složku můžete nahrát na váš server.
 
-V main branchi je nastavený automatický deployment na cloudflare pages pomocí branche production
+V main branchi je nastavený automatický deployment na cloudflare pages pomocí branche dist-cloudflare-pages.
+V main branchi je také nastavený automatický deployment na github pages pomocí Actions.
 
-Pro manuální deployment je potřeba si nainstalovat peanut:
+Pro manuální deployment na cloudflare pages je potřeba si nainstalovat peanut:
 
 ```bash
 flutter pub global activate peanut
@@ -106,18 +109,18 @@ flutter pub global activate peanut
 
 následně stačí spustit:
 
-připravený skript `compile_web.sh`:
+připravený skript 
 
 ```bash
-sh ./compile_web.sh
+sh ./deploy_cloudflare_pages.sh
 ```
 
 # Vytváření nové aplikace
 
 ## Vytvoření nového projektu
 1. Vytvořte si nový repozitář na githubu (fork)
-2. změňte všechny výskyty `core` na název vaší aplikace
-3. změňte všechny výskyty `App Elevate Core` na název vaší aplikace
+2. změňte všechny výskyty `App Elevate Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
+3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
 4. [Vytvořte ikonky pro android/ios/macos](https://www.appicon.co/#app-icon) - JE důležité nahrát ikonku v JPG formátu a ne PNG. PNG je ok ale bez transparentního pozadí
 5. Vložte ikonky do složky [android/app/src/main/res](android/app/src/main/res) u android a [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
 6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
@@ -132,6 +135,8 @@ flutterfire configure
 
 ## První deployment
 
+Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions)
+
 ### Android
 1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
 - `ANDROID_KEYSTORE_BASE64` - keystore ve kterém je uložený klíč pro podepisování aplikace
@@ -139,3 +144,16 @@ flutterfire configure
 - `ANDROID_KEY_PASSWORD` - heslo klíče
 - `ANDROID_STORE_PASSWORD` - další heslo klíče
 - `GOOGLE_PLAY_SERVICE_ACCOUNT` - service account pro přístup k google play. Tento účet je vytvořený pod projektem app-elevate-core a využívá jeho api.
+2. Vytvořte novou aplikaci v Google Play Console
+3. Přidejte práva uživateli `google-play-github-actions@app-elevate-core.iam.gserviceaccount.com` a to toto: `Release apps to testing tracks` na nově vytvořenou aplikaci
+4. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
+
+### Cloudflare Pages
+1. Vytvořte nový projekt v Cloudflare Pages a nastavte automatický deployment pro branch `dist-cloudflare-pages`
+2. Nastavte alternativní doménu.
+3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
+
+### Github Pages
+1. Zapněte Github Pages v nastavení repozitáře.
+2. Přidejte doménu do nastavení Github Pages
+3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu

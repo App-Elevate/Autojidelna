@@ -3,9 +3,11 @@ name: Deploy to Google Play
 on:
   #push:
     #branches: [ "main" ]
-  #pull_request:
-    #branches: [ "main" ]
   workflow_dispatch:
+
+concurrency:
+  group: "android"
+  cancel-in-progress: false
 
 jobs:
   version:
