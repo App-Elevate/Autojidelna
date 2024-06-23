@@ -1,4 +1,14 @@
-name: Web Release
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:  [ "main" ]
+
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -11,21 +21,15 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-on:
-  push:
-    branches:  [ "main" ]
-
-  pull_request:
-    branches: [ "main" ]
-
-  workflow_dispatch:
 
 jobs:
   build:
-    name: Create Web Build
+    name: Deploy to GitHub Pages
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - name: Setup Pages
+      uses: actions/configure-pages@v5
     - uses: subosito/flutter-action@v2
       with:
         channel: 'stable'
@@ -53,15 +57,6 @@ jobs:
       with:
         name: github-pages
         path: ./build/web
-
-  deploy:
-    name: Deploy Web Build
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: Setup Pages
-      uses: actions/configure-pages@v5
 
     - name: Deploy to GitHub Pages
       id: deployment
