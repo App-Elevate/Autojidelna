@@ -51,7 +51,7 @@ jobs:
     - name: Upload Web Build Files
       uses: actions/upload-artifact@v4
       with:
-        name: web-release
+        name: github-pages
         path: ./build/web
 
   deploy:
@@ -60,11 +60,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Download Web Release
-      uses: actions/download-artifact@v4
-      with:
-        name: web-release
-
     - name: Setup Pages
       uses: actions/configure-pages@v5
 
