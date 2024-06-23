@@ -14,35 +14,40 @@ jobs:
     name: Create Web Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          cache: true
-      
-      - name: Get custom domain from GitHub API
-        id: get_custom_domain
-        run: |
-          CUSTOM_DOMAIN=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/repos/${{ github.repository }}/pages | jq -r .cname)
-          if [ "$CUSTOM_DOMAIN" != "null" ]; then
-            echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
-            echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
-          fi
-      - name: print custom domain
-        run: echo $CUSTOM_DOMAIN
-      - name: Start Web Release Build
-        run: flutter build web --release
-     
-      - name: Upload Web Build Files
-        uses: actions/upload-artifact@v2
-        with:
-          name: web-release
-          path: ./build/web
+    - uses: actions/checkout@v4
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+        cache: true
+    
+    - name: Get custom domain from GitHub API
+      id: get_custom_domain
+      run: |
+        CUSTOM_DOMAIN=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          https://api.github.com/repos/${{ github.repository }}/pages | jq -r .cname)
+        if [ "$CUSTOM_DOMAIN" != "null" ]; then
+          echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
+          echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
+        fi
+    - name: Start Web Release Build
+      run: |
+        if [ -n "$CUSTOM_DOMAIN" ]; then
+          flutter build web --release
+        else
+          flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
+        fi
+    
+    - name: Upload Web Build Files
+      uses: actions/upload-artifact@v2
+      with:
+        name: web-release
+        path: ./build/web
 
   deploy:
     name: Deploy Web Build
     needs: build
+    permissions:
+      pages: write
     runs-on: ubuntu-latest
 
     steps:
