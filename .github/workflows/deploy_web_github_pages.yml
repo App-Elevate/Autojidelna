@@ -29,6 +29,8 @@ jobs:
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
           fi
+      - name: print custom domain
+        run: echo $CUSTOM_DOMAIN
       - name: Start Web Release Build
         run: flutter build web --release
      
