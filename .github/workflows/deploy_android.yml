@@ -87,10 +87,15 @@ jobs:
       with:
         channel: 'stable'
         cache: true
-    - uses: actions/cache/restore@v3
+    - uses: actions/cache@v4
       with:
-        path: /usr/local/lib/android/sdk/platform-tools
-        key: ${{ runner.os }}-android-sdk-platform-tools-${{ needs.version.outputs.version }}
+        path: |
+          /usr/local/lib/android/sdk/platform-tools
+          /usr/local/lib/android/sdk/licenses
+          /usr/local/lib/android/sdk/build-tools/
+        key: ${{ runner.os }}-android-sdk-${{ needs.version.outputs.version }}-${{ github.run_number }}
+        restore-keys: |
+          ${{ runner.os }}-android-sdk-
     - name: Start release build
       run: |
         flutter config --no-analytics
@@ -106,10 +111,6 @@ jobs:
       with:
         name: symbolsAndroid
         path: symbolsAndroid
-    - uses: actions/cache/save@v3
-      with:
-        path: /usr/local/lib/android/sdk/platform-tools
-        key: ${{ runner.os }}-android-sdk-platform-tools-${{ needs.version.outputs.version }}
 
 
   deploy:
