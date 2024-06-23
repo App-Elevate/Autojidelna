@@ -78,34 +78,6 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: "12.x"
-    - name: Cache Android SDK
-      id: cache-android-sdk
-      uses: actions/cache@v2
-      with:
-        path: /opt/android-sdk
-        key: ${{ runner.os }}-android-sdk
-
-    - name: Install Android SDK Tools
-      if: steps.cache-android-sdk.outputs.cache-hit != 'true'
-      env:
-        ANDROID_HOME: ${{ runner.temp }}/android-sdk
-      run: |
-        mkdir -p $ANDROID_HOME
-        curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
-        unzip sdk-tools.zip -d $ANDROID_HOME > /dev/null
-        rm sdk-tools.zip
-        mkdir -p $ANDROID_HOME/cmdline-tools/latest
-        mv $ANDROID_HOME/tools/* $ANDROID_HOME/cmdline-tools/latest
-      #$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30"
-
-    - name: Update cache
-      if: steps.cache-android-sdk.outputs.cache-hit != 'true'
-      uses: actions/cache@v2
-      with:
-        path: /opt/android-sdk
-        key: ${{ runner.os }}-android-sdk
-        restore-keys: |
-          ${{ runner.os }}-android-sdk
     - name: Setup Flutter
       uses: subosito/flutter-action@v2
       with:
