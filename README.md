@@ -86,7 +86,7 @@ Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`. Tento s
 sh ./compile_macos.sh
 ```
 
-Po spuštění je potřeba otevřít Xcode -> archive -> kompilování... -> Distribovat -> App Store
+Po nahrání je potřeba otevřít Xcode -> archive -> kompilování... -> Distribovat -> App Store
 
 ```bash
 open macos/Runner.xcworkspace
@@ -99,7 +99,10 @@ Pro kompilaci do release Módu stačí použít klasicky `flutter build web --re
 Web se vám postaví do složky `build/web` a tuto složku můžete nahrát na váš server.
 
 V main branchi je nastavený automatický deployment na cloudflare pages pomocí branche dist-cloudflare-pages.
+
 V main branchi je také nastavený automatický deployment na github pages pomocí Actions.
+
+V main branchi je také nastavený automatický deployment na Firebase Hosting pomocí Actions.
 
 Pro manuální deployment na cloudflare pages je potřeba si nainstalovat peanut:
 
@@ -124,7 +127,7 @@ sh ./deploy_cloudflare_pages.sh
 4. [Vytvořte ikonky pro android/ios/macos](https://www.appicon.co/#app-icon) - JE důležité nahrát ikonku v JPG formátu a ne PNG. PNG je ok ale bez transparentního pozadí
 5. Vložte ikonky do složky [android/app/src/main/res](android/app/src/main/res) u android a [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
 6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
-7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`kl)
+7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`)
 8. Vložte favicony do složky [web/icons](web/icons)
 9. Vytvořte nový projekt v Firebase.
 10. Spusťte
@@ -146,7 +149,8 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 - `GOOGLE_PLAY_SERVICE_ACCOUNT` - service account pro přístup k google play. Tento účet je vytvořený pod projektem app-elevate-core a využívá jeho api.
 2. Vytvořte novou aplikaci v Google Play Console
 3. Přidejte práva uživateli `google-play-github-actions@app-elevate-core.iam.gserviceaccount.com` a to toto: `Release apps to testing tracks` na nově vytvořenou aplikaci
-4. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
+4. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh compile_android.sh`)
+5. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
 
 ### Cloudflare Pages
 1. Vytvořte nový projekt v Cloudflare Pages a nastavte automatický deployment pro branch `dist-cloudflare-pages`
@@ -158,6 +162,23 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 2. Přidejte doménu do nastavení Github Pages
 3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
 
+### Firebase Hosting
+1. ```firebase init```
+2. Vyberte hosting
+3. Vyberte projekt
+4. Vyberte složku `build/web`
+5. Single page app - yes
+6. setup automatic deployment - yes
+7. Vložte `app-elevate/nazev-repa` jako repozitar
+8. Set up workflow to run a build script before every deploy - no
+8. Set up automatic deployment to your site's live channel when a PR is merged - no
+
+9. Otevřte si workflow soubor, který vám vytvořil Firebase.
+10. Zkopírujte řádek s `firebaseServiceAccount` a nahraďte existující řádek v [deploy_web_firebase.yml](.github/workflows/deploy_web_firebase.yml) (téměř na konci souboru)
+příklad:
+```yaml
+firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
+```
 
 # Omezení implementace CORU
 

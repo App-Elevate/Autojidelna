@@ -107,6 +107,9 @@ jobs:
           flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
         fi
     
+    - name: Copy index.html to 404.html
+      run: cp build/web/index.html build/web/404.html
+
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
