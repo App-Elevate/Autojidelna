@@ -78,7 +78,6 @@ jobs:
       with:
         distribution: 'zulu'
         java-version: "12.x"
-        cache: 'gradle'
     - name: Cache Android SDK
       id: cache-android-sdk
       uses: actions/cache@v2
@@ -89,11 +88,9 @@ jobs:
     - name: Install Android SDK Tools
       if: steps.cache-android-sdk.outputs.cache-hit != 'true'
       env:
-        ANDROID_HOME: /opt/android-sdk
-        PATH: /opt/android-sdk/cmdline-tools/latest/bin:/opt/android-sdk/platform-tools:${{ env.PATH }}
+        ANDROID_HOME: ${{ runner.temp }}/android-sdk
       run: |
-        mkdir -p /opt/android-sdk
-        chown $USER:$USER /opt/android-sdk
+        mkdir -p $ANDROID_HOME
         curl -Lo sdk-tools.zip https://dl.google.com/android/repository/sdk-tools-linux-4333796.zip
         unzip sdk-tools.zip -d $ANDROID_HOME
         rm sdk-tools.zip
