@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>cz.appelevate.core</string>
+	<string>cz.appelevate.coree</string>
 	<key>PROJECT_ID</key>
 	<string>app-elevate-core</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:466976066624:ios:f24268d71912ecfe5423a5</string>
+	<string>1:466976066624:ios:d5c850ab29d9e3455423a5</string>
 </dict>
 </plist>

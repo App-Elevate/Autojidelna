@@ -17,7 +17,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 
 ### macos
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Otevřete projekt v Xcode pomocí `open ios/Runner.xcworkspace`
+2. Otevřete projekt v Xcode pomocí `open macos/Runner.xcworkspace`
 2. Změňte klíč v targetu Runner na váš vlastní vývojářský klíč
 3. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
 
@@ -123,16 +123,19 @@ sh ./compile_web.sh
 6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
 7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`kl)
 8. Vložte favicony do složky [web/icons](web/icons)
+9. Vytvořte nový projekt v Firebase.
+10. Spusťte
+```bash
+flutterfire configure
+```
 
 
 ## První deployment
 
 ### Android
-1. Vytvořte Google Play Store ucet
-2. Vytvořte nový projekt v Firebase a přidejte si do něj aplikaci pro Android, iOS a Web
-3. Přidejte Organizační secrety:
-- `ANDROID_KEYSTORE_BASE64`
-- `ANDROID_KEY_ALIAS`
-- `ANDROID_KEY_PASSWORD`
-- `ANDROID_STORE_PASSWORD`
-- `GOOGLE_PLAY_SERVICE_ACCOUNT`
+1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
+- `ANDROID_KEYSTORE_BASE64` - keystore ve kterém je uložený klíč pro podepisování aplikace
+- `ANDROID_KEY_ALIAS` - alias klíče
+- `ANDROID_KEY_PASSWORD` - heslo klíče
+- `ANDROID_STORE_PASSWORD` - další heslo klíče
+- `GOOGLE_PLAY_SERVICE_ACCOUNT` - service account pro přístup k google play. Tento účet je vytvořený pod projektem app-elevate-core a využívá jeho api.

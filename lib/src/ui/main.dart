@@ -1,4 +1,4 @@
-import 'package:core/src/ui/screens/my_app.dart';
+import 'package:coree/src/ui/screens/my_app.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'App Elevate Core',
+      title: 'App Elevate Coree',
       theme: ThemeData(
         // This is the theme of your application.
         //

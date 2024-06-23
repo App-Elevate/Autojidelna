@@ -1,4 +1,4 @@
-import 'package:core/src/ui/pages/my_app.dart';
+import 'package:coree/src/ui/pages/my_app.dart';
 import 'package:flutter/material.dart';
 
 class MainAppScreen extends StatelessWidget {

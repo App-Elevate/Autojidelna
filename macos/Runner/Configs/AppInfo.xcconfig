@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = App Elevate Core
+PRODUCT_NAME = App Elevate Coree
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.core
+PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 cz.appelevate. All rights reserved.
