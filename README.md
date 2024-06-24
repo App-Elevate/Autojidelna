@@ -211,6 +211,8 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 ```
 
+12 Smažte workflow soubor vytvořený firebase
+
 # Omezení implementace CORU
 
 1. firebase_options.dart MUSÍ být v /lib/firebase_options.dart
