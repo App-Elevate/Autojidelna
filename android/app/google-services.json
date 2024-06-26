@@ -7,25 +7,6 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:466976066624:android:804f4c712efa78d15423a5",
-        "android_client_info": {
-          "package_name": "cz.appelevate.core"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCdSDmDUCZGXYmdKo13eLD02mhe3FGdsug"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:466976066624:android:da815df5188176e15423a5",
         "android_client_info": {
           "package_name": "cz.appelevate.coree"

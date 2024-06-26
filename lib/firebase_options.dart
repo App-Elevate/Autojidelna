@@ -44,12 +44,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyARLbCza3INmFGD3P62q7Bl0H_Hag_Ndzg',
-    appId: '1:466976066624:web:0b4bcf6c4676903e5423a5',
+    appId: '1:466976066624:web:6591f71f8c1987b75423a5',
     messagingSenderId: '466976066624',
     projectId: 'app-elevate-core',
     authDomain: 'app-elevate-core.firebaseapp.com',
     storageBucket: 'app-elevate-core.appspot.com',
-    measurementId: 'G-FQYVCRF8T9',
+    measurementId: 'G-GQN6RGH7K1',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
