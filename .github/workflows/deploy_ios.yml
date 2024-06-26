@@ -42,11 +42,35 @@ jobs:
       - name: Flutter get
         uses: subosito/flutter-action@v1
         with:
-          flutter-version: "2.10.1"
+          channel: "stable"
 
       # !!!
       # Build and Sign your application here
       # !!
+      # Build and sign the ipa using a single flutter command
+      - name: Install firebase
+        run: curl -sL https://firebase.tools | bash
+
+      - name: install flutterfire
+        run: dart pub global activate flutterfire_cli
+
+      - name: Building IPA
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate
+
+      # Collect the file and upload as artifact
+      - name: collect ipa artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-ipa
+          # Path to the release files
+          path: build/ios/ipa/*.ipa
+
+      - name: collect debug symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbols-ios
+          # Path to the release files
+          path: symbolsIos
 
       # Important! Cleanup: remove the certificate and provisioning profile from the runner!
       - name: Clean up keychain and provisioning profile
