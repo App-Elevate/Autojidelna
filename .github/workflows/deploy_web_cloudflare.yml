@@ -2,7 +2,7 @@ name: Deploy to Cloudflare Pages
 
 on:
   #push:
-    #branches: [ "main" ]
+  #branches: [ "main" ]
   workflow_dispatch:
 
 concurrency:
@@ -19,47 +19,46 @@ jobs:
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
       version: ${{ steps.gitversion.outputs.nuGetVersion }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: "5.x"
 
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
-      with:
-        versionSpec: "5.x"
+      - name: Use GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v1.1.1
 
-    - name: Use GitVersion
-      id: gitversion
-      uses: gittools/actions/gitversion/execute@v1.1.1
+      - name: Create version.txt with nuGetVersion
+        run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
 
-    - name: Create version.txt with nuGetVersion
-      run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+      - name: Update version in YAML
+        run: |
+          sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
 
-    - name: Update version in YAML
-      run: |
-        sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
+      - name: Upload pubspec.yaml
+        uses: actions/upload-artifact@v4
+        with:
+          name: pubspec
+          path: pubspec.yaml
 
-    - name: Upload pubspec.yaml
-      uses: actions/upload-artifact@v4
-      with:
-        name: pubspec
-        path: pubspec.yaml
+      - name: Get applicationId
+        id: extract_app_id
+        run: |
+          application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
+          echo "app_id=$application_id"
+          echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
 
-    - name: Get applicationId
-      id: extract_app_id
-      run: |
-        application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
-        echo "app_id=$application_id"
-        echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
-
-    - name: Get Firebase app id
-      id: firebase_id
-      run: |
-        firebase_id=$(grep -A 2 'static const FirebaseOptions android' lib/firebase_options.dart | grep 'appId' | awk -F"'" '{print $2}')
-        echo "firebase_id=$firebase_id"
-        echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
+      - name: Get Firebase app id
+        id: firebase_id
+        run: |
+          firebase_id=$(grep -A 2 'static const FirebaseOptions android' lib/firebase_options.dart | grep 'appId' | awk -F"'" '{print $2}')
+          echo "firebase_id=$firebase_id"
+          echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
 
   build:
     name: Build and deploy web to Cloudflare Pages
@@ -69,50 +68,47 @@ jobs:
     permissions:
       contents: write
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
+      - name: Get peanut
+        run: |
+          flutter pub global activate peanut
 
+      - name: Setup git
+        run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          git fetch origin dist-cloudflare-pages:dist-cloudflare-pages || true
+          git checkout dist-cloudflare-pages || true
+          git checkout main
 
-    - name: Setup Flutter
-      uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-        cache: true
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
 
-    - name: Get peanut
-      run: |
-        flutter pub global activate peanut
+      - name: Start release build
+        run: |
+          flutter pub global run peanut -b dist-cloudflare-pages --release
 
-    - name: Setup git
-      run: |
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        git config --global user.name "github-actions[bot]"
-        git fetch origin dist-cloudflare-pages:dist-cloudflare-pages || true
-        git checkout dist-cloudflare-pages || true
-        git checkout main
+      - name: Release Artifact Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: web
+          path: build/web
 
-    - name: Get pubspec
-      uses: actions/download-artifact@v4
-      with:
-        name: pubspec
+      - name: Deploy to Cloudflare Pages
+        run: |
 
-    - name: Start release build
-      run: |
-        flutter pub global run peanut -b dist-cloudflare-pages
+          # Push the new branch to the repository
+          git push origin dist-cloudflare-pages
 
-    - name: Release Artifact Upload
-      uses: actions/upload-artifact@v4
-      with:
-        name: web
-        path: build/web
-    
-    - name: Deploy to Cloudflare Pages
-      run: |
-
-        # Push the new branch to the repository
-        git push origin dist-cloudflare-pages
-
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

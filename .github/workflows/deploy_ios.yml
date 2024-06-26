@@ -56,7 +56,7 @@ jobs:
         run: dart pub global activate flutterfire_cli
 
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts

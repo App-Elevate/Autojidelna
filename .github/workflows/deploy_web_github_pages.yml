@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   #push:
-    #branches:  [ "main" ]
+  #branches:  [ "main" ]
   workflow_dispatch:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -17,7 +17,6 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
-
 jobs:
   version:
     name: Create version number and extract applicationId
@@ -28,47 +27,46 @@ jobs:
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
       version: ${{ steps.gitversion.outputs.nuGetVersion }}
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v1.1.1
+        with:
+          versionSpec: "5.x"
 
-    - name: Install GitVersion
-      uses: gittools/actions/gitversion/setup@v1.1.1
-      with:
-        versionSpec: "5.x"
+      - name: Use GitVersion
+        id: gitversion
+        uses: gittools/actions/gitversion/execute@v1.1.1
 
-    - name: Use GitVersion
-      id: gitversion
-      uses: gittools/actions/gitversion/execute@v1.1.1
+      - name: Create version.txt with nuGetVersion
+        run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
 
-    - name: Create version.txt with nuGetVersion
-      run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+      - name: Update version in YAML
+        run: |
+          sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
 
-    - name: Update version in YAML
-      run: |
-        sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
+      - name: Upload pubspec.yaml
+        uses: actions/upload-artifact@v4
+        with:
+          name: pubspec
+          path: pubspec.yaml
 
-    - name: Upload pubspec.yaml
-      uses: actions/upload-artifact@v4
-      with:
-        name: pubspec
-        path: pubspec.yaml
+      - name: Get applicationId
+        id: extract_app_id
+        run: |
+          application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
+          echo "app_id=$application_id"
+          echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
 
-    - name: Get applicationId
-      id: extract_app_id
-      run: |
-        application_id=$(grep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
-        echo "app_id=$application_id"
-        echo "app_id=$application_id" >> "$GITHUB_OUTPUT"
-
-    - name: Get Firebase app id
-      id: firebase_id
-      run: |
-        firebase_id=$(grep -A 2 'static const FirebaseOptions android' lib/firebase_options.dart | grep 'appId' | awk -F"'" '{print $2}')
-        echo "firebase_id=$firebase_id"
-        echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
+      - name: Get Firebase app id
+        id: firebase_id
+        run: |
+          firebase_id=$(grep -A 2 'static const FirebaseOptions android' lib/firebase_options.dart | grep 'appId' | awk -F"'" '{print $2}')
+          echo "firebase_id=$firebase_id"
+          echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   deploy:
     name: Deploy to GitHub Pages
     needs: version
@@ -77,45 +75,45 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Get pubspec
-      uses: actions/download-artifact@v4
-      with:
-        name: pubspec
-    - name: Setup Pages
-      uses: actions/configure-pages@v5
-    - uses: subosito/flutter-action@v2
-      with:
-        channel: 'stable'
-        cache: true
-    
-    - name: Get custom domain from GitHub API
-      id: get_custom_domain
-      run: |
-        CUSTOM_DOMAIN=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/repos/${{ github.repository }}/pages | jq -r .cname)
-        if [ "$CUSTOM_DOMAIN" != "null" ]; then
-          echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
-          echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
-        fi
-    - name: Start Web Release Build
-      run: |
-        if [ -n "$CUSTOM_DOMAIN" ]; then
-          flutter build web --release
-        else
-          flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
-        fi
-    
-    - name: Copy index.html to 404.html
-      run: cp build/web/index.html build/web/404.html
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v3
-      with:
-        # Upload entire repository
-        path: './build/web'
+      - name: Get custom domain from GitHub API
+        id: get_custom_domain
+        run: |
+          CUSTOM_DOMAIN=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/pages | jq -r .cname)
+          if [ "$CUSTOM_DOMAIN" != "null" ]; then
+            echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
+            echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
+          fi
+      - name: Start Web Release Build
+        run: |
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            flutter build web --release
+          else
+            flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
+          fi
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
+      - name: Copy index.html to 404.html
+        run: cp build/web/index.html build/web/404.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire repository
+          path: "./build/web"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
