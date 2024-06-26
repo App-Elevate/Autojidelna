@@ -1,2 +1,2 @@
-flutter build macos --split-debug-info symbolsIos --obfuscate &&
+flutter build macos --split-debug-info symbolsMacOS --obfuscate &&
 open macos/Runner.xcworkspace
