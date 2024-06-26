@@ -1,3 +1,4 @@
+import 'package:coree/src/crashlytics/testing.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -76,9 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
-            TextButton(
-              onPressed: () => throw Exception(),
-              child: const Text('Throw Test Exception'),
+            const TextButton(
+              onPressed: crash,
+              child: Text('Throw Test Exception'),
             ),
           ],
         ),
