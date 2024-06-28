@@ -3,6 +3,6 @@
 <plist version="1.0">
 <dict>
 	<key>aps-environment</key>
-	<string>distribution</string>
+	<string>production</string>
 </dict>
 </plist>
