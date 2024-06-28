@@ -13,16 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       # Install flutter
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
+      #- name: Setup Flutter
+      #uses: subosito/flutter-action@v2
+      #with:
+      #channel: "stable"
+      #cache: true
 
-      # !!!
-      # Build and Sign your application here
-      # !!
-      # Build and sign the ipa using a single flutter command
       - name: Install firebase
         run: curl -sL https://firebase.tools | bash
 
@@ -35,11 +31,12 @@ jobs:
       - name: Getting fastlane credentials
         run: |
           cd ios  
-          fastlane release
+          bundle install
+          bundle exec fastlane release
         env:
           IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+          MATCH_GIT_PRIVATE_KEY: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
