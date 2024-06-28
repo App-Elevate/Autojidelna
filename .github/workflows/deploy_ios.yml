@@ -32,11 +32,13 @@ jobs:
         id: android_keystore
         uses: timheuer/base64-to-file@v1.2.4
         with:
-          fileName: ios/private_keys/AuthKey_VPJ6V9H7X3.p8
+          fileName: AuthKey_VPJ6V9H7X3.p8
           encodedString: ${{ secrets.IOS_APPSTORE_CERT_BASE64 }}
 
       - name: Getting fastlane credentials
         run: |
+          mkdir ios/private_keys
+          mv AuthKey_VPJ6V9H7X3.p8 ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
           ls -R
           fastlane release
