@@ -58,13 +58,21 @@ jobs:
       - name: Building IPA
         run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
+      - name: Getting fastlane credentials
+        run: fastlane match
+        env:
+          GITHUB_TOKEN: ${{ secrets.IOS_KEYS_PAT }}
+
+      - name: Running fastlane
+        run: fastlane release
+
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
         uses: actions/upload-artifact@v4
         with:
           name: release-ipa
           # Path to the release files
-          path: build/ios/ipa/*.ipa
+          path: ios/*.ipa
 
       - name: collect debug symbols
         uses: actions/upload-artifact@v4
