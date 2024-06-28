@@ -33,9 +33,10 @@ jobs:
         run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
       - name: Getting fastlane credentials
-        run: fastlane match
+        run: |
+          cd ios  
+          fastlane match
         env:
-          IOS_KEYS_REPO: ${{ secrets.IOS_KEYS_REPO }}
           IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.IOS_KEYS_PAT }}
 
