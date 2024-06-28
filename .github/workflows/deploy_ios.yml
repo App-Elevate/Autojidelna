@@ -32,21 +32,14 @@ jobs:
       #- name: Building IPA
       #run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
-      - name: Fetch credentials
-        uses: actions/checkout@v4
-        with:
-          path: /var/folders/b3/2xm02wpd21qgrpkck5q1c6k40000gn/T/d20240628-6673-ststz8
-
       - name: Getting fastlane credentials
         run: |
           cd ios  
-          fastlane match
+          fastlane release
         env:
           IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
-          GITHUB_TOKEN: ${{ secrets.IOS_KEYS_PAT }}
-
-      - name: Running fastlane
-        run: fastlane release
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
@@ -62,10 +55,3 @@ jobs:
           name: symbols-ios
           # Path to the release files
           path: symbolsIos
-
-      # Important! Cleanup: remove the certificate and provisioning profile from the runner!
-      - name: Clean up keychain and provisioning profile
-        if: ${{ always() }}
-        run: |
-          security delete-keychain $RUNNER_TEMP/app-signing.keychain-db
-          rm ~/Library/MobileDevice/Provisioning\ Profiles/build_pp.mobileprovision
