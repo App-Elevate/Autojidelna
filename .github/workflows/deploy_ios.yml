@@ -31,12 +31,11 @@ jobs:
       - name: Getting fastlane credentials
         run: |
           cd ios  
-          bundle install
-          bundle exec fastlane release
+          fastlane release
         env:
           IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_GIT_PRIVATE_KEY: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+          MATCH_GIT_PRIVATE_KEY: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
