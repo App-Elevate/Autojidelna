@@ -8,25 +8,24 @@ jobs:
   build:
     runs-on: macos-latest
     steps:
-      # Checks-out our repository under $GITHUB_WORKSPACE, so our job can access it
       - name: Checkout repository
         uses: actions/checkout@v4
 
       # Install flutter
-      #- name: Setup Flutter
-      #uses: subosito/flutter-action@v2
-      #with:
-      #channel: "stable"
-      #cache: true
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
-      #- name: Install firebase
-      #run: curl -sL https://firebase.tools | bash
+      - name: Install firebase
+        run: curl -sL https://firebase.tools | bash
 
-      #- name: install flutterfire
-      #run: dart pub global activate flutterfire_cli
+      - name: install flutterfire
+        run: dart pub global activate flutterfire_cli
 
-      #- name: Building IPA
-      #run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
+      - name: Building IPA
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
       - name: Getting fastlane credentials
         run: |
@@ -54,6 +53,7 @@ jobs:
           name: symbols-ios
           # Path to the release files
           path: symbolsIos
+
       - name: Remove private keys
         if: always()
         run: rm -rf ios/private_keys
