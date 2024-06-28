@@ -36,7 +36,6 @@ jobs:
           IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-          FASTLANE_PASSWORD: ${{ secrets.IOS_APPLE_ID_LOGIN_PASS }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
