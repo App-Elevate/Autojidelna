@@ -27,15 +27,13 @@ jobs:
       - name: Building IPA
         run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
-      - name: Getting fastlane credentials
+      - name: Signing the app and publishing to App Store
         run: |
           mkdir -p ios/private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
-          ls -R
           fastlane release
         env:
-          IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
