@@ -14,6 +14,7 @@
 update_fastlane
 
 default_platform(:ios)
+git_url(ENV["IOS_KEYS_REPO"])
 
 platform :ios do
   desc "Push a new release build to the App Store"
