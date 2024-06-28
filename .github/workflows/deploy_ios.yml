@@ -19,11 +19,11 @@ jobs:
       #channel: "stable"
       #cache: true
 
-      - name: Install firebase
-        run: curl -sL https://firebase.tools | bash
+      #- name: Install firebase
+      #run: curl -sL https://firebase.tools | bash
 
-      - name: install flutterfire
-        run: dart pub global activate flutterfire_cli
+      #- name: install flutterfire
+      #run: dart pub global activate flutterfire_cli
 
       #- name: Building IPA
       #run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
