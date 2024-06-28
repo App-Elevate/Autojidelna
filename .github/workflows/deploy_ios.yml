@@ -61,6 +61,8 @@ jobs:
       - name: Getting fastlane credentials
         run: fastlane match
         env:
+          IOS_KEYS_REPO: ${{ secrets.IOS_KEYS_REPO }}
+          IOS_KEYCHAIN_PASSWORD: ${{ secrets.IOS_KEYCHAIN_PASSWORD }}
           GITHUB_TOKEN: ${{ secrets.IOS_KEYS_PAT }}
 
       - name: Running fastlane
