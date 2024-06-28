@@ -29,8 +29,13 @@ jobs:
       - name: install flutterfire
         run: dart pub global activate flutterfire_cli
 
-      - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
+      #- name: Building IPA
+      #run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
+
+      - name: Fetch credentials
+        uses: actions/checkout@v4
+        with:
+          path: /var/folders/b3/2xm02wpd21qgrpkck5q1c6k40000gn/T/d20240628-6673-ststz8
 
       - name: Getting fastlane credentials
         run: |

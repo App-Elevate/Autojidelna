@@ -50,3 +50,5 @@ app.*.map.json
 firepit-log.txt
 **/*gc_keys.json
 **/*.p8
+
+!build/ios/archive/*.*
