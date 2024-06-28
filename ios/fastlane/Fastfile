@@ -20,7 +20,7 @@ platform :ios do
   lane :release do
     # Create the keychain
     create_keychain(
-        name: "AppSigning",
+        name: "login.keychain",
         default_keychain: true,
         add_to_search_list: true,
         unlock: true,
