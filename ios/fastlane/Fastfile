@@ -43,6 +43,13 @@ platform :ios do
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",
+      export_options: {
+        signingStyle: "automatic",
+        method: "app-store",
+        uploadBitcode: false,
+        compileBitcode: false,
+        iCloudContainerEnvironment: "Production"
+      },
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       destination: 'generic/platform=iOS',
       )
