@@ -50,5 +50,6 @@ app.*.map.json
 firepit-log.txt
 **/*gc_keys.json
 **/*.p8
+ios/fastlane/report.xml
 
 !build/ios/archive/*.*
