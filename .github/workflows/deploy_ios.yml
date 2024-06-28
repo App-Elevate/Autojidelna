@@ -30,6 +30,7 @@ jobs:
 
       - name: Getting fastlane credentials
         run: |
+          mkdir -p ios/private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
           ls -R
