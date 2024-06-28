@@ -28,6 +28,13 @@ jobs:
       #- name: Building IPA
       #run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
+      - name: Download Appstore Connect credentials
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.2.4
+        with:
+          fileName: ios/private_keys/AuthKey_VPJ6V9H7X3.p8
+          encodedString: ${{ secrets.IOS_APPSTORE_CERT_BASE64 }}
+
       - name: Getting fastlane credentials
         run: |
           cd ios  
