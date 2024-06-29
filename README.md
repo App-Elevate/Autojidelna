@@ -12,13 +12,13 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 ### iOS
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Získejte spoječné vývojářské klíče pomocí `sh ios_get_keys.sh`
+2. Získejte spoječné vývojářské klíče pomocí `sh scripts/ios_get_keys.sh`
 3. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release`
 
 ### macos
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Získejte spoječné vývojářské klíče pomocí `sh ios_get_keys.sh`
+2. Získejte spoječné vývojářské klíče pomocí `sh scripts/ios_get_keys.sh`
 3. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
 
 ### Web
@@ -51,7 +51,7 @@ V main branchi je nastavený automatický deployment na Google Play.
 Pro přípravu na Google Play Store je připraven skript `compile_android.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Následně stačí jen přidat release notes a nahrát soubor na Google Play Store.
 
 ```bash
-sh ./compile_android.sh
+sh ./scripts/compile_android.sh
 ```
 
 ### iOS
@@ -59,14 +59,14 @@ sh ./compile_android.sh
 Pro kompilaci do release módu je připraven skript `compile_ios.sh`. Tento skript automaticky nahraje soubor na App Store. Pokud nemáte soukromý klíč pro publikování na App Store, budete muset mít nainstalovanou aplikaci [Transporter](https://apps.apple.com/cz/app/transporter/id1450874784?mt=12).
 
 ```bash
-sh ./compile_ios.sh
+sh ./scripts/compile_ios.sh
 ```
 
 `flutter build ios --release` funguje, avšak není moc užitečný.
 `flutter build ipa` sice skončí u generování xcarchive, ale následně lze dokončit v xcode:
 
 ```bash
-open open ./build/ios/archive/Runner.xcarchive
+open ./build/ios/archive/Runner.xcarchive
 ```
 
 ### macos
@@ -76,7 +76,7 @@ Pro kompilaci do release Módu stačí použít klasicky `flutter build macos`.
 Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`.
 
 ```bash
-sh ./compile_macos.sh
+sh ./scripts/compile_macos.sh
 ```
 
 Po nahrání je potřeba otevřít Xcode -> archive -> kompilování... -> Distribovat -> App Store
@@ -100,7 +100,7 @@ V main branchi je také nastavený automatický deployment na Firebase Hosting p
 Pro manuální deployment na cloudflare pages stačí spustit:
 
 ```bash
-sh ./deploy_cloudflare_pages.sh
+sh ./scripts/deploy_cloudflare_pages.sh
 ```
 
 # Vytváření nové aplikace
@@ -157,7 +157,7 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 
 2. Vytvořte novou aplikaci v Google Play Console
 3. Přidejte práva uživateli `google-play-github-actions@app-elevate-core.iam.gserviceaccount.com` a to toto: `Release apps to testing tracks` na nově vytvořenou aplikaci
-4. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh compile_android.sh`)
+4. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh scripts/compile_android.sh`)
 5. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
 
 ### iOS
