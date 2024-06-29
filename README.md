@@ -12,16 +12,14 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 ### iOS
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Otevřete projekt v Xcode pomocí `open ios/Runner.xcworkspace`
-3. Změňte klíč v targetu Runner na váš vlastní vývojářský klíč
-4. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release`
+2. Získejte spoječné vývojářské klíče pomocí `sh ios_get_keys.sh`
+3. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release`
 
 ### macos
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Otevřete projekt v Xcode pomocí `open macos/Runner.xcworkspace`
-3. Změňte klíč v targetu Runner na váš vlastní vývojářský klíč
-4. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
+2. Získejte spoječné vývojářské klíče pomocí `sh ios_get_keys.sh`
+3. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
 
 ### Web
 
@@ -36,7 +34,7 @@ Distribuce je automatická při merge do mainu. Verze se vezme z branche, který
 
 ### Android
 
-Pro kompilaci do release Módu pomocí `flutter build apk` je potřeba mít App Elevate distribuční klíč. Lze však použít i debug klíč pomocí tohoto příkazu:
+Pro kompilaci do release Módu pomocí `flutter build apk` nebo `flutter build appbundle` je potřeba mít App Elevate distribuční klíč. Tento klíč má případně k dispozici Tom. Lze však použít i debug klíč pomocí tohoto příkazu:
 
 ```bash
 flutter build apk -PuseDebugSigningConfig=true
@@ -50,7 +48,7 @@ flutter build appbundle -PuseDebugSigningConfig=true
 
 V main branchi je nastavený automatický deployment na Google Play.
 
-Pro přípravu na Google Play Store je připraven skript `compile_android.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribičnímu klíči. Následně stačí jen přidat release notes a nahrát soubor na Google Play Store.
+Pro přípravu na Google Play Store je připraven skript `compile_android.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Následně stačí jen přidat release notes a nahrát soubor na Google Play Store.
 
 ```bash
 sh ./compile_android.sh
@@ -58,33 +56,24 @@ sh ./compile_android.sh
 
 ### iOS
 
-Pro kompilaci do release Módu stačí použít klasicky `flutter build ios` nebo `flutter build ipa`. Stále je potřeba mít vlastní vývojářský klíč.
-
-Pro změnu klíče stačí otevřít projekt v Xcode a změnit klíč v targetu Runner:
-
-```bash
-open ios/Runner.xcworkspace
-```
-
-Pro přípravu na App Store je připraven skript `compile_ios.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribučnímu klíči.
+Pro kompilaci do release módu je připraven skript `compile_ios.sh`. Tento skript automaticky nahraje soubor na App Store. Pokud nemáte soukromý klíč pro publikování na App Store, budete muset mít nainstalovanou aplikaci [Transporter](https://apps.apple.com/cz/app/transporter/id1450874784?mt=12).
 
 ```bash
 sh ./compile_ios.sh
 ```
 
-Po spuštění skriptu stačí jen nahrát soubor na App Store pomocí aplikace Transporter.
+`flutter build ios --release` funguje, avšak není moc užitečný.
+`flutter build ipa` sice skončí u generování xcarchive, ale následně lze dokončit v xcode:
+
+```bash
+open open ./build/ios/archive/Runner.xcarchive
+```
 
 ### macos
 
-Pro kompilaci do release Módu stačí použít klasicky `flutter build macos`. Stále je potřeba mít vlastní vývojářský klíč.
+Pro kompilaci do release Módu stačí použít klasicky `flutter build macos`.
 
-Pro změnu klíče stačí otevřít projekt v Xcode a změnit klíč v targetu Runner:
-
-```bash
-open macos/Runner.xcworkspace
-```
-
-Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`. Tento skript nahraje debug symboly automaticky do Firebase. Spuštění tohoto skriptu je možné pouze pokud máte admina pro crashalytics a přístup k distribučnímu klíči.
+Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`.
 
 ```bash
 sh ./compile_macos.sh
@@ -211,7 +200,7 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 ```
 
-12 Smažte workflow soubor vytvořený firebase
+12. Smažte workflow soubor vytvořený firebase
 
 # Omezení implementace CORU
 
