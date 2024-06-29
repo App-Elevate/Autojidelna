@@ -61,10 +61,6 @@ platform :ios do
           key_filepath: "./private_keys/AuthKey_VPJ6V9H7X3.p8",
           in_house: false
       )
-    Dir.chdir('../') do
-      sh "./Pods/FirebaseCrashlytics/upload-symbols -gsp ./Runner/GoogleService-Info.plist -p ios ./../build/ios/archive/Runner.xcarchive/dSYMs"
-    end
-
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",
@@ -79,6 +75,7 @@ platform :ios do
       destination: 'generic/platform=iOS',
       )
     upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_symbols_to_crashlytics
     delete_keychain(
       name: "login.keychain"
     )
