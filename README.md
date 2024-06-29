@@ -7,7 +7,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 ### Android
 
 1. Ověřte si instalaci Android Studio a Android Emulatoru pomocí `flutter doctor`
-2. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release --PuseDebugSigningConfig=true`
+2. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release --PuseDebugSigningConfig`
 
 ### iOS
 
