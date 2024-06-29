@@ -66,6 +66,7 @@ platform :ios do
     delete_keychain(
       name: "AppSigning"
     )
+    sh "security default-keychain -s login.keychain || true"
   end
 
   desc "Push a new release build to the App Store"
