@@ -1,4 +1,4 @@
-name: "[DEV] Build and Publish iOS"
+name: "Deploy to App Store"
 on:
   push:
     branches: ["main"]
