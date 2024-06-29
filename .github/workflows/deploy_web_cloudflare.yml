@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: "[Web] Deploy to Cloudflare Pages"
 
 on:
   #push:

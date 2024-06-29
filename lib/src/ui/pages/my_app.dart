@@ -1,4 +1,4 @@
-import 'package:coree/src/crashlytics/hello.dart';
+import 'package:coree/src/heyssdf/ARCHIVE.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -78,7 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const TextButton(
-              onPressed: crash,
+              onPressed: dSYM,
               child: Text('Throw Test Exception'),
             ),
           ],

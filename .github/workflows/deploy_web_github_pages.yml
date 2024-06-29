@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: "[Web] Deploy to GitHub Pages"
 
 on:
   #push:

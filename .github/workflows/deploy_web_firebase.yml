@@ -3,7 +3,7 @@
 
 # Further edited by me to fit the project structure
 
-name: Deploy to Firebase Hosting on merge
+name: "[Web] Deploy to Firebase Hosting on merge"
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.

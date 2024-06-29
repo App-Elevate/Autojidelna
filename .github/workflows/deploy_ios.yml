@@ -1,4 +1,4 @@
-name: "Deploy to App Store"
+name: "[iOS] Deploy to App Store"
 on:
   #push:
   #branches: ["main"]

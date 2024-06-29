@@ -1,0 +1,34 @@
+name: Deploy Everything
+on:
+  workflow_dispatch:
+    inputs:
+      android:
+        description: "Deploy Android?"
+        required: true
+        type: boolean
+        default: true
+      ios:
+        description: "Deploy iOS?"
+        required: true
+        type: boolean
+        default: true
+      macos:
+        description: "Deploy macOS?"
+        required: true
+        type: boolean
+        default: true
+      cloudflare:
+        description: "Deploy to Cloudflare Pages?"
+        required: true
+        type: boolean
+        default: false
+      github_pages:
+        description: "Deploy to GitHub Pages?"
+        required: true
+        type: boolean
+        default: false
+      firebase_hosting:
+        description: "Deploy to Firebase Hosting?"
+        required: true
+        type: boolean
+        default: false
