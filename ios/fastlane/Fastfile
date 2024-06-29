@@ -19,8 +19,12 @@ platform :ios do
   desc "Create Keychain for Ci/CD"
   lane :setup_ci_keychain do 
     # Create the keychain
+    delete_keychain(
+        name: "login.keychain"
+    )
+
     create_keychain(
-        name: "AppSigning",
+        name: "login.keychain",
         default_keychain: true,
         add_to_search_list: true,
         unlock: true,
@@ -29,7 +33,7 @@ platform :ios do
 
     match(
       readonly: true,
-      keychain_name: "AppSigning",
+      keychain_name: "login.keychain",
       keychain_password: "temp-keychain_password",
       type: "appstore"
     )
