@@ -82,7 +82,8 @@ jobs:
       - name: Get Certificates
         run: |
           cd ios
-          fastlane match appstore --readonly
+          bundle install
+          bundle exec fastlane match appstore --readonly
           cd ..
 
       - name: Building IPA
@@ -93,7 +94,7 @@ jobs:
           mkdir -p ios/private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
-          fastlane release
+          bundle exec fastlane release
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
