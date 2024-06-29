@@ -62,9 +62,6 @@ platform :ios do
           in_house: false
       )
 
-    Dir.chdir('../../') do
-      sh "flutter build ipa --split-debug-info=symbolsIos --obfuscate --release || true"
-    end
     Dir.chdir('../') do
       sh "./Pods/FirebaseCrashlytics/upload-symbols -gsp ./Runner/GoogleService-Info.plist -p ios ./../build/ios/archive/Runner.xcarchive/dSYMs"
     end
