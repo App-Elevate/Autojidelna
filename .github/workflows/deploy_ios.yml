@@ -79,14 +79,27 @@ jobs:
       - name: install flutterfire
         run: dart pub global activate flutterfire_cli
 
-      - name: Build and release
+      - name: Get Certificates
         run: |
           cd ios
           mkdir -p private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/AuthKey_VPJ6V9H7X3.p8
           bundle install
-          bundle exec fastlane release_ci
+          bundle exec fastlane setup_ci_keychain
           cd ..
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+
+      - name: Building IPA
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+
+      - name: Signing the app and publishing to App Store
+        run: |
+          mkdir -p ios/private_keys
+          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
+          cd ios  
+          bundle exec fastlane release
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
