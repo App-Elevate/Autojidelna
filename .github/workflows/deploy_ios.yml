@@ -82,8 +82,8 @@ jobs:
       - name: Build and release
         run: |
           cd ios
-          mkdir -p ios/private_keys
-          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
+          mkdir -p private_keys
+          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/AuthKey_VPJ6V9H7X3.p8
           bundle install
           bundle exec fastlane release_ci
           cd ..
