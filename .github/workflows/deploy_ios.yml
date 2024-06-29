@@ -55,7 +55,7 @@ jobs:
           echo "firebase_id=$firebase_id"
           echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   build:
-    runs-on: macos-6core
+    runs-on: macos-latest-xl
     needs: version
     steps:
       - name: Checkout repository
