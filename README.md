@@ -97,15 +97,7 @@ V main branchi je také nastavený automatický deployment na github pages pomoc
 
 V main branchi je také nastavený automatický deployment na Firebase Hosting pomocí Actions.
 
-Pro manuální deployment na cloudflare pages je potřeba si nainstalovat peanut:
-
-```bash
-flutter pub global activate peanut
-```
-
-následně stačí spustit:
-
-připravený skript
+Pro manuální deployment na cloudflare pages stačí spustit:
 
 ```bash
 sh ./deploy_cloudflare_pages.sh
@@ -172,17 +164,20 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 
 1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
 
-- `IOS_APPSTORE_CERT_BASE64` - certifikát pro nahrání na App Store
+- `IOS_APPSTORE_CERT_BASE64` - účet pro nahrání na App Store - linknutý na tým, každý tým musí mít svůj certifikát. Je to certifikát v .p8 formátu zakódovaný do base64
 - `IOS_KEYS_MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
-- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys
+- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token` a je potřeba ho vytvořit na githubu v fine-grained personal access tokens. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží do secrets jako `IOS_KEYS_PAT`
 
 2. Vytvořte novou aplikaci v App Store Connect
-3. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - Tom)
+3. Nakonfigurujte [AppFile](ios/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect
+4. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
 
 ```bash
 cd ios && bundle install && bundle exec fastlane match appstore
 bundle exec fastlane match
 ```
+
+5. Nastavte v xcode provisioning profile na `match appstore xx` pro release a profile a `match development xx` pro debug
 
 ### Cloudflare Pages
 
