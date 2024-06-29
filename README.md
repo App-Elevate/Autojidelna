@@ -168,6 +168,22 @@ Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions
 4. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh compile_android.sh`)
 5. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
 
+### iOS
+
+1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
+
+- `IOS_APPSTORE_CERT_BASE64` - certifikát pro nahrání na App Store
+- `IOS_KEYS_MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
+- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys
+
+2. Vytvořte novou aplikaci v App Store Connect
+3. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - Tom)
+
+```bash
+cd ios && bundle install && bundle exec fastlane match appstore
+bundle exec fastlane match
+```
+
 ### Cloudflare Pages
 
 1. Vytvořte nový projekt v Cloudflare Pages a nastavte automatický deployment pro branch `dist-cloudflare-pages`
