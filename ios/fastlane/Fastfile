@@ -40,7 +40,7 @@ platform :ios do
   end
 
   desc "Push a new release build to the App Store"
-  lane :release do
+  lane :release_ci do
     create_keychain(
       name: "login.keychain",
       default_keychain: true,
