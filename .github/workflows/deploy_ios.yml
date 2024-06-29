@@ -79,8 +79,14 @@ jobs:
       - name: install flutterfire
         run: dart pub global activate flutterfire_cli
 
+      - name: Get Certificates
+        run: |
+          cd ios
+          fastlane match appstore --readonly
+          cd ..
+
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
+        run: flutter build ios --split-debug-info symbolsIos --obfuscate --release
 
       - name: Signing the app and publishing to App Store
         run: |

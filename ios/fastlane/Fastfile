@@ -30,7 +30,7 @@ platform :ios do
     match(
       readonly: true,
       keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password"
+      keychain_password: "temp-keychain_password",
       type: "appstore"
     )
 
