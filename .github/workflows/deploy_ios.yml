@@ -1,7 +1,7 @@
 name: "[DEV] Build and Publish iOS"
 on:
-  #push:
-  #branches: ["main"]
+  push:
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -98,6 +98,9 @@ jobs:
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
           bundle exec fastlane release
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
