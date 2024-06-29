@@ -15,22 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## iOS
 
-### ios setup_ci_keychain
-
-```sh
-[bundle exec] fastlane ios setup_ci_keychain
-```
-
-Create Keychain for Ci/CD
-
-### ios release_ci
-
-```sh
-[bundle exec] fastlane ios release_ci
-```
-
-Push a new release build to the App Store
-
 ### ios release
 
 ```sh
@@ -38,14 +22,6 @@ Push a new release build to the App Store
 ```
 
 Push a new release build to the App Store
-
-### ios upload_symbols
-
-```sh
-[bundle exec] fastlane ios upload_symbols
-```
-
-
 
 ----
 

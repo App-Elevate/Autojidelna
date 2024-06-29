@@ -40,7 +40,7 @@ platform :ios do
   end
 
   desc "Push a new release build to the App Store"
-  lane :release_ci do
+  lane :release do
     create_keychain(
         name: "login.keychain",
         default_keychain: true,
@@ -62,10 +62,6 @@ platform :ios do
           in_house: false
       )
 
-    Dir.chdir('../') do
-      sh "./Pods/FirebaseCrashlytics/upload-symbols -gsp ./Runner/GoogleService-Info.plist -p ios ./../build/ios/archive/Runner.xcarchive/dSYMs"
-    end
-
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",
@@ -80,49 +76,5 @@ platform :ios do
       destination: 'generic/platform=iOS',
       )
     upload_to_testflight(skip_waiting_for_build_processing: true)
-  end
-
-  desc "Push a new release build to the App Store"
-  lane :release do
-    match(
-      readonly: true,
-      keychain_name: "login.keychain",
-      keychain_password: "temp-keychain_password",
-      type: "appstore"
-    )
-    api_key = app_store_connect_api_key(
-          key_id: "VPJ6V9H7X3",
-          issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./private_keys/AuthKey_VPJ6V9H7X3.p8",
-          in_house: false
-      )
-
-    Dir.chdir('../../') do
-      sh "flutter build ipa --split-debug-info=symbolsIos --obfuscate --release || true"
-    end
-    Dir.chdir('../') do
-      sh "./Pods/FirebaseCrashlytics/upload-symbols -gsp ./Runner/GoogleService-Info.plist -p ios ./../build/ios/archive/Runner.xcarchive/dSYMs"
-    end
-
-    build_app(
-      skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
-      export_options: {
-        signingStyle: "automatic",
-        method: "app-store",
-        uploadBitcode: false,
-        compileBitcode: false,
-        iCloudContainerEnvironment: "Production"
-      },
-      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-      destination: 'generic/platform=iOS',
-      )
-    upload_to_testflight(skip_waiting_for_build_processing: true)
-  end
-
-  lane :upload_symbols do
-    Dir.chdir('../') do
-      sh "./Pods/FirebaseCrashlytics/upload-symbols -gsp ./Runner/GoogleService-Info.plist -p ios ./../build/ios/archive/Runner.xcarchive/dSYMs"
-    end
   end
 end
