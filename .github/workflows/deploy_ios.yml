@@ -1,8 +1,12 @@
 name: "Deploy to App Store"
 on:
-  push:
-    branches: ["main"]
+  #push:
+  #branches: ["main"]
   workflow_dispatch:
+
+concurrency:
+  group: "ios"
+  cancel-in-progress: false
 
 jobs:
   version:
@@ -72,12 +76,6 @@ jobs:
         with:
           channel: "stable"
           cache: true
-
-      - name: Install firebase
-        run: curl -sL https://firebase.tools | bash
-
-      - name: install flutterfire
-        run: dart pub global activate flutterfire_cli
 
       - name: Get Certificates
         run: |
