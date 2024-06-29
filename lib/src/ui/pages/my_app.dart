@@ -1,4 +1,4 @@
-import 'package:coree/src/crashlytics/testing.dart';
+import 'package:coree/src/crashlytics/hello.dart';
 import 'package:flutter/material.dart';
 
 class MyHomePage extends StatefulWidget {
