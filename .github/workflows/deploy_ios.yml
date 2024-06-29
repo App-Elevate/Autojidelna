@@ -1,7 +1,7 @@
 name: "[DEV] Build and Publish iOS"
 on:
-  push:
-    branches: ["main"]
+  #push:
+  #branches: ["main"]
   workflow_dispatch:
 
 jobs:
@@ -73,33 +73,30 @@ jobs:
           channel: "stable"
           cache: true
 
-      - name: Install firebase
-        run: curl -sL https://firebase.tools | bash
-
-      - name: install flutterfire
-        run: dart pub global activate flutterfire_cli
-
       - name: Get Certificates
         run: |
           cd ios
+
+          # Get the private key for the App Store
           mkdir -p private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/AuthKey_VPJ6V9H7X3.p8
+
+          # Get the provisioning profile and certificate
           bundle install
           bundle exec fastlane setup_ci_keychain
+
           cd ..
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+        run: flutter build ipa --split-debug-info=symbolsIos --obfuscate --release || true
 
       - name: Signing the app and publishing to App Store
         run: |
-          mkdir -p ios/private_keys
-          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > ios/private_keys/AuthKey_VPJ6V9H7X3.p8
           cd ios  
-          bundle exec fastlane release
+          bundle exec fastlane release_ci
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
@@ -112,12 +109,12 @@ jobs:
           # Path to the release files
           path: ios/*.ipa
 
-      - name: collect debug symbols
+      - name: collect archive
         uses: actions/upload-artifact@v4
         with:
-          name: symbols-ios
+          name: release-archive
           # Path to the release files
-          path: symbolsIos
+          path: build/ios/archive/Runner.xcarchive
 
       - name: Remove private keys
         if: always()
