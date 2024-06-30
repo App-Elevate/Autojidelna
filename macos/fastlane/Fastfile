@@ -35,13 +35,6 @@ platform :mac do
         unlock: true,
         password: "temp-keychain_password"
         )
-
-    match(
-      readonly: true,
-      keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
-      type: "appstore"
-    )
   end
 
   desc "Push a new release build to the App Store"

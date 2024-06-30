@@ -81,6 +81,7 @@ jobs:
         run: |
           cd macos
           bundle install
+          bundle exec fastlane setup_ci_keychain
           cd ..
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
