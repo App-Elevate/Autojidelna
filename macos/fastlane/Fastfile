@@ -54,12 +54,11 @@ platform :mac do
       password: "temp-keychain_password"
       )
 
-    /
     match(
       type: "appstore",
       readonly: true,
       additional_cert_types: "mac_installer_distribution"
-      )/
+      )
 
     sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
     build_app(
