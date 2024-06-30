@@ -28,6 +28,9 @@ platform :mac do
   desc "Create Keychain for Ci/CD"
   lane :setup_ci_keychain do 
     # Create the keychain
+    delete_keychain(
+      name: "login.keychain"
+    )
     create_keychain(
         name: "AppSigning",
         default_keychain: true,

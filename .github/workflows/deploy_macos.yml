@@ -77,18 +77,12 @@ jobs:
           channel: "stable"
           cache: true
 
-      - name: Get Certificates
+      - name: Signing the app and publishing to App Store
         run: |
           cd macos
           bundle install
           bundle exec fastlane setup_ci_keychain
           cd ..
-        env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-
-      - name: Signing the app and publishing to App Store
-        run: |
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
           sh scripts/compile_macos.sh
         env:
