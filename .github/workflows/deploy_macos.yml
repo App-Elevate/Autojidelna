@@ -87,8 +87,8 @@ jobs:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
-      - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsMacOS --obfuscate --release || true
+      - name: Building macos
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release || true
 
       - name: Signing the app and publishing to App Store
         run: |
