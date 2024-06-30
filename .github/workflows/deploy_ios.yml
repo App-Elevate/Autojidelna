@@ -92,7 +92,6 @@ jobs:
 
       - name: Signing the app and publishing to App Store
         run: |
-          mkdir private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
           cd ios  
           bundle exec fastlane release_ci
