@@ -28,16 +28,20 @@ platform :mac do
   desc "Create Keychain for Ci/CD"
   lane :setup_ci_keychain do 
     # Create the keychain
-    delete_keychain(
-      name: "login.keychain"
-    )
     create_keychain(
-        name: "login.keychain",
+        name: "AppSigning",
         default_keychain: true,
         add_to_search_list: true,
         unlock: true,
         password: "temp-keychain_password"
         )
+
+    match(
+      readonly: true,
+      keychain_name: "AppSigning",
+      keychain_password: "temp-keychain_password",
+      type: "appstore"
+    )
   end
 
   desc "Push a new release build to the App Store"
@@ -85,6 +89,7 @@ platform :mac do
       readonly: true,
       additional_cert_types: "mac_installer_distribution"
       )/
+    sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
     build_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       export_options: {

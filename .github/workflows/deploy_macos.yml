@@ -77,18 +77,27 @@ jobs:
           channel: "stable"
           cache: true
 
-      - name: Signing the app and publishing to App Store
+      - name: Get Certificates
         run: |
           cd macos
           bundle install
           bundle exec fastlane setup_ci_keychain
           cd ..
-          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
-          sh scripts/compile_macos.sh
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-          KEYCHAIN_PASSWORD: "temp-keychain-password"
+
+      - name: Building macos
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release || true
+
+      - name: Signing the app and publishing to App Store
+        run: |
+          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
+          cd macos  
+          bundle exec fastlane release_ci
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
