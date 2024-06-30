@@ -1,11 +1,11 @@
-name: "[iOS] Deploy to App Store"
+name: "[macOS] Deploy to App Store"
 on:
   #push:
   #branches: ["main"]
   workflow_dispatch:
 
 concurrency:
-  group: "ios"
+  group: "macos"
   cancel-in-progress: false
 
 jobs:
@@ -79,7 +79,7 @@ jobs:
 
       - name: Get Certificates
         run: |
-          cd ios
+          cd macos
           bundle install
           bundle exec fastlane setup_ci_keychain
           cd ..
@@ -88,13 +88,13 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+        run: flutter build ipa --split-debug-info symbolsMacOS --obfuscate --release || true
 
       - name: Signing the app and publishing to App Store
         run: |
           mkdir private_keys
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
-          cd ios  
+          cd macos  
           bundle exec fastlane release_ci
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
@@ -106,7 +106,7 @@ jobs:
         with:
           name: release-ipa
           # Path to the release files
-          path: ios/*.ipa
+          path: macos/*.pkg
 
       - name: Remove private keys
         if: always()

@@ -54,20 +54,25 @@ platform :mac do
       password: "temp-keychain_password"
       )
 
+    /
     match(
+      type: "appstore",
       readonly: true,
-      keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
-      type: "appstore"
+      additional_cert_types: "mac_installer_distribution"
+      )/
+
+    sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
+    build_app(
+      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+      export_options: {
+        signingStyle: "automatic",
+        }
       )
     api_key = app_store_connect_api_key(
           key_id: "VPJ6V9H7X3",
           issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./private_keys/AuthKey_VPJ6V9H7X3.p8",
+          key_filepath: "./../private_keys/app_store.p8",
           in_house: false
-      )
-    build_app(
-      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       )
     upload_to_testflight(skip_waiting_for_build_processing: true)
     delete_keychain(
@@ -78,29 +83,30 @@ platform :mac do
 
   desc "Push a new release build to the App Store"
   lane :release do
+    /
     match(
       type: "appstore",
-      readonly: true
-      )
-    match(
-      type: "mac_installer_distribution",
       readonly: true,
-      skip_provisioning_profiles: true
-    )
+      additional_cert_types: "mac_installer_distribution"
+      )/
+    sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
     build_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+      export_options: {
+        signingStyle: "automatic",
+        }
       )
     begin
     api_key = app_store_connect_api_key(
           key_id: "VPJ6V9H7X3",
           issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./private_keys/AuthKey_VPJ6V9H7X3.p8",
+          key_filepath: "./../private_keys/app_store.p8",
           in_house: false
       )
     upload_to_testflight(skip_waiting_for_build_processing: true)
     rescue => e
       sh "open -a transporter"
-      sh "open -R ../Runner.ipa"
+      sh "open -R ./../APPE\\ Coree.pkg"
     end
   end
 end

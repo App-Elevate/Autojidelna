@@ -45,14 +45,23 @@ app.*.map.json
 # So we can hide files
 ..*
 
-*.app
-*.app/
-
 # Firebase
 .crashlytics
 firepit-log.txt
+
+# Credentials
 **/*gc_keys.json
 **/*.p8
+
+# Build
+**/*.ipa
+**/*.pkg
+**/*.dSYM.zip
+**/*.app
+
+# Fastlane ios/macos
 ios/fastlane/report.xml
 macos/fastlane/report.xml
-macos/*dSYM.zip
+
+private_keys/*
+!private_keys/README.md
