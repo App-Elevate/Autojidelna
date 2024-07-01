@@ -46,7 +46,7 @@ on:
 
 jobs:
   version:
-    name: Create version number and extract applicationId
+    name: Create version number
     if: ${{ (contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true')) }}
     # Works only on ubuntu
     runs-on: ubuntu-latest
@@ -96,7 +96,7 @@ jobs:
           echo "firebase_id=$firebase_id"
           echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
   deploy_ios:
-    name: Deploy iOS
+    name: "[iOS] Deploy to App Store"
     runs-on: macos-latest
     needs: version
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.ios == 'true' }}
@@ -150,7 +150,7 @@ jobs:
         if: always()
         run: rm -rf private_keys
   deploy_cloudflare:
-    name: Build and deploy web to Cloudflare Pages
+    name: "[Web] Deploy to Cloudflare Pages"
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.cloudflare == 'true' }}
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -203,6 +203,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   deploy_firebase:
+    name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.firebase_hosting == 'true' }}
     needs: version
@@ -224,8 +225,11 @@ jobs:
           channelId: live
           projectId: app-elevate-core
   deploy_github_pages:
-    name: Deploy to GitHub Pages
+    name: "[Web] Deploy to GitHub Pages"
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.github_pages == 'true' }}
+    permissions:
+      pages: write
+      id-token: write
     needs: version
     environment:
       name: github-pages
@@ -275,6 +279,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v4
   build_android:
+    name: "[Android] Build App Bundle"
     needs: version
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -331,8 +336,8 @@ jobs:
           name: symbolsAndroid
           path: symbolsAndroid
   deploy_android:
+    name: "[Android] Deploy to Google Play Store"
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.android == 'true' }}
-    name: Deploy Android Build
     needs:
       - build_android
       - version
@@ -354,7 +359,7 @@ jobs:
           track: internal
           status: draft
   symbols_android:
-    name: Upload debug symbols
+    name: "[Android] Upload Crashlytics Symbols"
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.android == 'true' }}
     # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option
     runs-on: macos-latest
