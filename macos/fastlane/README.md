@@ -15,14 +15,6 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Mac
 
-### mac generate_profile
-
-```sh
-[bundle exec] fastlane mac generate_profile
-```
-
-Generate a new provisioning profile for macOS
-
 ### mac setup_ci_keychain
 
 ```sh

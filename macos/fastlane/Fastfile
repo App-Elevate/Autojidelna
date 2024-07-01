@@ -16,15 +16,6 @@
 default_platform(:mac)
 
 platform :mac do
-  desc "Generate a new provisioning profile for macOS"
-  lane :generate_profile do
-    match(
-      type: "development",  # or "appstore" for production
-      app_identifier: "cz.appelevate.coree",
-      readonly: false,  # Set to true if you only want to use existing profiles
-    )
-  end
-
   desc "Create Keychain for Ci/CD"
   lane :setup_ci_keychain do 
     # Create the keychain
@@ -60,7 +51,7 @@ platform :mac do
       additional_cert_types: "mac_installer_distribution"
       )
 
-    sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
+    sh "bundle exec  match appstore --readonly --additional_cert_types=mac_installer_distribution"
     build_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       export_options: {
@@ -82,13 +73,8 @@ platform :mac do
 
   desc "Push a new release build to the App Store"
   lane :release do
-    /
-    match(
-      type: "appstore",
-      readonly: true,
-      additional_cert_types: "mac_installer_distribution"
-      )/
-    sh "bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution"
+
+    # Fetch App Store Certificates
     build_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       export_options: {
