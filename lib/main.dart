@@ -21,7 +21,7 @@ void main() async {
     return true;
   };
 
-  await Future.delayed(const Duration(seconds: 2));
+  await Future.delayed(const Duration(seconds: 5));
 
   runApp(const MyApp());
 }
