@@ -1,4 +1,4 @@
-name: Deploy Everything
+name: "[Flutter] Deploy Everything"
 on:
   push:
     branches:
