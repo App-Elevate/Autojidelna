@@ -6,8 +6,24 @@ on:
       - main
 
 jobs:
+  refuse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get branch name
+        id: get_branch
+        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
+
+      - name: Run job on specific branch pattern
+        if: startsWith(steps.get_branch.outputs.branch, '') # Always true, just to show condition in the next step
+        run: |
+          branch="${{ steps.get_branch.outputs.branch }}"
+          if [[ "$branch" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "This job runs only on branches matching the pattern *.*.*"
+          else
+            echo "Branch name does not match pattern. Skipping the job."
+            exit 1
+          fi
   filter:
-    if: github.ref_name =~ '^[0-9]+\\.[0-9]+\\.[0-9]+$
     runs-on: ubuntu-latest
     outputs:
       android: ${{ steps.filter.outputs.android }}
