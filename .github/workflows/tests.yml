@@ -94,7 +94,7 @@ jobs:
       - name: Filter paths
         id: filter
         if: env.valid == 'true'
-        uses: dorny/paths-filter@v2
+        uses: dorny/paths-filter@v3
         with:
           filters: |
             android:
