@@ -88,6 +88,7 @@ jobs:
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+          KEYCHAIN_PASSWORD: temp
 
       # Collect the file and upload as artifact
       - name: collect ipa artifacts
