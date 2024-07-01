@@ -6,20 +6,6 @@ on:
       - main
 
 jobs:
-  refuse:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Validate branch name
-        id: validate
-        run: |
-          if [[ "${{ github.head_ref }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "match=true" >> $GITHUB_ENV
-          else
-            echo "match=false" >> $GITHUB_ENV
-
-      - name: Run your job
-        if: env.match == 'true'
-        run: echo "Job is running from branch ${{ github.head_ref }}"
   filter:
     runs-on: ubuntu-latest
     outputs:
@@ -30,8 +16,21 @@ jobs:
       test: ${{ steps.filter.outputs.test }}
     steps:
       - uses: actions/checkout@v4
+      - name: Validate branch name
+        id: validate
+        run: |
+          if [[ "${{ github.head_ref }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "match=true" >> $GITHUB_ENV
+          else
+            echo "match=false" >> $GITHUB_ENV
+          fi
+
+      - name: Run your job
+        if: env.match == 'true'
+        run: echo "Job is running from branch ${{ github.head_ref }}"
       - name: Filter paths
         id: filter
+        if: env.match == 'true'
         uses: dorny/paths-filter@v2
         with:
           filters: |
