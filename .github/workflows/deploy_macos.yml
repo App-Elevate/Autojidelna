@@ -80,6 +80,10 @@ jobs:
       - name: Get Certificates
         run: |
           echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
+          security delete-keychain login.keychain
+          security create-keychain -p temp login.keychain
+          security list-keychains -s login.keychain
+          security unlock-keychain -p temp login.keychain
           sh scripts/compile_macos.sh
         env:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
