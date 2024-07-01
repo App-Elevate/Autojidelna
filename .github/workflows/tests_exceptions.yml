@@ -1,4 +1,4 @@
-name: Approving PRs that pass tests
+name: Approving PRs don't make changes to code
 on:
   pull_request:
     branches:
