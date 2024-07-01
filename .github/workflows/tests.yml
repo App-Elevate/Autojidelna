@@ -9,20 +9,17 @@ jobs:
   refuse:
     runs-on: ubuntu-latest
     steps:
-      - name: Get branch name
-        id: get_branch
-        run: echo "##[set-output name=branch;]${GITHUB_REF#refs/heads/}"
-
-      - name: Run job on specific branch pattern
-        if: startsWith(steps.get_branch.outputs.branch, '') # Always true, just to show condition in the next step
+      - name: Validate branch name
+        id: validate
         run: |
-          branch="${{ steps.get_branch.outputs.branch }}"
-          if [[ "$branch" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
-            echo "This job runs only on branches matching the pattern *.*.*"
+          if [[ "${{ github.head_ref }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "match=true" >> $GITHUB_ENV
           else
-            echo "Branch name does not match pattern. Skipping the job."
-            exit 1
-          fi
+            echo "match=false" >> $GITHUB_ENV
+
+      - name: Run your job
+        if: env.match == 'true'
+        run: echo "Job is running from branch ${{ github.head_ref }}"
   filter:
     runs-on: ubuntu-latest
     outputs:
