@@ -1,4 +1,4 @@
-# core
+# APPE Core
 
 Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 
