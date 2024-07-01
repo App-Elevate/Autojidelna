@@ -230,6 +230,7 @@ jobs:
     name: "[Web] Deploy to GitHub Pages"
     if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.github_pages == 'true' }}
     permissions:
+      contents: read
       pages: write
       id-token: write
     needs: version

@@ -64,6 +64,7 @@ jobs:
   deploy:
     name: Deploy to GitHub Pages
     permissions:
+      contents: read
       pages: write
       id-token: write
     needs: version
