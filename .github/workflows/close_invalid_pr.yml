@@ -1,4 +1,4 @@
-name: Review PR branch name
+name: Review PR
 
 on:
   pull_request:
@@ -8,6 +8,7 @@ on:
 
 jobs:
   review:
+    name: Branch name check
     runs-on: ubuntu-latest
 
     steps:
