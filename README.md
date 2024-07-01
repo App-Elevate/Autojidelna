@@ -103,7 +103,7 @@ sh ./scripts/deploy_cloudflare_pages.sh
 
 ### název
 
-1. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
+1. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije).
 1. změňte všechny výskyty `APPECOREE` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
 1. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
 
