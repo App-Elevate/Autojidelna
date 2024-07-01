@@ -4,20 +4,40 @@ on:
   pull_request:
     branches:
       - main
-    paths:
-      - "android/**"
-      - "ios/**"
-      - "lib/**"
-      - "web/**"
-      - "test/**"
-      - "pubspec.yaml"
-      - "analysis_options.yaml"
 
 jobs:
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      android: ${{ steps.filter.outputs.android }}
+      ios: ${{ steps.filter.outputs.ios }}
+      lib: ${{ steps.filter.outputs.lib }}
+      web: ${{ steps.filter.outputs.web }}
+      test: ${{ steps.filter.outputs.test }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            android:
+              - 'android/**'
+            ios:
+              - 'ios/**'
+            web:
+              - 'web/**'
+            lib:
+              - 'lib/**'
+              - 'pubspec.yaml'
+            test:
+              - 'test/**'
+              - 'analysis_options.yaml'
+
   test:
     name: Test and analyze
     runs-on: ubuntu-latest
-    if: github.head_ref =~ /^\d+\.\d+\.\d+$/
+    if: ${{ github.head_ref =~ /^\d+\.\d+\.\d+$/ && (needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -35,10 +55,12 @@ jobs:
 
       - name: Test
         run: flutter test
+
   build_ios:
     name: Build iOS
     runs-on: macos-latest
     needs: test
+    if: ${{ needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,10 +72,12 @@ jobs:
 
       - name: Build iOS
         run: flutter build ipa --release --no-codesign
+
   build_android:
     name: Build Android
     runs-on: ubuntu-latest
     needs: test
+    if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -72,10 +96,12 @@ jobs:
 
       - name: Build Android
         run: flutter build appbundle -PuseDebugSigningConfig=true --release
+
   build_web:
     name: Build Web
     runs-on: ubuntu-latest
     needs: test
+    if: ${{ needs.filter.outputs.web == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
