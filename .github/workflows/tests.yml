@@ -93,4 +93,4 @@ jobs:
           cache: true
 
       - name: Build macOS
-        run: flutter build macos --no-codesign
+        run: flutter build macos --release
