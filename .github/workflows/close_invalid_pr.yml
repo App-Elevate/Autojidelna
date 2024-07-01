@@ -1,0 +1,80 @@
+name: Restrict Merging to Main
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  restrict-merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Check branch name
+        id: check_branch
+        run: |
+          if [[ ! ${{ github.event.pull_request.head.ref }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Branch name does not match pattern."
+            echo "valid=false" >> $GITHUB_ENV
+          else
+            echo "Branch name is valid."
+            echo "valid=true" >> $GITHUB_ENV
+          fi
+
+      - name: Close PR and comment
+        if: env.valid == 'false'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.issue.number;
+            const commentBody = "This pull request is being closed because it does not follow the branch naming pattern *.*.*.";
+
+            // Add a comment to the PR
+            await github.issues.createComment({
+              ...context.repo,
+              issue_number: prNumber,
+              body: commentBody,
+            });
+
+            // Close the PR
+            await github.pulls.update({
+              ...context.repo,
+              pull_number: prNumber,
+              state: 'closed',
+            });
+      - name: Close PR and comment
+        if: env.valid == 'false'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const prNumber = context.issue.number;
+            const commentBody = "This pull request is being closed because it does not follow the branch naming pattern *.*.*.";
+
+            // Add a comment to the PR
+            await github.issues.createComment({
+              ...context.repo,
+              issue_number: prNumber,
+              body: commentBody,
+            });
+
+            // Close the PR
+            await github.pulls.update({
+              ...context.repo,
+              pull_number: prNumber,
+              state: 'closed',
+            });
+      - name: Close PR and comment
+        if: env.valid == 'false'
+        run: |
+          echo "This pull request is being closed because it does not follow the branch naming pattern *.*.*."
+          exit 1
