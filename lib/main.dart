@@ -20,6 +20,7 @@ void main() async {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
+
   await Future.delayed(const Duration(seconds: 2));
 
   runApp(const MyApp());
