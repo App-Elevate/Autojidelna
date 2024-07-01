@@ -7,6 +7,7 @@ on:
 
 jobs:
   filter:
+    if: github.head_ref =~ /^\d+\.\d+\.\d+$/
     runs-on: ubuntu-latest
     outputs:
       android: ${{ steps.filter.outputs.android }}
@@ -36,8 +37,9 @@ jobs:
 
   test:
     name: Test and analyze
+    needs: filter
     runs-on: ubuntu-latest
-    if: ${{ github.head_ref =~ /^\d+\.\d+\.\d+$/ && (needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true') }}
+    if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
