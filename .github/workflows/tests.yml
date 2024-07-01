@@ -17,6 +17,7 @@ jobs:
   test:
     name: Test and analyze
     runs-on: ubuntu-latest
+    if: github.head_ref =~ /^\d+\.\d+\.\d+$/
     steps:
       - uses: actions/checkout@v4
 
