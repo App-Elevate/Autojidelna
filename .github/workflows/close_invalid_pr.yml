@@ -41,6 +41,7 @@ jobs:
             -X PATCH \
             -d "{\"state\":\"closed\"}" \
             "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/pulls/$PR_NUMBER"
+          exit 1
 
       - name: Comment nice
         if: env.valid == 'true'
