@@ -1,6 +1,6 @@
 # core
 
-Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
+Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 
 ## Spuštění aplikace
 
