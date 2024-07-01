@@ -1,5 +1,17 @@
 name: Deploy Everything
 on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - "README.md"
+      - "LICENSE"
+      - "pubspec.lock"
+      - "firebase.json"
+      - ".gitingore"
+      - ".metadata"
+      - "test/**"
+      - "scripts/**"
   pull_request:
     branches:
       - main
