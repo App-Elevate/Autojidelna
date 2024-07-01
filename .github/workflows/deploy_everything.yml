@@ -1,9 +1,9 @@
 name: Deploy Everything
+on:
   pull_request:
     branches:
       - main
     types: [closed]
-on:
   workflow_dispatch:
     inputs:
       android:
