@@ -63,7 +63,7 @@ jobs:
           cache: true
 
       - name: Build Android
-        run: flutter build appbundle --PuseDebugSigningConfig --release
+        run: flutter build appbundle -PuseDebugSigningConfig --release
   build_web:
     name: Build Web
     runs-on: ubuntu-latest

@@ -7,7 +7,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 ### Android
 
 1. Ověřte si instalaci Android Studio a Android Emulatoru pomocí `flutter doctor`
-2. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release --PuseDebugSigningConfig`
+2. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release -PuseDebugSigningConfig`
 
 ### iOS
 
@@ -37,13 +37,13 @@ Distribuce je automatická při merge do mainu. Verze se vezme z branche, který
 Pro kompilaci do release Módu pomocí `flutter build apk` nebo `flutter build appbundle` je potřeba mít App Elevate distribuční klíč. Tento klíč má případně k dispozici Tom. Lze však použít i debug klíč pomocí tohoto příkazu:
 
 ```bash
-flutter build apk -PuseDebugSigningConfig=true
+flutter build apk -PuseDebugSigningConfig
 ```
 
 Nebo
 
 ```bash
-flutter build appbundle -PuseDebugSigningConfig=true
+flutter build appbundle -PuseDebugSigningConfig
 ```
 
 V main branchi je nastavený automatický deployment na Google Play.
