@@ -43,7 +43,9 @@ on:
         required: true
         type: boolean
         default: false
-
+concurrency:
+  group: "deploy"
+  cancel-in-progress: false
 jobs:
   version:
     name: Create version number
@@ -281,7 +283,7 @@ jobs:
   build_android:
     name: "[Android] Build App Bundle"
     needs: version
-    if: ${{ contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || inputs.android == 'true' }}
+    if: ${{ (contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true')) || inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     steps:
