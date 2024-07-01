@@ -18,7 +18,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate
 ### macos
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Získejte spoječné vývojářské klíče pomocí `sh scripts/ios_get_keys.sh`
+2. Získejte spoječné vývojářské klíče pomocí `sh scripts/macos_get_keys.sh`
 3. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
 
 ### Web
@@ -71,18 +71,10 @@ open ./build/ios/archive/Runner.xcarchive
 
 ### macos
 
-Pro kompilaci do release Módu stačí použít klasicky `flutter build macos`.
-
-Pro přípravu na Mac App Store je připraven skript `compile_macos.sh`.
+Pro kompilaci do release módu je připraven skript `compile_macos.sh`. Tento skript automaticky nahraje soubor na App Store. Pokud nemáte soukromý klíč pro publikování na App Store, budete muset mít nainstalovanou aplikaci [Transporter](https://apps.apple.com/cz/app/transporter/id1450874784?mt=12).
 
 ```bash
 sh ./scripts/compile_macos.sh
-```
-
-Po nahrání je potřeba otevřít Xcode -> archive -> kompilování... -> Distribovat -> App Store
-
-```bash
-open macos/Runner.xcworkspace
 ```
 
 ### Web
