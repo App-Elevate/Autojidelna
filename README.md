@@ -28,7 +28,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 
 ## Distribuce
 
-Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions
+Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions.
 
 ## Manuální Kompilace a distribuce
 
