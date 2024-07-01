@@ -4,7 +4,14 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
+    paths:
+      - "android/**"
+      - "ios/**"
+      - "lib/**"
+      - "web/**"
+      - "test/**"
+      - "pubspec.yaml"
+      - "analysis_options.yaml"
 
 jobs:
   test:

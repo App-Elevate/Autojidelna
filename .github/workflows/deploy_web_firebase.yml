@@ -6,8 +6,6 @@
 name: "[Web] Deploy to Firebase Hosting on merge"
 
 on:
-  #push:
-  #branches:  [ "main" ]
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.

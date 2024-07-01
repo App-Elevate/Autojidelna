@@ -3,15 +3,14 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - "LICENSE"
-      - "pubspec.lock"
-      - "firebase.json"
-      - ".gitingore"
-      - ".metadata"
+    paths:
+      - "android/**"
+      - "ios/**"
+      - "lib/**"
+      - "web/**"
       - "test/**"
-      - "scripts/**"
+      - "pubspec.yaml"
+      - "analysis_options.yaml"
   workflow_dispatch:
     inputs:
       android:
