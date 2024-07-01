@@ -3,15 +3,14 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - "README.md"
-      - "LICENSE"
-      - "pubspec.lock"
-      - "firebase.json"
-      - ".gitingore"
-      - ".metadata"
+    paths:
+      - "android/**"
+      - "ios/**"
+      - "lib/**"
+      - "web/**"
       - "test/**"
-      - "scripts/**"
+      - "pubspec.yaml"
+      - "analysis_options.yaml"
   workflow_dispatch:
     inputs:
       android:
@@ -96,6 +95,8 @@ jobs:
   deploy_ios:
     name: "[iOS] Deploy to App Store"
     runs-on: macos-latest
+    environment:
+      name: app-store
     needs: version
     if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.ios == 'true' }}
     steps:
@@ -153,6 +154,9 @@ jobs:
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
+    environment:
+      name: cloudflare-pages
+      url: "https://core.appelevate.cz/"
     permissions:
       contents: write
     steps:
@@ -204,6 +208,9 @@ jobs:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
     if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.firebase_hosting == 'true' }}
+    environment:
+      name: firebase-hosting
+      url: "https://firebase.core.appelevate.cz/"
     needs: version
     steps:
       - uses: actions/checkout@v4
@@ -341,6 +348,8 @@ jobs:
       - version
     # Tested on ubuntu but there is no reason why it shouldn't work on macOS or windows
     runs-on: ubuntu-latest
+    environment:
+      name: google-play
 
     steps:
       - name: Get Android Build from artifacts
