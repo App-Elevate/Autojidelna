@@ -2,6 +2,7 @@ name: "[TEST] Flutter"
 
 on:
   pull_request:
+    types: [opened, synchronize]
     branches:
       - main
 
