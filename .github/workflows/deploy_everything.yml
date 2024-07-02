@@ -156,7 +156,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: cloudflare-pages
-      url: ${{ CLOUDFLARE_PAGES_URL }}
+      url: ${{ env.CLOUDFLARE_PAGES_URL }}
     permissions:
       contents: write
     steps:
@@ -210,7 +210,7 @@ jobs:
     if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.firebase_hosting == 'true' }}
     environment:
       name: firebase-hosting
-      url: ${{ FIREBASE_HOSTING_URL }}
+      url: ${{ env.FIREBASE_HOSTING_URL }}
     needs: version
     steps:
       - uses: actions/checkout@v4
