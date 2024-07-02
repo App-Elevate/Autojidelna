@@ -39,9 +39,9 @@ jobs:
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
           if [ "${{ env.valid }}" == "false" ]; then
-            COMMENT_BODY="${{ env.COMMENT_CLOSED }}"
+            COMMENT_BODY="${{ COMMENT_CLOSED }}"
           else
-            COMMENT_BODY="${{ env.COMMENT_NICE }}"
+            COMMENT_BODY="${{ COMMENT_NICE }}"
           fi
 
 
@@ -64,7 +64,7 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
-          COMMENT_BODY="${{ env.COMMENT_CLOSED }}"
+          COMMENT_BODY="${{ COMMENT_CLOSED }}"
 
           curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -X POST \
@@ -85,7 +85,7 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
-          COMMENT_BODY="${{ env.COMMENT_NICE }}"
+          COMMENT_BODY="${{ COMMENT_NICE }}"
 
           curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -X POST \
