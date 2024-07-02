@@ -44,6 +44,7 @@ jobs:
             COMMENT_BODY="${{ env.COMMENT_NICE }}"
           fi
 
+
           COMMENTS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
             "https://api.github.com/repos/$REPO_OWNER/$REPO_NAME/issues/$PR_NUMBER/comments")
 
