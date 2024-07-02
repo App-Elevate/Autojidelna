@@ -39,9 +39,9 @@ jobs:
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
           if [ "${{ env.valid }}" == "false" ]; then
-            COMMENT_BODY="Prosím o přejmenování branche, ze kterého je tento PR vytvořen. Název branche musí být ve formátu verze - \`*.*.*\` To je např \`1.11.1\`. Děkuji <3."
+            COMMENT_BODY="${{ env.COMMENT_CLOSED }}"
           else
-            COMMENT_BODY="Díky za PR! Nyní už jen stačí sehnat někoho kdo ho ověří. Hodně štěstí 🎉"
+            COMMENT_BODY="${{ env.COMMENT_NICE }}"
           fi
 
           COMMENTS=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
@@ -63,7 +63,7 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
-          COMMENT_BODY="Prosím o přejmenování branche, ze kterého je tento PR vytvořen. Název branche musí být ve formátu verze - \`*.*.*\` To je např \`1.11.1\`. Děkuji <3."
+          COMMENT_BODY="${{ env.COMMENT_CLOSED }}"
 
           curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -X POST \
@@ -84,7 +84,7 @@ jobs:
           PR_NUMBER=${{ github.event.pull_request.number }}
           REPO_OWNER=${{ github.repository_owner }}
           REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)
-          COMMENT_BODY="Díky za PR! Nyní už jen stačí sehnat někoho kdo ho ověří. Hodně štěstí 🎉"
+          COMMENT_BODY="${{ env.COMMENT_NICE }}"
 
           curl -s -H "Authorization: token $GITHUB_TOKEN" \
             -X POST \
