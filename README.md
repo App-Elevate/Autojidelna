@@ -26,6 +26,10 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 1. Ověřte si instalaci Flutter Web pomocí `flutter doctor`
 2. Spusťte aplikaci pomocí `flutter run -d chrome --web-port 5500` nebo `flutter run -d web-server --release --web-port 5500`
 
+### Wireless debugging
+
+- Silně nedoporučuji. Zatím je to moc nestabilní. iOS to má nativně, avšak je potřeba nejdřív spustit `flutter run` a potom přípojit debugger pomocí `[Flutter Wireless] debug` v Vscode. Pokud se vám podaří připojit android, postup je stejný.
+
 ## Distribuce
 
 Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions.
