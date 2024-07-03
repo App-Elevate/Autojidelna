@@ -23,6 +23,11 @@
       "flutterMode": "release"
     },
     {
+      "name": "[Flutter Wireless] debug",
+      "type": "dart",
+      "request": "attach"
+    },
+    {
       "name": "[Web] debug",
       "request": "launch",
       "type": "dart",
