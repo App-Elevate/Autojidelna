@@ -8,10 +8,12 @@ import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
+  // Flutter error handling
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
@@ -21,5 +23,5 @@ void main() async {
     return true;
   };
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
