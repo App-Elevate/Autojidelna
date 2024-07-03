@@ -24,7 +24,7 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 ### Web
 
 1. Ověřte si instalaci Flutter Web pomocí `flutter doctor`
-2. Spusťte aplikaci pomocí `flutter run -d chrome` nebo `flutter run -d web-server --release`
+2. Spusťte aplikaci pomocí `flutter run -d chrome --web-port 5500` nebo `flutter run -d web-server --release --web-port 5500`
 
 ## Distribuce
 
