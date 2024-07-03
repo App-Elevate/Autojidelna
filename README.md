@@ -134,10 +134,19 @@ sh ./scripts/deploy_cloudflare_pages.sh
 2. Spusťte
 
 ```bash
-flutterfire configure
+sh scripts/flutterfire_configure.sh
 ```
 
-3.
+3. Zkontrolujte, že zkompiluje macOS a že byly vytvořeny tři aplikace - iOS, Android a Web
+
+### Firebase Analytics
+
+1. Povolte Analytics a crashlytics ve Firebase
+2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_global/analytics.dart)
+
+### Assety
+
+1. Vyměňte assets/app_favicon.web a assets_dev/app_favicon.png za favicony vaší aplikace
 
 ## První deployment
 
