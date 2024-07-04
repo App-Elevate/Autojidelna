@@ -3,8 +3,8 @@ import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
-class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+class RouterPage extends StatelessWidget {
+  const RouterPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,6 +12,7 @@ class MainPage extends StatelessWidget {
       routes: [
         DemoPage(title: 'Users'),
         const CrashlyticsPage(),
+        const RoutingTestPage(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(

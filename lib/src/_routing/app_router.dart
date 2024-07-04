@@ -5,15 +5,19 @@ import 'package:coree/src/_routing/app_router.gr.dart';
 class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
-        // HomeScreen is generated as HomeRoute because
-        // of the replaceInRouteName property
         AutoRoute(
-          page: MainPage.page,
+          page: RouterPage.page,
+          initial: true,
           path: '/',
           children: <AutoRoute>[
-            AutoRoute(page: DemoPage.page, path: 'home'),
-            AutoRoute(page: CrashlyticsPage.page, path: 'crashlytics'),
+            AutoRoute(page: DemoPage.page, path: 'demo'),
+            AutoRoute(page: CrashlyticsPage.page, path: '', initial: true),
+            AutoRoute(
+              page: RoutingTestPage.page,
+              path: 'routing-test',
+            ),
           ],
         ),
+        AutoRoute(page: RoutingTestDetailPage.page, path: '/routing-test/detail'),
       ];
 }
