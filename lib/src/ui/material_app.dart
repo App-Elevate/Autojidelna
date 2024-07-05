@@ -1,4 +1,4 @@
-import 'package:coree/src/_routing/app_router.dart';
+import 'package:coree/src/routing/app_router.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
