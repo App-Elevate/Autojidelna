@@ -1,4 +1,4 @@
-import 'package:coree/src/conf/analytics.dart';
+import 'package:coree/src/_conf/analytics.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:url_launcher/url_launcher.dart';
 
