@@ -210,9 +210,9 @@ jobs:
       - name: Purge cache
         run: |
           curl -X POST "https://api.cloudflare.com/client/v4/zones/${{ vars.CLOUDFLARE_ZONE_ID }}/purge_cache" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_KEY }}" \
             -H "Content-Type: application/json" \
-              --data '{"hosts": ["core.appelevate.cz"]}'
+              --data '{"purge_everything": true}'
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
