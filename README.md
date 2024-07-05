@@ -244,7 +244,7 @@ bundle exec fastlane match
 2. Vyberte hosting
 3. Vyberte projekt
 4. Vyberte složku `build/web`
-5. Single page app - yes
+5. Configure as a single-page app (rewrite all urls to /index.html) - no
 6. setup automatic deployment - yes
 7. Vložte `app-elevate/nazev-repa` jako repozitar
 8. Set up workflow to run a build script before every deploy - no

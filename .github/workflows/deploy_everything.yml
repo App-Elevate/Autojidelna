@@ -223,6 +223,8 @@ jobs:
           channel: "stable"
           cache: true
       - run: flutter build web --release
+      - name: Copy index.html to 404.html
+        run: cp build/web/index.html build/web/404.html
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
