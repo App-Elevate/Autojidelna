@@ -134,6 +134,10 @@ sh ./scripts/deploy_cloudflare_pages.sh
 
 ### **Matějova část -- insert instructions here -- **
 
+### Klíče
+
+1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
+
 ### Firebase
 
 1. Vytvořte nový projekt v Firebase.
