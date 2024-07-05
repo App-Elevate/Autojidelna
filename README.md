@@ -233,6 +233,8 @@ bundle exec fastlane match
 2. Nastavte alternativní doménu.
 3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
 
+NOTE: Po každém deploymentu je nutné purgnout cache na [Cloudflare](https://dash.cloudflare.com/d48c778c9d01926e7bf45e9b9b853034/appelevate.cz/caching/configuration) (pokud nejde link otevřít je to v caching -> configuration -> purge everything)
+
 ### Github Pages
 
 1. Zapněte Github Pages v nastavení repozitáře.

@@ -13,7 +13,7 @@ class AboutAppButton extends StatelessWidget {
       icon: const Icon(Icons.info_outline),
       onPressed: () => showAboutDialog(
         context: context,
-        applicationName: 'APPE Core',
+        applicationName: 'APPE Coree',
         applicationVersion: App.packageInfo.version + (kDebugMode ? ' - debug' : ''),
         applicationIcon: GestureDetector(
           onTap: appElevateClick,
