@@ -266,3 +266,13 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 # Omezení implementace CORU
 
 1. firebase_options.dart MUSÍ být v /lib/firebase_options.dart
+
+## iOS
+
+1. Je potřeba po každém přidání entitlementu zapnout automatické podepisování v Xcode a následně ho vypnout. Potom už stačí jen regenerovat certifikáty pomocí fastlane match:
+
+```bash
+cd ios && bundle install && bundle exec fastlane match appstore --force && bundle exec fastlane match development --force && cd ..
+```
+
+a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potřeba mít přístup k certifikátům.
