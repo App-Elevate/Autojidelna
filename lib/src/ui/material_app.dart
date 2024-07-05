@@ -13,6 +13,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
         includePrefixMatches: true,
+        deepLinkTransformer: (uri) async {
+          if (uri.path == '/' && uri.fragment.isNotEmpty) {
+            return uri.replace(path: uri.path.replaceFirst('/', uri.fragment));
+          }
+          return uri;
+        },
       ),
       theme: ThemeData(
         // This is the theme of your application.
