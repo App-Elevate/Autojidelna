@@ -1,0 +1,52 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "[Flutter] debug",
+      "request": "launch",
+      "type": "dart"
+    },
+    {
+      "name": "[Flutter] profile",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile"
+    },
+    {
+      "name": "[Flutter] release",
+      "request": "launch",
+      "type": "dart",
+      "args": ["-PuseDebugSigningConfig=true"],
+      "flutterMode": "release"
+    },
+    {
+      "name": "[Flutter Wireless] debug",
+      "type": "dart",
+      "request": "attach"
+    },
+    {
+      "name": "[Web] debug",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "debug",
+      "args": ["--web-port", "5500", "-d", "chrome"]
+    },
+    {
+      "name": "[Web] profile",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "profile",
+      "args": ["--web-port", "5500", "-d", "chrome"]
+    },
+    {
+      "name": "[Web] release",
+      "request": "launch",
+      "type": "dart",
+      "flutterMode": "release",
+      "args": ["--web-port", "5500", "-d", "web-server"]
+    }
+  ]
+}

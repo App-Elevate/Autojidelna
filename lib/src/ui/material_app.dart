@@ -1,14 +1,19 @@
-import 'package:coree/src/ui/screens/my_app.dart';
+import 'package:coree/src/_routing/app_router.dart';
 import 'package:flutter/material.dart';
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'APPE Coree',
+      debugShowCheckedModeBanner: false,
+      routerConfig: _appRouter.config(
+        includePrefixMatches: true,
+      ),
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -28,7 +33,6 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const MainAppScreen(),
     );
   }
 }
