@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "cz.appelevate.coree",
+      "sha256_cert_fingerprints": [
+        "D5:13:D4:F5:A5:36:53:AF:3A:C8:67:C7:8A:64:8B:BA:F3:89:D6:BD:29:1B:7A:1E:90:5C:B6:75:83:13:6D:33"
+      ]
+    }
+  }
+]
