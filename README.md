@@ -114,8 +114,10 @@ sh ./scripts/deploy_cloudflare_pages.sh
 ### název
 
 1. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije).
-1. změňte všechny výskyty `APPECOREE` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
-1. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
+2. změňte všechny výskyty `APPECOREE` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
+3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
+4. změňte všechny výskyty `APPE Coree description` na popis vaší aplikace
+5. změňte všechny výskyty `6G8NMAQR5W` na váš developer id u apple - je to důležité pro fastline a deeplinking
 
 ### ikonky
 
@@ -134,9 +136,10 @@ sh ./scripts/deploy_cloudflare_pages.sh
 
 ### **Matějova část -- insert instructions here -- **
 
-### Klíče
+### Deep linking
 
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
+2. přepište url na vaši doménu - replace `core.appelevate.cz` ve vscode
 
 ### Firebase
 
@@ -152,7 +155,7 @@ sh scripts/flutterfire_configure.sh
 ### Firebase Analytics
 
 1. Povolte Analytics a crashlytics ve Firebase
-2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_global/analytics.dart)
+2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_conf/analytics.dart)
 
 ### Assety
 
@@ -254,7 +257,7 @@ bundle exec fastlane match
 9. Set up automatic deployment to your site's live channel when a PR is merged - no
 
 10. Otevřte si workflow soubor, který vám vytvořil Firebase.
-11. Zkopírujte řádek s `firebaseServiceAccount` a nahraďte existující řádek v [deploy_everything.yml](/.github/workflows/deploy_everything.yml#L229) (téměř na konci části firebase hostingu)
+11. Zkopírujte řádek s `firebaseServiceAccount` a nahraďte existující řádek v [deploy_everything.yml](/.github/workflows/deploy_everything.yml#L240) (téměř na konci části firebase hostingu)
     příklad:
 
 ```yaml
