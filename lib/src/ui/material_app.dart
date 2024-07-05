@@ -11,7 +11,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'APPE Coree',
       debugShowCheckedModeBanner: false,
-      routerConfig: _appRouter.config(),
+      routerConfig: _appRouter.config(
+        includePrefixMatches: true,
+      ),
       theme: ThemeData(
         // This is the theme of your application.
         //

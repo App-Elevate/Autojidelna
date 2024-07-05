@@ -18,6 +18,9 @@ class AppRouter extends $AppRouter {
             ),
           ],
         ),
+        AutoRoute(page: RoutingParamPage.page, path: '/routing-test/param'),
+        AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/routing-test/param/detail'),
+        AutoRoute(page: RoutingPathParamDetailPage.page, path: '/routing-test/param/:filmid'),
         AutoRoute(page: RoutingTestDetailPage.page, path: '/routing-test/detail'),
         AutoRoute(page: RoutingTestDetailDetail.page, path: '/routing-test/detail/detail'),
       ];

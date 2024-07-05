@@ -30,6 +30,12 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 
 - Silně nedoporučuji. Zatím je to moc nestabilní. iOS to má nativně, avšak je potřeba nejdřív spustit `flutter run` a potom přípojit debugger pomocí `[Flutter Wireless] debug` v Vscode. Pokud se vám podaří připojit android, postup je stejný.
 
+## Vývojářské nástroje
+
+- Tento projekt používá build_runner pro automatické generování kódu. Pro spuštění je potřeba spustit `dart run build_runner watch` nebo `dart run build_runner build` pro jednorázový build.
+- Doporučuje se build_runner spustit pokaždé co programujete
+- Doporučené IDE je vscode s rozšířeními Flutter a dart
+
 ## Distribuce
 
 Distribuce je automatická při merge do mainu. Verze se vezme z branche, který se merguje do mainu. např merge z branche `1.0.0` do mainu vytvoří release `1.0.0`. Build number se potom bere z počtu spuštěných github actions.

@@ -19,9 +19,9 @@ class RouterPage extends StatelessWidget {
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,
           items: const [
-            BottomNavigationBarItem(label: 'Users', icon: Icon(Icons.people)),
-            BottomNavigationBarItem(label: 'Posts', icon: Icon(Icons.post_add)),
-            BottomNavigationBarItem(label: 'Settings', icon: Icon(Icons.settings)),
+            BottomNavigationBarItem(label: 'Counting', icon: Icon(Icons.numbers)),
+            BottomNavigationBarItem(label: 'Crashlytics', icon: Icon(Icons.bug_report)),
+            BottomNavigationBarItem(label: 'Routing', icon: Icon(Icons.settings)),
           ],
         );
       },

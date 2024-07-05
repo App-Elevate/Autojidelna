@@ -23,6 +23,12 @@ class RoutingTestPage extends StatelessWidget {
               },
               child: const Text('Go to Detail Page'),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                context.router.push(const RoutingParamPage());
+              },
+              child: const Text('Go to Param Page'),
+            ),
           ],
         ),
       ),
