@@ -162,6 +162,7 @@ sh scripts/flutterfire_configure.sh
 
 1. Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions)
 2. Vypněte Platformy, které nepoužíváte tím, že okomentujete `if: cokoliv` a nahradíte `if: false`
+3. Odstraňte debug sha256 hash z [assetlinks.json](web/.well-known/assetlinks.json#L9) (je to ten druhý na řádku 9)
 
 ### Android
 
