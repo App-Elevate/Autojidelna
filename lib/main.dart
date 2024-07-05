@@ -1,5 +1,5 @@
 import 'package:coree/firebase_options.dart';
-import 'package:coree/src/_global/global.dart';
+import 'package:coree/src/global/global.dart';
 import 'package:coree/src/ui/material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';

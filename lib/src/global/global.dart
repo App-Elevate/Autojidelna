@@ -1,4 +1,4 @@
-import 'package:coree/src/_global/package_info.dart';
+import 'package:coree/src/global/package_info.dart';
 
 class InitApp {
   static Future<void> initConf() async {
