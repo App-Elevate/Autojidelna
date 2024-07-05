@@ -1,6 +1,6 @@
 import 'package:coree/src/_conf/assets.dart';
 import 'package:coree/src/_global/package_info.dart';
-import 'package:coree/src/_logic/about_app_button_logic.dart';
+import 'package:coree/src/logic/about_app_button_logic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
