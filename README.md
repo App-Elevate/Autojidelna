@@ -231,9 +231,9 @@ bundle exec fastlane match
 
 1. Vytvořte nový projekt v Cloudflare Pages a nastavte automatický deployment pro branch `dist-cloudflare-pages`
 2. Nastavte alternativní doménu.
-3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
-
-NOTE: Po každém deploymentu je nutné purgnout cache na [Cloudflare](https://dash.cloudflare.com/d48c778c9d01926e7bf45e9b9b853034/appelevate.cz/caching/configuration) (pokud nejde link otevřít je to v caching -> configuration -> purge everything)
+3. Klikněte si na doménu, kterou vlastníte a vpravo najděte kolonku API. Tam najdete Zone ID. Tento ZONE ID vložte do variables v Githubu jako `CLOUDFLARE_ZONE_ID`
+4. Vytvořte hned pod tímto API klíč s právy `Purge Cache` a vložte ho do Githubu jako `CLOUDFLARE_PURGE_KEY`
+5. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
 
 ### Github Pages
 
