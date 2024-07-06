@@ -81,8 +81,8 @@ jobs:
         id: gitversion
         uses: gittools/actions/gitversion/execute@v1.1.1
 
-      - name: Create version.txt with nuGetVersion
-        run: echo ${{ steps.gitversion.outputs.nuGetVersion  }} > version.txt
+      - name: Create version.txt with GitVersion_MajorMinorPatch
+        run: echo ${{ steps.gitversion.outputs.GitVersion_MajorMinorPatch  }} > version.txt
 
       - name: Update version in YAML
         run: |
