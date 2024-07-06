@@ -10,7 +10,7 @@ class RouterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       routes: [
-        DemoPage(title: 'Users'),
+        DemoPage(title: 'Counting'),
         const CrashlyticsPage(),
         const RoutingTestPage(),
       ],

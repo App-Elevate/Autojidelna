@@ -1,5 +1,17 @@
 name: "[Flutter] Deploy Everything"
 on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+    paths:
+      - "android/**"
+      - "ios/**"
+      - "lib/**"
+      - "web/**"
+      - "test/**"
+      - "pubspec.yaml"
+      - "analysis_options.yaml"
   push:
     branches:
       - main
