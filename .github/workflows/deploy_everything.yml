@@ -1,4 +1,7 @@
 name: "[Flutter] Deploy Everything"
+permissions:
+  checks: write
+  contents: read
 on:
   pull_request:
     types: [closed]
