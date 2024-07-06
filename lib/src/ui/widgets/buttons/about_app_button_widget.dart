@@ -27,7 +27,7 @@ class AboutAppButton extends StatelessWidget {
           GestureDetector(
             onTap: appElevateClick,
             child: Padding(
-              padding: const EdgeInsets.only(top: 27.0),
+              padding: const EdgeInsets.only(top: 27.01),
               child: Image.asset(Assets.appElevateLogo),
             ),
           ),
