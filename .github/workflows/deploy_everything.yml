@@ -65,8 +65,7 @@ jobs:
       - name: Get version
         id: version
         run: |
-          echo "BRANCH_NAME=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-          if [[ "${BRANCH_NAME}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ "${{ github.head_ref }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
             echo "version=${BRANCH_NAME}"
             echo "version=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
