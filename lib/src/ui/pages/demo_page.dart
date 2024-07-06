@@ -1,10 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_lang/localization.dart';
 import 'package:coree/src/ui/widgets/buttons/about_app_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class DemoPage extends StatefulWidget {
-  const DemoPage({super.key, this.title = 'Demo Page'});
+  const DemoPage({super.key, this.title = Alocale.demoPageTitle});
   final String title;
 
   @override
@@ -32,8 +34,8 @@ class _DemoPageState extends State<DemoPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              Alocale.buttonPushed.getString(context),
             ),
             Text(
               '$_counter',
@@ -44,9 +46,8 @@ class _DemoPageState extends State<DemoPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

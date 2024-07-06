@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_global/package_info.dart';
+import 'package:coree/src/_lang/localization.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class RoutingTestDetailPage extends StatelessWidget {
@@ -16,12 +18,10 @@ class RoutingTestDetailPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Text('This is a routing test detail page.'),
+            Text(Alocale.routingParamDetailPageDetail.getString(context)),
             ElevatedButton(
-              onPressed: () async {
-                await context.router.push((const RoutingTestDetailDetail()));
-              },
-              child: const Text('Go to Detail Detail'),
+              onPressed: () async => context.router.push((const RoutingTestDetailDetail())),
+              child: Text(Alocale.routingGoToDetailDetail.getString(context)),
             ),
           ],
         ),

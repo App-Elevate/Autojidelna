@@ -12,16 +12,12 @@ import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:coree/src/ui/pages/crashlytics_page.dart' as _i1;
 import 'package:coree/src/ui/pages/demo_page.dart' as _i2;
 import 'package:coree/src/ui/pages/router_page.dart' as _i3;
-import 'package:coree/src/ui/pages/routing/routing_param_page.dart' as _i4;
-import 'package:coree/src/ui/pages/routing/routing_path_param_detail_page.dart'
-    as _i5;
-import 'package:coree/src/ui/pages/routing/routing_query_param_detail_page.dart'
-    as _i6;
-import 'package:coree/src/ui/pages/routing/routing_test_detail_detail_page.dart'
-    as _i7;
-import 'package:coree/src/ui/pages/routing/routing_test_detail_page.dart'
-    as _i8;
-import 'package:coree/src/ui/pages/routing/routing_test_page.dart' as _i9;
+import 'package:coree/src/ui/pages/settings/routing/routing_param_page.dart' as _i4;
+import 'package:coree/src/ui/pages/settings/routing/routing_path_param_detail_page.dart' as _i5;
+import 'package:coree/src/ui/pages/settings/routing/routing_query_param_detail_page.dart' as _i6;
+import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_detail_page.dart' as _i7;
+import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_page.dart' as _i8;
+import 'package:coree/src/ui/pages/settings/routing/routing_test_page.dart' as _i9;
 import 'package:flutter/material.dart' as _i11;
 
 abstract class $AppRouter extends _i10.RootStackRouter {
@@ -36,8 +32,7 @@ abstract class $AppRouter extends _i10.RootStackRouter {
       );
     },
     DemoPage.name: (routeData) {
-      final args =
-          routeData.argsAs<DemoPageArgs>(orElse: () => const DemoPageArgs());
+      final args = routeData.argsAs<DemoPageArgs>(orElse: () => const DemoPageArgs());
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i2.DemoPage(
@@ -60,9 +55,8 @@ abstract class $AppRouter extends _i10.RootStackRouter {
     },
     RoutingPathParamDetailPage.name: (routeData) {
       final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<RoutingPathParamDetailPageArgs>(
-          orElse: () => RoutingPathParamDetailPageArgs(
-              filmid: pathParams.getString('filmid')));
+      final args =
+          routeData.argsAs<RoutingPathParamDetailPageArgs>(orElse: () => RoutingPathParamDetailPageArgs(filmid: pathParams.getString('filmid')));
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i5.RoutingPathParamDetailPage(
@@ -73,9 +67,8 @@ abstract class $AppRouter extends _i10.RootStackRouter {
     },
     RoutingQueryParamDetailPage.name: (routeData) {
       final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RoutingQueryParamDetailPageArgs>(
-          orElse: () => RoutingQueryParamDetailPageArgs(
-              filmid: queryParams.optInt('key')));
+      final args =
+          routeData.argsAs<RoutingQueryParamDetailPageArgs>(orElse: () => RoutingQueryParamDetailPageArgs(filmid: queryParams.optInt('key')));
       return _i10.AutoRoutePage<dynamic>(
         routeData: routeData,
         child: _i6.RoutingQueryParamDetailPage(
@@ -137,8 +130,7 @@ class DemoPage extends _i10.PageRouteInfo<DemoPageArgs> {
 
   static const String name = 'DemoPage';
 
-  static const _i10.PageInfo<DemoPageArgs> page =
-      _i10.PageInfo<DemoPageArgs>(name);
+  static const _i10.PageInfo<DemoPageArgs> page = _i10.PageInfo<DemoPageArgs>(name);
 }
 
 class DemoPageArgs {
@@ -187,8 +179,7 @@ class RoutingParamPage extends _i10.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.RoutingPathParamDetailPage]
-class RoutingPathParamDetailPage
-    extends _i10.PageRouteInfo<RoutingPathParamDetailPageArgs> {
+class RoutingPathParamDetailPage extends _i10.PageRouteInfo<RoutingPathParamDetailPageArgs> {
   RoutingPathParamDetailPage({
     _i11.Key? key,
     required String filmid,
@@ -205,8 +196,7 @@ class RoutingPathParamDetailPage
 
   static const String name = 'RoutingPathParamDetailPage';
 
-  static const _i10.PageInfo<RoutingPathParamDetailPageArgs> page =
-      _i10.PageInfo<RoutingPathParamDetailPageArgs>(name);
+  static const _i10.PageInfo<RoutingPathParamDetailPageArgs> page = _i10.PageInfo<RoutingPathParamDetailPageArgs>(name);
 }
 
 class RoutingPathParamDetailPageArgs {
@@ -227,8 +217,7 @@ class RoutingPathParamDetailPageArgs {
 
 /// generated route for
 /// [_i6.RoutingQueryParamDetailPage]
-class RoutingQueryParamDetailPage
-    extends _i10.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
+class RoutingQueryParamDetailPage extends _i10.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
   RoutingQueryParamDetailPage({
     _i11.Key? key,
     int? filmid,
@@ -245,8 +234,7 @@ class RoutingQueryParamDetailPage
 
   static const String name = 'RoutingQueryParamDetailPage';
 
-  static const _i10.PageInfo<RoutingQueryParamDetailPageArgs> page =
-      _i10.PageInfo<RoutingQueryParamDetailPageArgs>(name);
+  static const _i10.PageInfo<RoutingQueryParamDetailPageArgs> page = _i10.PageInfo<RoutingQueryParamDetailPageArgs>(name);
 }
 
 class RoutingQueryParamDetailPageArgs {

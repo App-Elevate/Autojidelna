@@ -28,5 +28,5 @@ void main() async {
 
   await InitApp.initConf();
 
-  runApp(MyApp());
+  runApp(const MyApp());
 }
