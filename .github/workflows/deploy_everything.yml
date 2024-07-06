@@ -9,6 +9,7 @@ on:
       - main
     paths:
       - "android/**"
+      - "assets/**"
       - "ios/**"
       - "lib/**"
       - "web/**"
@@ -20,6 +21,7 @@ on:
       - main
     paths:
       - "android/**"
+      - "assets/**"
       - "ios/**"
       - "lib/**"
       - "web/**"
