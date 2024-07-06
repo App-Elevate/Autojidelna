@@ -88,6 +88,10 @@ jobs:
         run: |
           sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
 
+      - name: Remove suffix from version names
+        run: |
+          sed -i 's/-[a-zA-Z0-9]*//' version.txt
+
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
         with:
