@@ -139,7 +139,8 @@ sh ./scripts/deploy_cloudflare_pages.sh
 ### Deep linking
 
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
-2. přepište url na vaši doménu - replace `core.appelevate.cz` ve vscode
+2. přepište url na vaši doménu - `core.appelevate.cz` ve vscode replace
+3. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
 
 ### Firebase
 
