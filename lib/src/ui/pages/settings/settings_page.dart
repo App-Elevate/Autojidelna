@@ -27,6 +27,10 @@ class RoutingTestPage extends StatelessWidget {
               onPressed: () async => context.router.push(const RoutingParamPage()),
               child: Text(Alocale.routingGoToParamDetailPage.getString(context)),
             ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(const LocalizationsPage()),
+              child: Text(Alocale.goBack.getString(context)),
+            ),
           ],
         ),
       ),

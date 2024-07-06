@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:coree/src/_global/package_info.dart';
 import 'package:coree/src/_lang/localization.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
@@ -15,33 +16,37 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
-  final FlutterLocalization localization = FlutterLocalization.instance;
+  Locale? _locale;
 
   @override
   void initState() {
     //final deviceLocale = PlatformDispatcher.instance.locale.languageCode;
+    _locale = App.localization.currentLocale;
     unawaited(
-      localization.init(
+      App.localization.init(
         mapLocales: [
           const MapLocale('en', Alocale.en),
           const MapLocale('cs', Alocale.cs),
         ],
-        initLanguageCode: 'cs',
+        initLanguageCode: _locale?.languageCode ?? 'en',
       ),
     );
-    localization.onTranslatedLanguage = _onTranslatedLanguage;
+    App.localization.onTranslatedLanguage = _onTranslatedLanguage;
     super.initState();
   }
 
   void _onTranslatedLanguage(Locale? locale) {
-    setState(() {});
+    setState(() {
+      _locale = locale;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      supportedLocales: localization.supportedLocales,
-      localizationsDelegates: localization.localizationsDelegates,
+      supportedLocales: App.localization.supportedLocales,
+      localizationsDelegates: App.localization.localizationsDelegates,
+      locale: _locale,
       title: 'APPE Coree',
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(

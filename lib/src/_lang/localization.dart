@@ -38,6 +38,8 @@ mixin Alocale {
   static const String demoPageTitle = 'demo_page_title';
   static const String buttonPushed = 'button_pushed';
 
+  static const String localization = 'localization';
+
   static const Map<String, dynamic> en = {
     language: 'Language',
     languageName: 'English',
@@ -78,6 +80,8 @@ mixin Alocale {
 
     demoPageTitle: 'Demo Page',
     buttonPushed: 'You have pushed the button this many times:',
+
+    localization: 'Localizations',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -119,5 +123,7 @@ mixin Alocale {
 
     demoPageTitle: 'Demo stránka',
     buttonPushed: 'Tlačítko jste stiskli tolikrát:',
+
+    localization: 'Lokalizace',
   };
 }
