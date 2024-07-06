@@ -16,18 +16,6 @@ on:
       - "test/**"
       - "pubspec.yaml"
       - "analysis_options.yaml"
-  push:
-    branches:
-      - main
-    paths:
-      - "android/**"
-      - "assets/**"
-      - "ios/**"
-      - "lib/**"
-      - "web/**"
-      - "test/**"
-      - "pubspec.yaml"
-      - "analysis_options.yaml"
   workflow_dispatch:
     inputs:
       android:
@@ -61,7 +49,7 @@ concurrency:
 jobs:
   version:
     name: Create version number
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event_name == 'workflow_dispatch'}}
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'}}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
@@ -111,7 +99,7 @@ jobs:
     environment:
       name: app-store
     needs: version
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.ios == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -163,7 +151,7 @@ jobs:
         run: rm -rf private_keys
   deploy_cloudflare:
     name: "[Web] Deploy to Cloudflare Pages"
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.cloudflare == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' }}
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
@@ -229,7 +217,7 @@ jobs:
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.firebase_hosting == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.firebase_hosting == 'true' }}
     environment:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
@@ -255,7 +243,7 @@ jobs:
           projectId: app-elevate-core
   deploy_github_pages:
     name: "[Web] Deploy to GitHub Pages"
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.github_pages == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
     permissions:
       contents: read
       pages: write
@@ -311,7 +299,7 @@ jobs:
   build_android:
     name: "[Android] Build App Bundle"
     needs: version
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.android == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     steps:
