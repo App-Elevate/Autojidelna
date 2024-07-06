@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class RoutingPathParamDetailPage extends StatelessWidget {
@@ -11,14 +13,14 @@ class RoutingPathParamDetailPage extends StatelessWidget {
     final int? filmId = int.tryParse(filmid);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Routing Param Detail Page'),
+        title: Text(Alocale.routingParamDetailPageDetail.getString(context)),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            const Text('This is a routing param detail page.'),
-            const Text('It is used to test routing with parameters.'),
-            Text('Film ID: $filmId'),
+            Text(Alocale.routingParamDetailPageDetail1.getString(context)),
+            Text(Alocale.routingParamDetailPageDetail2.getString(context)),
+            Text(context.formatString(Alocale.routingParamDetailPageDetail3, [filmId])),
           ],
         ),
       ),
