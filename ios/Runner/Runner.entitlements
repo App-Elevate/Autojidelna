@@ -7,6 +7,8 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:core.appelevate.cz</string>
+		<string>applinks:github.core.appelevate.cz</string>
+		<string>applinks:firebase.core.appelevate.cz</string>
 	</array>
 </dict>
 </plist>
