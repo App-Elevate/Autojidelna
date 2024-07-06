@@ -75,7 +75,7 @@ jobs:
           fi
           echo "Branch name does not match the pattern *.*.* - continuing"
           if [[ ! -n $(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+') ]]; then
-            echo "Latest merge isn't from a branch matching *.*.* - Either repo rules are set wrong or somebody bypassed protections"
+            echo "Latest merge isn't from a branch matching *.*.* - Either repo rules are set wrong or somebody bypassed protections or it was ran from a different branch than main or version branch"
             exit 1
           fi
           version=$(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
