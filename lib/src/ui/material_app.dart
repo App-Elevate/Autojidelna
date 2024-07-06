@@ -7,6 +7,7 @@ import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:toastification/toastification.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -47,19 +48,21 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      supportedLocales: App.localization.supportedLocales,
-      localizationsDelegates: App.localization.localizationsDelegates,
-      locale: _locale,
-      title: 'APPE Coree',
-      debugShowCheckedModeBanner: false,
-      routerConfig: _appRouter.config(
-        includePrefixMatches: true,
-        deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
-      ),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ToastificationWrapper(
+      child: MaterialApp.router(
+        supportedLocales: App.localization.supportedLocales,
+        localizationsDelegates: App.localization.localizationsDelegates,
+        locale: _locale,
+        title: 'APPE Coree',
+        debugShowCheckedModeBanner: false,
+        routerConfig: _appRouter.config(
+          includePrefixMatches: true,
+          deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
+        ),
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
       ),
     );
   }

@@ -16,6 +16,7 @@ mixin Alocale {
     MapLocale('en', en),
     MapLocale('cs', cs),
   ];
+
   static const String language = 'language';
   static const String languageName = 'language_name';
   static const String appName = 'app_name';
@@ -56,6 +57,7 @@ mixin Alocale {
   static const String buttonPushed = 'button_pushed';
 
   static const String localization = 'localization';
+  static const String showLocale = 'show_locale';
 
   static const Map<String, dynamic> en = {
     language: 'Language',
@@ -99,6 +101,7 @@ mixin Alocale {
     buttonPushed: 'You have pushed the button this many times:',
 
     localization: 'Localizations',
+    showLocale: 'Show locale',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -142,5 +145,6 @@ mixin Alocale {
     buttonPushed: 'Tlačítko jste stiskli tolikrát:',
 
     localization: 'Lokalizace',
+    showLocale: 'Zobrazit lokalizaci',
   };
 }

@@ -3,7 +3,7 @@ import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/lang/lang.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:toastification/toastification.dart';
 
 @RoutePage()
 class LocalizationsPage extends StatelessWidget {
@@ -18,21 +18,19 @@ class LocalizationsPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(Alocale.localization.getString(context)),
             ElevatedButton(
-              onPressed: () async => Fluttertoast.showToast(
-                msg: App.localization.currentLocale?.languageCode ?? '',
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.BOTTOM,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                fontSize: 16.0,
+              onPressed: () async => Toastification().show(
+                title: Text(
+                  '${Alocale.localization.getString(context)}: ${App.localization.currentLocale}',
+                ),
+                alignment: Alignment.bottomCenter,
+                style: ToastificationStyle.simple,
+                autoCloseDuration: const Duration(seconds: 2),
               ),
-              child: const Text('Print locale'),
+              child: Text(Alocale.showLocale.getString(context)),
             ),
             ElevatedButton(onPressed: () => App.localization.translate('en'), child: const Text('English')),
-            ElevatedButton(onPressed: () => App.localization.translate('cs'), child: const Text('Czech')),
+            ElevatedButton(onPressed: () => App.localization.translate('cs'), child: const Text('Čeština')),
           ],
         ),
       ),
