@@ -53,7 +53,6 @@ class _MyAppState extends State<MyApp> {
         supportedLocales: App.localization.supportedLocales,
         localizationsDelegates: App.localization.localizationsDelegates,
         locale: _locale,
-        title: 'APPE Coree',
         debugShowCheckedModeBanner: false,
         routerConfig: _appRouter.config(
           includePrefixMatches: true,
