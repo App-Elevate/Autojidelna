@@ -1,4 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+
 mixin Alocale {
+  static isLocaleSupported(Locale locale) {
+    for (final MapLocale mapLocale in mapLocales) {
+      if (mapLocale.locale.languageCode == locale.languageCode) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  static const Locale defaultLocale = Locale('en');
+  static const List<MapLocale> mapLocales = [
+    MapLocale('en', en),
+    MapLocale('cs', cs),
+  ];
   static const String language = 'language';
   static const String languageName = 'language_name';
   static const String appName = 'app_name';
@@ -74,7 +91,7 @@ mixin Alocale {
     routingGoToDetailPage: 'Go to Detail Page',
     routingGoToParamDetailPage: 'Go to Param Detail Page',
 
-    routingTestPage: 'Routing Test Page',
+    routingTestPage: 'Settings',
     routingTestPageDetail: 'This is a routing test page.',
     routingTestPageDetail1: 'It is used to test routing.',
 
@@ -117,7 +134,7 @@ mixin Alocale {
     routingGoToDetailPage: 'Jít na podrobnosti stránky',
     routingGoToParamDetailPage: 'Jít na podrobnosti stránky s parametry',
 
-    routingTestPage: 'Stránka s testováním směrování',
+    routingTestPage: 'Nastavení',
     routingTestPageDetail: 'Toto je stránka s testováním směrování.',
     routingTestPageDetail1: 'Slouží k testování směrování.',
 

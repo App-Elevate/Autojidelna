@@ -1,11 +1,12 @@
 import 'dart:async';
 
-import 'package:coree/src/_global/package_info.dart';
-import 'package:coree/src/_lang/localization.dart';
+import 'package:coree/src/_conf/hive.dart';
+import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -20,15 +21,17 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    //final deviceLocale = PlatformDispatcher.instance.locale.languageCode;
-    _locale = App.localization.currentLocale;
+    if (Alocale.isLocaleSupported(App.initLocale)) {
+      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.initLocale.languageCode));
+      _locale ??= App.initLocale;
+    } else {
+      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, Alocale.defaultLocale.languageCode));
+      _locale ??= Alocale.defaultLocale;
+    }
     unawaited(
       App.localization.init(
-        mapLocales: [
-          const MapLocale('en', Alocale.en),
-          const MapLocale('cs', Alocale.cs),
-        ],
-        initLanguageCode: _locale?.languageCode ?? 'en',
+        mapLocales: Alocale.mapLocales,
+        initLanguageCode: _locale?.languageCode ?? Alocale.defaultLocale.languageCode,
       ),
     );
     App.localization.onTranslatedLanguage = _onTranslatedLanguage;
@@ -36,6 +39,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _onTranslatedLanguage(Locale? locale) {
+    unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, locale?.languageCode));
     setState(() {
       _locale = locale;
     });

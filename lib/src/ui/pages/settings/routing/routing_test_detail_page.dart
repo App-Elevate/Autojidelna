@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/package_info.dart';
-import 'package:coree/src/_lang/localization.dart';
+import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
