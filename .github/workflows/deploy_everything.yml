@@ -65,11 +65,11 @@ jobs:
       - name: Get version
         id: version
         run: |
-          if [[ "${{ github.head_ref }}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
-            echo "version=${BRANCH_NAME}"
-            echo "version=${BRANCH_NAME}" >> "$GITHUB_OUTPUT"
-            echo "${BRANCH_NAME}" > version.txt
+            echo "version=${GITHUB_REF#refs/heads/}"
+            echo "version=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
+            echo "${GITHUB_REF#refs/heads/}" > version.txt
             exit 0
           fi
           echo "Branch name does not match the pattern *.*.* - continuing"
