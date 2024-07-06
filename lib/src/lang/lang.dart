@@ -117,7 +117,7 @@ mixin Alocale {
     settings: 'Nastavení',
 
     crashlyticsPage: 'Stránka Crashlytics',
-    crashlyticsTestCrash: 'Testovací pád Crashlytics!',
+    crashlyticsTestCrash: 'Testovací pád Crashlytics yohooo!',
 
     routingParamPage: 'Stránka s parametry směrování',
     routingParamPageDetail: 'Toto je stránka s parametry směrování.',
