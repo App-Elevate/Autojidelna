@@ -24,7 +24,7 @@ jobs:
       - name: Check branch name
         id: check_branch
         run: |
-          if [[ ! ${{ github.event.pull_request.head.ref }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+          if [[ ! ${{ github.event.pull_request.head.ref }} =~ ^release/[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name does not match pattern."
             echo "valid=false" >> $GITHUB_ENV
           else
