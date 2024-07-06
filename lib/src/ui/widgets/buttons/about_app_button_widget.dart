@@ -23,7 +23,7 @@ class AboutAppButton extends StatelessWidget {
           ),
         ),
         children: [
-          const Text('Aplikace, která je základ pro další aplikace'),
+          const Text('Aplikace, která je základ pro další aplikace.'),
           GestureDetector(
             onTap: appElevateClick,
             child: Padding(
