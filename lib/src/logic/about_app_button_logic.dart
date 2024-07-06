@@ -7,5 +7,5 @@ Future<void> appElevateClick() async {
     name: AnalyticsNames.appElevateClicked,
     parameters: {AnalyticsParam.place: AnalyticsPlace.aboutDialog, AnalyticsParam.sponsor: 'https://appelevate.cz/'},
   );
-  await launchUrl(Uri.parse('https://appelevate.cz/'));
+  await launchUrl(Uri.parse('https://appelevate.cz'));
 }
