@@ -14,15 +14,19 @@ class ProviderTestPage extends StatelessWidget {
         title: const Text('Provider Test Page'),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Consumer<Rmc>(
-              builder: (context, Rmc rmc, child) {
-                return Text(rmc.values[Rmc.authorMessage]);
-              },
-            ),
-          ],
+        child: Consumer<Rmc>(
+          builder: (context, Rmc rmc, child) {
+            return Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(rmc.values[Rmc.authorMessage]),
+                Text(rmc.values[Rmc.json].toString()),
+                Text(rmc.values[Rmc.boolTrue].toString()),
+                Text(rmc.values[Rmc.doubleNum].toString()),
+                Text(rmc.values[Rmc.integer].toString()),
+              ],
+            );
+          },
         ),
       ),
     );

@@ -71,59 +71,18 @@ class Rmc extends ChangeNotifier {
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
     unawaited(
-      InternetConnection().hasInternetAccess.then((bool hasInternetAccess) async {
-        if (hasInternetAccess) {
-          await App.remoteConfig.fetchAndActivate().onError((Object error, StackTrace stackTrace) async {
-            return false;
-          }).then((_) {
-            values = parseRemoteConfigValues(App.remoteConfig.getAll());
-            notifyListeners();
-          }).then((_) {
-            _subscription ??= App.remoteConfig.onConfigUpdated.listen(
-              (_) async {
-                await App.remoteConfig.activate();
-                values = parseRemoteConfigValues(App.remoteConfig.getAll());
-                notifyListeners();
-              },
-              onError: (Object error, StackTrace stackTrace) => null,
-            );
-          });
-        }
+      App.remoteConfig.fetchAndActivate().onError((Object error, StackTrace stackTrace) async {
+        return false;
+      }).then((_) async {
+        values = parseRemoteConfigValues(App.remoteConfig.getAll());
+        notifyListeners();
       }),
     );
-
-    _listener = InternetConnection().onStatusChange.listen(
-      (InternetStatus status) {
-        switch (status) {
-          case InternetStatus.connected:
-            unawaited(
-              App.remoteConfig.fetchAndActivate().onError((Object error, StackTrace stackTrace) async {
-                return false;
-              }).then((_) {
-                values = parseRemoteConfigValues(App.remoteConfig.getAll());
-                notifyListeners();
-              }).then((_) {
-                _subscription ??= App.remoteConfig.onConfigUpdated.listen(
-                  (_) async {
-                    await App.remoteConfig.activate();
-                    values = parseRemoteConfigValues(App.remoteConfig.getAll());
-                    notifyListeners();
-                  },
-                  onError: (Object error, StackTrace stackTrace) => null,
-                );
-              }),
-            );
-            // The internet is now connected
-            break;
-          case InternetStatus.disconnected:
-            unawaited(
-              _subscription?.cancel().then((_) {
-                _subscription = null;
-              }),
-            );
-            // The internet is now disconnected
-            break;
-        }
+    _subscription ??= App.remoteConfig.onConfigUpdated.listen(
+      (_) async {
+        await App.remoteConfig.activate();
+        values = parseRemoteConfigValues(App.remoteConfig.getAll());
+        notifyListeners();
       },
       onError: (Object error, StackTrace stackTrace) => null,
     );
