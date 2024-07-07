@@ -31,6 +31,10 @@ class RoutingTestPage extends StatelessWidget {
               onPressed: () async => context.router.push(const LocalizationsPage()),
               child: Text(Alocale.language.getString(context)),
             ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(const ProviderTestPage()),
+              child: const Text('Remote Config'),
+            ),
           ],
         ),
       ),

@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/_global/remote_config.dart';
 import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 class MyApp extends StatefulWidget {
@@ -49,18 +51,21 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ToastificationWrapper(
-      child: MaterialApp.router(
-        supportedLocales: App.localization.supportedLocales,
-        localizationsDelegates: App.localization.localizationsDelegates,
-        locale: _locale,
-        debugShowCheckedModeBanner: false,
-        routerConfig: _appRouter.config(
-          includePrefixMatches: true,
-          deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
-        ),
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
+      child: ChangeNotifierProvider(
+        create: (context) => Rmc(),
+        child: MaterialApp.router(
+          supportedLocales: App.localization.supportedLocales,
+          localizationsDelegates: App.localization.localizationsDelegates,
+          locale: _locale,
+          debugShowCheckedModeBanner: false,
+          routerConfig: _appRouter.config(
+            includePrefixMatches: true,
+            deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
+          ),
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
         ),
       ),
     );

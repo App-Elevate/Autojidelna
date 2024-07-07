@@ -29,6 +29,7 @@ void main() async {
   }
 
   await InitApp.initConf();
+  await InitApp.initOnline();
 
   runApp(const MyApp());
 }
