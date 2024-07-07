@@ -35,16 +35,16 @@ class RoutingTestPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const ProviderTestPage()),
-              child: const Text('Remote Config'),
+              child: Text(Alocale.remoteConfig.getString(context)),
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
-                return Text(isOnline.isOnline ? 'Connected to the internet' : 'Disconnected from the internet');
+                return Text(isOnline.isOnline ? Alocale.connectedToTheInternet : Alocale.disconnectedFromTheInternet);
               },
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
-                return Text(isOnline.isOnlineLocal ? 'Connected to a network' : 'Disconnected from a network');
+                return Text(isOnline.isOnlineLocal ? Alocale.connectedToANetwork : Alocale.disconnectedFromANetwork);
               },
             ),
           ],
