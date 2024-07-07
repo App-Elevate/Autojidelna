@@ -1,5 +1,4 @@
 import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_global/remote_config.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -39,13 +38,6 @@ class App {
     if (_initRemoteConfigExecuted) return;
 
     remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.setConfigSettings(
-      RemoteConfigSettings(
-        fetchTimeout: const Duration(milliseconds: 400),
-        minimumFetchInterval: const Duration(hours: 1),
-      ),
-    );
-    await remoteConfig.setDefaults(Rmc.defaultValues);
 
     _initRemoteConfigExecuted = true;
   }
@@ -58,20 +50,4 @@ class App {
   static late final Locale initLocale;
 
   static late final PackageInfo packageInfo;
-}
-
-class AppOnline {
-  static bool _initOnlineExecuted = false;
-  static Future<void> initOnline() async {
-    assert(_initOnlineExecuted == false, 'AppOnline.initOnline() must be called only once');
-    if (_initOnlineExecuted) return;
-
-    //await App.remoteConfig.fetchAndActivate();
-    //initRemoteConfigValues = App.remoteConfig.getAll();
-
-    _initOnlineExecuted = true;
-  }
-
-  /// Initial Remote Config Values of the app. To get the current values, use provider [Rmc].
-  static Map<String, dynamic>? initRemoteConfigValues;
 }

@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/is_online.dart';
 import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class RoutingTestPage extends StatelessWidget {
@@ -34,6 +36,16 @@ class RoutingTestPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async => context.router.push(const ProviderTestPage()),
               child: const Text('Remote Config'),
+            ),
+            Consumer<IsOnline>(
+              builder: (context, IsOnline isOnline, child) {
+                return Text(isOnline.isOnline ? 'Connected to the internet' : 'Disconnected from the internet');
+              },
+            ),
+            Consumer<IsOnline>(
+              builder: (context, IsOnline isOnline, child) {
+                return Text(isOnline.isOnlineLocal ? 'Connected to a network' : 'Disconnected from a network');
+              },
             ),
           ],
         ),
