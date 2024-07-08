@@ -1,4 +1,5 @@
 import 'package:coree/src/_conf/hive.dart';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
@@ -8,6 +9,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 class App {
   static bool _initPlatformExecuted = false;
   static bool _initLocalizationExecuted = false;
+  static bool _initRemoteConfigExecuted = false;
   static Future<void> initPlatform() async {
     assert(_initPlatformExecuted == false, 'App.initPlatform() must be called only once');
     if (_initPlatformExecuted) return;
@@ -30,6 +32,17 @@ class App {
 
     _initLocalizationExecuted = true;
   }
+
+  static Future<void> initRemoteConfig() async {
+    assert(_initRemoteConfigExecuted == false, 'App.initRemoteConfig() must be called only once');
+    if (_initRemoteConfigExecuted) return;
+
+    remoteConfig = FirebaseRemoteConfig.instance;
+
+    _initRemoteConfigExecuted = true;
+  }
+
+  static late final FirebaseRemoteConfig remoteConfig;
 
   static late final FlutterLocalization localization;
 

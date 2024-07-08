@@ -59,6 +59,13 @@ mixin Alocale {
   static const String localization = 'localization';
   static const String showLocale = 'show_locale';
 
+  static const String providerTestPage = 'provider_test_page';
+  static const String remoteConfig = 'remote_config';
+  static const String connectedToTheInternet = 'connected_to_the_internet';
+  static const String connectedToANetwork = 'connected_to_a_network';
+  static const String disconnectedFromTheInternet = 'disconnected_from_the_internet';
+  static const String disconnectedFromANetwork = 'disconnected_from_a_network';
+
   static const Map<String, dynamic> en = {
     language: 'Language',
     languageName: 'English',
@@ -102,6 +109,14 @@ mixin Alocale {
 
     localization: 'Localizations',
     showLocale: 'Show locale',
+
+    providerTestPage: 'Provider Test Page',
+    remoteConfig: 'Remote Config',
+
+    connectedToTheInternet: 'Connected to the internet',
+    connectedToANetwork: 'Connected to a network',
+    disconnectedFromTheInternet: 'Disconnected from the internet',
+    disconnectedFromANetwork: 'Disconnected from a network',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -146,5 +161,13 @@ mixin Alocale {
 
     localization: 'Lokalizace',
     showLocale: 'Zobrazit lokalizaci',
+
+    providerTestPage: 'Stránka testování poskytovatele',
+    remoteConfig: 'Vzdálená konfigurace',
+
+    connectedToANetwork: 'Připojeno k síti',
+    connectedToTheInternet: 'Připojeno k internetu',
+    disconnectedFromANetwork: 'Odpojeno od sítě',
+    disconnectedFromTheInternet: 'Odpojeno od internetu',
   };
 }

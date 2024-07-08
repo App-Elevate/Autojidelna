@@ -31,18 +31,13 @@
             "android": "1:466976066624:android:da815df5188176e15423a5",
             "ios": "1:466976066624:ios:d5c850ab29d9e3455423a5",
             "macos": "1:466976066624:ios:d5c850ab29d9e3455423a5",
-            "web": "1:466976066624:web:0b4bcf6c4676903e5423a5"
+            "web": "1:466976066624:web:6591f71f8c1987b75423a5"
           }
         }
       }
     }
   },
   "hosting": {
-    "public": "build/web",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ]
+    "public": "build/web"
   }
 }

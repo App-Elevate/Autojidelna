@@ -13,6 +13,7 @@ class InitApp {
     // We're using Future.wait to run multiple Futures in parallel
     // These Futures must take less than 200 ms to run
     await Future.wait([
+      App.initRemoteConfig(),
       App.initPlatform(),
       App.initLocalization(),
     ]);

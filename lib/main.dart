@@ -30,5 +30,5 @@ void main() async {
 
   await InitApp.initConf();
 
-  runApp(const MyApp());
+  runApp(const MyAppWrapper());
 }

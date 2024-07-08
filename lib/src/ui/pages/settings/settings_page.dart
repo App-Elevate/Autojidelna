@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/is_online.dart';
 import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class RoutingTestPage extends StatelessWidget {
@@ -30,6 +32,22 @@ class RoutingTestPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async => context.router.push(const LocalizationsPage()),
               child: Text(Alocale.language.getString(context)),
+            ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(const ProviderTestPage()),
+              child: Text(Alocale.remoteConfig.getString(context)),
+            ),
+            Consumer<IsOnline>(
+              builder: (context, IsOnline isOnline, child) {
+                return Text(
+                    isOnline.isOnline ? Alocale.connectedToTheInternet.getString(context) : Alocale.disconnectedFromTheInternet.getString(context),);
+              },
+            ),
+            Consumer<IsOnline>(
+              builder: (context, IsOnline isOnline, child) {
+                return Text(
+                    isOnline.isOnlineLocal ? Alocale.connectedToANetwork.getString(context) : Alocale.disconnectedFromANetwork.getString(context),);
+              },
             ),
           ],
         ),

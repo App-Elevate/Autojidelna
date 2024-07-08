@@ -46,6 +46,10 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   toastification: ^2.0.0
+  firebase_remote_config: ^5.0.2
+  provider: ^6.1.2
+  connectivity_plus: ^6.0.3
+  internet_connection_checker_plus: ^2.5.0
 
 dev_dependencies:
   flutter_test:
