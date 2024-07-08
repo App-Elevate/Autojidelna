@@ -56,14 +56,20 @@ class Rmc extends ChangeNotifier {
 
   /// Current Remote Config values
   final Map<String, dynamic> _values = Map.from(defaultValues);
+
+  /// Current Remote Config values - These don't update the ui - use only in functions
+  static final Map<String, dynamic> value = Map.from(Rmc.defaultValues);
   StreamSubscription<RemoteConfigUpdate>? _subscription;
   StreamSubscription<InternetStatus>? _listener;
 
   Map<String, dynamic> get values => _values;
   set values(Map<String, dynamic> values) {
-    values.forEach((key, value) {
-      if (value != _values[key]) {
-        _values[key] = value;
+    values.forEach((key, newValue) {
+      if (newValue != _values[key]) {
+        _values[key] = newValue;
+      }
+      if (newValue != value[key]) {
+        value[key] = newValue;
       }
     });
   }
@@ -71,9 +77,7 @@ class Rmc extends ChangeNotifier {
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
     unawaited(
-      App.remoteConfig.fetchAndActivate().onError((Object error, StackTrace stackTrace) async {
-        return false;
-      }).then((_) async {
+      App.remoteConfig.fetchAndActivate().then((_) async {
         values = parseRemoteConfigValues(App.remoteConfig.getAll());
         notifyListeners();
       }),
@@ -100,6 +104,7 @@ class Rmc extends ChangeNotifier {
   static const String json = 'json';
   static const String integer = 'integer';
   static const String doubleNum = 'double_num';
+  static const String appelevateLink = 'appelevate_link';
 
   /// Default values for Remote Config
   /// Every value has to be included to be parsed correctly.
@@ -110,5 +115,6 @@ class Rmc extends ChangeNotifier {
     json: {'key': 'value'},
     integer: 42,
     doubleNum: 42.5,
+    appelevateLink: 'https://appelevate.com/',
   };
 }

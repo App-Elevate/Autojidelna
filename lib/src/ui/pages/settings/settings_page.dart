@@ -39,12 +39,14 @@ class RoutingTestPage extends StatelessWidget {
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
-                return Text(isOnline.isOnline ? Alocale.connectedToTheInternet : Alocale.disconnectedFromTheInternet);
+                return Text(
+                    isOnline.isOnline ? Alocale.connectedToTheInternet.getString(context) : Alocale.disconnectedFromTheInternet.getString(context));
               },
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
-                return Text(isOnline.isOnlineLocal ? Alocale.connectedToANetwork : Alocale.disconnectedFromANetwork);
+                return Text(
+                    isOnline.isOnlineLocal ? Alocale.connectedToANetwork.getString(context) : Alocale.disconnectedFromANetwork.getString(context));
               },
             ),
           ],
