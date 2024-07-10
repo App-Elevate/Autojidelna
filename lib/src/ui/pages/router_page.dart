@@ -11,10 +11,11 @@ class RouterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      routes: [
-        DemoPage(title: Alocale.counting.getString(context)),
-        const CrashlyticsPage(),
-        const RoutingTestPage(),
+      // These should Always be constant.
+      routes: const [
+        DemoPage(),
+        CrashlyticsPage(),
+        RoutingTestPage(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(

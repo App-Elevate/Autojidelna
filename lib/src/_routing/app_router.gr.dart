@@ -41,14 +41,9 @@ abstract class $AppRouter extends _i12.RootStackRouter {
       );
     },
     DemoPage.name: (routeData) {
-      final args =
-          routeData.argsAs<DemoPageArgs>(orElse: () => const DemoPageArgs());
       return _i12.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i2.DemoPage(
-          key: args.key,
-          title: args.title,
-        ),
+        child: const _i2.DemoPage(),
       );
     },
     LocalizationsPage.name: (routeData) {
@@ -138,40 +133,16 @@ class CrashlyticsPage extends _i12.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.DemoPage]
-class DemoPage extends _i12.PageRouteInfo<DemoPageArgs> {
-  DemoPage({
-    _i13.Key? key,
-    String? title,
-    List<_i12.PageRouteInfo>? children,
-  }) : super(
+class DemoPage extends _i12.PageRouteInfo<void> {
+  const DemoPage({List<_i12.PageRouteInfo>? children})
+      : super(
           DemoPage.name,
-          args: DemoPageArgs(
-            key: key,
-            title: title,
-          ),
           initialChildren: children,
         );
 
   static const String name = 'DemoPage';
 
-  static const _i12.PageInfo<DemoPageArgs> page =
-      _i12.PageInfo<DemoPageArgs>(name);
-}
-
-class DemoPageArgs {
-  const DemoPageArgs({
-    this.key,
-    this.title,
-  });
-
-  final _i13.Key? key;
-
-  final String? title;
-
-  @override
-  String toString() {
-    return 'DemoPageArgs{key: $key, title: $title}';
-  }
+  static const _i12.PageInfo<void> page = _i12.PageInfo<void>(name);
 }
 
 /// generated route for
