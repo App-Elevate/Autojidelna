@@ -6,8 +6,9 @@ import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class DemoPage extends StatefulWidget {
-  const DemoPage({super.key, this.title});
-  final String? title;
+  const DemoPage({
+    super.key,
+  });
 
   @override
   State<DemoPage> createState() => _DemoPageState();
@@ -28,7 +29,7 @@ class _DemoPageState extends State<DemoPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: const [AboutAppButton()],
-        title: Text(widget.title ?? Alocale.demoPageTitle.getString(context)),
+        title: Text(Alocale.demoPageTitle.getString(context)),
       ),
       body: Center(
         child: Column(
