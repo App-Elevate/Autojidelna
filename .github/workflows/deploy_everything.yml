@@ -115,6 +115,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get pubspec
         uses: actions/download-artifact@v4
@@ -130,6 +132,7 @@ jobs:
 
       - name: Get Certificates
         run: |
+          git revert --no-commit f57df1c168d1d108e6043f9d39c3bfbce6692cbf # Reverting the commit that changes release provisioning profile to a development one
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain

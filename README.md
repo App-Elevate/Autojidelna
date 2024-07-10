@@ -12,14 +12,16 @@ Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 ### iOS
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Získejte spoječné vývojářské klíče pomocí `sh scripts/ios_get_keys.sh`
-3. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release`
+2. Zažádejte u toma o přidání vašeho zařízení do Apple Developer portálu. Tom k tomu bude potřebovat vaše [UDID zařízení](https://www.igeeksblog.com/how-to-find-iphone-udid-number/#h-2-how-to-find-iphone-s-udid-using-mac) na které budete aplikaci instalovat.
+3. Získejte spoječné vývojářské klíče pomocí `sh scripts/ios_get_keys.sh`
+4. Spusťte aplikaci pomocí `flutter run` nebo `flutter run --release`
 
 ### macos
 
 1. Ověřte si instalaci Xcode a iOS simulátoru pomocí `flutter doctor`
-2. Získejte spoječné vývojářské klíče pomocí `sh scripts/macos_get_keys.sh`
-3. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
+2. Zažádejte u toma o přidání vašeho zařízení do Apple Developer portálu. Tom k tomu bude potřebovat vaše [UDID zařízení](https://www.igeeksblog.com/how-to-find-mac-udid/#h-how-to-find-udid-uuid-of-your-mac) na které budete aplikaci instalovat.
+3. Získejte spoječné vývojářské klíče pomocí `sh scripts/macos_get_keys.sh`
+4. Spusťte aplikaci pomocí `flutter run -d macos` nebo `flutter run -d macos --release`
 
 ### Web
 
