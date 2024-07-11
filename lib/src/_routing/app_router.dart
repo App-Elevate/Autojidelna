@@ -14,14 +14,16 @@ class AppRouter extends $AppRouter {
             AutoRoute(page: CrashlyticsPage.page, path: '', initial: true),
             AutoRoute(
               page: RoutingTestPage.page,
-              path: 'routing-test',
+              path: 'settings',
             ),
           ],
         ),
-        AutoRoute(page: RoutingParamPage.page, path: '/routing-test/param'),
-        AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/routing-test/param/detail'),
-        AutoRoute(page: RoutingPathParamDetailPage.page, path: '/routing-test/param/:filmid'),
-        AutoRoute(page: RoutingTestDetailPage.page, path: '/routing-test/detail'),
-        AutoRoute(page: RoutingTestDetailDetail.page, path: '/routing-test/detail/detail'),
+        AutoRoute(page: RoutingParamPage.page, path: '/settings/param'),
+        AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
+        AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
+        AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
+        AutoRoute(page: RoutingTestDetailPage.page, path: '/settings/detail'),
+        AutoRoute(page: RoutingTestDetailDetail.page, path: '/settings/detail/detail'),
+        AutoRoute(page: ProviderTestPage.page, path: '/settings/provider'),
       ];
 }

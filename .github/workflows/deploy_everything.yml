@@ -16,18 +16,6 @@ on:
       - "test/**"
       - "pubspec.yaml"
       - "analysis_options.yaml"
-  push:
-    branches:
-      - main
-    paths:
-      - "android/**"
-      - "assets/**"
-      - "ios/**"
-      - "lib/**"
-      - "web/**"
-      - "test/**"
-      - "pubspec.yaml"
-      - "analysis_options.yaml"
   workflow_dispatch:
     inputs:
       android:
@@ -61,7 +49,7 @@ concurrency:
 jobs:
   version:
     name: Create version number
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event_name == 'workflow_dispatch'}}
+    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'}}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
@@ -77,6 +65,18 @@ jobs:
       - name: Get version
         id: version
         run: |
+          if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Branch name matches the pattern *.*.* - stopping"
+            echo "version=${GITHUB_REF#refs/heads/}"
+            echo "version=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
+            echo "${GITHUB_REF#refs/heads/}" > version.txt
+            exit 0
+          fi
+          echo "Branch name does not match the pattern *.*.* - continuing"
+          if [[ ! -n $(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+') ]]; then
+            echo "Latest merge isn't from a branch matching *.*.* - Either repo rules are set wrong or somebody bypassed protections or it was ran from a different branch than main or version branch"
+            exit 1
+          fi
           version=$(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
           echo "version=$version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -111,10 +111,12 @@ jobs:
     environment:
       name: app-store
     needs: version
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.ios == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get pubspec
         uses: actions/download-artifact@v4
@@ -130,6 +132,7 @@ jobs:
 
       - name: Get Certificates
         run: |
+          git revert --no-commit f57df1c168d1d108e6043f9d39c3bfbce6692cbf # Reverting the commit that changes release provisioning profile to a development one
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
@@ -163,7 +166,7 @@ jobs:
         run: rm -rf private_keys
   deploy_cloudflare:
     name: "[Web] Deploy to Cloudflare Pages"
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.cloudflare == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' }}
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
@@ -192,7 +195,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git fetch origin dist-cloudflare-pages:dist-cloudflare-pages || true
           git checkout dist-cloudflare-pages || true
-          git checkout main
+          git checkout ${GITHUB_REF#refs/heads/}
 
       - name: Get pubspec
         uses: actions/download-artifact@v4
@@ -229,7 +232,7 @@ jobs:
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.firebase_hosting == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.firebase_hosting == 'true' }}
     environment:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
@@ -255,7 +258,7 @@ jobs:
           projectId: app-elevate-core
   deploy_github_pages:
     name: "[Web] Deploy to GitHub Pages"
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.github_pages == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
     permissions:
       contents: read
       pages: write
@@ -311,7 +314,7 @@ jobs:
   build_android:
     name: "[Android] Build App Bundle"
     needs: version
-    if: ${{ github.event.pull_request.merged == true || contains(github.event.head_commit.message, '--build') || contains(github.event.pull_request.merged, 'true') || github.event.inputs.android == 'true' }}
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     steps:

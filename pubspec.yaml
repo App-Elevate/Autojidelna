@@ -43,6 +43,14 @@ dependencies:
   package_info_plus: ^8.0.0 # Package info used in about page
   url_launcher: ^6.3.0
   firebase_app_check: ^0.3.0+3
+  flutter_localization: ^0.2.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  toastification: ^2.0.0
+  firebase_remote_config: ^5.0.2
+  provider: ^6.1.2
+  connectivity_plus: ^6.0.3
+  internet_connection_checker_plus: ^2.5.0
 
 dev_dependencies:
   flutter_test:
@@ -56,6 +64,8 @@ dev_dependencies:
   flutter_lints: ^3.0.0
 
   auto_route_generator: ^8.0.0
+  hive_generator: ^2.0.1
+
   build_runner:
 
 # For information on the generic Dart part of this file, see the
