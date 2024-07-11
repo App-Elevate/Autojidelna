@@ -66,6 +66,11 @@ mixin Alocale {
   static const String disconnectedFromTheInternet = 'disconnected_from_the_internet';
   static const String disconnectedFromANetwork = 'disconnected_from_a_network';
 
+  static const String login = 'login';
+  static const String secret = 'secret';
+  static const String secretGoogle = 'secret_google';
+  static const String appleSecret = 'apple_secret';
+
   static const Map<String, dynamic> en = {
     language: 'Language',
     languageName: 'English',
@@ -117,6 +122,11 @@ mixin Alocale {
     connectedToANetwork: 'Connected to a network',
     disconnectedFromTheInternet: 'Disconnected from the internet',
     disconnectedFromANetwork: 'Disconnected from a network',
+
+    login: 'login',
+    secret: 'secret',
+    secretGoogle: 'secret Google',
+    appleSecret: 'Apple Femboy Secret',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -169,5 +179,10 @@ mixin Alocale {
     connectedToTheInternet: 'Připojeno k internetu',
     disconnectedFromANetwork: 'Odpojeno od sítě',
     disconnectedFromTheInternet: 'Odpojeno od internetu',
+
+    login: 'přihlásit se',
+    secret: 'tajemství',
+    secretGoogle: 'tajemství Google',
+    appleSecret: 'Apple velký tajemství',
   };
 }

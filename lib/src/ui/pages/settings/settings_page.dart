@@ -39,19 +39,19 @@ class SettingsPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(LoginPage()),
-              child: Text("login"),
+              child: Text(Alocale.login.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const SecretPage()),
-              child: Text("secret"),
+              child: Text(Alocale.secret.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const GoogleSecretPage()),
-              child: Text("secret Google"),
+              child: Text(Alocale.secretGoogle.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const AppleSecretPage()),
-              child: Text("Apple Femboy Secret"),
+              child: Text(Alocale.appleSecret.getString(context)),
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
