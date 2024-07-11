@@ -15,7 +15,7 @@ class RouterPage extends StatelessWidget {
       routes: const [
         DemoPage(),
         CrashlyticsPage(),
-        RoutingTestPage(),
+        SettingsPage(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavigationBar(
