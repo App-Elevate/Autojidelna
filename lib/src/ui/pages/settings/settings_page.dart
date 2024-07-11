@@ -7,8 +7,8 @@ import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
-class RoutingTestPage extends StatelessWidget {
-  const RoutingTestPage({super.key});
+class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +37,26 @@ class RoutingTestPage extends StatelessWidget {
               onPressed: () async => context.router.push(const ProviderTestPage()),
               child: Text(Alocale.remoteConfig.getString(context)),
             ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(LoginPage()),
+              child: Text("login"),
+            ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(const SecretPage()),
+              child: Text("secret"),
+            ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
                 return Text(
-                    isOnline.isOnline ? Alocale.connectedToTheInternet.getString(context) : Alocale.disconnectedFromTheInternet.getString(context),);
+                  isOnline.isOnline ? Alocale.connectedToTheInternet.getString(context) : Alocale.disconnectedFromTheInternet.getString(context),
+                );
               },
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
                 return Text(
-                    isOnline.isOnlineLocal ? Alocale.connectedToANetwork.getString(context) : Alocale.disconnectedFromANetwork.getString(context),);
+                  isOnline.isOnlineLocal ? Alocale.connectedToANetwork.getString(context) : Alocale.disconnectedFromANetwork.getString(context),
+                );
               },
             ),
           ],
