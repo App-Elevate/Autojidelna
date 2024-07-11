@@ -48,6 +48,11 @@
   <title>APPE Coree</title>
 </head>
 <body>
+  <script>
+    if (window.location.hostname == "localhost") {
+      self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; // Replace true with the debug token you get from the Firebase console
+    }
+  </script>
   <script src="redirect.js" type="application/javascript"></script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
