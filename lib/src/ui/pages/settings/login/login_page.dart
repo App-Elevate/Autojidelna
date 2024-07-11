@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key, this.onResult});
 
-  final Function(bool)? onResult;
+  final Function(User)? onResult;
   @override
   Widget build(BuildContext context) {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
           debugPrint(element.providerId);
         }
         debugPrint('User is signed in!');
-        onResult!(true);
+        onResult!(user);
       }
     });
     return Scaffold(

@@ -28,5 +28,6 @@ class AppRouter extends $AppRouter {
         AutoRoute(page: ProviderTestPage.page, path: '/settings/provider'),
         AutoRoute(page: LoginPage.page, path: '/settings/login'),
         AutoRoute(page: SecretPage.page, path: '/settings/secret', guards: [AuthGuard()]),
+        AutoRoute(page: GoogleSecretPage.page, path: '/settings/google', guards: [GoogleGuard()]),
       ];
 }
