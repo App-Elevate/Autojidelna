@@ -8,89 +8,98 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i15;
-import 'package:coree/src/ui/pages/crashlytics_page.dart' as _i1;
-import 'package:coree/src/ui/pages/demo_page.dart' as _i2;
-import 'package:coree/src/ui/pages/router_page.dart' as _i7;
+import 'package:auto_route/auto_route.dart' as _i16;
+import 'package:coree/src/ui/pages/crashlytics_page.dart' as _i2;
+import 'package:coree/src/ui/pages/demo_page.dart' as _i3;
+import 'package:coree/src/ui/pages/router_page.dart' as _i8;
 import 'package:coree/src/ui/pages/settings/localization/localizations_page.dart'
-    as _i4;
+    as _i5;
+import 'package:coree/src/ui/pages/settings/login/apple_secret_page.dart'
+    as _i1;
 import 'package:coree/src/ui/pages/settings/login/google_secret_page.dart'
-    as _i3;
-import 'package:coree/src/ui/pages/settings/login/login_page.dart' as _i5;
-import 'package:coree/src/ui/pages/settings/login/secret_page.dart' as _i13;
+    as _i4;
+import 'package:coree/src/ui/pages/settings/login/login_page.dart' as _i6;
+import 'package:coree/src/ui/pages/settings/login/secret_page.dart' as _i14;
 import 'package:coree/src/ui/pages/settings/provider/provider_test_page.dart'
-    as _i6;
+    as _i7;
 import 'package:coree/src/ui/pages/settings/routing/routing_param_page.dart'
-    as _i8;
-import 'package:coree/src/ui/pages/settings/routing/routing_path_param_detail_page.dart'
     as _i9;
-import 'package:coree/src/ui/pages/settings/routing/routing_query_param_detail_page.dart'
+import 'package:coree/src/ui/pages/settings/routing/routing_path_param_detail_page.dart'
     as _i10;
-import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_detail_page.dart'
+import 'package:coree/src/ui/pages/settings/routing/routing_query_param_detail_page.dart'
     as _i11;
-import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_page.dart'
+import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_detail_page.dart'
     as _i12;
-import 'package:coree/src/ui/pages/settings/settings_page.dart' as _i14;
-import 'package:firebase_auth/firebase_auth.dart' as _i17;
-import 'package:flutter/foundation.dart' as _i16;
-import 'package:flutter/material.dart' as _i18;
+import 'package:coree/src/ui/pages/settings/routing/routing_test_detail_page.dart'
+    as _i13;
+import 'package:coree/src/ui/pages/settings/settings_page.dart' as _i15;
+import 'package:firebase_auth/firebase_auth.dart' as _i18;
+import 'package:flutter/foundation.dart' as _i17;
+import 'package:flutter/material.dart' as _i19;
 
-abstract class $AppRouter extends _i15.RootStackRouter {
+abstract class $AppRouter extends _i16.RootStackRouter {
   $AppRouter({super.navigatorKey});
 
   @override
-  final Map<String, _i15.PageFactory> pagesMap = {
-    CrashlyticsPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+  final Map<String, _i16.PageFactory> pagesMap = {
+    AppleSecretPage.name: (routeData) {
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i1.CrashlyticsPage(),
+        child: const _i1.AppleSecretPage(),
+      );
+    },
+    CrashlyticsPage.name: (routeData) {
+      return _i16.AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const _i2.CrashlyticsPage(),
       );
     },
     DemoPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i2.DemoPage(),
+        child: const _i3.DemoPage(),
       );
     },
     GoogleSecretPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i3.GoogleSecretPage(),
+        child: const _i4.GoogleSecretPage(),
       );
     },
     LocalizationsPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i4.LocalizationsPage(),
+        child: const _i5.LocalizationsPage(),
       );
     },
     LoginPage.name: (routeData) {
       final args =
           routeData.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i5.LoginPage(
+        child: _i6.LoginPage(
           key: args.key,
           onResult: args.onResult,
+          providerId: args.providerId,
         ),
       );
     },
     ProviderTestPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i6.ProviderTestPage(),
+        child: const _i7.ProviderTestPage(),
       );
     },
     RouterPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i7.RouterPage(),
+        child: const _i8.RouterPage(),
       );
     },
     RoutingParamPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i8.RoutingParamPage(),
+        child: const _i9.RoutingParamPage(),
       );
     },
     RoutingPathParamDetailPage.name: (routeData) {
@@ -98,9 +107,9 @@ abstract class $AppRouter extends _i15.RootStackRouter {
       final args = routeData.argsAs<RoutingPathParamDetailPageArgs>(
           orElse: () => RoutingPathParamDetailPageArgs(
               filmid: pathParams.getString('filmid')));
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i9.RoutingPathParamDetailPage(
+        child: _i10.RoutingPathParamDetailPage(
           key: args.key,
           filmid: args.filmid,
         ),
@@ -111,45 +120,59 @@ abstract class $AppRouter extends _i15.RootStackRouter {
       final args = routeData.argsAs<RoutingQueryParamDetailPageArgs>(
           orElse: () => RoutingQueryParamDetailPageArgs(
               filmid: queryParams.optInt('key')));
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: _i10.RoutingQueryParamDetailPage(
+        child: _i11.RoutingQueryParamDetailPage(
           key: args.key,
           filmid: args.filmid,
         ),
       );
     },
     RoutingTestDetailDetail.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i11.RoutingTestDetailDetail(),
+        child: const _i12.RoutingTestDetailDetail(),
       );
     },
     RoutingTestDetailPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i12.RoutingTestDetailPage(),
+        child: const _i13.RoutingTestDetailPage(),
       );
     },
     SecretPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i13.SecretPage(),
+        child: const _i14.SecretPage(),
       );
     },
     SettingsPage.name: (routeData) {
-      return _i15.AutoRoutePage<dynamic>(
+      return _i16.AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const _i14.SettingsPage(),
+        child: const _i15.SettingsPage(),
       );
     },
   };
 }
 
 /// generated route for
-/// [_i1.CrashlyticsPage]
-class CrashlyticsPage extends _i15.PageRouteInfo<void> {
-  const CrashlyticsPage({List<_i15.PageRouteInfo>? children})
+/// [_i1.AppleSecretPage]
+class AppleSecretPage extends _i16.PageRouteInfo<void> {
+  const AppleSecretPage({List<_i16.PageRouteInfo>? children})
+      : super(
+          AppleSecretPage.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AppleSecretPage';
+
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
+}
+
+/// generated route for
+/// [_i2.CrashlyticsPage]
+class CrashlyticsPage extends _i16.PageRouteInfo<void> {
+  const CrashlyticsPage({List<_i16.PageRouteInfo>? children})
       : super(
           CrashlyticsPage.name,
           initialChildren: children,
@@ -157,13 +180,13 @@ class CrashlyticsPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'CrashlyticsPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i2.DemoPage]
-class DemoPage extends _i15.PageRouteInfo<void> {
-  const DemoPage({List<_i15.PageRouteInfo>? children})
+/// [_i3.DemoPage]
+class DemoPage extends _i16.PageRouteInfo<void> {
+  const DemoPage({List<_i16.PageRouteInfo>? children})
       : super(
           DemoPage.name,
           initialChildren: children,
@@ -171,13 +194,13 @@ class DemoPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'DemoPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i3.GoogleSecretPage]
-class GoogleSecretPage extends _i15.PageRouteInfo<void> {
-  const GoogleSecretPage({List<_i15.PageRouteInfo>? children})
+/// [_i4.GoogleSecretPage]
+class GoogleSecretPage extends _i16.PageRouteInfo<void> {
+  const GoogleSecretPage({List<_i16.PageRouteInfo>? children})
       : super(
           GoogleSecretPage.name,
           initialChildren: children,
@@ -185,13 +208,13 @@ class GoogleSecretPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'GoogleSecretPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i4.LocalizationsPage]
-class LocalizationsPage extends _i15.PageRouteInfo<void> {
-  const LocalizationsPage({List<_i15.PageRouteInfo>? children})
+/// [_i5.LocalizationsPage]
+class LocalizationsPage extends _i16.PageRouteInfo<void> {
+  const LocalizationsPage({List<_i16.PageRouteInfo>? children})
       : super(
           LocalizationsPage.name,
           initialChildren: children,
@@ -199,51 +222,56 @@ class LocalizationsPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'LocalizationsPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i5.LoginPage]
-class LoginPage extends _i15.PageRouteInfo<LoginPageArgs> {
+/// [_i6.LoginPage]
+class LoginPage extends _i16.PageRouteInfo<LoginPageArgs> {
   LoginPage({
-    _i16.Key? key,
-    dynamic Function(_i17.User)? onResult,
-    List<_i15.PageRouteInfo>? children,
+    _i17.Key? key,
+    dynamic Function(_i18.User?)? onResult,
+    String? providerId,
+    List<_i16.PageRouteInfo>? children,
   }) : super(
           LoginPage.name,
           args: LoginPageArgs(
             key: key,
             onResult: onResult,
+            providerId: providerId,
           ),
           initialChildren: children,
         );
 
   static const String name = 'LoginPage';
 
-  static const _i15.PageInfo<LoginPageArgs> page =
-      _i15.PageInfo<LoginPageArgs>(name);
+  static const _i16.PageInfo<LoginPageArgs> page =
+      _i16.PageInfo<LoginPageArgs>(name);
 }
 
 class LoginPageArgs {
   const LoginPageArgs({
     this.key,
     this.onResult,
+    this.providerId,
   });
 
-  final _i16.Key? key;
+  final _i17.Key? key;
 
-  final dynamic Function(_i17.User)? onResult;
+  final dynamic Function(_i18.User?)? onResult;
+
+  final String? providerId;
 
   @override
   String toString() {
-    return 'LoginPageArgs{key: $key, onResult: $onResult}';
+    return 'LoginPageArgs{key: $key, onResult: $onResult, providerId: $providerId}';
   }
 }
 
 /// generated route for
-/// [_i6.ProviderTestPage]
-class ProviderTestPage extends _i15.PageRouteInfo<void> {
-  const ProviderTestPage({List<_i15.PageRouteInfo>? children})
+/// [_i7.ProviderTestPage]
+class ProviderTestPage extends _i16.PageRouteInfo<void> {
+  const ProviderTestPage({List<_i16.PageRouteInfo>? children})
       : super(
           ProviderTestPage.name,
           initialChildren: children,
@@ -251,13 +279,13 @@ class ProviderTestPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'ProviderTestPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i7.RouterPage]
-class RouterPage extends _i15.PageRouteInfo<void> {
-  const RouterPage({List<_i15.PageRouteInfo>? children})
+/// [_i8.RouterPage]
+class RouterPage extends _i16.PageRouteInfo<void> {
+  const RouterPage({List<_i16.PageRouteInfo>? children})
       : super(
           RouterPage.name,
           initialChildren: children,
@@ -265,13 +293,13 @@ class RouterPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'RouterPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i8.RoutingParamPage]
-class RoutingParamPage extends _i15.PageRouteInfo<void> {
-  const RoutingParamPage({List<_i15.PageRouteInfo>? children})
+/// [_i9.RoutingParamPage]
+class RoutingParamPage extends _i16.PageRouteInfo<void> {
+  const RoutingParamPage({List<_i16.PageRouteInfo>? children})
       : super(
           RoutingParamPage.name,
           initialChildren: children,
@@ -279,17 +307,17 @@ class RoutingParamPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'RoutingParamPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i9.RoutingPathParamDetailPage]
+/// [_i10.RoutingPathParamDetailPage]
 class RoutingPathParamDetailPage
-    extends _i15.PageRouteInfo<RoutingPathParamDetailPageArgs> {
+    extends _i16.PageRouteInfo<RoutingPathParamDetailPageArgs> {
   RoutingPathParamDetailPage({
-    _i18.Key? key,
+    _i19.Key? key,
     required String filmid,
-    List<_i15.PageRouteInfo>? children,
+    List<_i16.PageRouteInfo>? children,
   }) : super(
           RoutingPathParamDetailPage.name,
           args: RoutingPathParamDetailPageArgs(
@@ -302,8 +330,8 @@ class RoutingPathParamDetailPage
 
   static const String name = 'RoutingPathParamDetailPage';
 
-  static const _i15.PageInfo<RoutingPathParamDetailPageArgs> page =
-      _i15.PageInfo<RoutingPathParamDetailPageArgs>(name);
+  static const _i16.PageInfo<RoutingPathParamDetailPageArgs> page =
+      _i16.PageInfo<RoutingPathParamDetailPageArgs>(name);
 }
 
 class RoutingPathParamDetailPageArgs {
@@ -312,7 +340,7 @@ class RoutingPathParamDetailPageArgs {
     required this.filmid,
   });
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   final String filmid;
 
@@ -323,13 +351,13 @@ class RoutingPathParamDetailPageArgs {
 }
 
 /// generated route for
-/// [_i10.RoutingQueryParamDetailPage]
+/// [_i11.RoutingQueryParamDetailPage]
 class RoutingQueryParamDetailPage
-    extends _i15.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
+    extends _i16.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
   RoutingQueryParamDetailPage({
-    _i18.Key? key,
+    _i19.Key? key,
     int? filmid,
-    List<_i15.PageRouteInfo>? children,
+    List<_i16.PageRouteInfo>? children,
   }) : super(
           RoutingQueryParamDetailPage.name,
           args: RoutingQueryParamDetailPageArgs(
@@ -342,8 +370,8 @@ class RoutingQueryParamDetailPage
 
   static const String name = 'RoutingQueryParamDetailPage';
 
-  static const _i15.PageInfo<RoutingQueryParamDetailPageArgs> page =
-      _i15.PageInfo<RoutingQueryParamDetailPageArgs>(name);
+  static const _i16.PageInfo<RoutingQueryParamDetailPageArgs> page =
+      _i16.PageInfo<RoutingQueryParamDetailPageArgs>(name);
 }
 
 class RoutingQueryParamDetailPageArgs {
@@ -352,7 +380,7 @@ class RoutingQueryParamDetailPageArgs {
     this.filmid,
   });
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   final int? filmid;
 
@@ -363,9 +391,9 @@ class RoutingQueryParamDetailPageArgs {
 }
 
 /// generated route for
-/// [_i11.RoutingTestDetailDetail]
-class RoutingTestDetailDetail extends _i15.PageRouteInfo<void> {
-  const RoutingTestDetailDetail({List<_i15.PageRouteInfo>? children})
+/// [_i12.RoutingTestDetailDetail]
+class RoutingTestDetailDetail extends _i16.PageRouteInfo<void> {
+  const RoutingTestDetailDetail({List<_i16.PageRouteInfo>? children})
       : super(
           RoutingTestDetailDetail.name,
           initialChildren: children,
@@ -373,13 +401,13 @@ class RoutingTestDetailDetail extends _i15.PageRouteInfo<void> {
 
   static const String name = 'RoutingTestDetailDetail';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i12.RoutingTestDetailPage]
-class RoutingTestDetailPage extends _i15.PageRouteInfo<void> {
-  const RoutingTestDetailPage({List<_i15.PageRouteInfo>? children})
+/// [_i13.RoutingTestDetailPage]
+class RoutingTestDetailPage extends _i16.PageRouteInfo<void> {
+  const RoutingTestDetailPage({List<_i16.PageRouteInfo>? children})
       : super(
           RoutingTestDetailPage.name,
           initialChildren: children,
@@ -387,13 +415,13 @@ class RoutingTestDetailPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'RoutingTestDetailPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i13.SecretPage]
-class SecretPage extends _i15.PageRouteInfo<void> {
-  const SecretPage({List<_i15.PageRouteInfo>? children})
+/// [_i14.SecretPage]
+class SecretPage extends _i16.PageRouteInfo<void> {
+  const SecretPage({List<_i16.PageRouteInfo>? children})
       : super(
           SecretPage.name,
           initialChildren: children,
@@ -401,13 +429,13 @@ class SecretPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'SecretPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }
 
 /// generated route for
-/// [_i14.SettingsPage]
-class SettingsPage extends _i15.PageRouteInfo<void> {
-  const SettingsPage({List<_i15.PageRouteInfo>? children})
+/// [_i15.SettingsPage]
+class SettingsPage extends _i16.PageRouteInfo<void> {
+  const SettingsPage({List<_i16.PageRouteInfo>? children})
       : super(
           SettingsPage.name,
           initialChildren: children,
@@ -415,5 +443,5 @@ class SettingsPage extends _i15.PageRouteInfo<void> {
 
   static const String name = 'SettingsPage';
 
-  static const _i15.PageInfo<void> page = _i15.PageInfo<void>(name);
+  static const _i16.PageInfo<void> page = _i16.PageInfo<void>(name);
 }

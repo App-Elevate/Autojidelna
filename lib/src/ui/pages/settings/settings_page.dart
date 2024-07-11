@@ -49,6 +49,10 @@ class SettingsPage extends StatelessWidget {
               onPressed: () async => context.router.push(const GoogleSecretPage()),
               child: Text("secret Google"),
             ),
+            ElevatedButton(
+              onPressed: () async => context.router.push(const AppleSecretPage()),
+              child: Text("Apple Femboy Secret"),
+            ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
                 return Text(
