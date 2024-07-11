@@ -205,7 +205,9 @@ cd ios && bundle install && bundle exec fastlane match appstore
 bundle exec fastlane match
 ```
 
-5. Nastavte v xcode provisioning profile na `match appstore xx` pro release a `match development xx` pro debug a profile
+5. Nastavte v xcode provisioning profile na `match development xx`
+
+6. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu.
 
 ### macos
 
@@ -230,6 +232,10 @@ bundle exec fastlane match
 ```
 
 5. Nastavte v xcode provisioning profile na `match appstore xx` pro release a `match development xx` pro debug a profile
+
+### Web
+
+1. Je potřeba vytvořit recaptcha klíč pro (web)[https://cloud.google.com/recaptcha/docs/create-key-website?hl=en&authuser=0]
 
 ### Cloudflare Pages
 

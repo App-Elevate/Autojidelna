@@ -42,6 +42,7 @@ dependencies:
   auto_route: ^8.2.0
   package_info_plus: ^8.0.0 # Package info used in about page
   url_launcher: ^6.3.0
+  firebase_app_check: ^0.3.0+3
 
 dev_dependencies:
   flutter_test:
