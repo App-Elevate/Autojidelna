@@ -17,6 +17,7 @@ class InitApp {
       App.initPlatform(),
       App.initLocalization(),
     ]);
+    App.initGoogleSignIn();
     // Stop the stopwatch
     stopwatch.stop();
 

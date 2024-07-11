@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:coree/src/_global/app.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 enum RemoteConfigValueType {
@@ -82,14 +82,16 @@ class Rmc extends ChangeNotifier {
         notifyListeners();
       }),
     );
-    _subscription ??= App.remoteConfig.onConfigUpdated.listen(
-      (_) async {
-        await App.remoteConfig.activate();
-        values = parseRemoteConfigValues(App.remoteConfig.getAll());
-        notifyListeners();
-      },
-      onError: (Object error, StackTrace stackTrace) => null,
-    );
+    if (!kIsWeb) {
+      _subscription ??= App.remoteConfig.onConfigUpdated.listen(
+        (_) async {
+          await App.remoteConfig.activate();
+          values = parseRemoteConfigValues(App.remoteConfig.getAll());
+          notifyListeners();
+        },
+        onError: (Object error, StackTrace stackTrace) => null,
+      );
+    }
   }
 
   @override

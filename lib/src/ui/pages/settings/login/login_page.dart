@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
+import 'package:coree/src/logic/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -36,7 +38,11 @@ class LoginPage extends StatelessWidget {
               onPressed: () async => FirebaseAuth.instance.signInAnonymously(),
               child: const Text('Sign in Anonymously'),
             ),
-            ElevatedButton(onPressed: () async => FirebaseAuth.instance.signOut(), child: const Text('Sign out')),
+            ElevatedButton(
+              onPressed: () async => kIsWeb ? handleSignInWeb() : handleSignInNative(),
+              child: const Text('Sign in to Google'),
+            ),
+            ElevatedButton(onPressed: () async => handleSignOut(), child: const Text('Sign out')),
           ],
         ),
       ),
