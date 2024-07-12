@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 
+/// Localization for the whole App. To get a localized string, use:
+///
+/// `Alocale.routingParamPageDetail.getString(context)`
+///
+/// OR
+///
+/// `context.formatString(Alocale.routingParamDetailPageDetail3, [filmid])`
 mixin Alocale {
   static isLocaleSupported(Locale locale) {
     for (final MapLocale mapLocale in mapLocales) {
@@ -93,6 +100,19 @@ mixin Alocale {
   static const String languageEnglish = 'language_english';
   static const String languageCzech = 'language_czech';
 
+  static const String accountStatus = 'account_status';
+  static const String loggedIn = 'logged_in';
+  static const String userId = 'user_id';
+  static const String userDisplayName = 'user_display_name';
+  static const String userEmail = 'user_email';
+  static const String userEmailVerified = 'user_email_verified';
+  static const String userIsAnonymous = 'user_is_anonymous';
+  static const String lastSignInTime = 'last_sign_in_time';
+  static const String accountcreationTime = 'account_creation_time';
+  static const String providerId = 'provider_id';
+
+  static const String resetPassword = 'reset_password';
+
   static const Map<String, dynamic> en = {
     language: 'Language',
     languageName: 'English',
@@ -172,6 +192,17 @@ mixin Alocale {
     createAccount: 'Create account with email and password',
 
     secretPage: 'Secret Page',
+
+    accountStatus: 'Account Status',
+    loggedIn: 'Logged in: %a',
+    userId: 'User ID: %a',
+    userDisplayName: 'User Display Name: %a',
+    userEmail: 'User Email: %a',
+    userEmailVerified: 'User Email Verified: %a',
+    lastSignInTime: 'Last Sign In Time: %a',
+    accountcreationTime: 'Account Creation Time: %a',
+    providerId: 'Provider ID: %a',
+    resetPassword: 'Reset password',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -252,5 +283,16 @@ mixin Alocale {
     createAccount: 'Vytvořit účet s e-mailem a heslem',
 
     secretPage: 'Tajná stránka',
+
+    accountStatus: 'Stav účtu',
+    loggedIn: 'Přihlášen: %a',
+    userId: 'ID uživatele: %a',
+    userDisplayName: 'Zobrazované jméno uživatele: %a',
+    userEmail: 'E-mail uživatele: %a',
+    userEmailVerified: 'E-mail uživatele ověřen: %a',
+    lastSignInTime: 'Čas posledního přihlášení: %a',
+    accountcreationTime: 'Čas vytvoření účtu: %a',
+    providerId: 'ID poskytovatele: %a',
+    resetPassword: 'Obnovit heslo',
   };
 }

@@ -2,6 +2,7 @@ import 'package:coree/src/_global/app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+/// Handles the sign in with Google on iOS or Android.
 Future<UserCredential?> handleGoogleSignInNative() async {
   try {
     // Trigger the authentication flow
@@ -23,6 +24,7 @@ Future<UserCredential?> handleGoogleSignInNative() async {
   }
 }
 
+/// Handles the sign in with Google on the web.
 Future<UserCredential?> handleSignInWeb() async {
   try {
     // Create a new provider

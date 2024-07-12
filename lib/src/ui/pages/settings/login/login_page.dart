@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/lang/lang.dart';
@@ -5,6 +7,7 @@ import 'package:coree/src/logic/login/apple_sign_in_logic.dart';
 import 'package:coree/src/logic/login/email_sign_in_logic.dart';
 import 'package:coree/src/logic/login/google_sign_in_logic.dart';
 import 'package:coree/src/logic/login/login_logic.dart';
+import 'package:coree/src/ui/widgets/login_form_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -22,21 +25,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _formKey = GlobalKey<FormState>();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  StreamSubscription<User?>? _authStateChanges;
 
   @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    _formKey.currentState?.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  void initState() {
+    _authStateChanges ??= FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         debugPrint('User is currently signed out!');
       } else if (widget.onResult != null) {
@@ -51,6 +44,17 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
     });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    unawaited(_authStateChanges?.cancel());
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return PopScope(
       onPopInvoked: (didPop) {
         if (didPop && widget.onResult != null) {
@@ -89,49 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(Alocale.verifyEmail.getString(context)),
               ),
               ElevatedButton(onPressed: () async => handleSignOut(), child: Text(Alocale.signOut.getString(context))),
-              Form(
-                key: _formKey,
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      controller: _emailController,
-                      decoration: InputDecoration(labelText: Alocale.email.getString(context)),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return Alocale.enterYourEmail.getString(context);
-                        }
-                        if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return Alocale.enterAValidEmailAddress.getString(context);
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      controller: _passwordController,
-                      decoration: InputDecoration(labelText: Alocale.password.getString(context)),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return Alocale.enterYourPassword.getString(context);
-                        }
-                        if (value.length < 6) {
-                          return Alocale.passwordMustBeAtLeast6CharactersLong.getString(context);
-                        }
-                        return null;
-                      },
-                    ),
-                    ElevatedButton(
-                      onPressed: () async =>
-                          _formKey.currentState!.validate() ? handleEmailSignIn(_emailController.text, _passwordController.text) : null,
-                      child: Text(Alocale.signInWithEmailAndPassword.getString(context)),
-                    ),
-                    ElevatedButton(
-                      onPressed: () async =>
-                          _formKey.currentState!.validate() ? handleEmailRegister(_emailController.text, _passwordController.text) : null,
-                      child: Text(Alocale.createAccount.getString(context)),
-                    ),
-                  ],
-                ),
-              ),
+              const LoginForm(),
             ],
           ),
         ),

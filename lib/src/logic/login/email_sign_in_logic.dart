@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+/// Handles email sign in.
+///
+/// This will sign in the user with email and password.
 Future<UserCredential?> handleEmailSignIn(String email, String password) async {
   try {
     return await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
@@ -18,6 +21,9 @@ Future<UserCredential?> handleEmailSignIn(String email, String password) async {
   return null;
 }
 
+/// Handles email registration.
+///
+/// This will register the user with email and password.
 Future<UserCredential?> handleEmailRegister(String email, String password) async {
   try {
     return await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -36,10 +42,14 @@ Future<UserCredential?> handleEmailRegister(String email, String password) async
   return null;
 }
 
+/// Handles a request to reset the password.
 Future<void> handlePasswordReset(String email) async {
   await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
 }
 
+/// Handles email verification.
+///
+/// This will send an email verification to the user.
 Future<void> handleEmailVerification() async {
   User? user = FirebaseAuth.instance.currentUser;
   if (user != null && !user.emailVerified) {

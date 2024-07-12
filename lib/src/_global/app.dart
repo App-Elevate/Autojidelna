@@ -23,6 +23,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 /// Initial locale: [initLocale] (To get the current locale, use [localization])
 ///
 /// Package info: [packageInfo]
+///
+/// Secure storage: [secureStorage]
 class App {
   static bool _initPlatformExecuted = false;
   static bool _initLocalizationExecuted = false;
