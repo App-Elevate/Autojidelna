@@ -9,6 +9,8 @@ Future<UserCredential?> handleEmailSignIn(String email, String password) async {
       debugPrint('No user found for that email.');
     } else if (e.code == 'wrong-password') {
       debugPrint('Wrong password provided for that user.');
+    } else if (e.code == 'invalid-credential') {
+      debugPrint('Wrong password provided for that user.');
     }
   } catch (e) {
     debugPrint(e.toString());
@@ -34,7 +36,11 @@ Future<UserCredential?> handleEmailRegister(String email, String password) async
   return null;
 }
 
-Future<void> verifyEmail() async {
+Future<void> handlePasswordReset(String email) async {
+  await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+}
+
+Future<void> handleEmailVerification() async {
   User? user = FirebaseAuth.instance.currentUser;
   if (user != null && !user.emailVerified) {
     await user.sendEmailVerification();

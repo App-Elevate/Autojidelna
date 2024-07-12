@@ -78,7 +78,7 @@ mixin Alocale {
   static const String signInWithGoogle = 'sign_in_with_google';
   static const String signInWithApple = 'sign_in_with_apple';
   static const String signOut = 'sign_out';
-  static const String revokeTokenApple = 'revoke_token_apple';
+  static const String deleteAccount = 'delete_account';
   static const String verifyEmail = 'verify_email';
 
   static const String email = 'email';
@@ -160,7 +160,7 @@ mixin Alocale {
     signInWithGoogle: 'Sign in with Google',
     signInWithApple: 'Sign in with Apple',
     signOut: 'Sign out',
-    revokeTokenApple: 'Revoke Apple token',
+    deleteAccount: 'Delete account',
     verifyEmail: 'Verify email',
     email: 'Email',
     password: 'Password',
@@ -240,7 +240,7 @@ mixin Alocale {
     signInWithGoogle: 'Přihlásit se pomocí Google',
     signInWithApple: 'Přihlásit se pomocí Apple',
     signOut: 'Odhlásit se',
-    revokeTokenApple: 'Zrušit token Apple',
+    deleteAccount: 'Smazat účet',
     verifyEmail: 'Ověřit e-mail',
     email: 'E-mail',
     password: 'Heslo',

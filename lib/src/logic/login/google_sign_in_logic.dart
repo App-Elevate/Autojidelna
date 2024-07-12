@@ -2,7 +2,7 @@ import 'package:coree/src/_global/app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-Future<UserCredential?> handleSignInNative() async {
+Future<UserCredential?> handleGoogleSignInNative() async {
   try {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await App.googleSignIn.signIn();
@@ -21,11 +21,6 @@ Future<UserCredential?> handleSignInNative() async {
   } catch (e) {
     return null;
   }
-}
-
-Future<void> handleSignOut() async {
-  await App.googleSignIn.signOut();
-  await FirebaseAuth.instance.signOut();
 }
 
 Future<UserCredential?> handleSignInWeb() async {

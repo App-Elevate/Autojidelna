@@ -1,9 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/lang/lang.dart';
-import 'package:coree/src/logic/apple_sign_in_logic.dart';
-import 'package:coree/src/logic/email_sign_in_logic.dart';
-import 'package:coree/src/logic/google_sign_in_logic.dart';
+import 'package:coree/src/logic/login/apple_sign_in_logic.dart';
+import 'package:coree/src/logic/login/email_sign_in_logic.dart';
+import 'package:coree/src/logic/login/google_sign_in_logic.dart';
+import 'package:coree/src/logic/login/login_logic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -72,19 +73,19 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(Alocale.signInAnonymously.getString(context)),
               ),
               ElevatedButton(
-                onPressed: () async => kIsWeb ? handleSignInWeb() : handleSignInNative(),
+                onPressed: () async => kIsWeb ? handleSignInWeb() : handleGoogleSignInNative(),
                 child: Text(Alocale.signInWithGoogle.getString(context)),
               ),
               ElevatedButton(
-                onPressed: () async => signInWithApple(),
+                onPressed: () async => handleSignInWithApple(),
                 child: Text(Alocale.signInWithApple.getString(context)),
               ),
               ElevatedButton(
-                onPressed: () async => revokeTokenApple(),
-                child: Text(Alocale.revokeTokenApple.getString(context)),
+                onPressed: () async => handleAccountDeletion(),
+                child: Text(Alocale.deleteAccount.getString(context)),
               ),
               ElevatedButton(
-                onPressed: () async => verifyEmail(),
+                onPressed: () async => handleEmailVerification(),
                 child: Text(Alocale.verifyEmail.getString(context)),
               ),
               ElevatedButton(onPressed: () async => handleSignOut(), child: Text(Alocale.signOut.getString(context))),

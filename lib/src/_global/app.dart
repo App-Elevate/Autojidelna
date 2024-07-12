@@ -3,6 +3,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -27,6 +28,7 @@ class App {
   static bool _initLocalizationExecuted = false;
   static bool _initRemoteConfigExecuted = false;
   static bool _initGoogleSignInExecuted = false;
+  static bool _initHiveExecuted = false;
   static Future<void> initPlatform() async {
     assert(_initPlatformExecuted == false, 'App.initPlatform() must be called only once');
     if (_initPlatformExecuted) return;
@@ -59,12 +61,12 @@ class App {
     _initRemoteConfigExecuted = true;
   }
 
-  static void initGoogleSignIn() {
+  static Future<void> initGoogleSignIn() async {
     assert(_initGoogleSignInExecuted == false, 'App.initRemoteConfig() must be called only once');
     if (_initGoogleSignInExecuted) return;
     const List<String> scopes = <String>[
       'email',
-      'https://www.googleapis.com/auth/contacts.readonly',
+      'profile',
     ];
 
     googleSignIn = GoogleSignIn(
@@ -72,6 +74,22 @@ class App {
     );
     _initGoogleSignInExecuted = true;
   }
+
+  static Future<void> initHive() async {
+    assert(_initHiveExecuted == false, 'App.initHive() must be called only once');
+    if (_initHiveExecuted) return;
+
+    await Hive.initFlutter();
+    await Hive.openBox(Boxes.settings);
+
+    _initHiveExecuted = true;
+  }
+
+  static Future<void> initSecureStorage() async {
+    secureStorage = const FlutterSecureStorage();
+  }
+
+  static late final FlutterSecureStorage secureStorage;
 
   static late final FirebaseRemoteConfig remoteConfig;
 
