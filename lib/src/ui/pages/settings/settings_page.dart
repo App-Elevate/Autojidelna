@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_global/is_online.dart';
 import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
+import 'package:coree/src/ui/widgets/account_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
@@ -39,19 +40,19 @@ class SettingsPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(LoginPage()),
-              child: Text("login"),
+              child: Text(Alocale.login.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const SecretPage()),
-              child: Text("secret"),
+              child: Text(Alocale.secret.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const GoogleSecretPage()),
-              child: Text("secret Google"),
+              child: Text(Alocale.secretGoogle.getString(context)),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const AppleSecretPage()),
-              child: Text("Apple Femboy Secret"),
+              child: Text(Alocale.appleSecret.getString(context)),
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
@@ -67,6 +68,7 @@ class SettingsPage extends StatelessWidget {
                 );
               },
             ),
+            const AccountStatusWidget(),
           ],
         ),
       ),

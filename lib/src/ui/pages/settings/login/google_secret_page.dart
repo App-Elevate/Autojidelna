@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class GoogleSecretPage extends StatelessWidget {
@@ -9,12 +11,12 @@ class GoogleSecretPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Google Secret Page'),
+        title: Text(Alocale.secretGoogle.getString(context)),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           children: <Widget>[
-            Text('Flutter + Google = ❤️'),
+            Text(Alocale.secretGoogleContent.getString(context)),
           ],
         ),
       ),
