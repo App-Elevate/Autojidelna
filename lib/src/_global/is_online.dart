@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
+/// Is Online change notifier which can be used to check if the device is online.
 class IsOnline extends ChangeNotifier {
   bool isOnline = false;
   bool isOnlineLocal = false;

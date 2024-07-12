@@ -2,6 +2,7 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
+/// Initialize the app
 class InitApp {
   static Future<void> initConf() async {
     await Hive.openBox(Boxes.settings);

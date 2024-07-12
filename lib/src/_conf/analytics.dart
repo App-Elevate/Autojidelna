@@ -4,6 +4,7 @@ mixin AnalyticsNames {
 }
 
 /// Parameters used across analytics events
+///
 /// If you create a new parameter, make sure to add it to dimensions in Firebase Analytics
 mixin AnalyticsParam {
   static const String place = 'place';

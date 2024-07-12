@@ -7,6 +7,21 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
+/// Global app class.
+///
+/// This class is used to initialize global variables and services.
+///
+/// You can use this class to get:
+///
+/// Remote config: [remoteConfig]
+///
+/// Google sign in: [googleSignIn]
+///
+/// Localization: [localization]
+///
+/// Initial locale: [initLocale] (To get the current locale, use [localization])
+///
+/// Package info: [packageInfo]
 class App {
   static bool _initPlatformExecuted = false;
   static bool _initLocalizationExecuted = false;

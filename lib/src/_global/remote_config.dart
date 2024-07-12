@@ -14,6 +14,13 @@ enum RemoteConfigValueType {
   json,
 }
 
+/// Remote Config change notifier which can be used to get Remote Config values.
+///
+/// You can get current values from [values]. You hovewer have to be subscribed to the changes to get the updated values.
+///
+/// This subscription is made using provider.
+///
+/// If you want to use the values in a function, you can use the static [value] variable.
 class Rmc extends ChangeNotifier {
   /// Method to get the Remote Config value types. This is grabbed from the default values.
   static Map<String, RemoteConfigValueType> get remoteConfigValueTypes {

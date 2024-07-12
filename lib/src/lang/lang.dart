@@ -68,12 +68,37 @@ mixin Alocale {
 
   static const String login = 'login';
   static const String secret = 'secret';
+  static const String secretPage = 'secret_page';
   static const String secretGoogle = 'secret_google';
+  static const String secretGoogleContent = 'secret_google_content';
   static const String appleSecret = 'apple_secret';
+  static const String appleSecretContent = 'apple_secret_content';
+  static const String goToSettings = 'go_to_settings';
+  static const String signInAnonymously = 'sign_in_anonymously';
+  static const String signInWithGoogle = 'sign_in_with_google';
+  static const String signInWithApple = 'sign_in_with_apple';
+  static const String signOut = 'sign_out';
+  static const String revokeTokenApple = 'revoke_token_apple';
+  static const String verifyEmail = 'verify_email';
+
+  static const String email = 'email';
+  static const String password = 'password';
+  static const String enterYourEmail = 'enter_your_email';
+  static const String enterAValidEmailAddress = 'enter_a_valid_email_address';
+  static const String enterYourPassword = 'enter_your_password';
+  static const String passwordMustBeAtLeast6CharactersLong = 'password_must_be_at_least_6_characters_long';
+  static const String signInWithEmailAndPassword = 'sign_in_with_email_and_password';
+  static const String createAccount = 'create_account';
+
+  static const String languageEnglish = 'language_english';
+  static const String languageCzech = 'language_czech';
 
   static const Map<String, dynamic> en = {
     language: 'Language',
     languageName: 'English',
+
+    languageEnglish: 'English',
+    languageCzech: 'Czech',
 
     // about_app_button_widget.dart
     appName: 'APPE Coree',
@@ -123,14 +148,37 @@ mixin Alocale {
     disconnectedFromTheInternet: 'Disconnected from the internet',
     disconnectedFromANetwork: 'Disconnected from a network',
 
-    login: 'login',
+    login: 'Login',
     secret: 'secret',
     secretGoogle: 'secret Google',
     appleSecret: 'Apple Femboy Secret',
+    secretGoogleContent: 'Flutter + Google = ❤️',
+    appleSecretContent: 'Flutter + Apple = ❤️',
+
+    goToSettings: 'Go to settings',
+    signInAnonymously: 'Sign in Anonymously',
+    signInWithGoogle: 'Sign in with Google',
+    signInWithApple: 'Sign in with Apple',
+    signOut: 'Sign out',
+    revokeTokenApple: 'Revoke Apple token',
+    verifyEmail: 'Verify email',
+    email: 'Email',
+    password: 'Password',
+    enterYourEmail: 'Please enter your email',
+    enterAValidEmailAddress: 'Please enter a valid email address',
+    enterYourPassword: 'Please enter your password',
+    passwordMustBeAtLeast6CharactersLong: 'Password must be at least 6 characters long',
+    signInWithEmailAndPassword: 'Sign in with email and password',
+    createAccount: 'Create account with email and password',
+
+    secretPage: 'Secret Page',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
     languageName: 'Čeština',
+
+    languageEnglish: 'Angličtina',
+    languageCzech: 'Čeština',
 
     // about_app_button_widget.dart
     appName: 'APPE Coree',
@@ -184,5 +232,25 @@ mixin Alocale {
     secret: 'tajemství',
     secretGoogle: 'tajemství Google',
     appleSecret: 'Apple velký tajemství',
+    secretGoogleContent: 'Flutter + Google = ❤️',
+    appleSecretContent: 'Flutter + Apple = ❤️',
+
+    goToSettings: 'Jít na nastavení',
+    signInAnonymously: 'Přihlásit se anonymně',
+    signInWithGoogle: 'Přihlásit se pomocí Google',
+    signInWithApple: 'Přihlásit se pomocí Apple',
+    signOut: 'Odhlásit se',
+    revokeTokenApple: 'Zrušit token Apple',
+    verifyEmail: 'Ověřit e-mail',
+    email: 'E-mail',
+    password: 'Heslo',
+    enterYourEmail: 'Zadejte svůj e-mail',
+    enterAValidEmailAddress: 'Zadejte platnou e-mailovou adresu',
+    enterYourPassword: 'Zadejte své heslo',
+    passwordMustBeAtLeast6CharactersLong: 'Heslo musí mít alespoň 6 znaků',
+    signInWithEmailAndPassword: 'Přihlásit se pomocí e-mailu a hesla',
+    createAccount: 'Vytvořit účet s e-mailem a heslem',
+
+    secretPage: 'Tajná stránka',
   };
 }

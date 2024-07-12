@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/logic/apple_sign_in_logic.dart';
 import 'package:coree/src/logic/email_sign_in_logic.dart';
 import 'package:coree/src/logic/google_sign_in_logic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -56,62 +58,62 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: Text(Alocale.login.getString(context)),
         ),
         body: Center(
           child: Column(
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async => context.router.navigate(const SettingsPage()),
-                child: const Text('Go to settings'),
+                child: Text(Alocale.goToSettings.getString(context)),
               ),
               ElevatedButton(
                 onPressed: () async => FirebaseAuth.instance.signInAnonymously(),
-                child: const Text('Sign in Anonymously'),
+                child: Text(Alocale.signInAnonymously.getString(context)),
               ),
               ElevatedButton(
                 onPressed: () async => kIsWeb ? handleSignInWeb() : handleSignInNative(),
-                child: const Text('Sign in to Google'),
+                child: Text(Alocale.signInWithGoogle.getString(context)),
               ),
               ElevatedButton(
                 onPressed: () async => signInWithApple(),
-                child: const Text('Sign in with Apple'),
+                child: Text(Alocale.signInWithApple.getString(context)),
               ),
               ElevatedButton(
                 onPressed: () async => revokeTokenApple(),
-                child: const Text('Revoke Apple token'),
+                child: Text(Alocale.revokeTokenApple.getString(context)),
               ),
               ElevatedButton(
                 onPressed: () async => verifyEmail(),
-                child: const Text('Verify Email'),
+                child: Text(Alocale.verifyEmail.getString(context)),
               ),
-              ElevatedButton(onPressed: () async => handleSignOut(), child: const Text('Sign out')),
+              ElevatedButton(onPressed: () async => handleSignOut(), child: Text(Alocale.signOut.getString(context))),
               Form(
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
                     TextFormField(
                       controller: _emailController,
-                      decoration: const InputDecoration(labelText: 'Email'),
+                      decoration: InputDecoration(labelText: Alocale.email.getString(context)),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return Alocale.enterYourEmail.getString(context);
                         }
                         if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                          return 'Please enter a valid email address';
+                          return Alocale.enterAValidEmailAddress.getString(context);
                         }
                         return null;
                       },
                     ),
                     TextFormField(
                       controller: _passwordController,
-                      decoration: const InputDecoration(labelText: 'Password'),
+                      decoration: InputDecoration(labelText: Alocale.password.getString(context)),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
+                          return Alocale.enterYourPassword.getString(context);
                         }
                         if (value.length < 6) {
-                          return 'Password must be at least 6 characters long';
+                          return Alocale.passwordMustBeAtLeast6CharactersLong.getString(context);
                         }
                         return null;
                       },
@@ -119,12 +121,12 @@ class _LoginPageState extends State<LoginPage> {
                     ElevatedButton(
                       onPressed: () async =>
                           _formKey.currentState!.validate() ? handleEmailSignIn(_emailController.text, _passwordController.text) : null,
-                      child: const Text('Sign in with email and password'),
+                      child: Text(Alocale.signInWithEmailAndPassword.getString(context)),
                     ),
                     ElevatedButton(
                       onPressed: () async =>
                           _formKey.currentState!.validate() ? handleEmailRegister(_emailController.text, _passwordController.text) : null,
-                      child: const Text('Create account with email and password'),
+                      child: Text(Alocale.createAccount.getString(context)),
                     ),
                   ],
                 ),
