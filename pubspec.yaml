@@ -70,6 +70,12 @@ dependency_overrides:
       url: https://github.com/alex-melnyk/flutter-permission-handler.git
       path: permission_handler_apple
       ref: master
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1303
+  permission_handler_html:
+    git:
+      url: https://github.com/raldhafiri/flutter-permission-handler.git
+      ref: main
+      path: permission_handler_html
 
 dev_dependencies:
   flutter_test:

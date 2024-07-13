@@ -856,13 +856,14 @@ packages:
     source: git
     version: "9.3.0"
   permission_handler_html:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: permission_handler_html
-      sha256: "54bf176b90f6eddd4ece307e2c06cf977fb3973719c35a93b85cc7093eb6070d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.1"
+      path: permission_handler_html
+      ref: main
+      resolved-ref: "96422310e460221935bdbe20ab244677271c2b03"
+      url: "https://github.com/raldhafiri/flutter-permission-handler.git"
+    source: git
+    version: "0.1.2"
   permission_handler_platform_interface:
     dependency: transitive
     description:
