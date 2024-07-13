@@ -56,6 +56,21 @@ dependencies:
   flutter_secure_storage: ^9.2.2
   permission_handler: ^11.3.1
 
+# Dependency overrides for macos support of permission_handler
+dependency_overrides:
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1207
+  permission_handler:
+    git:
+      url: https://github.com/alex-melnyk/flutter-permission-handler.git
+      path: permission_handler
+      ref: master
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1207
+  permission_handler_apple:
+    git:
+      url: https://github.com/alex-melnyk/flutter-permission-handler.git
+      path: permission_handler_apple
+      ref: master
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

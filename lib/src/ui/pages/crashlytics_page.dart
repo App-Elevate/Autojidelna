@@ -21,7 +21,11 @@ class CrashlyticsPage extends StatelessWidget {
           TextButton(onPressed: crashlyticsTestFunction, child: Text(Alocale.crashlyticsTestCrash.getString(context))),
           TextButton(
             onPressed: () async {
-              await Permission.locationWhenInUse.request();
+              if (await Permission.locationWhenInUse.request() == PermissionStatus.granted) {
+                debugPrint('Permission granted');
+              } else {
+                debugPrint('Permission denied');
+              }
             },
             child: const Text('Get Location test'),
           ),
