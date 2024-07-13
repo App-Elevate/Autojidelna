@@ -10,7 +10,7 @@
 2. změňte všechny výskyty `APPECOREE` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
 3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
 4. změňte všechny výskyty `APPE Coree description` na popis vaší aplikace
-5. změňte všechny výskyty `6G8NMAQR5W` na váš developer id u apple - je to důležité pro fastline a deeplinking
+5. změňte všechny výskyty `6G8NMAQR5W` na váš developer tým u apple - je to důležité pro fastline a deeplinking
 
 ### ikonky
 
