@@ -1,6 +1,7 @@
 RUN_NUMBER=$1
 if [ -z "$RUN_NUMBER" ]; then
   echo "Usage: $0 <run_number>"
+  echo "This utility gets you the version number of the current branch and appends the run number to it."
   exit 1
 fi
 
