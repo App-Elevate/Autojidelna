@@ -18,6 +18,23 @@
         }
       }
     },
+    "NSLocationAlwaysAndWhenInUseUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "cs" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APPE Coree potřebuje lokaci pro zobrazení koordinací"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "APPE Coree needs location to show coordinates"
+          }
+        }
+      }
+    },
     "NSLocationUsageDescription" : {
       "extractionState" : "manual",
       "localizations" : {

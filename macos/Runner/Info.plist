@@ -51,10 +51,8 @@
 	<!-- Permission options for the `location` group -->
     <key>NSLocationWhenInUseUsageDescription</key>
     <string>APPE Coree needs location to show coordinates</string>
-	<!--
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Always and when in use!</string>
-	-->
+    <string>APPE Coree needs location to show coordinates</string>
 	<!-- Older devices need location -->
     <key>NSLocationUsageDescription</key>
     <string>APPE Coree needs location to show coordinates</string>
