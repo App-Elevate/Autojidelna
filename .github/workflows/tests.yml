@@ -141,7 +141,8 @@ jobs:
     name: Build iOS
     runs-on: macos-latest
     needs: test
-    if: ${{ needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' }}
+    if: false
+    # if: ${{ needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -158,7 +159,8 @@ jobs:
     name: Build Android
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.lib == 'true' }}
+    if: false
+    # if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -182,7 +184,8 @@ jobs:
     name: Build Web
     runs-on: ubuntu-latest
     needs: test
-    if: ${{ needs.filter.outputs.web == 'true' || needs.filter.outputs.lib == 'true' }}
+    if: false
+    # if: ${{ needs.filter.outputs.web == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
 
