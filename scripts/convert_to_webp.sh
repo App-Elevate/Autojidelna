@@ -1,5 +1,15 @@
 #!/bin/zsh
 
+set -e
+
+handle_sigint() {
+    echo "Terminating script due to Ctrl+C"
+    exit 1
+}
+
+# Trap SIGINT and call handle_sigint
+trap handle_sigint SIGINT
+
 # Function to display help
 show_help() {
   echo "Usage: $0 [-h] <directory>"

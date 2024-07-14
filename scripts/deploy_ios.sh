@@ -15,6 +15,13 @@ handle_sigint() {
 trap handle_sigint SIGINT
 
 version=$(sh scripts/version.sh $RUN_NUMBER)
-echo "Building web version $version"
+echo "Deploying iOS version $version"
 
-flutter build web --release
+cd ios 
+bundle install 
+bundle exec fastlane match appstore --readonly 
+cd .. 
+flutter build ipa --split-debug-info build/symbolsIos --obfuscate --release || true
+cd ios 
+bundle exec fastlane release
+cd ..
