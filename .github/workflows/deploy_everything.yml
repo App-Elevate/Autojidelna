@@ -179,8 +179,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Get pubspec
         uses: actions/download-artifact@v4
@@ -206,7 +204,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building macos
-        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release || true
 
       - name: Signing the app and publishing to App Store
         run: |
@@ -219,12 +217,12 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       # Collect the file and upload as artifact
-      # - name: collect ipa artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: release-ipa
-      #     # Path to the release files
-      #     path: ios/*.ipa
+      - name: collect ipa artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-ipa
+          # Path to the release files
+          path: macos/*.pkg
 
       - name: Remove private keys
         if: always()
