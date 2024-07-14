@@ -11,6 +11,7 @@
 3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
 4. změňte všechny výskyty `APPE Coree description` na popis vaší aplikace
 5. změňte všechny výskyty `6G8NMAQR5W` na váš developer tým u apple - je to důležité pro fastline a deeplinking
+6. změňte výskyt `3rd Party Mac Developer Installer: TOM\xC3\x81\xC5\xA0 PROTIVA (6G8NMAQR5W)` na váš developer tým u apple - je to důležité pro macos
 
 ### ikonky
 
