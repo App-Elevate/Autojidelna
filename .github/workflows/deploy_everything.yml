@@ -203,7 +203,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building macos
-        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release || true
+        run: flutter build macos
 
       - name: Signing the app and publishing to App Store
         run: |
