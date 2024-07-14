@@ -33,6 +33,8 @@ platform :mac do
       platform: "macos",
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       additional_cert_types: ["mac_installer_distribution"]
+      keychain_name: "AppSigning",
+      keychain_password: "temp-keychain_password",
     )
   end
   desc "Push a new release build to the App Store"
@@ -52,6 +54,8 @@ platform :mac do
       platform: "macos",
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       additional_cert_types: ["mac_installer_distribution"]
+      keychain_name: "AppSigning",
+      keychain_password: "temp-keychain_password",
     )
     build_mac_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
