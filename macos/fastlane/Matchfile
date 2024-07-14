@@ -1,10 +1,10 @@
-git_url("https://github.com/App-Elevate/ios-keys")
+git_url "https://github.com/App-Elevate/ios-keys"
 
-storage_mode("git")
+storage_mode "git"
 
-type("development") # The default type, can be: appstore, adhoc, enterprise or development
+type "development" # The default type, can be: appstore, adhoc, enterprise or development
 
-platform("macos")
+platform "macos"
 
 # app_identifier(["tools.fastlane.app", "tools.fastlane.app2"])
 # username("user@fastlane.tools") # Your Apple Developer Portal username

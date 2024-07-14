@@ -4,5 +4,7 @@ apple_id("protitom@icloud.com") # Your Apple Developer Portal username
 itc_team_id("127134957") # App Store Connect Team ID
 team_id("6G8NMAQR5W") # Developer Portal Team ID
 
+ENV["APP_STORE_KEY_ID"] = "VPJ6V9H7X3"
+ENV["APP_STORE_ISSUER_ID"] = "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c"
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile

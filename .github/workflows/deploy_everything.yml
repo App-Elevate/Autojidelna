@@ -28,6 +28,11 @@ on:
         required: true
         type: boolean
         default: true
+      macos:
+        description: "Deploy macOS?"
+        required: true
+        type: boolean
+        default: false
       cloudflare:
         description: "Deploy to Cloudflare Pages?"
         required: true
@@ -160,6 +165,66 @@ jobs:
           name: release-ipa
           # Path to the release files
           path: ios/*.ipa
+
+      - name: Remove private keys
+        if: always()
+        run: rm -rf private_keys
+  deploy_macos:
+    name: "[macOS] Deploy to App Store"
+    runs-on: macos-latest
+    environment:
+      name: app-store-macos
+    needs: version
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.macos == 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+
+      # Install flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Get Certificates
+        run: |
+          git revert --no-commit d695178ed80c438235fe937e4af9e83f1f3f1c72 # Reverting the commit that changes release provisioning profile to a development one
+          cd macos
+          bundle install
+          bundle exec fastlane setup_ci_keychain
+          cd ..
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+
+      - name: Building macos
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release
+
+      - name: Signing the app and publishing to App Store
+        run: |
+          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
+          cd macos  
+          bundle exec fastlane release_ci
+          cd ..
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+
+      # Collect the file and upload as artifact
+      # - name: collect ipa artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: release-ipa
+      #     # Path to the release files
+      #     path: ios/*.ipa
 
       - name: Remove private keys
         if: always()

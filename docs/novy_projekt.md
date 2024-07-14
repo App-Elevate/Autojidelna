@@ -7,8 +7,8 @@
 ### název
 
 1. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije).
-2. změňte všechny výskyty `APPECOREE` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije)
-3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`)
+2. změňte všechny výskyty `APPE_Coree` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Udržte stejnou strukturu. Tento název nepodporuje mezery a speciální znaky)
+3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`). Toto je app_id a je důležité, aby bylo unikátní. U vybírání jména u iOS používat camel case u android snake case.
 4. změňte všechny výskyty `APPE Coree description` na popis vaší aplikace
 5. změňte všechny výskyty `6G8NMAQR5W` na váš developer tým u apple - je to důležité pro fastline a deeplinking
 6. změňte výskyt `3rd Party Mac Developer Installer: TOM\xC3\x81\xC5\xA0 PROTIVA (6G8NMAQR5W)` na váš developer tým u apple - je to důležité pro macos
