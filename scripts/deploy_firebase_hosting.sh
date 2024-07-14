@@ -15,6 +15,8 @@ handle_sigint() {
 trap handle_sigint SIGINT
 
 version=$(sh scripts/version.sh $RUN_NUMBER)
-echo "Building web version $version"
+echo "Deploying version $version to firebase hosting"
 
 flutter build web --release
+
+firebase deploy --only hosting 

@@ -28,11 +28,6 @@ on:
         required: true
         type: boolean
         default: true
-      macos:
-        description: "Deploy macOS?"
-        required: true
-        type: boolean
-        default: false
       cloudflare:
         description: "Deploy to Cloudflare Pages?"
         required: true
@@ -175,7 +170,7 @@ jobs:
     environment:
       name: app-store-macos
     needs: version
-    if: ${{ github.event.pull_request.merged == true || github.event.inputs.macos == 'true' }}
+    if: ${{ github.event.inputs.macos == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -203,7 +198,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building macos
-        run: flutter build macos
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release || true
 
       - name: Signing the app and publishing to App Store
         run: |

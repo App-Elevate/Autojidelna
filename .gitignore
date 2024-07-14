@@ -48,6 +48,7 @@ app.*.map.json
 # Firebase
 .crashlytics
 firepit-log.txt
+.firebase
 
 # Credentials
 **/*gc_keys.json

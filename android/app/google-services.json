@@ -12,7 +12,28 @@
           "package_name": "cz.appelevate.coree"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.appelevate.coree",
+            "certificate_hash": "0e6160c6543881ec3f8c4748497577874d86b927"
+          }
+        },
+        {
+          "client_id": "466976066624-8m852qlcq1t1gsc8f37j43ro3267fmq2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "cz.appelevate.coree",
+            "certificate_hash": "4dfb5fdb0deb11c3c54485a9fa54c24b09c36ee1"
+          }
+        },
+        {
+          "client_id": "466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCdSDmDUCZGXYmdKo13eLD02mhe3FGdsug"
@@ -20,7 +41,20 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "cz.appelevate.coree",
+                "app_store_id": "6504736528"
+              }
+            }
+          ]
         }
       }
     }
