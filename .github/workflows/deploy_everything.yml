@@ -1,7 +1,4 @@
 name: "[Flutter] Deploy Everything"
-permissions:
-  checks: write
-  contents: read
 on:
   pull_request:
     types: [closed]
@@ -43,9 +40,15 @@ on:
         required: true
         type: boolean
         default: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
 concurrency:
   group: "deploy"
   cancel-in-progress: false
+
 jobs:
   version:
     name: Create version number
