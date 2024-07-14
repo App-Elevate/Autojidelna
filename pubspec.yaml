@@ -54,6 +54,28 @@ dependencies:
   connectivity_plus: ^6.0.3
   internet_connection_checker_plus: ^2.5.0
   flutter_secure_storage: ^9.2.2
+  permission_handler: ^11.3.1
+
+# Dependency overrides for macos and web support of permission_handler
+dependency_overrides:
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1207
+  permission_handler:
+    git:
+      url: https://github.com/alex-melnyk/flutter-permission-handler.git
+      path: permission_handler
+      ref: master
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1207
+  permission_handler_apple:
+    git:
+      url: https://github.com/alex-melnyk/flutter-permission-handler.git
+      path: permission_handler_apple
+      ref: master
+  # https://github.com/Baseflow/flutter-permission-handler/pull/1303
+  permission_handler_html:
+    git:
+      url: https://github.com/raldhafiri/flutter-permission-handler.git
+      ref: main
+      path: permission_handler_html
 
 dev_dependencies:
   flutter_test:

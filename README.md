@@ -131,7 +131,7 @@ a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potř
 1. Je potřeba po každém přidání entitlementu zapnout automatické podepisování v Xcode a následně ho vypnout. Potom už stačí jen regenerovat certifikáty pomocí fastlane match:
 
 ```bash
-cd macos && bundle install && bundle exec fastlane match appstore --additional-cert-types=mac_installer_distribution --force && bundle exec fastlane match development --force && cd ..
+cd macos && bundle install && bundle exec fastlane match appstore --additional-cert-types=mac_installer_distribution --force --platform=macos && bundle exec fastlane match development --force --platform=macos && cd ..
 ```
 
 a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potřeba mít přístup k certifikátům.

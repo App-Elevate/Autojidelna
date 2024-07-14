@@ -18,14 +18,21 @@ default_platform(:mac)
 platform :mac do
   desc "Push a new release build to the App Store"
   lane :release do
-
+    match(
+      type: "appstore",
+      app_identifier: "cz.appelevate.coree",
+      readonly: true,
+      platform: "macos",
+      additional_cert_types: ["mac_installer_distribution"],
+    )
     # Fetch App Store Certificates
-    build_app(
+    build_mac_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-      export_options: {
-        signingStyle: "automatic",
-        }
-      )
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_method: "app-store",
+      installer_cert_name: "3rd Party Mac Developer Installer: TOM\xC3\x81\xC5\xA0 PROTIVA (6G8NMAQR5W)"
+    )
     begin
     api_key = app_store_connect_api_key(
           key_id: "VPJ6V9H7X3",
