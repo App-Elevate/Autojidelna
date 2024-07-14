@@ -5,7 +5,7 @@
 // 'flutter create' template.
 
 // The application's name. This is not the title of the flutter window.
-PRODUCT_NAME = APPECOREE
+PRODUCT_NAME = APPE_Coree
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree
