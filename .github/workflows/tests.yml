@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   filter:
-    name: Branch name check
+    name: Branch name check + Flutter tests
     runs-on: ubuntu-latest
     outputs:
       android: ${{ steps.filter.outputs.android }}
