@@ -230,7 +230,7 @@ jobs:
         if: always()
         run: rm -rf private_keys
   build_web:
-    name: "[Web] Deploy to Cloudflare Pages"
+    name: "[Web] Build Web"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' || github.event.inputs.github_pages == 'true' || github.event.inputs.firebase_hosting == 'true' }}
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -285,8 +285,8 @@ jobs:
 
       - name: Copy files
         run: |
-          cp -r web-build/* .
-          rm -rf web-build
+          cp -r build/web/* .
+          rm -rf build/web
 
       - name: Deploy to Cloudflare Pages
         run: |
@@ -319,14 +319,10 @@ jobs:
         with:
           name: web-build
 
-      - name: Copy files
-        run: |
-          cp -r web-build/* build/web
-          rm -rf web-build
-
       - name: Rewrite base href
         run: |
           sed -i 's|<base href="/">|<base href="/${{ github.event.inputs.firebase_hosting_path }}/"/>|' build/web/index.html
+
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
@@ -352,10 +348,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: web-build
-      - name: Copy files
-        run: |
-          cp -r web-build/* build/web
-          rm -rf web-build
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
