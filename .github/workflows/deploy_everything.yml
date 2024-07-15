@@ -1,7 +1,4 @@
 name: "[Flutter] Deploy Everything"
-permissions:
-  checks: write
-  contents: read
 on:
   pull_request:
     types: [closed]
@@ -43,9 +40,15 @@ on:
         required: true
         type: boolean
         default: false
+
+permissions:
+  contents: read
+  pull-requests: write
+
 concurrency:
   group: "deploy"
   cancel-in-progress: false
+
 jobs:
   version:
     name: Create version number
@@ -65,6 +68,18 @@ jobs:
       - name: Get version
         id: version
         run: |
+          if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Branch name matches the pattern *.*.* - stopping"
+            echo "version=${GITHUB_REF#refs/heads/}"
+            echo "version=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
+            echo "${GITHUB_REF#refs/heads/}" > version.txt
+            exit 0
+          fi
+          echo "Branch name does not match the pattern *.*.* - continuing"
+          if [[ ! -n $(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+') ]]; then
+            echo "Latest merge isn't from a branch matching *.*.* - Either repo rules are set wrong or somebody bypassed protections or it was ran from a different branch than main or version branch"
+            exit 1
+          fi
           version=$(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
           echo "version=$version"
           echo "version=$version" >> "$GITHUB_OUTPUT"
@@ -103,6 +118,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Get pubspec
         uses: actions/download-artifact@v4
@@ -127,7 +144,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
       - name: Signing the app and publishing to App Store
         run: |
@@ -149,10 +166,93 @@ jobs:
       - name: Remove private keys
         if: always()
         run: rm -rf private_keys
+  deploy_macos:
+    name: "[macOS] Deploy to App Store"
+    runs-on: macos-latest
+    environment:
+      name: app-store-macos
+    needs: version
+    if: ${{ github.event.inputs.macos == 'true' }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+
+      # Install flutter
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+
+      - name: Get Certificates
+        run: |
+          cd macos
+          bundle install
+          bundle exec fastlane setup_ci_keychain
+          cd ..
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+
+      - name: Building macos
+        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release
+
+      - name: Signing the app and publishing to App Store
+        run: |
+          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
+          cd macos  
+          bundle exec fastlane release_ci
+          cd ..
+        env:
+          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
+          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
+
+      # Collect the file and upload as artifact
+      - name: collect ipa artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-ipa
+          # Path to the release files
+          path: macos/*.pkg
+
+      - name: Remove private keys
+        if: always()
+        run: rm -rf private_keys
+  build_web:
+    name: "[Web] Build Web"
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' || github.event.inputs.github_pages == 'true' || github.event.inputs.firebase_hosting == 'true' }}
+    needs: version
+    # Works on ubuntu and macOS. Should propably work on windows as well
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Build web
+        run: flutter build web --release
+      - name: Copy index.html to 404.html
+        run: cp build/web/index.html build/web/404.html
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
   deploy_cloudflare:
     name: "[Web] Deploy to Cloudflare Pages"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' }}
-    needs: version
+    needs: build_web
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     environment:
@@ -164,45 +264,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-
-      - name: Get peanut
-        run: |
-          flutter pub global activate peanut
-
       - name: Setup git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git fetch origin dist-cloudflare-pages:dist-cloudflare-pages || true
           git checkout dist-cloudflare-pages || true
-          git checkout main
+          find . -maxdepth 1 ! -name ".git" ! -name "." -exec rm -rf {} +
 
-      - name: Get pubspec
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
-
-      - name: Start release build
-        run: |
-          flutter pub global run peanut -b dist-cloudflare-pages --release
-
-      - name: Release Artifact Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: build/web
+          name: web-build
 
       - name: Deploy to Cloudflare Pages
         run: |
-
           # Push the new branch to the repository
+          git commit -a -m "Built web"
           git push origin dist-cloudflare-pages
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Wait for deployment
@@ -214,6 +293,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_KEY }}" \
             -H "Content-Type: application/json" \
               --data '{"purge_everything": true}'
+
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
@@ -221,26 +301,23 @@ jobs:
     environment:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
-    needs: version
+    needs: build_web
     steps:
-      - uses: actions/checkout@v4
-      - name: Get pubspec
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Get build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-      - run: flutter build web --release
-      - name: Copy index.html to 404.html
-        run: cp build/web/index.html build/web/404.html
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+          name: web-build
+          path: build/web
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
           channelId: live
           projectId: app-elevate-core
+
   deploy_github_pages:
     name: "[Web] Deploy to GitHub Pages"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
@@ -248,24 +325,20 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    needs: version
+    needs: build_web
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Get pubspec
+      - name: Get build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
+          name: web-build
+          path: build/web
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
 
       - name: Get custom domain from GitHub API
         id: get_custom_domain
@@ -276,16 +349,12 @@ jobs:
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
           fi
-      - name: Start Web Release Build
-        run: |
-          if [ -n "$CUSTOM_DOMAIN" ]; then
-            flutter build web --release
-          else
-            flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
-          fi
 
-      - name: Copy index.html to 404.html
-        run: cp build/web/index.html build/web/404.html
+      - name: Rewrite base href
+        run: |
+          if [ ! -n "$CUSTOM_DOMAIN" ]; then
+          sed -i "s|<base href=\"/\">|<base href=\"/$(basename $GITHUB_REPOSITORY)/\">|" build/web/index.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -296,8 +365,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  build_android:
-    name: "[Android] Build App Bundle"
+  deploy_android:
+    name: "[Android] Deploy to Google Play Store"
+    environment:
+      name: google-play
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -342,6 +413,15 @@ jobs:
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
+      - name: Release Build to internal track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: ${{needs.version.outputs.app_id}}
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal
+          status: draft
+
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
         with:
@@ -353,37 +433,14 @@ jobs:
         with:
           name: symbolsAndroid
           path: symbolsAndroid
-  deploy_android:
-    name: "[Android] Deploy to Google Play Store"
-    needs:
-      - build_android
-      - version
-    # Tested on ubuntu but there is no reason why it shouldn't work on macOS or windows
-    runs-on: ubuntu-latest
-    environment:
-      name: google-play
 
-    steps:
-      - name: Get Android Build from artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: android-release
-
-      - name: Release Build to internal track
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: ${{needs.version.outputs.app_id}}
-          releaseFiles: app-release.aab
-          track: internal
-          status: draft
   symbols_android:
     name: "[Android] Upload Crashlytics Symbols"
-    # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option
+    # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option even with the 10x
     runs-on: macos-latest
     needs:
       - version
-      - build_android
+      - deploy_android
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

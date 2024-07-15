@@ -16,23 +16,87 @@
 default_platform(:mac)
 
 platform :mac do
+  desc "Create Keychain for Ci/CD"
+  lane :setup_ci_keychain do
+    # Create the keychain
+    create_keychain(
+      name: "AppSigning",
+      default_keychain: true,
+      add_to_search_list: true,
+      unlock: true,
+      password: "temp-keychain_password"
+    )
+    # Fetch App Store Certificates
+    match(
+      type: "appstore",
+      readonly: true,
+      platform: "macos",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
+      additional_cert_types: ["mac_installer_distribution"],
+      keychain_name: "AppSigning",
+      keychain_password: "temp-keychain_password",
+    )
+  end
+  desc "Push a new release build to the App Store"
+  lane :release_ci do
+    # Create the keychain
+    create_keychain(
+      name: "AppSigning",
+      default_keychain: true,
+      add_to_search_list: true,
+      unlock: true,
+      password: "temp-keychain_password"
+    )
+    # Fetch App Store Certificates
+    match(
+      type: "appstore",
+      readonly: true,
+      platform: "macos",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
+      additional_cert_types: ["mac_installer_distribution"],
+      keychain_name: "AppSigning",
+      keychain_password: "temp-keychain_password",
+    )
+    build_mac_app(
+      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
+      export_method: "app-store",
+      installer_cert_name: ENV["DEVELOPER_INSTALLER_CERT_NAME"],
+    )
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: "./../private_keys/app_store.p8",
+      in_house: false
+    )
+    upload_to_testflight(skip_waiting_for_build_processing: true)
+    delete_keychain(
+      name: "AppSigning"
+    )
+    sh "security default-keychain -s login.keychain || true"
+  end
+
   desc "Push a new release build to the App Store"
   lane :release do
-
     # Fetch App Store Certificates
-    build_app(
+    match(
+      type: "appstore",
+      readonly: true,
+      platform: "macos",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
+      additional_cert_types: ["mac_installer_distribution"]
+    )
+    build_mac_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-      export_options: {
-        signingStyle: "automatic",
-        }
-      )
+      export_method: "app-store",
+      installer_cert_name: ENV["DEVELOPER_INSTALLER_CERT_NAME"],
+    )
     begin
     api_key = app_store_connect_api_key(
-          key_id: "VPJ6V9H7X3",
-          issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./../private_keys/app_store.p8",
-          in_house: false
-      )
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: "./../private_keys/app_store.p8",
+      in_house: false
+    )
     upload_to_testflight(skip_waiting_for_build_processing: true)
     rescue => e
       sh "open -a transporter"

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
+import 'package:coree/src/_routing/guards.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends $AppRouter {
@@ -13,15 +14,21 @@ class AppRouter extends $AppRouter {
             AutoRoute(page: DemoPage.page, path: 'demo'),
             AutoRoute(page: CrashlyticsPage.page, path: '', initial: true),
             AutoRoute(
-              page: RoutingTestPage.page,
-              path: 'routing-test',
+              page: SettingsPage.page,
+              path: 'settings',
             ),
           ],
         ),
-        AutoRoute(page: RoutingParamPage.page, path: '/routing-test/param'),
-        AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/routing-test/param/detail'),
-        AutoRoute(page: RoutingPathParamDetailPage.page, path: '/routing-test/param/:filmid'),
-        AutoRoute(page: RoutingTestDetailPage.page, path: '/routing-test/detail'),
-        AutoRoute(page: RoutingTestDetailDetail.page, path: '/routing-test/detail/detail'),
+        AutoRoute(page: RoutingParamPage.page, path: '/settings/param'),
+        AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
+        AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
+        AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
+        AutoRoute(page: RoutingTestDetailPage.page, path: '/settings/detail'),
+        AutoRoute(page: RoutingTestDetailDetail.page, path: '/settings/detail/detail'),
+        AutoRoute(page: ProviderTestPage.page, path: '/settings/provider'),
+        AutoRoute(page: LoginPage.page, path: '/settings/login'),
+        AutoRoute(page: SecretPage.page, path: '/settings/secret', guards: [AuthGuard()]),
+        AutoRoute(page: GoogleSecretPage.page, path: '/settings/google', guards: [GoogleGuard()]),
+        AutoRoute(page: AppleSecretPage.page, path: '/settings/apple', guards: [AppleGuard()]),
       ];
 }

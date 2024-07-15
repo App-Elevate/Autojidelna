@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/lang/lang.dart';
 import 'package:coree/src/ui/widgets/buttons/about_app_button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class DemoPage extends StatefulWidget {
-  const DemoPage({super.key, this.title = 'Demo Page'});
-  final String title;
+  const DemoPage({
+    super.key,
+  });
 
   @override
   State<DemoPage> createState() => _DemoPageState();
@@ -26,14 +29,14 @@ class _DemoPageState extends State<DemoPage> {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: const [AboutAppButton()],
-        title: Text(widget.title),
+        title: Text(Alocale.demoPageTitle.getString(context)),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            Text(
+              Alocale.buttonPushed.getString(context),
             ),
             Text(
               '$_counter',
@@ -44,9 +47,8 @@ class _DemoPageState extends State<DemoPage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
-        tooltip: 'Increment',
         child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),
     );
   }
 }

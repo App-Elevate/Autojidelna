@@ -66,6 +66,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '466976066624',
     projectId: 'app-elevate-core',
     storageBucket: 'app-elevate-core.appspot.com',
+    androidClientId: '466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com',
+    iosClientId: '466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com',
     iosBundleId: 'cz.appelevate.coree',
   );
 
@@ -75,6 +77,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '466976066624',
     projectId: 'app-elevate-core',
     storageBucket: 'app-elevate-core.appspot.com',
+    androidClientId: '466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com',
+    iosClientId: '466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com',
     iosBundleId: 'cz.appelevate.coree',
   );
 

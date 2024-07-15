@@ -4,8 +4,8 @@
 // future. If not, the values below would default to using the project name when this becomes a
 // 'flutter create' template.
 
-// The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = APPECOREE
+// The application's name. This is not the title of the flutter window.
+PRODUCT_NAME = APPE_Coree
 
 // The application's bundle identifier
 PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree

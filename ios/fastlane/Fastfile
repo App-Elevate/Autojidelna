@@ -52,11 +52,11 @@ platform :ios do
       type: "appstore"
       )
     api_key = app_store_connect_api_key(
-          key_id: "VPJ6V9H7X3",
-          issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./../private_keys/app_store.p8",
-          in_house: false
-      )
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: "./../private_keys/app_store.p8",
+      in_house: false
+    )
     build_app(
       skip_build_archive: true,
       archive_path: "../build/ios/archive/Runner.xcarchive",
@@ -82,11 +82,11 @@ platform :ios do
       )
     begin
     api_key = app_store_connect_api_key(
-          key_id: "VPJ6V9H7X3",
-          issuer_id: "d7e6d3c1-f68b-4764-9d30-0d74a9888f6c",
-          key_filepath: "./../private_keys/app_store.p8",
-          in_house: false
-      )
+      key_id: ENV["APP_STORE_KEY_ID"],
+      issuer_id: ENV["APP_STORE_ISSUER_ID"],
+      key_filepath: "./../private_keys/app_store.p8",
+      in_house: false
+    )
     upload_to_testflight(skip_waiting_for_build_processing: true)
     rescue => e
       sh "open -a transporter"
