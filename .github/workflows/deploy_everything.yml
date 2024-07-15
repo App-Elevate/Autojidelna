@@ -40,6 +40,11 @@ on:
         required: true
         type: boolean
         default: false
+      macos:
+        description: "Deploy macOS?"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
