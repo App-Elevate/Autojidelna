@@ -28,7 +28,7 @@ platform :mac do
     )
     # Fetch App Store Certificates
     match(
-      type: "appstore",
+      type: "development",
       readonly: true,
       platform: "macos",
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
