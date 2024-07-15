@@ -314,6 +314,8 @@ jobs:
       url: ${{ vars.FIREBASE_HOSTING_URL }}
     needs: build_web
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
       - name: Get build artifact
         uses: actions/download-artifact@v4
         with:
