@@ -1,8 +1,16 @@
 // Retrieve the FLUTTER_BASE_HREF from the HTML meta tag if it exists
-var baseHref =
-  document
-    .querySelector('meta[name="FLUTTER_BASE_HREF"]')
-    ?.getAttribute("content") || "/";
+
+const baseElement = document.querySelector('base');
+let baseHref = "/";
+
+// Check if the <base> element exists
+if (baseElement) {
+  // Retrieve the value of the href attribute
+  const baseUrl = baseElement.getAttribute('href');
+  if(baseUrl) {
+    baseHref = baseUrl;
+  }
+}
 
 // Ensure baseHref ends with a slash
 if (!baseHref.endsWith("/")) {

@@ -1,4 +1,4 @@
-name: "[TEST] Flutter"
+name: "[Flutter] Tests"
 
 on:
   pull_request:

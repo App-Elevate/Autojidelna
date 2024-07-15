@@ -40,6 +40,11 @@ on:
         required: true
         type: boolean
         default: false
+      firebase_hosting_path:
+        description: "Path to deploy to Firebase Hosting?"
+        required: true
+        type: string
+        default: "/"
 
 permissions:
   contents: read
@@ -224,10 +229,36 @@ jobs:
       - name: Remove private keys
         if: always()
         run: rm -rf private_keys
+  build_web:
+    name: "[Web] Deploy to Cloudflare Pages"
+    if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' || github.event.inputs.github_pages == 'true' || github.event.inputs.firebase_hosting == 'true' }}
+    needs: version
+    # Works on ubuntu and macOS. Should propably work on windows as well
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
+      - name: Build web
+      - run: flutter build web --release
+      - name: Copy index.html to 404.html
+        run: cp build/web/index.html build/web/404.html
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web
+
   deploy_cloudflare:
     name: "[Web] Deploy to Cloudflare Pages"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' }}
-    needs: version
+    needs: build_web
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     environment:
@@ -239,45 +270,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-
-      - name: Get peanut
-        run: |
-          flutter pub global activate peanut
-
       - name: Setup git
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git fetch origin dist-cloudflare-pages:dist-cloudflare-pages || true
           git checkout dist-cloudflare-pages || true
-          git checkout ${GITHUB_REF#refs/heads/}
+          find . -maxdepth 1 ! -name ".git" ! -name "." -exec rm -rf {} +
 
-      - name: Get pubspec
+      - name: Download build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
+          name: web-build
 
-      - name: Start release build
+      - name: Copy files
         run: |
-          flutter pub global run peanut -b dist-cloudflare-pages --release
-
-      - name: Release Artifact Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: web
-          path: build/web
+          cp -r web-build/* .
+          rm -rf web-build
 
       - name: Deploy to Cloudflare Pages
         run: |
-
           # Push the new branch to the repository
+          git commit -a -m "Built web"
           git push origin dist-cloudflare-pages
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Wait for deployment
@@ -289,6 +304,7 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_PURGE_KEY }}" \
             -H "Content-Type: application/json" \
               --data '{"purge_everything": true}'
+
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
@@ -296,26 +312,29 @@ jobs:
     environment:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
-    needs: version
+    needs: build_web
     steps:
-      - uses: actions/checkout@v4
-      - name: Get pubspec
+      - name: Get build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-      - run: flutter build web --release
-      - name: Copy index.html to 404.html
-        run: cp build/web/index.html build/web/404.html
+          name: web-build
+
+      - name: Copy files
+        run: |
+          cp -r web-build/* build/web
+          rm -rf web-build
+
+      - name: Rewrite base href
+        run: |
+          sed -i 's|<base href="/">|<base href="/${{ github.event.inputs.firebase_hosting_path }}/"/>|' build/web/index.html
+      - name: Deploy to Firebase Hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
           channelId: live
           projectId: app-elevate-core
+
   deploy_github_pages:
     name: "[Web] Deploy to GitHub Pages"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
@@ -323,24 +342,22 @@ jobs:
       contents: read
       pages: write
       id-token: write
-    needs: version
+    needs: build_web
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Get pubspec
+      - name: Get build artifact
         uses: actions/download-artifact@v4
         with:
-          name: pubspec
+          name: web-build
+      - name: Copy files
+        run: |
+          cp -r web-build/* build/web
+          rm -rf web-build
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
 
       - name: Get custom domain from GitHub API
         id: get_custom_domain
@@ -351,16 +368,12 @@ jobs:
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN"
             echo "CUSTOM_DOMAIN=$CUSTOM_DOMAIN" >> $GITHUB_ENV
           fi
-      - name: Start Web Release Build
-        run: |
-          if [ -n "$CUSTOM_DOMAIN" ]; then
-            flutter build web --release
-          else
-            flutter build web --release --base-href=/$(basename $GITHUB_REPOSITORY)/
-          fi
 
-      - name: Copy index.html to 404.html
-        run: cp build/web/index.html build/web/404.html
+      - name: Rewrite base href
+        run: |
+          if [ ! -n "$CUSTOM_DOMAIN" ]; then
+            sed -i 's|<base href="/">|<base href="/$(basename $GITHUB_REPOSITORY)/"/>|' build/web/index.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
