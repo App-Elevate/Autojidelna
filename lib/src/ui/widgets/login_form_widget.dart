@@ -51,7 +51,7 @@ class _LoginFormState extends State<LoginForm> {
               if (value == null || value.isEmpty) {
                 return Alocale.enterYourPassword.getString(context);
               }
-              if (value.length < 6) {
+              if (value.length < 7) {
                 return Alocale.passwordMustBeAtLeast6CharactersLong.getString(context);
               }
               return null;
