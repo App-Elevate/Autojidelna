@@ -246,7 +246,7 @@ jobs:
           channel: "stable"
           cache: true
       - name: Build web
-      - run: flutter build web --release
+        run: flutter build web --release
       - name: Copy index.html to 404.html
         run: cp build/web/index.html build/web/404.html
       - name: Upload build artifact
@@ -328,7 +328,7 @@ jobs:
         run: |
           sed -i 's|<base href="/">|<base href="/${{ github.event.inputs.firebase_hosting_path }}/"/>|' build/web/index.html
       - name: Deploy to Firebase Hosting
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
