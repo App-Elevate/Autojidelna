@@ -440,8 +440,7 @@ jobs:
     # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option even with the 10x
     runs-on: macos-latest
     needs:
-      - version
-      - build_android
+      - deploy_android
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
