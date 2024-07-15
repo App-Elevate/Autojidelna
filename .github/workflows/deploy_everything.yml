@@ -366,8 +366,10 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-  build_android:
-    name: "[Android] Build App Bundle"
+  deploy_android:
+    name: "[Android] Deploy to Google Play Store"
+    environment:
+      name: google-play
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -412,6 +414,15 @@ jobs:
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
+      - name: Release Build to internal track
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          packageName: ${{needs.version.outputs.app_id}}
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal
+          status: draft
+
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
         with:
@@ -423,33 +434,10 @@ jobs:
         with:
           name: symbolsAndroid
           path: symbolsAndroid
-  deploy_android:
-    name: "[Android] Deploy to Google Play Store"
-    needs:
-      - build_android
-      - version
-    # Tested on ubuntu but there is no reason why it shouldn't work on macOS or windows
-    runs-on: ubuntu-latest
-    environment:
-      name: google-play
 
-    steps:
-      - name: Get Android Build from artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: android-release
-
-      - name: Release Build to internal track
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: ${{needs.version.outputs.app_id}}
-          releaseFiles: app-release.aab
-          track: internal
-          status: draft
   symbols_android:
     name: "[Android] Upload Crashlytics Symbols"
-    # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option
+    # Doesn't work on ubuntu, Windows works sometimes but it's super slow. macOS is the best option even with the 10x
     runs-on: macos-latest
     needs:
       - version
