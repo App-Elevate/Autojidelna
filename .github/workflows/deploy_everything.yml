@@ -320,7 +320,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: web-build
-
       - name: Rewrite base href
         run: |
           sed -i 's|<base href="/">|<base href="/${{ github.event.inputs.firebase_hosting_path }}/"/>|' build/web/index.html
@@ -351,6 +350,9 @@ jobs:
         with:
           name: web-build
 
+      - name: IDK
+        run: |
+          ls -R
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
