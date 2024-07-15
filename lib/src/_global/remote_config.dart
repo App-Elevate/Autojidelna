@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:coree/src/_global/app.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 enum RemoteConfigValueType {
   string,
@@ -67,7 +66,6 @@ class Rmc extends ChangeNotifier {
   /// Current Remote Config values - These don't update the ui - use only in functions
   static final Map<String, dynamic> value = Map.from(Rmc.defaultValues);
   StreamSubscription<RemoteConfigUpdate>? _subscription;
-  StreamSubscription<InternetStatus>? _listener;
 
   Map<String, dynamic> get values => _values;
   set values(Map<String, dynamic> values) {
@@ -103,7 +101,6 @@ class Rmc extends ChangeNotifier {
 
   @override
   void dispose() {
-    unawaited(_listener?.cancel());
     unawaited(_subscription?.cancel());
     super.dispose();
   }
