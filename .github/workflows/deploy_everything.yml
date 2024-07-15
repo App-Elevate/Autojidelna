@@ -302,6 +302,9 @@ jobs:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
     needs: build_web
+    permissions:
+      contents: read
+      checks: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
