@@ -318,7 +318,7 @@ jobs:
           path: build/web
       - name: Rewrite base href
         run: |
-          sed -i 's|<base href="/">|<base href="/${{ github.event.inputs.firebase_hosting_path }}/"/>|' build/web/index.html
+          sed -i 's|<base href="/">|<base href="${{ github.event.inputs.firebase_hosting_path }}"/>|' build/web/index.html
 
       - name: Deploy to Firebase Hosting
         uses: FirebaseExtended/action-hosting-deploy@v0
@@ -363,7 +363,7 @@ jobs:
       - name: Rewrite base href
         run: |
           if [ ! -n "$CUSTOM_DOMAIN" ]; then
-            sed -i 's|<base href="/">|<base href="/$(basename $GITHUB_REPOSITORY)/"/>|' build/web/index.html
+          sed -i "s|<base href=\"/\">|<base href=\"/$(basename $GITHUB_REPOSITORY)/\">|" build/web/index.html
           fi
 
       - name: Upload artifact
