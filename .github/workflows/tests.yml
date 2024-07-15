@@ -5,6 +5,23 @@ on:
     types: [opened, synchronize]
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      android:
+        description: "Build Android?"
+        required: true
+        type: boolean
+        default: true
+      ios:
+        description: "Build iOS?"
+        required: true
+        type: boolean
+        default: true
+      web:
+        description: "Build web?"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -138,7 +155,7 @@ jobs:
     name: Build iOS
     runs-on: macos-latest
     needs: filter
-    if: false
+    if: github.event.inputs.ios == 'true'
     # if: ${{ needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -156,7 +173,7 @@ jobs:
     name: Build Android
     runs-on: ubuntu-latest
     needs: filter
-    if: false
+    if: github.event.inputs.android == 'true'
     # if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
@@ -181,7 +198,7 @@ jobs:
     name: Build Web
     runs-on: ubuntu-latest
     needs: filter
-    if: false
+    if: github.event.inputs.web == 'true'
     # if: ${{ needs.filter.outputs.web == 'true' || needs.filter.outputs.lib == 'true' }}
     steps:
       - uses: actions/checkout@v4
