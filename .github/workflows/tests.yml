@@ -5,23 +5,23 @@ on:
     types: [opened, synchronize]
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      android:
-        description: "Build Android?"
-        required: true
-        type: boolean
-        default: true
-      ios:
-        description: "Build iOS?"
-        required: true
-        type: boolean
-        default: true
-      web:
-        description: "Build web?"
-        required: true
-        type: boolean
-        default: false
+workflow_dispatch:
+  inputs:
+    android:
+      description: "Build Android?"
+      required: true
+      type: boolean
+      default: true
+    ios:
+      description: "Build iOS?"
+      required: true
+      type: boolean
+      default: true
+    web:
+      description: "Build web?"
+      required: true
+      type: boolean
+      default: false
 
 permissions:
   contents: read
