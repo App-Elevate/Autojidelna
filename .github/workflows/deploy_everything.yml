@@ -81,8 +81,8 @@ jobs:
             exit 1
           fi
           version=$(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
-          echo "version=$version"
-          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "version=\"$version\""
+          echo "version=\"$version\"" >> "$GITHUB_OUTPUT"
           echo "$version" > version.txt
 
       - name: Update version in YAML
