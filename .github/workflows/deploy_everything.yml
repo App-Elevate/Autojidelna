@@ -149,7 +149,7 @@ jobs:
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release --no-codesign
 
       - name: Signing the app and publishing to App Store
         run: |
