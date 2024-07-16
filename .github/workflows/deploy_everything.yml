@@ -106,6 +106,7 @@ jobs:
   deploy_ios:
     name: "[iOS] Deploy to App Store"
     runs-on: macos-latest
+    timeout-minutes: 30
     environment:
       name: app-store
     needs: version
