@@ -63,6 +63,11 @@ linter:
     no_adjacent_strings_in_list: true
     prefer_single_quotes: true
     comment_references: true
-
+analyzer:
+  exclude:
+    - lib/**.g.dart
+    - lib/**.freezed.dart
+  errors:
+    invalid_annotation_target: ignore
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
