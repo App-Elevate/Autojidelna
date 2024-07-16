@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 class AccountStatusWidget extends StatefulWidget {
   const AccountStatusWidget({super.key});
@@ -36,19 +35,21 @@ class _AccountStatusWidgetState extends State<AccountStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Column(
       children: <Widget>[
-        Text(Alocale.accountStatus.getString(context)),
-        Text(context.formatString(Alocale.loggedIn, [_user != null ? 'true' : 'false'])),
-        if (_user != null) Text(context.formatString(Alocale.userId, [_user!.uid])),
-        if (_user?.displayName != null) Text(context.formatString(Alocale.userDisplayName, [_user!.displayName])),
-        if (_user?.email != null) Text(context.formatString(Alocale.userEmail, [_user!.email])),
-        if (_user != null) Text(context.formatString(Alocale.userEmailVerified, [_user!.emailVerified.toString()])),
-        if (_user?.metadata.lastSignInTime != null) Text(context.formatString(Alocale.lastSignInTime, [_user?.metadata.lastSignInTime.toString()])),
-        if (_user?.metadata.creationTime != null) Text(context.formatString(Alocale.accountcreationTime, [_user?.metadata.creationTime.toString()])),
+        Text(l10n.accountStatus),
+        Text(context.formatString(l10n.loggedIn, [_user != null ? 'true' : 'false'])),
+        if (_user != null) Text(context.formatString(l10n.userId, [_user!.uid])),
+        if (_user?.displayName != null) Text(context.formatString(l10n.userDisplayName, [_user!.displayName])),
+        if (_user?.email != null) Text(context.formatString(l10n.userEmail, [_user!.email])),
+        if (_user != null) Text(context.formatString(l10n.userEmailVerified, [_user!.emailVerified.toString()])),
+        if (_user?.metadata.lastSignInTime != null) Text(context.formatString(l10n.lastSignInTime, [_user?.metadata.lastSignInTime.toString()])),
+        if (_user?.metadata.creationTime != null) Text(context.formatString(l10n.accountcreationTime, [_user?.metadata.creationTime.toString()])),
         if (_user?.providerData != null)
           ..._user!.providerData.map(
-            (UserInfo userInfo) => Text(context.formatString(Alocale.providerId, [userInfo.providerId])),
+            (UserInfo userInfo) => Text(context.formatString(l10n.providerId, [userInfo.providerId])),
           ),
       ],
     );

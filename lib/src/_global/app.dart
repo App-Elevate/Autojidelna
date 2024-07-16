@@ -1,8 +1,6 @@
 import 'package:coree/src/_conf/hive.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,7 +25,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 /// Secure storage: [secureStorage]
 class App {
   static bool _initPlatformExecuted = false;
-  static bool _initLocalizationExecuted = false;
   static bool _initRemoteConfigExecuted = false;
   static bool _initGoogleSignInExecuted = false;
   static bool _initHiveExecuted = false;
@@ -38,20 +35,6 @@ class App {
     packageInfo = await PackageInfo.fromPlatform();
 
     _initPlatformExecuted = true;
-  }
-
-  static Future<void> initLocalization() async {
-    assert(_initLocalizationExecuted == false, 'App.initLocalization() must be called only once');
-    if (_initLocalizationExecuted) return;
-
-    localization = FlutterLocalization.instance;
-
-    final Box box = Hive.box(Boxes.settings);
-    String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
-    initLocale = Locale.fromSubtags(languageCode: locale);
-    box.put(HiveKeys.locale, locale);
-
-    _initLocalizationExecuted = true;
   }
 
   static Future<void> initRemoteConfig() async {
@@ -97,7 +80,7 @@ class App {
 
   static late final GoogleSignIn googleSignIn;
 
-  static late final FlutterLocalization localization;
+  static late final List localization;
 
   /// Initial locale of the app. To get the current locale, use [localization].
   static late final Locale initLocale;

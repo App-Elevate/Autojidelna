@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_global/is_online.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/ui/widgets/account_status_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
@@ -13,58 +12,59 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.routingTestPage.getString(context)),
+        title: Text(l10n.routingTestPage),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(Alocale.routingTestPageDetail.getString(context)),
-            Text(Alocale.routingTestPageDetail1.getString(context)),
+            Text(l10n.routingTestPageDetail),
+            Text(l10n.routingTestPageDetail1),
             ElevatedButton(
               onPressed: () async => context.router.push(const RoutingTestDetailPage()),
-              child: Text(Alocale.routingGoToDetailPage.getString(context)),
+              child: Text(l10n.routingGoToDetailPage),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const RoutingParamPage()),
-              child: Text(Alocale.routingGoToParamDetailPage.getString(context)),
+              child: Text(l10n.routingGoToParamDetailPage),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const LocalizationsPage()),
-              child: Text(Alocale.language.getString(context)),
+              child: Text(l10n.language),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const ProviderTestPage()),
-              child: Text(Alocale.remoteConfig.getString(context)),
+              child: Text(l10n.remoteConfig),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(LoginPage()),
-              child: Text(Alocale.login.getString(context)),
+              child: Text(l10n.login),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const SecretPage()),
-              child: Text(Alocale.secret.getString(context)),
+              child: Text(l10n.secret),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const GoogleSecretPage()),
-              child: Text(Alocale.secretGoogle.getString(context)),
+              child: Text(l10n.secretGoogle),
             ),
             ElevatedButton(
               onPressed: () async => context.router.push(const AppleSecretPage()),
-              child: Text(Alocale.appleSecret.getString(context)),
+              child: Text(l10n.appleSecret),
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
                 return Text(
-                  isOnline.isOnline ? Alocale.connectedToTheInternet.getString(context) : Alocale.disconnectedFromTheInternet.getString(context),
+                  isOnline.isOnline ? l10n.connectedToTheInternet : l10n.disconnectedFromTheInternet,
                 );
               },
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
                 return Text(
-                  isOnline.isOnlineLocal ? Alocale.connectedToANetwork.getString(context) : Alocale.disconnectedFromANetwork.getString(context),
+                  isOnline.isOnlineLocal ? l10n.connectedToANetwork : l10n.disconnectedFromANetwork,
                 );
               },
             ),

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class AppleSecretPage extends StatelessWidget {
@@ -9,14 +8,15 @@ class AppleSecretPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.appleSecret.getString(context)),
+        title: Text(l10n.appleSecret),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(Alocale.appleSecretContent.getString(context)),
+            Text(l10n.appleSecretContent),
           ],
         ),
       ),

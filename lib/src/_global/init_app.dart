@@ -11,11 +11,6 @@ class InitApp {
     // We're using Future.wait to run multiple Futures in parallel
     // These Futures must take less than 200 ms to run
     await Future.wait([
-      App.initHive().then(
-        (_) async => await Future.wait([
-          App.initLocalization(),
-        ]),
-      ),
       App.initSecureStorage(),
       App.initRemoteConfig(),
       App.initGoogleSignIn(),

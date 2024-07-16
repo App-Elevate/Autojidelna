@@ -1,66 +1,25 @@
-import 'dart:async';
-
-import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/is_online.dart';
 import 'package:coree/src/_global/remote_config.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/_global/translate.dart';
 import 'package:coree/src/_routing/app_router.dart';
+import 'package:coree/src/lang/output/texts.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final _appRouter = AppRouter();
-  Locale? _locale;
-
-  @override
-  void initState() {
-    initLocale();
-    super.initState();
-  }
-
-  void initLocale() {
-    if (Alocale.isLocaleSupported(App.initLocale)) {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.initLocale.languageCode));
-      _locale ??= App.initLocale;
-    } else {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, Alocale.defaultLocale.languageCode));
-      _locale ??= Alocale.defaultLocale;
-    }
-    unawaited(
-      App.localization.init(
-        mapLocales: Alocale.mapLocales,
-        initLanguageCode: _locale?.languageCode ?? Alocale.defaultLocale.languageCode,
-      ),
-    );
-    App.localization.onTranslatedLanguage = _onTranslatedLanguage;
-  }
-
-  void _onTranslatedLanguage(Locale? locale) {
-    unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, locale?.languageCode));
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final appRouter = AppRouter();
     return MaterialApp.router(
-      supportedLocales: App.localization.supportedLocales,
-      localizationsDelegates: App.localization.localizationsDelegates,
-      locale: _locale,
+      supportedLocales: Texts.supportedLocales,
+      localizationsDelegates: Texts.localizationsDelegates,
+      locale: context.watch<Translate>().currentLocale,
       debugShowCheckedModeBanner: false,
-      routerConfig: _appRouter.config(
+      routerConfig: appRouter.config(
         includePrefixMatches: true,
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
       ),
@@ -80,6 +39,7 @@ class MyAppWrapper extends StatelessWidget {
     return ToastificationWrapper(
       child: MultiProvider(
         providers: [
+          ChangeNotifierProvider(create: (context) => Translate(), lazy: false),
           ChangeNotifierProvider(create: (context) => IsOnline(), lazy: false),
           ChangeNotifierProvider(create: (context) => Rmc(), lazy: false),
         ],

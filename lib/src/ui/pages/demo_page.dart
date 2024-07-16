@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/ui/widgets/buttons/about_app_button_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class DemoPage extends StatefulWidget {
@@ -25,19 +24,19 @@ class _DemoPageState extends State<DemoPage> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: const [AboutAppButton()],
-        title: Text(Alocale.demoPageTitle.getString(context)),
+        title: Text(l10n.demoPageTitle),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(
-              Alocale.buttonPushed.getString(context),
-            ),
+            Text(l10n.buttonPushed),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
