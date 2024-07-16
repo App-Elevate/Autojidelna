@@ -59,6 +59,9 @@ dependencies:
 
   flutter_secure_storage: ^9.2.2
   permission_handler: ^11.3.1
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  http: ^1.2.1
 
 # Dependency overrides for macos and web support of permission_handler
 dependency_overrides:
@@ -95,7 +98,9 @@ dev_dependencies:
   auto_route_generator: ^8.0.0
   hive_generator: ^2.0.1
 
-  build_runner:
+  build_runner: ^2.4.11
+  freezed: ^2.5.2
+  json_serializable: ^6.8.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

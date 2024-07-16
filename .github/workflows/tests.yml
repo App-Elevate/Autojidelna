@@ -11,17 +11,17 @@ on:
         description: "Build Android?"
         required: true
         type: boolean
-        default: true
+        default: false
       ios:
         description: "Build iOS?"
         required: true
         type: boolean
-        default: true
+        default: false
       web:
         description: "Build web?"
         required: true
         type: boolean
-        default: false
+        default: true
 
 permissions:
   contents: read
@@ -41,6 +41,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check branch name
         id: check_branch
+        if: github.event_name == 'pull_request'
         run: |
           if [[ ! ${{ github.event.pull_request.head.ref }} =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name does not match pattern."
@@ -52,7 +53,7 @@ jobs:
 
       - name: Check if comment exists
         id: check_comment
-        if: env.valid == 'false' || env.valid == 'true'
+        if: (env.valid == 'false' || env.valid == 'true') && github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -78,7 +79,7 @@ jobs:
           fi
 
       - name: Close PR and comment
-        if: env.valid == 'false' && env.comment_exists == 'false'
+        if: env.valid == 'false' && env.comment_exists == 'false' && github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -99,7 +100,7 @@ jobs:
           exit 1
 
       - name: Comment nice
-        if: env.valid == 'true' && env.comment_exists == 'false'
+        if: env.valid == 'true' && env.comment_exists == 'false' && github.event_name == 'pull_request'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -115,7 +116,7 @@ jobs:
 
       - name: Filter paths
         id: filter
-        if: env.valid == 'true'
+        if: env.valid == 'true' && github.event_name == 'pull_request'
         uses: dorny/paths-filter@v3
         with:
           filters: |
@@ -133,22 +134,22 @@ jobs:
               - 'analysis_options.yaml'
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
-        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' }}
+        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
         with:
           channel: "stable"
           cache: true
 
       - name: Install dependencies
-        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' }}
+        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
         run: flutter pub get
 
       - name: Analyze
-        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' }}
+        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
 
         run: flutter analyze --fatal-infos
 
       - name: Test
-        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' }}
+        if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
         run: flutter test
 
   build_ios:

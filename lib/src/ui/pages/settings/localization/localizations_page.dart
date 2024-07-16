@@ -29,8 +29,14 @@ class LocalizationsPage extends StatelessWidget {
               ),
               child: Text(Alocale.showLocale.getString(context)),
             ),
-            ElevatedButton(onPressed: () => App.localization.translate('en'), child: Text(Alocale.languageEnglish.getString(context))),
-            ElevatedButton(onPressed: () => App.localization.translate('cs'), child: Text(Alocale.languageCzech.getString(context))),
+            ElevatedButton(
+              onPressed: () => App.localization.translate('en'),
+              child: Text(Alocale.languageEnglish.getString(context)),
+            ),
+            ElevatedButton(
+              onPressed: () => App.localization.translate('cs'),
+              child: Text(Alocale.languageCzech.getString(context)),
+            ),
           ],
         ),
       ),
