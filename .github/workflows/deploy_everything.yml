@@ -58,7 +58,6 @@ jobs:
     outputs:
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
-      version: ${{ steps.version.outputs.version }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -70,8 +69,6 @@ jobs:
         run: |
           if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
-            echo "version=${GITHUB_REF#refs/heads/}"
-            echo "version=${GITHUB_REF#refs/heads/}" >> "$GITHUB_OUTPUT"
             echo "${GITHUB_REF#refs/heads/}" > version.txt
             exit 0
           fi
@@ -81,8 +78,6 @@ jobs:
             exit 1
           fi
           version=$(git log --merges -1 --pretty=%B | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
-          echo "version=\"$version\""
-          echo "version=\"$version\"" >> "$GITHUB_OUTPUT"
           echo "$version" > version.txt
 
       - name: Update version in YAML

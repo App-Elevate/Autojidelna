@@ -112,6 +112,7 @@ mixin Alocale {
   static const String providerId = 'provider_id';
 
   static const String resetPassword = 'reset_password';
+  static const String getLatestRelease = 'get_latest_release';
 
   static const Map<String, dynamic> en = {
     language: 'Language',
@@ -203,6 +204,8 @@ mixin Alocale {
     accountcreationTime: 'Account Creation Time: %a',
     providerId: 'Provider ID: %a',
     resetPassword: 'Reset password',
+
+    getLatestRelease: 'Get latest release',
   };
   static const Map<String, dynamic> cs = {
     language: 'Jazyk',
@@ -294,5 +297,7 @@ mixin Alocale {
     accountcreationTime: 'Čas vytvoření účtu: %a',
     providerId: 'ID poskytovatele: %a',
     resetPassword: 'Obnovit heslo',
+
+    getLatestRelease: 'Získat nejnovější verzi',
   };
 }
