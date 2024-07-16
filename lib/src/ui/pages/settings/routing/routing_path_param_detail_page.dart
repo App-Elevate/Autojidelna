@@ -20,7 +20,7 @@ class RoutingPathParamDetailPage extends StatelessWidget {
           children: <Widget>[
             Text(l10n.routingParamDetailPageDetail1),
             Text(l10n.routingParamDetailPageDetail2),
-            Text(context.formatString(l10n.routingParamDetailPageDetail3, [filmId])),
+            Text(l10n.routingParamDetailPageDetail3(filmId!)),
           ],
         ),
       ),

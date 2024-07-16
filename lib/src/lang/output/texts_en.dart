@@ -1,11 +1,10 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'texts.dart';
 
 /// The translations for English (`en`).
 class TextsEn extends Texts {
   TextsEn([String locale = 'en']) : super(locale);
-
-  @override
-  String get helloWorld => 'Hello World!';
 
   @override
   String get language => 'Language';
@@ -26,7 +25,8 @@ class TextsEn extends Texts {
   String get debug => ' - debug';
 
   @override
-  String get appDescription => 'Application that is the basis for other applications.';
+  String get appDescription =>
+      'Application that is the basis for other applications.';
 
   @override
   String get counting => 'Counting';
@@ -50,7 +50,8 @@ class TextsEn extends Texts {
   String get routingParamPageDetail => 'This is a routing param page.';
 
   @override
-  String get routingParamPageDetail2 => 'It is used to test routing with parameters.';
+  String get routingParamPageDetail2 =>
+      'It is used to test routing with parameters.';
 
   @override
   String get routingParamFilmId => 'Path param Film ID';
@@ -62,19 +63,24 @@ class TextsEn extends Texts {
   String get routingParamDetailPageDetail => 'Routing Param Detail Page';
 
   @override
-  String get routingParamDetailPageDetail1 => 'This is a routing param detail page.';
+  String get routingParamDetailPageDetail1 =>
+      'This is a routing param detail page.';
 
   @override
-  String get routingParamDetailPageDetail2 => 'It is used to test routing with parameters.';
+  String get routingParamDetailPageDetail2 =>
+      'It is used to test routing with parameters.';
 
   @override
-  String get routingParamDetailPageDetail3 => 'Film ID: %a';
+  String routingParamDetailPageDetail3(num filmId) {
+    return 'Film ID: $filmId';
+  }
 
   @override
   String get routingTestDetailDetail => 'Routing Test Detail Detail';
 
   @override
-  String get routingTestDetailDetailText => 'This is a routing test detail detail page.';
+  String get routingTestDetailDetailText =>
+      'This is a routing test detail detail page.';
 
   @override
   String get goBack => 'Go back';
@@ -182,7 +188,8 @@ class TextsEn extends Texts {
   String get enterYourPassword => 'Please enter your password';
 
   @override
-  String get passwordMustBeAtLeast6CharactersLong => 'Password must be at least 6 characters long';
+  String get passwordMustBeAtLeast6CharactersLong =>
+      'Password must be at least 6 characters long';
 
   @override
   String get signInWithEmailAndPassword => 'Sign in with email and password';
@@ -197,28 +204,52 @@ class TextsEn extends Texts {
   String get accountStatus => 'Account Status';
 
   @override
-  String get loggedIn => 'Logged in: %a';
+  String loggedIn(String bool) {
+    return 'Logged in: $bool';
+  }
 
   @override
-  String get userId => 'User ID: %a';
+  String userId(String id) {
+    return 'User ID: $id';
+  }
 
   @override
-  String get userDisplayName => 'User Display Name: %a';
+  String userDisplayName(String name) {
+    return 'User Display Name: $name';
+  }
 
   @override
-  String get userEmail => 'User Email: %a';
+  String userEmail(String email) {
+    return 'User Email: $email';
+  }
 
   @override
-  String get userEmailVerified => 'User Email Verified: %a';
+  String userEmailVerified(String bool) {
+    return 'User Email Verified: $bool';
+  }
 
   @override
-  String get lastSignInTime => 'Last Sign In Time: %a';
+  String lastSignInTime(DateTime date) {
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Last Sign In Time: $dateString';
+  }
 
   @override
-  String get accountcreationTime => 'Account Creation Time: %a';
+  String accountcreationTime(DateTime date) {
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Account Creation Time: $dateString';
+  }
 
   @override
-  String get providerId => 'Provider ID: %a';
+  String providerId(String id) {
+    return 'Provider ID: $id';
+  }
 
   @override
   String get resetPassword => 'Reset password';

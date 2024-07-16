@@ -1,9 +1,5 @@
 {
   "@@locale": "en",
-  "helloWorld": "Hello World!",
-  "@helloWorld": {
-    "description": "The conventional newborn programmer greeting"
-  },
   "language": "Language",
   "languageName": "English",
   "languageEnglish": "English",
@@ -24,7 +20,15 @@
   "routingParamDetailPageDetail": "Routing Param Detail Page",
   "routingParamDetailPageDetail1": "This is a routing param detail page.",
   "routingParamDetailPageDetail2": "It is used to test routing with parameters.",
-  "routingParamDetailPageDetail3": "Film ID: %a",
+  "routingParamDetailPageDetail3": "Film ID: {filmId}",
+  "@routingParamDetailPageDetail3": {
+    "placeholders": {
+      "filmId": {
+        "type": "num",
+        "example": "100"
+      }
+    }
+  },
   "routingTestDetailDetail": "Routing Test Detail Detail",
   "routingTestDetailDetailText": "This is a routing test detail detail page.",
   "goBack": "Go back",
@@ -67,13 +71,77 @@
   "createAccount": "Create account with email and password",
   "secretPage": "Secret Page",
   "accountStatus": "Account Status",
-  "loggedIn": "Logged in: %a",
-  "userId": "User ID: %a",
-  "userDisplayName": "User Display Name: %a",
-  "userEmail": "User Email: %a",
-  "userEmailVerified": "User Email Verified: %a",
-  "lastSignInTime": "Last Sign In Time: %a",
-  "accountcreationTime": "Account Creation Time: %a",
-  "providerId": "Provider ID: %a",
+  "loggedIn": "Logged in: {bool}",
+  "@loggedIn": {
+    "placeholders": {
+      "bool": {
+        "type": "String",
+        "example": "false"
+      }
+    }
+  },
+  "userId": "User ID: {id}",
+  "@userId": {
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "MNJNS3q134213rdasfn"
+      }
+    }
+  },
+  "userDisplayName": "User Display Name: {name}",
+  "@userDisplayName": {
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "ALena Novotna"
+      }
+    }
+  },
+  "userEmail": "User Email: {email}",
+  "@userEmail": {
+    "placeholders": {
+      "email": {
+        "type": "String",
+        "example": "this@example.com"
+      }
+    }
+  },
+  "userEmailVerified": "User Email Verified: {bool}",
+  "@userEmailVerified": {
+    "placeholders": {
+      "bool": {
+        "type": "String",
+        "example": "false"
+      }
+    }
+  },
+  "lastSignInTime": "Last Sign In Time: {date}",
+  "@lastSignInTime": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMEEEEd"
+      }
+    }
+  },
+  "accountcreationTime": "Account Creation Time: {date}",
+  "@accountcreationTime": {
+    "placeholders": {
+      "date": {
+        "type": "DateTime",
+        "format": "yMMMMEEEEd"
+      }
+    }
+  },
+  "providerId": "Provider ID: {id}",
+  "@providerId": {
+    "placeholders": {
+      "id": {
+        "type": "String",
+        "example": "google.com"
+      }
+    }
+  },
   "resetPassword": "Reset password"
 }

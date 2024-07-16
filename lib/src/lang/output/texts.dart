@@ -60,7 +60,8 @@ import 'texts_en.dart';
 /// be consistent with the languages listed in the Texts.supportedLocales
 /// property.
 abstract class Texts {
-  Texts(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  Texts(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -80,7 +81,8 @@ abstract class Texts {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
+      <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -92,12 +94,6 @@ abstract class Texts {
     Locale('cs'),
     Locale('en')
   ];
-
-  /// The conventional newborn programmer greeting
-  ///
-  /// In en, this message translates to:
-  /// **'Hello World!'**
-  String get helloWorld;
 
   /// No description provided for @language.
   ///
@@ -222,8 +218,8 @@ abstract class Texts {
   /// No description provided for @routingParamDetailPageDetail3.
   ///
   /// In en, this message translates to:
-  /// **'Film ID: %a'**
-  String get routingParamDetailPageDetail3;
+  /// **'Film ID: {filmId}'**
+  String routingParamDetailPageDetail3(num filmId);
 
   /// No description provided for @routingTestDetailDetail.
   ///
@@ -480,50 +476,50 @@ abstract class Texts {
   /// No description provided for @loggedIn.
   ///
   /// In en, this message translates to:
-  /// **'Logged in: %a'**
-  String get loggedIn;
+  /// **'Logged in: {bool}'**
+  String loggedIn(String bool);
 
   /// No description provided for @userId.
   ///
   /// In en, this message translates to:
-  /// **'User ID: %a'**
-  String get userId;
+  /// **'User ID: {id}'**
+  String userId(String id);
 
   /// No description provided for @userDisplayName.
   ///
   /// In en, this message translates to:
-  /// **'User Display Name: %a'**
-  String get userDisplayName;
+  /// **'User Display Name: {name}'**
+  String userDisplayName(String name);
 
   /// No description provided for @userEmail.
   ///
   /// In en, this message translates to:
-  /// **'User Email: %a'**
-  String get userEmail;
+  /// **'User Email: {email}'**
+  String userEmail(String email);
 
   /// No description provided for @userEmailVerified.
   ///
   /// In en, this message translates to:
-  /// **'User Email Verified: %a'**
-  String get userEmailVerified;
+  /// **'User Email Verified: {bool}'**
+  String userEmailVerified(String bool);
 
   /// No description provided for @lastSignInTime.
   ///
   /// In en, this message translates to:
-  /// **'Last Sign In Time: %a'**
-  String get lastSignInTime;
+  /// **'Last Sign In Time: {date}'**
+  String lastSignInTime(DateTime date);
 
   /// No description provided for @accountcreationTime.
   ///
   /// In en, this message translates to:
-  /// **'Account Creation Time: %a'**
-  String get accountcreationTime;
+  /// **'Account Creation Time: {date}'**
+  String accountcreationTime(DateTime date);
 
   /// No description provided for @providerId.
   ///
   /// In en, this message translates to:
-  /// **'Provider ID: %a'**
-  String get providerId;
+  /// **'Provider ID: {id}'**
+  String providerId(String id);
 
   /// No description provided for @resetPassword.
   ///
@@ -541,25 +537,25 @@ class _TextsDelegate extends LocalizationsDelegate<Texts> {
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['cs', 'en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      <String>['cs', 'en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_TextsDelegate old) => false;
 }
 
 Texts lookupTexts(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'cs': return TextsCs();
-    case 'en': return TextsEn();
+    case 'cs':
+      return TextsCs();
+    case 'en':
+      return TextsEn();
   }
 
   throw FlutterError(
-    'Texts.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+      'Texts.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

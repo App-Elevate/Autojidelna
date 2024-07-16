@@ -1,11 +1,10 @@
+import 'package:intl/intl.dart' as intl;
+
 import 'texts.dart';
 
 /// The translations for Czech (`cs`).
 class TextsCs extends Texts {
   TextsCs([String locale = 'cs']) : super(locale);
-
-  @override
-  String get helloWorld => 'Hello World!';
 
   @override
   String get language => 'Jazyk';
@@ -50,7 +49,8 @@ class TextsCs extends Texts {
   String get routingParamPageDetail => 'Toto je stránka s parametry směrování.';
 
   @override
-  String get routingParamPageDetail2 => 'Slouží k testování směrování s parametry.';
+  String get routingParamPageDetail2 =>
+      'Slouží k testování směrování s parametry.';
 
   @override
   String get routingParamFilmId => 'Cesta param Film ID';
@@ -59,22 +59,28 @@ class TextsCs extends Texts {
   String get routingParamQueryFilmId => 'Dotaz param Film ID';
 
   @override
-  String get routingParamDetailPageDetail => 'Stránka s podrobnostmi o parametrech směrování';
+  String get routingParamDetailPageDetail =>
+      'Stránka s podrobnostmi o parametrech směrování';
 
   @override
-  String get routingParamDetailPageDetail1 => 'Toto je stránka s podrobnostmi o parametrech směrování.';
+  String get routingParamDetailPageDetail1 =>
+      'Toto je stránka s podrobnostmi o parametrech směrování.';
 
   @override
-  String get routingParamDetailPageDetail2 => 'Slouží k testování směrování s parametry.';
+  String get routingParamDetailPageDetail2 =>
+      'Slouží k testování směrování s parametry.';
 
   @override
-  String get routingParamDetailPageDetail3 => 'Film ID: %a';
+  String routingParamDetailPageDetail3(num filmId) {
+    return 'Film ID: $filmId';
+  }
 
   @override
   String get routingTestDetailDetail => 'Podrobnosti o testování směrování';
 
   @override
-  String get routingTestDetailDetailText => 'Toto je podostránka s podrobnostmi o testování směrování.';
+  String get routingTestDetailDetailText =>
+      'Toto je podostránka s podrobnostmi o testování směrování.';
 
   @override
   String get goBack => 'Jít zpět';
@@ -86,7 +92,8 @@ class TextsCs extends Texts {
   String get routingGoToDetailPage => 'Jít na podrobnosti stránky';
 
   @override
-  String get routingGoToParamDetailPage => 'Jít na podrobnosti stránky s parametry';
+  String get routingGoToParamDetailPage =>
+      'Jít na podrobnosti stránky s parametry';
 
   @override
   String get routingTestPage => 'Nastavení';
@@ -182,10 +189,12 @@ class TextsCs extends Texts {
   String get enterYourPassword => 'Zadejte své heslo';
 
   @override
-  String get passwordMustBeAtLeast6CharactersLong => 'Heslo musí mít alespoň 6 znaků';
+  String get passwordMustBeAtLeast6CharactersLong =>
+      'Heslo musí mít alespoň 6 znaků';
 
   @override
-  String get signInWithEmailAndPassword => 'Přihlásit se pomocí e-mailu a hesla';
+  String get signInWithEmailAndPassword =>
+      'Přihlásit se pomocí e-mailu a hesla';
 
   @override
   String get createAccount => 'Vytvořit účet s e-mailem a heslem';
@@ -197,28 +206,52 @@ class TextsCs extends Texts {
   String get accountStatus => 'Stav účtu';
 
   @override
-  String get loggedIn => 'Přihlášen: %a';
+  String loggedIn(String bool) {
+    return 'Přihlášen: $bool';
+  }
 
   @override
-  String get userId => 'ID uživatele: %a';
+  String userId(String id) {
+    return 'ID uživatele: $id';
+  }
 
   @override
-  String get userDisplayName => 'Zobrazované jméno uživatele: %a';
+  String userDisplayName(String name) {
+    return 'Zobrazované jméno uživatele: $name';
+  }
 
   @override
-  String get userEmail => 'E-mail uživatele: %a';
+  String userEmail(String email) {
+    return 'E-mail uživatele: $email';
+  }
 
   @override
-  String get userEmailVerified => 'E-mail uživatele ověřen: %a';
+  String userEmailVerified(String bool) {
+    return 'E-mail uživatele ověřen: $bool';
+  }
 
   @override
-  String get lastSignInTime => 'Čas posledního přihlášení: %a';
+  String lastSignInTime(DateTime date) {
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Čas posledního přihlášení: $dateString';
+  }
 
   @override
-  String get accountcreationTime => 'Čas vytvoření účtu: %a';
+  String accountcreationTime(DateTime date) {
+    final intl.DateFormat dateDateFormat =
+        intl.DateFormat.yMMMMEEEEd(localeName);
+    final String dateString = dateDateFormat.format(date);
+
+    return 'Čas vytvoření účtu: $dateString';
+  }
 
   @override
-  String get providerId => 'ID poskytovatele: %a';
+  String providerId(String id) {
+    return 'ID poskytovatele: $id';
+  }
 
   @override
   String get resetPassword => 'Obnovit heslo';
