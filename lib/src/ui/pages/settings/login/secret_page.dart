@@ -9,17 +9,17 @@ class SecretPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.secretPage),
+        title: Text(lang.secretPage),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
             ElevatedButton(
               onPressed: () async => context.router.navigate(const SettingsPage()),
-              child: Text(l10n.goToSettings),
+              child: Text(lang.goToSettings),
             ),
           ],
         ),

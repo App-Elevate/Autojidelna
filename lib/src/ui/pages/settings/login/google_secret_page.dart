@@ -8,15 +8,15 @@ class GoogleSecretPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.secretGoogle),
+        title: Text(lang.secretGoogle),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(l10n.secretGoogleContent),
+            Text(lang.secretGoogleContent),
           ],
         ),
       ),

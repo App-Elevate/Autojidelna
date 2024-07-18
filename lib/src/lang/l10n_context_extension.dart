@@ -5,6 +5,4 @@ export 'package:coree/src/lang/output/texts.dart';
 
 extension AppLocalizationsX on BuildContext {
   Texts get l10n => Texts.of(this);
-  static const defaultLocale = Locale('en');
-  static Function(Locale language)? translate;
 }

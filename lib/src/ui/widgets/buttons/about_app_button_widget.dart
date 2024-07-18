@@ -10,13 +10,13 @@ class AboutAppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return IconButton(
       icon: const Icon(Icons.info_outline),
       onPressed: () => showAboutDialog(
         context: context,
-        applicationName: l10n.appName,
-        applicationVersion: App.packageInfo.version + (kDebugMode ? l10n.debug : ''),
+        applicationName: lang.appName,
+        applicationVersion: App.packageInfo.version + (kDebugMode ? lang.debug : ''),
         applicationIcon: GestureDetector(
           onTap: appElevateClick,
           child: Image.asset(
@@ -25,7 +25,7 @@ class AboutAppButton extends StatelessWidget {
           ),
         ),
         children: [
-          Text(l10n.appDescription),
+          Text(lang.appDescription),
           GestureDetector(
             onTap: appElevateClick,
             child: Padding(

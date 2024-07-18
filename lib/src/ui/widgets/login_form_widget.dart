@@ -26,48 +26,48 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
           TextFormField(
             controller: _emailController,
-            decoration: InputDecoration(labelText: l10n.email),
+            decoration: InputDecoration(labelText: lang.email),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return l10n.enterYourEmail;
+                return lang.enterYourEmail;
               }
               if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
-                return l10n.enterAValidEmailAddress;
+                return lang.enterAValidEmailAddress;
               }
               return null;
             },
           ),
           TextFormField(
             controller: _passwordController,
-            decoration: InputDecoration(labelText: l10n.password),
+            decoration: InputDecoration(labelText: lang.password),
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return l10n.enterYourPassword;
+                return lang.enterYourPassword;
               }
               if (value.length < 7) {
-                return l10n.passwordMustBeAtLeast6CharactersLong;
+                return lang.passwordMustBeAtLeast6CharactersLong;
               }
               return null;
             },
           ),
           ElevatedButton(
             onPressed: () async => _formKey.currentState!.validate() ? handleEmailSignIn(_emailController.text, _passwordController.text) : null,
-            child: Text(l10n.signInWithEmailAndPassword),
+            child: Text(lang.signInWithEmailAndPassword),
           ),
           ElevatedButton(
             onPressed: () async => _formKey.currentState!.validate() ? handleEmailRegister(_emailController.text, _passwordController.text) : null,
-            child: Text(l10n.createAccount),
+            child: Text(lang.createAccount),
           ),
           ElevatedButton(
             onPressed: () async => _formKey.currentState!.validate() ? handlePasswordReset(_emailController.text) : null,
-            child: Text(l10n.resetPassword),
+            child: Text(lang.resetPassword),
           ),
         ],
       ),

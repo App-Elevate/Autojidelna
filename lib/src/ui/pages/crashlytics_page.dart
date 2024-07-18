@@ -10,13 +10,13 @@ class CrashlyticsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(l10n.crashlyticsPage),
-          TextButton(onPressed: crashlyticsTestFunction, child: Text(l10n.crashlyticsTestCrash)),
+          Text(lang.crashlyticsPage),
+          TextButton(onPressed: crashlyticsTestFunction, child: Text(lang.crashlyticsTestCrash)),
           TextButton(
             onPressed: () async {
               if (await Permission.location.request() == PermissionStatus.granted) {

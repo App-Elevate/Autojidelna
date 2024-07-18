@@ -13,17 +13,17 @@ class RoutingQueryParamDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.routingParamDetailPageDetail),
+        title: Text(lang.routingParamDetailPageDetail),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(l10n.routingParamDetailPageDetail1),
-            Text(l10n.routingParamDetailPageDetail2),
-            Text(l10n.routingParamDetailPageDetail3(filmid!)),
+            Text(lang.routingParamDetailPageDetail1),
+            Text(lang.routingParamDetailPageDetail2),
+            Text(lang.routingParamDetailPageDetail3(filmid!)),
           ],
         ),
       ),

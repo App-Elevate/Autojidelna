@@ -25,6 +25,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.4.1"
+  arb_utils:
+    dependency: "direct dev"
+    description:
+      name: arb_utils
+      sha256: "6a4cc9fec625f6e3753c32042c23140bca5c00a4ebbd228e572b311fbcdb32c0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.0+1"
   args:
     dependency: transitive
     description:

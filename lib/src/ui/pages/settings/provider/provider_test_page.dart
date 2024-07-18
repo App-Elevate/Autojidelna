@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/remote_config.dart';
+import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -10,10 +10,10 @@ class ProviderTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.providerTestPage),
+        title: Text(lang.providerTestPage),
       ),
       body: Center(
         child: Consumer<Rmc>(
