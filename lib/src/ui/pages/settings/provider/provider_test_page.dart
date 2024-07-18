@@ -10,10 +10,10 @@ class ProviderTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.providerTestPage),
+        title: Text(lang.providerTestPage),
       ),
       body: Center(
         child: Consumer<Rmc>(

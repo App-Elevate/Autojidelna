@@ -17,10 +17,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 ///
 /// Google sign in: [googleSignIn]
 ///
-/// Localization: [localization]
-///
-/// Initial locale: [initLocale] (To get the current locale, use [localization])
-///
 /// Package info: [packageInfo]
 ///
 /// Secure storage: [secureStorage]
@@ -45,7 +41,7 @@ class App {
 
     final Box box = Hive.box(Boxes.settings);
     String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
-    initLocale = Locale.fromSubtags(languageCode: locale);
+    currentLocale = Locale.fromSubtags(languageCode: locale);
     box.put(HiveKeys.locale, locale);
 
     _initLocalizationExecuted = true;
@@ -94,8 +90,16 @@ class App {
 
   static late final GoogleSignIn googleSignIn;
 
-  /// Initial locale of the app. To get the current locale, use [localization].
-  static late final Locale initLocale;
+  static late Locale currentLocale;
 
   static late final PackageInfo packageInfo;
+
+  static const defaultLocale = Locale('en');
+
+  /// This function is used to change the language of the app.
+  ///
+  /// You can also pass null to this function to set the default language.
+  ///
+  /// Do not call this before MaterialApp is built.
+  static late Function(Locale? language) translate;
 }

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/_global/is_online.dart';
-import 'package:coree/src/_global/remote_config.dart';
+import 'package:coree/src/_global/providers/is_online.dart';
+import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
@@ -30,18 +30,20 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initLocale() {
-    if (Texts.supportedLocales.contains(App.initLocale)) {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.initLocale.languageCode));
-      _locale ??= App.initLocale;
+    if (Texts.supportedLocales.contains(App.currentLocale)) {
+      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.currentLocale.languageCode));
+      _locale ??= App.currentLocale;
     } else {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, AppLocalizationsX.defaultLocale.languageCode));
-      _locale ??= AppLocalizationsX.defaultLocale;
+      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.defaultLocale.languageCode));
+      _locale ??= App.defaultLocale;
     }
-    AppLocalizationsX.translate = _onTranslatedLanguage;
+    App.translate = _onTranslatedLanguage;
   }
 
   void _onTranslatedLanguage(Locale? locale) {
-    unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, locale?.languageCode));
+    locale ??= App.defaultLocale;
+    unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, locale.languageCode));
+    App.currentLocale = locale;
     setState(() {
       _locale = locale;
     });

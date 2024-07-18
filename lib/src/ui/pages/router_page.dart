@@ -9,7 +9,7 @@ class RouterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return AutoTabsScaffold(
       // These should Always be constant.
       routes: const [
@@ -22,9 +22,9 @@ class RouterPage extends StatelessWidget {
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,
           items: [
-            BottomNavigationBarItem(label: l10n.counting, icon: const Icon(Icons.numbers)),
-            BottomNavigationBarItem(label: l10n.crashlytics, icon: const Icon(Icons.bug_report)),
-            BottomNavigationBarItem(label: l10n.settings, icon: const Icon(Icons.settings)),
+            BottomNavigationBarItem(label: lang.counting, icon: const Icon(Icons.numbers)),
+            BottomNavigationBarItem(label: lang.crashlytics, icon: const Icon(Icons.bug_report)),
+            BottomNavigationBarItem(label: lang.settings, icon: const Icon(Icons.settings)),
           ],
         );
       },

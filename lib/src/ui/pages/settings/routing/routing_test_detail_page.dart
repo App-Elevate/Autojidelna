@@ -10,7 +10,7 @@ class RoutingTestDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
@@ -19,10 +19,10 @@ class RoutingTestDetailPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(l10n.routingParamDetailPageDetail),
+            Text(lang.routingParamDetailPageDetail),
             ElevatedButton(
               onPressed: () async => context.router.push((const RoutingTestDetailDetail())),
-              child: Text(l10n.routingGoToDetailDetail),
+              child: Text(lang.routingGoToDetailDetail),
             ),
           ],
         ),

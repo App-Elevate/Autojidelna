@@ -8,15 +8,15 @@ class AppleSecretPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.appleSecret),
+        title: Text(lang.appleSecret),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(l10n.appleSecretContent),
+            Text(lang.appleSecretContent),
           ],
         ),
       ),

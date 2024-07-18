@@ -24,19 +24,19 @@ class _DemoPageState extends State<DemoPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: const [AboutAppButton()],
-        title: Text(l10n.demoPageTitle),
+        title: Text(lang.demoPageTitle),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(l10n.buttonPushed),
+            Text(lang.buttonPushed),
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,

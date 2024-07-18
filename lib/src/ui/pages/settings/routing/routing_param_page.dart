@@ -9,25 +9,25 @@ class RoutingParamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.routingParamPage),
+        title: Text(lang.routingParamPage),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(l10n.routingParamPageDetail),
-            Text(l10n.routingParamPageDetail2),
+            Text(lang.routingParamPageDetail),
+            Text(lang.routingParamPageDetail2),
             Form(
               child: TextFormField(
-                decoration: InputDecoration(labelText: l10n.routingParamQueryFilmId),
+                decoration: InputDecoration(labelText: lang.routingParamQueryFilmId),
                 onFieldSubmitted: (String value) async => context.router.push(RoutingQueryParamDetailPage(filmid: int.tryParse(value))),
               ),
             ),
             Form(
               child: TextFormField(
-                decoration: InputDecoration(labelText: l10n.routingParamFilmId),
+                decoration: InputDecoration(labelText: lang.routingParamFilmId),
                 onFieldSubmitted: (String value) async => context.router.push(RoutingPathParamDetailPage(filmid: value)),
               ),
             ),

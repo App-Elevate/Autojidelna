@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:toastification/toastification.dart';
@@ -9,10 +10,10 @@ class LocalizationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.localization),
+        title: Text(lang.localization),
       ),
       body: Center(
         child: Column(
@@ -20,21 +21,21 @@ class LocalizationsPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async => Toastification().show(
                 title: Text(
-                  '${l10n.localization}: ${Localizations.localeOf(context)}',
+                  '${lang.localization}: ${Localizations.localeOf(context)}',
                 ),
                 alignment: Alignment.bottomCenter,
                 style: ToastificationStyle.simple,
                 autoCloseDuration: const Duration(seconds: 2),
               ),
-              child: Text(l10n.showLocale),
+              child: Text(lang.showLocale),
             ),
             ElevatedButton(
-              onPressed: () => AppLocalizationsX.translate!(const Locale('en')),
-              child: Text(l10n.languageEnglish),
+              onPressed: () => App.translate(const Locale('en')),
+              child: Text(lang.languageEnglish),
             ),
             ElevatedButton(
-              onPressed: () => AppLocalizationsX.translate!(const Locale('cs')),
-              child: Text(l10n.languageCzech),
+              onPressed: () => App.translate(const Locale('cs')),
+              child: Text(lang.languageCzech),
             ),
           ],
         ),

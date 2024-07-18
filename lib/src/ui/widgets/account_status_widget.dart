@@ -35,21 +35,21 @@ class _AccountStatusWidgetState extends State<AccountStatusWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
 
     return Column(
       children: <Widget>[
-        Text(l10n.accountStatus),
-        Text(l10n.loggedIn(_user != null ? 'true' : 'false')),
-        if (_user != null) Text(l10n.userId(_user!.uid)),
-        if (_user?.displayName != null) Text(l10n.userDisplayName(_user!.displayName ?? '')),
-        if (_user?.email != null) Text(l10n.userEmail(_user!.email ?? '')),
-        if (_user != null) Text(l10n.userEmailVerified(_user!.emailVerified.toString())),
-        if (_user?.metadata.lastSignInTime != null) Text(l10n.lastSignInTime(_user?.metadata.lastSignInTime ?? DateTime.now())),
-        if (_user?.metadata.creationTime != null) Text(l10n.accountcreationTime(_user?.metadata.creationTime ?? DateTime.now())),
+        Text(lang.accountStatus),
+        Text(lang.loggedIn(_user != null ? 'true' : 'false')),
+        if (_user != null) Text(lang.userId(_user!.uid)),
+        if (_user?.displayName != null) Text(lang.userDisplayName(_user!.displayName ?? '')),
+        if (_user?.email != null) Text(lang.userEmail(_user!.email ?? '')),
+        if (_user != null) Text(lang.userEmailVerified(_user!.emailVerified.toString())),
+        if (_user?.metadata.lastSignInTime != null) Text(lang.lastSignInTime(_user?.metadata.lastSignInTime ?? DateTime.now())),
+        if (_user?.metadata.creationTime != null) Text(lang.accountcreationTime(_user?.metadata.creationTime ?? DateTime.now())),
         if (_user?.providerData != null)
           ..._user!.providerData.map(
-            (UserInfo userInfo) => Text(l10n.providerId(userInfo.providerId)),
+            (UserInfo userInfo) => Text(lang.providerId(userInfo.providerId)),
           ),
       ],
     );

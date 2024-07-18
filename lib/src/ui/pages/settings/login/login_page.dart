@@ -54,7 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = context.l10n;
+    final lang = context.l10n;
     return PopScope(
       onPopInvoked: (didPop) {
         if (didPop && widget.onResult != null) {
@@ -63,36 +63,36 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(l10n.login),
+          title: Text(lang.login),
         ),
         body: Center(
           child: Column(
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async => context.router.navigate(const SettingsPage()),
-                child: Text(l10n.goToSettings),
+                child: Text(lang.goToSettings),
               ),
               ElevatedButton(
                 onPressed: () async => FirebaseAuth.instance.signInAnonymously(),
-                child: Text(l10n.signInAnonymously),
+                child: Text(lang.signInAnonymously),
               ),
               ElevatedButton(
                 onPressed: () async => kIsWeb ? handleSignInWeb() : handleGoogleSignInNative(),
-                child: Text(l10n.signInWithGoogle),
+                child: Text(lang.signInWithGoogle),
               ),
               ElevatedButton(
                 onPressed: () async => handleSignInWithApple(),
-                child: Text(l10n.signInWithApple),
+                child: Text(lang.signInWithApple),
               ),
               ElevatedButton(
                 onPressed: () async => handleAccountDeletion(),
-                child: Text(l10n.deleteAccount),
+                child: Text(lang.deleteAccount),
               ),
               ElevatedButton(
                 onPressed: () async => handleEmailVerification(),
-                child: Text(l10n.verifyEmail),
+                child: Text(lang.verifyEmail),
               ),
-              ElevatedButton(onPressed: () async => handleSignOut(), child: Text(l10n.signOut)),
+              ElevatedButton(onPressed: () async => handleSignOut(), child: Text(lang.signOut)),
               const LoginForm(),
             ],
           ),
