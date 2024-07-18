@@ -2,7 +2,6 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -43,8 +42,6 @@ class App {
   static Future<void> initLocalization() async {
     assert(_initLocalizationExecuted == false, 'App.initLocalization() must be called only once');
     if (_initLocalizationExecuted) return;
-
-    localization = FlutterLocalization.instance;
 
     final Box box = Hive.box(Boxes.settings);
     String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
@@ -96,8 +93,6 @@ class App {
   static late final FirebaseRemoteConfig remoteConfig;
 
   static late final GoogleSignIn googleSignIn;
-
-  static late final FlutterLocalization localization;
 
   /// Initial locale of the app. To get the current locale, use [localization].
   static late final Locale initLocale;

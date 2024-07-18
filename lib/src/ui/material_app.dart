@@ -4,7 +4,7 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/is_online.dart';
 import 'package:coree/src/_global/remote_config.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
@@ -30,20 +30,14 @@ class _MyAppState extends State<MyApp> {
   }
 
   void initLocale() {
-    if (Alocale.isLocaleSupported(App.initLocale)) {
+    if (Texts.supportedLocales.contains(App.initLocale)) {
       if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.initLocale.languageCode));
       _locale ??= App.initLocale;
     } else {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, Alocale.defaultLocale.languageCode));
-      _locale ??= Alocale.defaultLocale;
+      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, AppLocalizationsX.defaultLocale.languageCode));
+      _locale ??= AppLocalizationsX.defaultLocale;
     }
-    unawaited(
-      App.localization.init(
-        mapLocales: Alocale.mapLocales,
-        initLanguageCode: _locale?.languageCode ?? Alocale.defaultLocale.languageCode,
-      ),
-    );
-    App.localization.onTranslatedLanguage = _onTranslatedLanguage;
+    AppLocalizationsX.translate = _onTranslatedLanguage;
   }
 
   void _onTranslatedLanguage(Locale? locale) {
@@ -56,8 +50,8 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      supportedLocales: App.localization.supportedLocales,
-      localizationsDelegates: App.localization.localizationsDelegates,
+      supportedLocales: Texts.supportedLocales,
+      localizationsDelegates: Texts.localizationsDelegates,
       locale: _locale,
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(

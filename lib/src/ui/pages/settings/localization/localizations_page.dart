@@ -1,8 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/translate.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 @RoutePage()
@@ -31,11 +29,11 @@ class LocalizationsPage extends StatelessWidget {
               child: Text(l10n.showLocale),
             ),
             ElevatedButton(
-              onPressed: () => context.read<Translate>().translate('en'),
+              onPressed: () => AppLocalizationsX.translate!(const Locale('en')),
               child: Text(l10n.languageEnglish),
             ),
             ElevatedButton(
-              onPressed: () => context.read<Translate>().translate('cs'),
+              onPressed: () => AppLocalizationsX.translate!(const Locale('cs')),
               child: Text(l10n.languageCzech),
             ),
           ],
