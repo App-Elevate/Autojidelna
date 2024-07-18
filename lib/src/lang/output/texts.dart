@@ -95,29 +95,23 @@ abstract class Texts {
     Locale('en')
   ];
 
-  /// No description provided for @language.
+  /// No description provided for @accountStatus.
   ///
   /// In en, this message translates to:
-  /// **'Language'**
-  String get language;
+  /// **'Account Status'**
+  String get accountStatus;
 
-  /// No description provided for @languageName.
+  /// No description provided for @accountcreationTime.
   ///
   /// In en, this message translates to:
-  /// **'English'**
-  String get languageName;
+  /// **'Account Creation Time: {date}'**
+  String accountcreationTime(DateTime date);
 
-  /// No description provided for @languageEnglish.
+  /// No description provided for @appDescription.
   ///
   /// In en, this message translates to:
-  /// **'English'**
-  String get languageEnglish;
-
-  /// No description provided for @languageCzech.
-  ///
-  /// In en, this message translates to:
-  /// **'Czech'**
-  String get languageCzech;
+  /// **'Application that is the basis for other applications.'**
+  String get appDescription;
 
   /// No description provided for @appName.
   ///
@@ -125,17 +119,35 @@ abstract class Texts {
   /// **'APPE Coree'**
   String get appName;
 
-  /// No description provided for @debug.
+  /// No description provided for @appleSecret.
   ///
   /// In en, this message translates to:
-  /// **' - debug'**
-  String get debug;
+  /// **'Apple Femboy Secret'**
+  String get appleSecret;
 
-  /// No description provided for @appDescription.
+  /// No description provided for @appleSecretContent.
   ///
   /// In en, this message translates to:
-  /// **'Application that is the basis for other applications.'**
-  String get appDescription;
+  /// **'Flutter + Apple = ❤️'**
+  String get appleSecretContent;
+
+  /// No description provided for @buttonPushed.
+  ///
+  /// In en, this message translates to:
+  /// **'You have pushed the button this many times:'**
+  String get buttonPushed;
+
+  /// No description provided for @connectedToANetwork.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to a network'**
+  String get connectedToANetwork;
+
+  /// No description provided for @connectedToTheInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Connected to the internet'**
+  String get connectedToTheInternet;
 
   /// No description provided for @counting.
   ///
@@ -149,12 +161,6 @@ abstract class Texts {
   /// **'Crashlytics'**
   String get crashlytics;
 
-  /// No description provided for @settings.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get settings;
-
   /// No description provided for @crashlyticsPage.
   ///
   /// In en, this message translates to:
@@ -167,35 +173,179 @@ abstract class Texts {
   /// **'Crashlytics test crash!'**
   String get crashlyticsTestCrash;
 
-  /// No description provided for @routingParamPage.
+  /// No description provided for @createAccount.
   ///
   /// In en, this message translates to:
-  /// **'Routing Param Page'**
-  String get routingParamPage;
+  /// **'Create account with email and password'**
+  String get createAccount;
 
-  /// No description provided for @routingParamPageDetail.
+  /// No description provided for @debug.
   ///
   /// In en, this message translates to:
-  /// **'This is a routing param page.'**
-  String get routingParamPageDetail;
+  /// **' - debug'**
+  String get debug;
 
-  /// No description provided for @routingParamPageDetail2.
+  /// No description provided for @deleteAccount.
   ///
   /// In en, this message translates to:
-  /// **'It is used to test routing with parameters.'**
-  String get routingParamPageDetail2;
+  /// **'Delete account'**
+  String get deleteAccount;
 
-  /// No description provided for @routingParamFilmId.
+  /// No description provided for @demoPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Path param Film ID'**
-  String get routingParamFilmId;
+  /// **'Demo Page'**
+  String get demoPageTitle;
 
-  /// No description provided for @routingParamQueryFilmId.
+  /// No description provided for @disconnectedFromANetwork.
   ///
   /// In en, this message translates to:
-  /// **'Query param Film ID'**
-  String get routingParamQueryFilmId;
+  /// **'Disconnected from a network'**
+  String get disconnectedFromANetwork;
+
+  /// No description provided for @disconnectedFromTheInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'Disconnected from the internet'**
+  String get disconnectedFromTheInternet;
+
+  /// No description provided for @email.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// No description provided for @enterAValidEmailAddress.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get enterAValidEmailAddress;
+
+  /// No description provided for @enterYourEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your email'**
+  String get enterYourEmail;
+
+  /// No description provided for @enterYourPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter your password'**
+  String get enterYourPassword;
+
+  /// No description provided for @goBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Go back'**
+  String get goBack;
+
+  /// No description provided for @goToSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to settings'**
+  String get goToSettings;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @languageCzech.
+  ///
+  /// In en, this message translates to:
+  /// **'Czech'**
+  String get languageCzech;
+
+  /// No description provided for @languageEnglish.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageEnglish;
+
+  /// No description provided for @languageName.
+  ///
+  /// In en, this message translates to:
+  /// **'English'**
+  String get languageName;
+
+  /// No description provided for @lastSignInTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Sign In Time: {date}'**
+  String lastSignInTime(DateTime date);
+
+  /// No description provided for @localization.
+  ///
+  /// In en, this message translates to:
+  /// **'Localizations'**
+  String get localization;
+
+  /// No description provided for @loggedIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Logged in: {bool}'**
+  String loggedIn(String bool);
+
+  /// No description provided for @login.
+  ///
+  /// In en, this message translates to:
+  /// **'Login'**
+  String get login;
+
+  /// No description provided for @password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// No description provided for @passwordMustBeAtLeast6CharactersLong.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters long'**
+  String get passwordMustBeAtLeast6CharactersLong;
+
+  /// No description provided for @providerId.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider ID: {id}'**
+  String providerId(String id);
+
+  /// No description provided for @providerTestPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Provider Test Page'**
+  String get providerTestPage;
+
+  /// No description provided for @remoteConfig.
+  ///
+  /// In en, this message translates to:
+  /// **'Remote Config'**
+  String get remoteConfig;
+
+  /// No description provided for @resetPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset password'**
+  String get resetPassword;
+
+  /// No description provided for @routingGoToDetailDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Detail Detail'**
+  String get routingGoToDetailDetail;
+
+  /// No description provided for @routingGoToDetailPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Detail Page'**
+  String get routingGoToDetailPage;
+
+  /// No description provided for @routingGoToParamDetailPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to Param Detail Page'**
+  String get routingGoToParamDetailPage;
 
   /// No description provided for @routingParamDetailPageDetail.
   ///
@@ -221,6 +371,36 @@ abstract class Texts {
   /// **'Film ID: {filmId}'**
   String routingParamDetailPageDetail3(num filmId);
 
+  /// No description provided for @routingParamFilmId.
+  ///
+  /// In en, this message translates to:
+  /// **'Path param Film ID'**
+  String get routingParamFilmId;
+
+  /// No description provided for @routingParamPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Routing Param Page'**
+  String get routingParamPage;
+
+  /// No description provided for @routingParamPageDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'This is a routing param page.'**
+  String get routingParamPageDetail;
+
+  /// No description provided for @routingParamPageDetail2.
+  ///
+  /// In en, this message translates to:
+  /// **'It is used to test routing with parameters.'**
+  String get routingParamPageDetail2;
+
+  /// No description provided for @routingParamQueryFilmId.
+  ///
+  /// In en, this message translates to:
+  /// **'Query param Film ID'**
+  String get routingParamQueryFilmId;
+
   /// No description provided for @routingTestDetailDetail.
   ///
   /// In en, this message translates to:
@@ -232,30 +412,6 @@ abstract class Texts {
   /// In en, this message translates to:
   /// **'This is a routing test detail detail page.'**
   String get routingTestDetailDetailText;
-
-  /// No description provided for @goBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Go back'**
-  String get goBack;
-
-  /// No description provided for @routingGoToDetailDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Detail Detail'**
-  String get routingGoToDetailDetail;
-
-  /// No description provided for @routingGoToDetailPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Detail Page'**
-  String get routingGoToDetailPage;
-
-  /// No description provided for @routingGoToParamDetailPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Param Detail Page'**
-  String get routingGoToParamDetailPage;
 
   /// No description provided for @routingTestPage.
   ///
@@ -275,72 +431,6 @@ abstract class Texts {
   /// **'It is used to test routing.'**
   String get routingTestPageDetail1;
 
-  /// No description provided for @demoPageTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Demo Page'**
-  String get demoPageTitle;
-
-  /// No description provided for @buttonPushed.
-  ///
-  /// In en, this message translates to:
-  /// **'You have pushed the button this many times:'**
-  String get buttonPushed;
-
-  /// No description provided for @localization.
-  ///
-  /// In en, this message translates to:
-  /// **'Localizations'**
-  String get localization;
-
-  /// No description provided for @showLocale.
-  ///
-  /// In en, this message translates to:
-  /// **'Show locale'**
-  String get showLocale;
-
-  /// No description provided for @providerTestPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider Test Page'**
-  String get providerTestPage;
-
-  /// No description provided for @remoteConfig.
-  ///
-  /// In en, this message translates to:
-  /// **'Remote Config'**
-  String get remoteConfig;
-
-  /// No description provided for @connectedToTheInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Connected to the internet'**
-  String get connectedToTheInternet;
-
-  /// No description provided for @connectedToANetwork.
-  ///
-  /// In en, this message translates to:
-  /// **'Connected to a network'**
-  String get connectedToANetwork;
-
-  /// No description provided for @disconnectedFromTheInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnected from the internet'**
-  String get disconnectedFromTheInternet;
-
-  /// No description provided for @disconnectedFromANetwork.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnected from a network'**
-  String get disconnectedFromANetwork;
-
-  /// No description provided for @login.
-  ///
-  /// In en, this message translates to:
-  /// **'Login'**
-  String get login;
-
   /// No description provided for @secret.
   ///
   /// In en, this message translates to:
@@ -353,113 +443,11 @@ abstract class Texts {
   /// **'secret Google'**
   String get secretGoogle;
 
-  /// No description provided for @appleSecret.
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Femboy Secret'**
-  String get appleSecret;
-
   /// No description provided for @secretGoogleContent.
   ///
   /// In en, this message translates to:
   /// **'Flutter + Google = ❤️'**
   String get secretGoogleContent;
-
-  /// No description provided for @appleSecretContent.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter + Apple = ❤️'**
-  String get appleSecretContent;
-
-  /// No description provided for @goToSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to settings'**
-  String get goToSettings;
-
-  /// No description provided for @signInAnonymously.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in Anonymously'**
-  String get signInAnonymously;
-
-  /// No description provided for @signInWithGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Google'**
-  String get signInWithGoogle;
-
-  /// No description provided for @signInWithApple.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Apple'**
-  String get signInWithApple;
-
-  /// No description provided for @signOut.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
-  String get signOut;
-
-  /// No description provided for @deleteAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete account'**
-  String get deleteAccount;
-
-  /// No description provided for @verifyEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify email'**
-  String get verifyEmail;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @password.
-  ///
-  /// In en, this message translates to:
-  /// **'Password'**
-  String get password;
-
-  /// No description provided for @enterYourEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter your email'**
-  String get enterYourEmail;
-
-  /// No description provided for @enterAValidEmailAddress.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a valid email address'**
-  String get enterAValidEmailAddress;
-
-  /// No description provided for @enterYourPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter your password'**
-  String get enterYourPassword;
-
-  /// No description provided for @passwordMustBeAtLeast6CharactersLong.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must be at least 6 characters long'**
-  String get passwordMustBeAtLeast6CharactersLong;
-
-  /// No description provided for @signInWithEmailAndPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with email and password'**
-  String get signInWithEmailAndPassword;
-
-  /// No description provided for @createAccount.
-  ///
-  /// In en, this message translates to:
-  /// **'Create account with email and password'**
-  String get createAccount;
 
   /// No description provided for @secretPage.
   ///
@@ -467,23 +455,47 @@ abstract class Texts {
   /// **'Secret Page'**
   String get secretPage;
 
-  /// No description provided for @accountStatus.
+  /// No description provided for @settings.
   ///
   /// In en, this message translates to:
-  /// **'Account Status'**
-  String get accountStatus;
+  /// **'Settings'**
+  String get settings;
 
-  /// No description provided for @loggedIn.
+  /// No description provided for @showLocale.
   ///
   /// In en, this message translates to:
-  /// **'Logged in: {bool}'**
-  String loggedIn(String bool);
+  /// **'Show locale'**
+  String get showLocale;
 
-  /// No description provided for @userId.
+  /// No description provided for @signInAnonymously.
   ///
   /// In en, this message translates to:
-  /// **'User ID: {id}'**
-  String userId(String id);
+  /// **'Sign in Anonymously'**
+  String get signInAnonymously;
+
+  /// No description provided for @signInWithApple.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Apple'**
+  String get signInWithApple;
+
+  /// No description provided for @signInWithEmailAndPassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with email and password'**
+  String get signInWithEmailAndPassword;
+
+  /// No description provided for @signInWithGoogle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Google'**
+  String get signInWithGoogle;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
 
   /// No description provided for @userDisplayName.
   ///
@@ -503,29 +515,17 @@ abstract class Texts {
   /// **'User Email Verified: {bool}'**
   String userEmailVerified(String bool);
 
-  /// No description provided for @lastSignInTime.
+  /// No description provided for @userId.
   ///
   /// In en, this message translates to:
-  /// **'Last Sign In Time: {date}'**
-  String lastSignInTime(DateTime date);
+  /// **'User ID: {id}'**
+  String userId(String id);
 
-  /// No description provided for @accountcreationTime.
+  /// No description provided for @verifyEmail.
   ///
   /// In en, this message translates to:
-  /// **'Account Creation Time: {date}'**
-  String accountcreationTime(DateTime date);
-
-  /// No description provided for @providerId.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider ID: {id}'**
-  String providerId(String id);
-
-  /// No description provided for @resetPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset password'**
-  String get resetPassword;
+  /// **'Verify email'**
+  String get verifyEmail;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {
