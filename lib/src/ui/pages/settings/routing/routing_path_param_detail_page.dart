@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class RoutingPathParamDetailPage extends StatelessWidget {
@@ -10,17 +9,18 @@ class RoutingPathParamDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final int? filmId = int.tryParse(filmid);
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.routingParamDetailPageDetail.getString(context)),
+        title: Text(l10n.routingParamDetailPageDetail),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(Alocale.routingParamDetailPageDetail1.getString(context)),
-            Text(Alocale.routingParamDetailPageDetail2.getString(context)),
-            Text(context.formatString(Alocale.routingParamDetailPageDetail3, [filmId])),
+            Text(l10n.routingParamDetailPageDetail1),
+            Text(l10n.routingParamDetailPageDetail2),
+            Text(l10n.routingParamDetailPageDetail3(filmId!)),
           ],
         ),
       ),

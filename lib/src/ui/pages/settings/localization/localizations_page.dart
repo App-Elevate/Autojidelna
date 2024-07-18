@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/_global/translate.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
+import 'package:provider/provider.dart';
 import 'package:toastification/toastification.dart';
 
 @RoutePage()
@@ -11,9 +11,10 @@ class LocalizationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.localization.getString(context)),
+        title: Text(l10n.localization),
       ),
       body: Center(
         child: Column(
@@ -21,21 +22,21 @@ class LocalizationsPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async => Toastification().show(
                 title: Text(
-                  '${Alocale.localization.getString(context)}: ${App.localization.currentLocale}',
+                  '${l10n.localization}: ${Localizations.localeOf(context)}',
                 ),
                 alignment: Alignment.bottomCenter,
                 style: ToastificationStyle.simple,
                 autoCloseDuration: const Duration(seconds: 2),
               ),
-              child: Text(Alocale.showLocale.getString(context)),
+              child: Text(l10n.showLocale),
             ),
             ElevatedButton(
-              onPressed: () => App.localization.translate('en'),
-              child: Text(Alocale.languageEnglish.getString(context)),
+              onPressed: () => context.read<Translate>().translate('en'),
+              child: Text(l10n.languageEnglish),
             ),
             ElevatedButton(
-              onPressed: () => App.localization.translate('cs'),
-              child: Text(Alocale.languageCzech.getString(context)),
+              onPressed: () => context.read<Translate>().translate('cs'),
+              child: Text(l10n.languageCzech),
             ),
           ],
         ),

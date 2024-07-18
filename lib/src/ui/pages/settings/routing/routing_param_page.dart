@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class RoutingParamPage extends StatelessWidget {
@@ -10,24 +9,25 @@ class RoutingParamPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.routingParamPage.getString(context)),
+        title: Text(l10n.routingParamPage),
       ),
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(Alocale.routingParamPageDetail.getString(context)),
-            Text(Alocale.routingParamPageDetail2.getString(context)),
+            Text(l10n.routingParamPageDetail),
+            Text(l10n.routingParamPageDetail2),
             Form(
               child: TextFormField(
-                decoration: InputDecoration(labelText: Alocale.routingParamQueryFilmId.getString(context)),
+                decoration: InputDecoration(labelText: l10n.routingParamQueryFilmId),
                 onFieldSubmitted: (String value) async => context.router.push(RoutingQueryParamDetailPage(filmid: int.tryParse(value))),
               ),
             ),
             Form(
               child: TextFormField(
-                decoration: InputDecoration(labelText: Alocale.routingParamFilmId.getString(context)),
+                decoration: InputDecoration(labelText: l10n.routingParamFilmId),
                 onFieldSubmitted: (String value) async => context.router.push(RoutingPathParamDetailPage(filmid: value)),
               ),
             ),
