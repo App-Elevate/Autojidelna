@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/logic/login/apple_sign_in_logic.dart';
 import 'package:coree/src/logic/login/email_sign_in_logic.dart';
 import 'package:coree/src/logic/login/google_sign_in_logic.dart';
@@ -11,7 +11,6 @@ import 'package:coree/src/ui/widgets/login_form_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -55,6 +54,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.l10n;
     return PopScope(
       onPopInvoked: (didPop) {
         if (didPop && widget.onResult != null) {
@@ -63,36 +63,36 @@ class _LoginPageState extends State<LoginPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(Alocale.login.getString(context)),
+          title: Text(lang.login),
         ),
         body: Center(
           child: Column(
             children: <Widget>[
               ElevatedButton(
                 onPressed: () async => context.router.navigate(const SettingsPage()),
-                child: Text(Alocale.goToSettings.getString(context)),
+                child: Text(lang.goToSettings),
               ),
               ElevatedButton(
                 onPressed: () async => FirebaseAuth.instance.signInAnonymously(),
-                child: Text(Alocale.signInAnonymously.getString(context)),
+                child: Text(lang.signInAnonymously),
               ),
               ElevatedButton(
                 onPressed: () async => kIsWeb ? handleSignInWeb() : handleGoogleSignInNative(),
-                child: Text(Alocale.signInWithGoogle.getString(context)),
+                child: Text(lang.signInWithGoogle),
               ),
               ElevatedButton(
                 onPressed: () async => handleSignInWithApple(),
-                child: Text(Alocale.signInWithApple.getString(context)),
+                child: Text(lang.signInWithApple),
               ),
               ElevatedButton(
                 onPressed: () async => handleAccountDeletion(),
-                child: Text(Alocale.deleteAccount.getString(context)),
+                child: Text(lang.deleteAccount),
               ),
               ElevatedButton(
                 onPressed: () async => handleEmailVerification(),
-                child: Text(Alocale.verifyEmail.getString(context)),
+                child: Text(lang.verifyEmail),
               ),
-              ElevatedButton(onPressed: () async => handleSignOut(), child: Text(Alocale.signOut.getString(context))),
+              ElevatedButton(onPressed: () async => handleSignOut(), child: Text(lang.signOut)),
               const LoginForm(),
             ],
           ),

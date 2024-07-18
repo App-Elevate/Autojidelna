@@ -2,7 +2,6 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -17,10 +16,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 /// Remote config: [remoteConfig]
 ///
 /// Google sign in: [googleSignIn]
-///
-/// Localization: [localization]
-///
-/// Initial locale: [initLocale] (To get the current locale, use [localization])
 ///
 /// Package info: [packageInfo]
 ///
@@ -44,11 +39,9 @@ class App {
     assert(_initLocalizationExecuted == false, 'App.initLocalization() must be called only once');
     if (_initLocalizationExecuted) return;
 
-    localization = FlutterLocalization.instance;
-
     final Box box = Hive.box(Boxes.settings);
     String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
-    initLocale = Locale.fromSubtags(languageCode: locale);
+    currentLocale = Locale.fromSubtags(languageCode: locale);
     box.put(HiveKeys.locale, locale);
 
     _initLocalizationExecuted = true;
@@ -97,10 +90,16 @@ class App {
 
   static late final GoogleSignIn googleSignIn;
 
-  static late final FlutterLocalization localization;
-
-  /// Initial locale of the app. To get the current locale, use [localization].
-  static late final Locale initLocale;
+  static late Locale currentLocale;
 
   static late final PackageInfo packageInfo;
+
+  static const defaultLocale = Locale('en');
+
+  /// This function is used to change the language of the app.
+  ///
+  /// You can also pass null to this function to set the default language.
+  ///
+  /// Do not call this before MaterialApp is built.
+  static late Function(Locale? language) translate;
 }

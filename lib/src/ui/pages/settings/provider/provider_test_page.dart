@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/remote_config.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/_global/providers/remote_config.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
@@ -11,9 +10,10 @@ class ProviderTestPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.providerTestPage.getString(context)),
+        title: Text(lang.providerTestPage),
       ),
       body: Center(
         child: Consumer<Rmc>(

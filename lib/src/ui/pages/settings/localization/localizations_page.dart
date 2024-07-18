@@ -1,8 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/lang/lang.dart';
+import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localization/flutter_localization.dart';
 import 'package:toastification/toastification.dart';
 
 @RoutePage()
@@ -11,9 +10,10 @@ class LocalizationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text(Alocale.localization.getString(context)),
+        title: Text(lang.localization),
       ),
       body: Center(
         child: Column(
@@ -21,21 +21,21 @@ class LocalizationsPage extends StatelessWidget {
             ElevatedButton(
               onPressed: () async => Toastification().show(
                 title: Text(
-                  '${Alocale.localization.getString(context)}: ${App.localization.currentLocale}',
+                  '${lang.localization}: ${Localizations.localeOf(context)}',
                 ),
                 alignment: Alignment.bottomCenter,
                 style: ToastificationStyle.simple,
                 autoCloseDuration: const Duration(seconds: 2),
               ),
-              child: Text(Alocale.showLocale.getString(context)),
+              child: Text(lang.showLocale),
             ),
             ElevatedButton(
-              onPressed: () => App.localization.translate('en'),
-              child: Text(Alocale.languageEnglish.getString(context)),
+              onPressed: () => App.translate(const Locale('en')),
+              child: Text(lang.languageEnglish),
             ),
             ElevatedButton(
-              onPressed: () => App.localization.translate('cs'),
-              child: Text(Alocale.languageCzech.getString(context)),
+              onPressed: () => App.translate(const Locale('cs')),
+              child: Text(lang.languageCzech),
             ),
           ],
         ),
