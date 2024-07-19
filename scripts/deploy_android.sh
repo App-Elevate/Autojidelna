@@ -21,3 +21,4 @@ flutter build appbundle --split-debug-info build/symbolsAndroid --obfuscate
 open https://play.google.com/console/
 firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json) 
 firebase crashlytics:symbols:upload --app=$firebase_id build/symbolsAndroid
+sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab $RUN_NUMBER internal draft build/app/outputs/mapping/release/mapping.txt build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib

@@ -383,59 +383,59 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Get pubspec
+        uses: actions/download-artifact@v4
+        with:
+          name: pubspec
+
+      - name: Download Android keystore
+        id: android_keystore
+        uses: timheuer/base64-to-file@v1.2.4
+        with:
+          fileName: upload-keystore.jks
+          encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
+      - name: Create key.properties
+        run: |
+          echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
+          echo "storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}" >> android/key.properties
+          echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
+          echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: "zulu"
+          java-version: "17.x"
+          cache: "gradle"
+
       - uses: vacxe/google-play-cli-kt@master
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh app-release.aab 180 internal draft mapping.txt"
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
 
-      # - name: Get pubspec
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: pubspec
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          cache: true
 
-      # - name: Download Android keystore
-      #   id: android_keystore
-      #   uses: timheuer/base64-to-file@v1.2.4
-      #   with:
-      #     fileName: upload-keystore.jks
-      #     encodedString: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Start release build
+        run: |
+          flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
-      # - name: Create key.properties
-      #   run: |
-      #     echo "storeFile=${{ steps.android_keystore.outputs.filePath }}" > android/key.properties
-      #     echo "storePassword=${{ secrets.ANDROID_STORE_PASSWORD }}" >> android/key.properties
-      #     echo "keyPassword=${{ secrets.ANDROID_KEY_PASSWORD }}" >> android/key.properties
-      #     echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
+      - name: Release Artifact Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: android-release
+          path: build/app/outputs/bundle/release/app-release.aab
 
-      # - name: Setup Java
-      #   uses: actions/setup-java@v4
-      #   with:
-      #     distribution: "zulu"
-      #     java-version: "17.x"
-      #     cache: "gradle"
-
-      # - name: Setup Flutter
-      #   uses: subosito/flutter-action@v2
-      #   with:
-      #     channel: "stable"
-      #     cache: true
-
-      # - name: Start release build
-      #   run: |
-      #     flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
-
-      # - name: Release Artifact Upload
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: android-release
-      #     path: build/app/outputs/bundle/release/app-release.aab
-
-      # - name: Debug symbols Artifact Upload
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: symbolsAndroid
-      #     path: symbolsAndroid
+      - name: Debug symbols Artifact Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: symbolsAndroid
+          path: symbolsAndroid
 
   symbols_android:
     name: "[Android] Upload Crashlytics Symbols"
