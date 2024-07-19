@@ -288,7 +288,8 @@ jobs:
       - name: Deploy to Cloudflare Pages
         run: |
           # Push the new branch to the repository
-          git commit -a -m "Built web"
+          git add .
+          git commit -m "Built web"
           git push origin dist-cloudflare-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
