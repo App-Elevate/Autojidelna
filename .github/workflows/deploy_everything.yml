@@ -424,13 +424,21 @@ jobs:
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
+      - name: Symbols extraction
+        run: |
+          PATH_TO_NATIVE_SYMBOLS="build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
+          CURRENT_EXECUTION_PATH=$(pwd)
+          cd $PATH_TO_NATIVE_SYMBOLS
+          zip -r symbols.zip .
+          cd $CURRENT_EXECUTION_PATH
+          mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
       - uses: vacxe/google-play-cli-kt@master
         env:
           JAVA_HOME: ""
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4

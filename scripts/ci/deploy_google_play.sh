@@ -23,13 +23,8 @@ echo "Edit id created: $EDIT_ID"
 echo "Upload Bundle..."
 google-play-cli bundles upload --edit-id "$EDIT_ID" --bundle "$PATH_TO_BUNDLE"
 echo "Upload deobfuscation files..."
-CURRENT_EXECUTION_PATH=$(pwd)
-cd $PATH_TO_NATIVE_SYMBOLS
-zip -r symbols.zip .
-cd $CURRENT_EXECUTION_PATH
-mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
 google-play-cli deobfuscation-files upload --edit-id "$EDIT_ID" --deobfuscation "$PATH_TO_MAPPING" --version-code "$VERSION_CODE"
-google-play-cli deobfuscation-files upload --edit-id "$EDIT_ID" --deobfuscation "build/symbols.zip" --version-code "$VERSION_CODE" -t nativeCode
+google-play-cli deobfuscation-files upload --edit-id "$EDIT_ID" --deobfuscation "$PATH_TO_NATIVE_SYMBOLS" --version-code "$VERSION_CODE" -t nativeCode
 echo "Update track..."
 google-play-cli tracks update --edit-id "$EDIT_ID" --version-code "$VERSION_CODE" --track "$TRACK" \
   ${USER_FRACTION:+ --user-fraction "$USER_FRACTION"} \
