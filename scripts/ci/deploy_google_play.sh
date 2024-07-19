@@ -21,7 +21,8 @@ echo "Edit id created: $EDIT_ID"
 echo "Upload Bundle..."
 google-play-cli bundles upload --edit-id "$EDIT_ID" --bundle "$PATH_TO_BUNDLE"
 echo "Upload deobfuscation files..."
-google-play-cli deobfuscation-files upload --edit-id "$EDIT_ID" --deobfuscation "$PATH_TO_MAPPING" --version-code "$VERSION_CODE"
+zip -r $PATH_TO_MAPPING.zip $PATH_TO_MAPPING/*
+google-play-cli deobfuscation-files upload --edit-id "$EDIT_ID" --deobfuscation "$PATH_TO_MAPPING.zip" --version-code "$VERSION_CODE"
 echo "Update track..."
 google-play-cli tracks update --edit-id "$EDIT_ID" --version-code "$VERSION_CODE" --track "$TRACK" \
   ${USER_FRACTION:+ --user-fraction "$USER_FRACTION"} \
