@@ -409,14 +409,6 @@ jobs:
           java-version: "17.x"
           cache: "gradle"
 
-      - uses: vacxe/google-play-cli-kt@master
-        env:
-          JAVA_HOME: ""
-        with:
-          service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
-
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -426,6 +418,14 @@ jobs:
       - name: Start release build
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
+
+      - uses: vacxe/google-play-cli-kt@master
+        env:
+          JAVA_HOME: ""
+        with:
+          service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          package-name: ${{needs.version.outputs.app_id}}
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
