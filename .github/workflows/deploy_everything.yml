@@ -40,6 +40,11 @@ on:
         required: true
         type: boolean
         default: false
+      skip:
+        description: "Skip all deployments?"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -52,7 +57,7 @@ concurrency:
 jobs:
   version:
     name: Create version number
-    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'}}
+    if: ${{ (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch') && github.event.inputs.skip == false }}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
