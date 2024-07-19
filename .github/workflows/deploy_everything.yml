@@ -383,6 +383,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set permissions
+        run: |
+          chmod +x scripts/ci/deploy_google_play.sh
+
       - uses: vacxe/google-play-cli-kt@master
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
