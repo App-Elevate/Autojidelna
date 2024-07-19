@@ -387,7 +387,7 @@ jobs:
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "bash scripts/ci/deploy_google_play.sh app-release.aab 180 internal draft mapping.txt"
+          custom-script: "sh scripts/ci/deploy_google_play.sh app-release.aab 180 internal draft mapping.txt"
 
       # - name: Get pubspec
       #   uses: actions/download-artifact@v4
