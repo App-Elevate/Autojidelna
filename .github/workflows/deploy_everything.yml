@@ -381,6 +381,7 @@ jobs:
     name: "[Android] Deploy to Google Play Store"
     environment:
       name: google-play
+      url: https://play.google.com/store/apps/details?id=${{ needs.version.outputs.app_id }}
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
