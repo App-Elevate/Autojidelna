@@ -57,7 +57,7 @@ concurrency:
 jobs:
   version:
     name: Create version number
-    if: ${{ (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch') && github.event.inputs.skip == false }}
+    if: ${{ (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch') && github.event.inputs.skip == 'false' }}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
