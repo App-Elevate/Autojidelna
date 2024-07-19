@@ -419,15 +419,15 @@ jobs:
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
-      - name: Release Build to internal track
-        uses: r0adkll/upload-google-play@v1
+      - uses: vacxe/google-play-cli-kt@master
         with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: ${{needs.version.outputs.app_id}}
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          template: bundles-upload
+          service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          package-name: ${{needs.version.outputs.app_id}}
+          version-code: ${{ github.run_number }}
+          path-to-bundle: build/app/outputs/bundle/release/app-release.aab
           track: internal
-          userFraction: 1
-          status: inProgress
+          status: completed
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
