@@ -410,6 +410,8 @@ jobs:
           cache: "gradle"
 
       - uses: vacxe/google-play-cli-kt@master
+        env:
+          JAVA_HOME: ""
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
