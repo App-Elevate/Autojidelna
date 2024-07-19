@@ -385,13 +385,9 @@ jobs:
 
       - uses: vacxe/google-play-cli-kt@master
         with:
-          template: bundles-upload
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          version-code: 180
-          path-to-bundle: app-release.aab
-          track: internal
-          status: completed
+          custom-script: "scripts/ci/deploy_google_play.sh app-release.aab 180 internal draft mapping.txt"
 
       # - name: Get pubspec
       #   uses: actions/download-artifact@v4
