@@ -129,6 +129,12 @@ jobs:
           channel: "stable"
           cache: true
 
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: setup flutterfire
+        run: dart pub global activate flutterfire_cli
+
       - name: Get Certificates
         run: |
           git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 --no-commit
