@@ -120,6 +120,9 @@ class TextsCs extends Texts {
   String get login => 'přihlásit se';
 
   @override
+  String get noThankYou => 'Ne, děkuji';
+
+  @override
   String get password => 'Heslo';
 
   @override
@@ -136,6 +139,9 @@ class TextsCs extends Texts {
 
   @override
   String get remoteConfig => 'Vzdálená konfigurace';
+
+  @override
+  String get requestNotificationPermission => 'Požádat o povolení notifikací';
 
   @override
   String get resetPassword => 'Obnovit heslo';

@@ -1,9 +1,22 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/_routing/guards.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-class AppRouter extends $AppRouter {
+class AppRouter extends $AppRouter implements AutoRouteGuard {
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    if (Messaging.grantedPermission || resolver.route.name == RequestPermissionPage.name || !App.firstRun) {
+      resolver.next();
+    } else {
+      unawaited(resolver.redirect(RequestPermissionPage(onResult: (didLogin) => resolver.next(didLogin))));
+    }
+  }
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
@@ -19,6 +32,7 @@ class AppRouter extends $AppRouter {
             ),
           ],
         ),
+        AutoRoute(page: RequestPermissionPage.page, path: '/request-permission'),
         AutoRoute(page: RoutingParamPage.page, path: '/settings/param'),
         AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
         AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
