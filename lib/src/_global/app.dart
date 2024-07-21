@@ -96,14 +96,16 @@ class App {
     assert(_initAppCheckExecuted == false, 'App.initAppCheck() must be called only once');
     if (_initAppCheckExecuted) return;
 
-    await FirebaseAppCheck.instance
-        .activate(
-          // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-          webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
-          androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-          appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
-        )
-        .retryWithExponentialBackoff(exitAfterFirstTryCallback: (_) => null, infinite: true);
+    retryWithExponentialBackoff(
+      () async => await FirebaseAppCheck.instance.activate(
+        // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
+        webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
+        androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+        appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
+      ),
+      exitAfterFirstTryCallback: (_) => null,
+      infinite: true,
+    );
 
     _initAppCheckExecuted = true;
   }
@@ -112,6 +114,7 @@ class App {
     assert(_initFirebaseMessagingExecuted == false, 'App.initFirebaseMessaging() must be called only once');
     if (_initFirebaseMessagingExecuted) return;
     NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
+    await Messaging.setupInteractedMessage();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
       await Messaging.onNotificationPermissionGranted();

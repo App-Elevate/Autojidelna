@@ -37,11 +37,13 @@ class RequestPermissionPage extends StatelessWidget {
                     provisional: false,
                     sound: true,
                   );
+                  onResult!(true);
                   if (permission.authorizationStatus == AuthorizationStatus.authorized ||
                       permission.authorizationStatus == AuthorizationStatus.provisional) {
-                    Messaging.onNotificationPermissionGranted();
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Messaging.onNotificationPermissionGranted();
+                    });
                   }
-                  onResult!(true);
                 },
                 child: Text(lang.requestNotificationPermission),
               ),
