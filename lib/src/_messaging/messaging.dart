@@ -8,6 +8,13 @@ import 'package:flutter/foundation.dart';
 class Messaging {
   static Future<void> onNotificationPermissionGranted() async {
     grantedPermission = true;
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
+      final apnsTokenLocal = await FirebaseMessaging.instance.getAPNSToken().retryWithExponentialBackoff(ignoreError: true, infinite: true);
+      if (apnsTokenLocal == null) {
+        return;
+      }
+      apnsToken = apnsTokenLocal;
+    }
     final fcmToken = await FirebaseMessaging.instance
         .getToken(vapidKey: kIsWeb ? 'BCA2GZa5SucDxk3knHVJ_ip_PDiVcqNnbTgnw2aT1kmdt9QtG2SvH7E91DrvfssjuNZhHqAbYCM4yRmI3BmnSes' : null);
     if (fcmToken != null) {
@@ -16,13 +23,6 @@ class Messaging {
   }
 
   static Future<void> onSuccessfulToken(String token) async {
-    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
-      final apnsTokenLocal = await FirebaseMessaging.instance.getAPNSToken();
-      if (apnsTokenLocal == null) {
-        return;
-      }
-      apnsToken = apnsTokenLocal;
-    }
     onTokenRefresh ??= FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
       onSuccessfulToken(fcmToken);
     });
