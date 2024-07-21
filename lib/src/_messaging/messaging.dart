@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:coree/src/_messaging/exponential_backoff.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
@@ -15,7 +16,7 @@ class Messaging {
   }
 
   static Future<void> onSuccessfulToken(String token) async {
-    if (!kIsWeb && Platform.isIOS) {
+    if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       final apnsTokenLocal = await FirebaseMessaging.instance.getAPNSToken();
       if (apnsTokenLocal == null) {
         return;
@@ -26,7 +27,7 @@ class Messaging {
       onSuccessfulToken(fcmToken);
     });
     onTokenRefresh!.onError((_) => null);
-    FirebaseMessaging.instance.subscribeToTopic('all');
+    FirebaseMessaging.instance.subscribeToTopic('all').retryWithExponentialBackoff(ignoreError: true, infinite: true);
     fcmToken = token;
 
     // Save the token to the server
