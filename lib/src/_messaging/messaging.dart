@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:coree/src/_conf/messaging.dart';
 import 'package:coree/src/_messaging/exponential_backoff.dart';
+import 'package:coree/src/_routing/app_router.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
@@ -55,6 +56,9 @@ class Messaging {
   static Future<void> setupInteractedMessage() async {
     // Get any messages which caused the application to open from
     // a terminated state.
-    currentMessage = await FirebaseMessaging.instance.getInitialMessage();
+    final message = await FirebaseMessaging.instance.getInitialMessage();
+    if (message != null) {
+      messagingProvider.handleMessage(message);
+    }
   }
 }

@@ -1,15 +1,12 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_conf/messaging.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/providers/is_online.dart';
 import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -26,34 +23,11 @@ class _MyAppState extends State<MyApp> {
   final _appRouter = AppRouter();
   Locale? _locale;
 
-  bool isRouteValid(String routeName) {
-    final uri = Uri.parse(routeName);
-    final baseRoute = uri.path;
-    final routes = _appRouter.routes;
-    return routes.any((route) {
-      // Convert the route pattern to a regex pattern
-      final regexPattern = RegExp('^${route.path.replaceAllMapped(RegExp(r':\w+'), (match) => r'[^/]+')}\$');
-      return regexPattern.hasMatch(baseRoute);
-    });
-  }
-
-  void _handleMessage(RemoteMessage message) {
-    if (message.data[MessagingConf.dataPushRoute] != null && isRouteValid(message.data[MessagingConf.dataPushRoute]!)) {
-      final routeName = message.data[MessagingConf.dataPushRoute]!;
-      final uri = Uri.parse(routeName);
-      final route = uri.path + (uri.hasQuery ? '?${uri.query}' : '');
-      unawaited(
-        context.router.pushNamed(route),
-      );
-    }
-  }
-
   @override
   void initState() {
     initLocale();
     // Also handle any interaction when the app is in the background via a
     // Stream listener
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
     super.initState();
   }
 
@@ -85,6 +59,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
+        reevaluateListenable: messagingProvider,
         includePrefixMatches: true,
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
       ),
