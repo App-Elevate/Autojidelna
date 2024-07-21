@@ -83,7 +83,7 @@
   "@routingParamDetailPageDetail3": {
     "placeholders": {
       "filmId": {
-        "type": "num",
+        "type": "String",
         "example": "100"
       }
     }

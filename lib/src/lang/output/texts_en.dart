@@ -168,7 +168,7 @@ class TextsEn extends Texts {
       'It is used to test routing with parameters.';
 
   @override
-  String routingParamDetailPageDetail3(num filmId) {
+  String routingParamDetailPageDetail3(String filmId) {
     return 'Film ID: $filmId';
   }
 

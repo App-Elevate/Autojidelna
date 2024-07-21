@@ -20,6 +20,7 @@ class InitApp {
       App.initSecureStorage(),
       App.initRemoteConfig(),
       App.initGoogleSignIn(),
+      App.initFirebaseMessaging(),
       App.initPlatform(),
     ]);
     // Stop the stopwatch

@@ -381,7 +381,7 @@ abstract class Texts {
   ///
   /// In en, this message translates to:
   /// **'Film ID: {filmId}'**
-  String routingParamDetailPageDetail3(num filmId);
+  String routingParamDetailPageDetail3(String filmId);
 
   /// No description provided for @routingParamFilmId.
   ///

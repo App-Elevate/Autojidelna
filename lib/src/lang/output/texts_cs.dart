@@ -169,7 +169,7 @@ class TextsCs extends Texts {
       'Slouží k testování směrování s parametry.';
 
   @override
-  String routingParamDetailPageDetail3(num filmId) {
+  String routingParamDetailPageDetail3(String filmId) {
     return 'Film ID: $filmId';
   }
 
