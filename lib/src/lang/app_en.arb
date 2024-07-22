@@ -57,6 +57,7 @@
     }
   },
   "login": "Login",
+  "noThankYou": "No, thank you",
   "password": "Password",
   "passwordMustBeAtLeast6CharactersLong": "Password must be at least 6 characters long",
   "providerId": "Provider ID: {id}",
@@ -70,6 +71,7 @@
   },
   "providerTestPage": "Provider Test Page",
   "remoteConfig": "Remote Config",
+  "requestNotificationPermission": "Request Notification Permission",
   "resetPassword": "Reset password",
   "routingGoToDetailDetail": "Go to Detail Detail",
   "routingGoToDetailPage": "Go to Detail Page",
@@ -81,7 +83,7 @@
   "@routingParamDetailPageDetail3": {
     "placeholders": {
       "filmId": {
-        "type": "num",
+        "type": "String",
         "example": "100"
       }
     }

@@ -2,7 +2,7 @@ import 'package:coree/src/_global/app.dart';
 
 /// Initialize the app
 class InitApp {
-  static Future<void> initConf() async {
+  static Future<void> init() async {
     Stopwatch stopwatch = Stopwatch();
 
     // Start the stopwatch
@@ -16,9 +16,11 @@ class InitApp {
           App.initLocalization(),
         ]),
       ),
+      App.initAppCheck(),
       App.initSecureStorage(),
       App.initRemoteConfig(),
       App.initGoogleSignIn(),
+      App.initFirebaseMessaging(),
       App.initPlatform(),
     ]);
     // Stop the stopwatch

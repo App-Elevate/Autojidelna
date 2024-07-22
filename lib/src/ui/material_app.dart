@@ -4,6 +4,7 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/providers/is_online.dart';
 import 'package:coree/src/_global/providers/remote_config.dart';
+import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
@@ -26,6 +27,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     initLocale();
+    // Also handle any interaction when the app is in the background via a
+    // Stream listener
     super.initState();
   }
 
@@ -57,6 +60,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
+        reevaluateListenable: Messaging.messagingProvider,
         includePrefixMatches: true,
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
       ),

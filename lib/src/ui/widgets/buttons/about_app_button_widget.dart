@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_conf/assets.dart';
 import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/logic/about_app_button_logic.dart';
 import 'package:flutter/foundation.dart';
@@ -28,6 +30,9 @@ class AboutAppButton extends StatelessWidget {
           Text(lang.appDescription),
           GestureDetector(
             onTap: appElevateClick,
+            onLongPress: () async {
+              context.router.push(const DebugPage());
+            },
             child: Padding(
               padding: const EdgeInsets.only(top: 27.01),
               child: Image.asset(Assets.appElevateLogo),

@@ -37,6 +37,22 @@ target 'Runner' do
   end
 end
 
+target 'ImageNotification' do
+  use_frameworks!
+  pod 'GoogleUtilities/AppDelegateSwizzler'
+  pod 'GoogleUtilities/MethodSwizzler'
+  pod 'GoogleUtilities/Network'
+  pod 'GoogleUtilities/NSData+zlib'
+  pod 'GoogleUtilities/AppDelegateSwizzler'
+  pod 'GoogleUtilities/Environment'
+  pod 'GoogleUtilities/Logger'
+  pod 'GoogleUtilities/UserDefaults'
+  pod 'GoogleUtilities/Reachability'
+  pod 'GTMSessionFetcher'
+  pod 'Firebase/Auth' # Add this line if you are using FirebaseAuth phone authentication
+  pod 'Firebase/Messaging'
+end
+
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)

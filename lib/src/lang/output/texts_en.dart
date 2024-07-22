@@ -121,6 +121,9 @@ class TextsEn extends Texts {
   String get login => 'Login';
 
   @override
+  String get noThankYou => 'No, thank you';
+
+  @override
   String get password => 'Password';
 
   @override
@@ -137,6 +140,9 @@ class TextsEn extends Texts {
 
   @override
   String get remoteConfig => 'Remote Config';
+
+  @override
+  String get requestNotificationPermission => 'Request Notification Permission';
 
   @override
   String get resetPassword => 'Reset password';
@@ -162,7 +168,7 @@ class TextsEn extends Texts {
       'It is used to test routing with parameters.';
 
   @override
-  String routingParamDetailPageDetail3(num filmId) {
+  String routingParamDetailPageDetail3(String filmId) {
     return 'Film ID: $filmId';
   }
 

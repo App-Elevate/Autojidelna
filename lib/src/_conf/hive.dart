@@ -6,4 +6,5 @@ class Boxes {
 /// Hive keys. These are the keys used to store values in Hive.
 class HiveKeys {
   static const String locale = 'locale';
+  static const String firstRun = 'firstRun';
 }

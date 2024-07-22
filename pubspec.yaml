@@ -65,6 +65,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: any
+  firebase_messaging: ^15.0.3
 
 # Dependency overrides for macos and web support of permission_handler
 dependency_overrides:
