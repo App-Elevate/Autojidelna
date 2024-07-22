@@ -62,7 +62,10 @@ platform :ios do
       archive_path: "../build/ios/archive/Runner.xcarchive",
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       )
-    upload_to_testflight(skip_waiting_for_build_processing: true, app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0])
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
+    )
     delete_keychain(
       name: "AppSigning"
     )
@@ -87,7 +90,10 @@ platform :ios do
       key_filepath: "./../private_keys/app_store.p8",
       in_house: false
     )
-    upload_to_testflight(skip_waiting_for_build_processing: true, app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0])
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
+    )
     rescue => e
       sh "open -a transporter"
       sh "open -R ../Runner.ipa"

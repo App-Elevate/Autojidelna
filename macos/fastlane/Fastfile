@@ -68,7 +68,10 @@ platform :mac do
       key_filepath: "./../private_keys/app_store.p8",
       in_house: false
     )
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
+    )
     delete_keychain(
       name: "AppSigning"
     )
@@ -97,10 +100,13 @@ platform :mac do
       key_filepath: "./../private_keys/app_store.p8",
       in_house: false
     )
-    upload_to_testflight(skip_waiting_for_build_processing: true)
+    upload_to_testflight(
+      skip_waiting_for_build_processing: true,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
+    )
     rescue => e
       sh "open -a transporter"
-      sh "open -R ./../APPECOREE.pkg"
+      sh "open -R ./../Appe_Coree.pkg"
     end
   end
 end
