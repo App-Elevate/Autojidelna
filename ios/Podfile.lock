@@ -253,6 +253,15 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
+  - GoogleUtilities/AppDelegateSwizzler
+  - GoogleUtilities/Environment
+  - GoogleUtilities/Logger
+  - GoogleUtilities/MethodSwizzler
+  - GoogleUtilities/Network
+  - "GoogleUtilities/NSData+zlib"
+  - GoogleUtilities/Reachability
+  - GoogleUtilities/UserDefaults
+  - GTMSessionFetcher
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `.symlinks/plugins/permission_handler_apple/ios`)
@@ -370,6 +379,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: 41e174565542cda51539343d672c2062f7561cb4
+PODFILE CHECKSUM: a1430631973740ef15d0ec8390b0716fdd5b2fa5
 
 COCOAPODS: 1.15.2
