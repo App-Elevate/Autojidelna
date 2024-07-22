@@ -31,6 +31,7 @@ platform :ios do
       readonly: true,
       keychain_name: "AppSigning",
       keychain_password: "temp-keychain_password",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       type: "appstore"
     )
   end
@@ -48,6 +49,7 @@ platform :ios do
     match(
       readonly: true,
       keychain_name: "AppSigning",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       keychain_password: "temp-keychain_password",
       type: "appstore"
       )
@@ -73,6 +75,7 @@ platform :ios do
   lane :release do
     match(
       readonly: true,
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       type: "appstore"
       )
     build_app(
