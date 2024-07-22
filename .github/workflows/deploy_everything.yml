@@ -142,7 +142,8 @@ jobs:
 
       - name: Get Certificates
         run: |
-          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 --no-commit
+          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 
+          git revert 67afac41f5d4b2b09e36c1cddb1296e50ef5be53 
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
