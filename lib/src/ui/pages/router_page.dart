@@ -21,11 +21,12 @@ class _RouterPageState extends State<RouterPage> {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return AdaptiveScaffold(
-      useDrawer: false,
-      transitionDuration: Durations.short1,
+      useDrawer: true,
+      transitionDuration: Durations.short4,
       selectedIndex: index,
       bodyRatio: .4,
       onSelectedIndexChange: changeIndex,
+      appBarBreakpoint: Breakpoints.smallAndUp,
       destinations: [
         NavigationDestination(label: lang.counting, icon: const Icon(Icons.numbers)),
         NavigationDestination(label: lang.crashlytics, icon: const Icon(Icons.bug_report)),
@@ -37,7 +38,7 @@ class _RouterPageState extends State<RouterPage> {
         const SettingsPage(),
       ][index],
       // Only ever use [largeSecondaryBody] in case more content is wanted on the screen
-      // largeSecondaryBody: (context) => Container(color: Colors.red),
+      largeSecondaryBody: (context) => Container(color: Colors.red),
     );
   }
 }
