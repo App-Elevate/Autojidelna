@@ -115,6 +115,8 @@ class App {
     if (_initFirebaseMessagingExecuted) return;
     NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
     await Messaging.setupInteractedMessage();
+    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
       await Messaging.onNotificationPermissionGranted();

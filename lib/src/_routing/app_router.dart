@@ -5,7 +5,6 @@ import 'package:coree/src/_conf/messaging.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
-import 'package:coree/src/_routing/messaging_provider.dart';
 import 'package:coree/src/_routing/guards.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
@@ -22,8 +21,8 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    final message = messagingProvider.message;
-    messagingProvider.messageHandled();
+    final message = Messaging.messagingProvider.message;
+    Messaging.messagingProvider.notificationMessageHandled();
     if (message?.data[MessagingConf.dataPushRoute] != null && isRouteValid(message!.data[MessagingConf.dataPushRoute]!)) {
       final routeName = message.data[MessagingConf.dataPushRoute]!;
       final uri = Uri.parse(routeName);
@@ -69,5 +68,3 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
         AutoRoute(page: AppleSecretPage.page, path: '/settings/apple', guards: [AppleGuard()]),
       ];
 }
-
-final messagingProvider = MessagingProvider();

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:coree/src/_conf/messaging.dart';
 import 'package:coree/src/_messaging/exponential_backoff.dart';
-import 'package:coree/src/_routing/app_router.dart';
+import 'package:coree/src/_messaging/messaging_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
@@ -19,6 +19,7 @@ class Messaging {
   static String? fcmToken;
   static String? apnsToken;
   static bool grantedPermission = false;
+  static MessagingProvider messagingProvider = MessagingProvider();
 
   static Future<void> onNotificationPermissionGranted() async {
     grantedPermission = true;
@@ -58,7 +59,22 @@ class Messaging {
     // a terminated state.
     final message = await FirebaseMessaging.instance.getInitialMessage();
     if (message != null) {
-      messagingProvider.handleMessage(message);
+      messagingProvider.handleNotificationMessage(message);
     }
   }
+
+  static Future<void> handleMessage(RemoteMessage message) async {
+    // Handle the message in foreground.
+    // This should popup a notification (not the native one, something like instagram has)
+    return;
+  }
+}
+
+@pragma('vm:entry-point')
+Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  // This should send out a notification to the user or perform a quick fetch
+
+  debugPrint('Handling a background message: ${message.messageId}');
 }
