@@ -70,7 +70,6 @@ platform :mac do
     )
     upload_to_testflight(
       skip_waiting_for_build_processing: true,
-      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
     )
     delete_keychain(
       name: "AppSigning"
@@ -102,7 +101,6 @@ platform :mac do
     )
     upload_to_testflight(
       skip_waiting_for_build_processing: true,
-      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier)[0]
     )
     rescue => e
       sh "open -a transporter"

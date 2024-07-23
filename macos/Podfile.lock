@@ -247,7 +247,6 @@ PODS:
 
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/darwin`)
-  - Firebase/Messaging
   - firebase_analytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_analytics/macos`)
   - firebase_app_check (from `Flutter/ephemeral/.symlinks/plugins/firebase_app_check/macos`)
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
@@ -258,15 +257,6 @@ DEPENDENCIES:
   - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
-  - GoogleUtilities/AppDelegateSwizzler
-  - GoogleUtilities/Environment
-  - GoogleUtilities/Logger
-  - GoogleUtilities/MethodSwizzler
-  - GoogleUtilities/Network
-  - "GoogleUtilities/NSData+zlib"
-  - GoogleUtilities/Reachability
-  - GoogleUtilities/UserDefaults
-  - GTMSessionFetcher
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
   - permission_handler_apple (from `Flutter/ephemeral/.symlinks/plugins/permission_handler_apple/macos`)
@@ -382,6 +372,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
 
-PODFILE CHECKSUM: b3a5fe43dd8e6905493c85fb25eabc74448d72d8
+PODFILE CHECKSUM: cddd3515cac8d1b917aeb038d24adb9b817b1310
 
 COCOAPODS: 1.15.2
