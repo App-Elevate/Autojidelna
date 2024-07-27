@@ -110,7 +110,7 @@ class _RouterPageState extends State<RouterPage> {
         body: SlotLayout(
           config: {
             Breakpoints.smallAndUp: SlotLayout.from(
-              key: const Key('body'),
+              key: const Key('SmlUpBody'),
               builder: (context) => [
                 const DemoPage(),
                 const CrashlyticsPage(),
@@ -123,7 +123,7 @@ class _RouterPageState extends State<RouterPage> {
             ? SlotLayout(
                 config: {
                   Breakpoints.large: SlotLayout.from(
-                    key: const Key('value'),
+                    key: const Key('LrgSecBody'),
                     builder: (context) => Container(color: Colors.red),
                   ),
                 },
@@ -133,7 +133,7 @@ class _RouterPageState extends State<RouterPage> {
             ? SlotLayout(
                 config: {
                   Breakpoints.smallMobile: SlotLayout.from(
-                    key: const Key('l'),
+                    key: const Key('SmlMobileBottomNav'),
                     builder: (context) => AdaptiveScaffold.standardBottomNavigationBar(
                       currentIndex: index,
                       onDestinationSelected: changeIndex,
