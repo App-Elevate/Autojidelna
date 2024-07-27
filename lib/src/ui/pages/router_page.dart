@@ -36,6 +36,21 @@ class _RouterPageState extends State<RouterPage> {
 
     bool isSmallMobile = Breakpoints.smallMobile.isActive(context);
 
+    final double? leadingWidth = !isSmallMobile ? 64 : null;
+    final Widget? leading = !isSmallMobile
+        ? Container(
+            alignment: Alignment.center,
+            margin: const EdgeInsets.only(left: 16),
+            child: DrawerButton(onPressed: () => changeExtention(context)),
+          )
+        : null;
+
+    final List<PreferredSizeWidget> appBars = [
+      DemoPageAppBar(leading: leading, leadingWidth: leadingWidth),
+      CrashliticsPageAppBar(leading: leading, leadingWidth: leadingWidth),
+      SettingsPageAppBar(leading: leading, leadingWidth: leadingWidth),
+    ];
+
     final List<NavigationDestination> destinations = [
       NavigationDestination(label: lang.counting, icon: const Icon(Icons.numbers)),
       NavigationDestination(label: lang.crashlytics, icon: const Icon(Icons.bug_report)),
@@ -59,6 +74,7 @@ class _RouterPageState extends State<RouterPage> {
 
     return Scaffold(
       key: _key,
+      appBar: appBars[index],
       drawer: Breakpoints.smallDesktop.isActive(context)
           ? NavigationDrawer(
               selectedIndex: index,
@@ -71,27 +87,6 @@ class _RouterPageState extends State<RouterPage> {
         internalAnimations: true,
         bodyRatio: .4,
         transitionDuration: Durations.short4,
-        topNavigation: SlotLayout(
-          config: {
-            Breakpoints.smallAndUp: SlotLayout.from(
-              key: const Key('value'),
-              builder: (context) => ConstrainedBox(
-                constraints: BoxConstraints.tight(const Size.fromHeight(kToolbarHeight)),
-                child: AppBar(
-                  leadingWidth: !isSmallMobile ? 64 : null,
-                  leading: !isSmallMobile
-                      ? Container(
-                          alignment: Alignment.center,
-                          margin: const EdgeInsets.only(left: 16),
-                          child: DrawerButton(onPressed: () => changeExtention(context)),
-                        )
-                      : null,
-                  title: const Text('Test'),
-                ),
-              ),
-            ),
-          },
-        ),
         primaryNavigation: SlotLayout(
           config: {
             Breakpoints.mediumAndUp: SlotLayout.from(

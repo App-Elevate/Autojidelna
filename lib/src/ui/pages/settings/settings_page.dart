@@ -6,6 +6,25 @@ import 'package:coree/src/ui/widgets/account_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+class SettingsPageAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const SettingsPageAppBar({super.key, this.leading, this.leadingWidth});
+  final Widget? leading;
+  final double? leadingWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    final lang = context.l10n;
+    return AppBar(
+      title: Text(lang.routingTestPage),
+      leading: leading,
+      leadingWidth: leadingWidth,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
 @RoutePage()
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -14,9 +33,6 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(lang.routingTestPage),
-      ),
       body: Center(
         child: Column(
           children: <Widget>[

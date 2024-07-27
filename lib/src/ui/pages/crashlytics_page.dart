@@ -4,6 +4,23 @@ import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+class CrashliticsPageAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const CrashliticsPageAppBar({super.key, this.leading, this.leadingWidth});
+  final Widget? leading;
+  final double? leadingWidth;
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      leading: leading,
+      leadingWidth: leadingWidth,
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
 @RoutePage()
 class CrashlyticsPage extends StatelessWidget {
   const CrashlyticsPage({super.key});
