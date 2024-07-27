@@ -22,12 +22,16 @@ class _RouterPageState extends State<RouterPage> {
 
   changeIndex(int newIndex) {
     if (Breakpoints.smallDesktop.isActive(context)) changeExtention(context);
-    setState(() => index = newIndex);
+    setState(() {
+      index = newIndex;
+    });
   }
 
   changeExtention(BuildContext context) {
     if (Breakpoints.smallDesktop.isActive(context)) isExtended ? _key.currentState!.closeDrawer() : _key.currentState!.openDrawer();
-    setState(() => isExtended = !isExtended);
+    setState(() {
+      isExtended = !isExtended;
+    });
   }
 
   @override
@@ -141,22 +145,6 @@ class _RouterPageState extends State<RouterPage> {
             : null,
       ),
     );
-    /*return AdaptiveScaffold(
-      useDrawer: true,
-      transitionDuration: Durations.short4,
-      selectedIndex: index,
-      bodyRatio: .4,
-      onSelectedIndexChange: changeIndex,
-      appBarBreakpoint: Breakpoints.smallAndUp,
-      destinations: destinations,
-      body: (context) => [
-        const DemoPage(),
-        const CrashlyticsPage(),
-        const SettingsPage(),
-      ][index],
-      // Only ever use [largeSecondaryBody] in case more content is wanted on the screen
-      largeSecondaryBody: (context) => Container(color: Colors.red),
-    );*/
   }
 }
 
