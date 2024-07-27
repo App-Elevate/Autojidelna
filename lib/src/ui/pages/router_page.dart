@@ -34,6 +34,8 @@ class _RouterPageState extends State<RouterPage> {
   Widget build(BuildContext context) {
     final lang = context.l10n;
 
+    bool isSmallMobile = Breakpoints.smallMobile.isActive(context);
+
     final List<NavigationDestination> destinations = [
       NavigationDestination(label: lang.counting, icon: const Icon(Icons.numbers)),
       NavigationDestination(label: lang.crashlytics, icon: const Icon(Icons.bug_report)),
@@ -76,12 +78,14 @@ class _RouterPageState extends State<RouterPage> {
               builder: (context) => ConstrainedBox(
                 constraints: BoxConstraints.tight(const Size.fromHeight(kToolbarHeight)),
                 child: AppBar(
-                  leadingWidth: 64,
-                  leading: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(left: 16),
-                    child: DrawerButton(onPressed: () => changeExtention(context)),
-                  ),
+                  leadingWidth: !isSmallMobile ? 64 : null,
+                  leading: !isSmallMobile
+                      ? Container(
+                          alignment: Alignment.center,
+                          margin: const EdgeInsets.only(left: 16),
+                          child: DrawerButton(onPressed: () => changeExtention(context)),
+                        )
+                      : null,
                   title: const Text('Test'),
                 ),
               ),
@@ -126,7 +130,7 @@ class _RouterPageState extends State<RouterPage> {
                 },
               )
             : null,
-        bottomNavigation: Breakpoints.smallMobile.isActive(context)
+        bottomNavigation: isSmallMobile
             ? SlotLayout(
                 config: {
                   Breakpoints.smallMobile: SlotLayout.from(
