@@ -81,9 +81,7 @@ class App {
     if (_initHiveExecuted) return;
 
     await Hive.initFlutter();
-    final box = await Hive.openBox(Boxes.settings);
-    firstRun = box.get(HiveKeys.firstRun, defaultValue: true);
-    box.put(HiveKeys.firstRun, false);
+    await Hive.openBox(Boxes.settings);
 
     _initHiveExecuted = true;
   }
@@ -117,6 +115,12 @@ class App {
     await Messaging.setupInteractedMessage();
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
+
+    if (settings.authorizationStatus == AuthorizationStatus.notDetermined) {
+      App.firstRun = true;
+    } else {
+      App.firstRun = false;
+    }
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
       await Messaging.onNotificationPermissionGranted();

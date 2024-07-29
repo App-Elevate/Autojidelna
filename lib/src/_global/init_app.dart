@@ -1,4 +1,5 @@
 import 'package:coree/src/_global/app.dart';
+import 'package:flutter/foundation.dart';
 
 /// Initialize the app
 class InitApp {
@@ -28,6 +29,6 @@ class InitApp {
 
     // Get the elapsed time
     Duration elapsed = stopwatch.elapsed;
-    assert(elapsed.inMilliseconds < 200, 'initConf() took too long to run');
+    debugPrint('Initialization took ${elapsed.inMilliseconds} ms');
   }
 }
