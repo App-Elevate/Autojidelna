@@ -61,6 +61,12 @@ class TextsCs extends Texts {
   String get deleteAccount => 'Smazat účet';
 
   @override
+  String get deleteAccountConfirm => 'Smazat účet';
+
+  @override
+  String get deleteAccountDialog => 'Opravdu chcete smazat svůj účet?';
+
+  @override
   String get demoPageTitle => 'Demo stránka';
 
   @override
