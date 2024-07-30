@@ -61,6 +61,12 @@ class TextsCs extends Texts {
   String get deleteAccount => 'Smazat účet';
 
   @override
+  String get deleteAccountConfirm => 'Smazat účet';
+
+  @override
+  String get deleteAccountDialog => 'Opravdu chcete smazat svůj účet?';
+
+  @override
   String get demoPageTitle => 'Demo stránka';
 
   @override
@@ -120,6 +126,9 @@ class TextsCs extends Texts {
   String get login => 'přihlásit se';
 
   @override
+  String get noThankYou => 'Ne, děkuji';
+
+  @override
   String get password => 'Heslo';
 
   @override
@@ -136,6 +145,9 @@ class TextsCs extends Texts {
 
   @override
   String get remoteConfig => 'Vzdálená konfigurace';
+
+  @override
+  String get requestNotificationPermission => 'Požádat o povolení notifikací';
 
   @override
   String get resetPassword => 'Obnovit heslo';
@@ -163,7 +175,7 @@ class TextsCs extends Texts {
       'Slouží k testování směrování s parametry.';
 
   @override
-  String routingParamDetailPageDetail3(num filmId) {
+  String routingParamDetailPageDetail3(String filmId) {
     return 'Film ID: $filmId';
   }
 

@@ -191,6 +191,18 @@ abstract class Texts {
   /// **'Delete account'**
   String get deleteAccount;
 
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get deleteAccountDialog;
+
   /// No description provided for @demoPageTitle.
   ///
   /// In en, this message translates to:
@@ -293,6 +305,12 @@ abstract class Texts {
   /// **'Login'**
   String get login;
 
+  /// No description provided for @noThankYou.
+  ///
+  /// In en, this message translates to:
+  /// **'No, thank you'**
+  String get noThankYou;
+
   /// No description provided for @password.
   ///
   /// In en, this message translates to:
@@ -322,6 +340,12 @@ abstract class Texts {
   /// In en, this message translates to:
   /// **'Remote Config'**
   String get remoteConfig;
+
+  /// No description provided for @requestNotificationPermission.
+  ///
+  /// In en, this message translates to:
+  /// **'Request Notification Permission'**
+  String get requestNotificationPermission;
 
   /// No description provided for @resetPassword.
   ///
@@ -369,7 +393,7 @@ abstract class Texts {
   ///
   /// In en, this message translates to:
   /// **'Film ID: {filmId}'**
-  String routingParamDetailPageDetail3(num filmId);
+  String routingParamDetailPageDetail3(String filmId);
 
   /// No description provided for @routingParamFilmId.
   ///

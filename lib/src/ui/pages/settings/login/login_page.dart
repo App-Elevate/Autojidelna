@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Text(lang.signInWithApple),
               ),
               ElevatedButton(
-                onPressed: () async => handleAccountDeletion(),
+                onPressed: () async => context.router.push(const DeleteAccountPage()),
                 child: Text(lang.deleteAccount),
               ),
               ElevatedButton(

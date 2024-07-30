@@ -142,7 +142,8 @@ jobs:
 
       - name: Get Certificates
         run: |
-          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 --no-commit
+          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 
+          git revert 67afac41f5d4b2b09e36c1cddb1296e50ef5be53 
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
@@ -440,7 +441,7 @@ jobs:
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
