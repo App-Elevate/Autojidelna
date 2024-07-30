@@ -71,6 +71,12 @@ class _RouterPageState extends State<RouterPage> {
       NavigationDestination(label: lang.settings, icon: const Icon(Icons.settings)),
     ];
 
+    final List<Widget?> secondaryBodies = [
+      null,
+      Container(color: Colors.red),
+      Container(color: Colors.green),
+    ];
+
     final List<NavigationRailDestination> railDestinations =
         destinations.map((NavigationDestination destination) => AdaptiveScaffold.toRailDestination(destination)).toList();
 
@@ -136,12 +142,12 @@ class _RouterPageState extends State<RouterPage> {
                 ),
               },
             ),
-            secondaryBody: Breakpoints.large.isActive(context)
+            secondaryBody: Breakpoints.large.isActive(context) && secondaryBodies[index] != null
                 ? SlotLayout(
                     config: {
                       Breakpoints.large: SlotLayout.from(
                         key: const Key('LrgSecBody'),
-                        builder: (context) => Container(color: Colors.red),
+                        builder: (context) => secondaryBodies[index]!,
                       ),
                     },
                   )
