@@ -36,52 +36,62 @@
 
 ### Vytvořte Aplikaci v Google Play Console a App Store Connect
 
+### První build
+
+1. Vytvořte novou aplikaci pomocí fastlane match:
+
+```bash
+cd ios && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree --skip_itc && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree.ImageNotification --skip_itc && cd ..
+cd macos && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree --skip_itc && cd ..
+```
+
+2. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
+
+```bash
+cd ios && bundle install && bundle exec fastlane match appstore && bundle exec fastlane match && cd ..
+```
+
+3.  inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
+
+```bash
+cd macos && bundle install && bundle exec fastlane match appstore --additional_cert_types=mac_installer_distribution && bundle exec fastlane match && cd ..
+```
+
+4. Nastavte v xcode provisioning profile u obou platforem na `match development xx` a zároveň u notification extension na `match development xx`
+
+5. Vytvořte commit
+
+6. Přepněte release u obou platforem a targetů na `match appstore xx`
+
+7. Vytvořte commit
+
+8. Přepněte release u obou platforem a targetů na `match development xx`
+
+9. Vytvořte commit
+
+10. nahraďte původní hash committem 8. kroku ve workflow souboru v [deploy_everything.yml](.github/workflows/deploy_everything.yml#L145) (můžete nahradit oba hashe)
+
 ### Firebase
 
 1. Vytvořte nový projekt v Firebase.
-2. V (.firebaserc)[.firebaserc] změňte `app-elevate-core` na název vašeho projektu
+2. V [.firebaserc](.firebaserc) změňte `app-elevate-core` na název vašeho projektu ve firebase
 3. Spusťte
 
 ```bash
 flutterfire configure
 ```
 
-3. Zkontrolujte, že zkompiluje macOS a že byly vytvořeny tři aplikace - iOS, Android a Web
+4. Zapněte `run for install builds only` v xcode pro macos pro krok flutterfire: upload symbols
 
-### [Firebase App Check](https://console.firebase.google.com/u/0/project/_/appcheck/apps)
-
-1. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu. V opačném případě se dá vytvořit. Tento klíč se potom přidá do deviceCheck v firebase.
-2. Je potřeba vzít sha-256 a sha-1 z google play a nahrát je [na firebase](https://console.firebase.google.com/u/0/project/app-elevate-core/settings/general/android) + Zapnout play Integrity v Google play. Potom ještě zapnout [zde v firebase](https://console.firebase.google.com/u/0/project/_/appcheck/apps).
-3. Vytvořte captchu klíč pro web [zde pro recaptcha v3](https://www.google.com/recaptcha/admin/create) nebo ještě lépe [zde pro recaptcha enterprise](https://console.cloud.google.com/security/recaptcha)
-
-### Google Sign In
-
-1. Registrujte google ve [firebase auth](https://console.firebase.google.com/project/_/authentication/providers)
-2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent)
-3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/_/app-elevate-core/settings/general/ios) (nevkládejte do projektu)
-4. [Postupujte dle instrukcí zde](https://pub.dev/packages/google_sign_in_ios#macos-setup) - je potřeba udělat všechny kroky pro iOS i MacOS.
-5. [Získejte id Oauth klíče pro web a nahraďte již existující v index.html:](https://console.cloud.google.com/apis/credentials)
-
-```html
-<meta
-  name="google-signin-client_id"
-  content="466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com"
-/>
+```bash
+open macos/Runner.xcworkspace
 ```
 
-### Login with apple
-
-1. [Nastavte si apple sign in](https://console.firebase.google.com/project/_/authentication/providers)
-2. [Následujte instrukce zde](https://firebase.google.com/docs/auth/ios/apple?hl=en&authuser=0)
-
-### Firebase Analytics
-
-1. Povolte Analytics a crashlytics ve Firebase
-2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_conf/analytics.dart)
+5. Zkontrolujte, že zkompiluje macOS a že byly vytvořeny tři aplikace - iOS, Android a Web
 
 ### Assety
 
-1. Vyměňte assets/app_favicon.web a assets_dev/app_favicon.png za favicony vaší aplikace
+1. Vyměňte assets/app_favicon.webp a assets_dev/app_favicon.webp za favicony vaší aplikace
 
 ## První deployment
 
@@ -101,8 +111,9 @@ flutterfire configure
 
 2. Vytvořte novou aplikaci v Google Play Console
 3. Přidejte práva uživateli `google-play-github-actions@app-elevate-core.iam.gserviceaccount.com` a to toto: `Release apps to testing tracks` na nově vytvořenou aplikaci
-4. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh scripts/compile_android.sh`)
-5. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
+4. Přepněte způsob nahrávání na Google Play na `draft` místo `completed` v [tomto](.github/workflows/deploy_everything.yml#L444) a [tomto](scripts/deploy_android.sh#L31) souboru. Po ověření jména aplikace a ikonky můžete přepnout zpět na `completed`
+5. Nahrajte manuálně první verzi aplikace (buďto z artefaktu nebo manuálně pomocí `sh scripts/compile_android.sh`) - je však potřeba nahrát daný soubor, nestačí jen spustit skript s klíčem.
+6. Nyní se vám automaticky vytvoří nový release při každém mergu do mainu
 
 ### iOS
 
@@ -110,7 +121,7 @@ flutterfire configure
 
 - `IOS_APPSTORE_CERT_BASE64` - účet pro nahrání na App Store - linknutý na tým, každý tým musí mít svůj certifikát. Je to certifikát v .p8 formátu zakódovaný do base64
 - `IOS_KEYS_MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
-- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token` a je potřeba ho vytvořit na githubu v fine-grained personal access tokens. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží do secrets jako `IOS_KEYS_PAT`
+- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token` a je potřeba ho vytvořit na githubu v fine-grained personal access tokens. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží do secrets jako `IOS_KEYS_PAT`. Mělo by však stačit ho pouze povolit pro repo
 
 2. Vytvořte novou aplikaci v App Store Connect
 3. Nakonfigurujte [AppFile](ios/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect. Toto můžete udělat jak manuálně, tak pomocí
@@ -119,14 +130,11 @@ flutterfire configure
 cd ios && bundle install && bundle exec fastlane match init && cd ..
 ```
 
-4. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
+4. Otestujte, že vše funguje pomocí
 
 ```bash
-cd ios && bundle install && bundle exec fastlane match appstore
-bundle exec fastlane match
+sh scripts/deploy_ios.sh
 ```
-
-5. Nastavte v xcode provisioning profile na `match development xx`
 
 ### macos
 
@@ -143,18 +151,11 @@ bundle exec fastlane match
 cd macos && bundle install && bundle exec fastlane match init && cd ..
 ```
 
-4. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
+4. Otestujte, že vše funguje pomocí
 
 ```bash
-cd macos && bundle install && bundle exec fastlane match appstore --additional_cert_types=mac_installer_distribution
-bundle exec fastlane match
+sh scripts/deploy_macos.sh
 ```
-
-5. Nastavte v xcode provisioning profile na `match appstore xx` pro release a `match development xx` pro debug a profile
-
-### Web
-
-1. Je potřeba vytvořit recaptcha klíč pro (web)[https://cloud.google.com/recaptcha/docs/create-key-website?hl=en&authuser=0]
 
 ### Cloudflare Pages
 
@@ -192,8 +193,41 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 
 12. Smažte workflow soubor vytvořený firebase
 
+### [Firebase App Check](https://console.firebase.google.com/u/0/project/_/appcheck/apps)
+
+1. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu. V opačném případě se dá vytvořit. Tento klíč se potom přidá do deviceCheck v firebase.
+2. Je potřeba vzít sha-256 a sha-1 z google play a nahrát je [na firebase](https://console.firebase.google.com/u/0/project/_/settings/general/android) + Zapnout play Integrity v Google play. Potom ještě zapnout [zde v firebase](https://console.firebase.google.com/u/0/project/_/appcheck/apps).
+3. Vytvořte captchu klíč pro web [zde pro recaptcha v3](https://www.google.com/recaptcha/admin/create) nebo ještě lépe [zde pro recaptcha enterprise](https://console.cloud.google.com/security/recaptcha)
+4. Nahraďte klíč v [App.dart](lib/src/_global/app.dart#L100)
+
 ### Deep linking
 
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
-2. přepište url na vaši doménu - `core.appelevate.cz` ve vscode replace
-3. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
+2. přepište url v souboru [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) na vaši doménu
+3. Přepište url v souboru [ios/Runner/Runner.entitlements](ios/Runner/Runner.entitlements) na vaši doménu a v souboru [ios/Runner/RunnerRelease.entitlements](ios/Runner/RunnerRelease.entitlements)
+4. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
+
+### Google Sign In
+
+1. Registrujte google ve [firebase auth](https://console.firebase.google.com/project/_/authentication/providers)
+2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent)
+3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/_/app-elevate-core/settings/general/ios) (nevkládejte do projektu)
+4. [Postupujte dle instrukcí zde](https://pub.dev/packages/google_sign_in_ios#macos-setup) - je potřeba udělat všechny kroky pro iOS i MacOS.
+5. [Získejte id Oauth klíče pro web a nahraďte již existující v index.html:](https://console.cloud.google.com/apis/credentials)
+
+```html
+<meta
+  name="google-signin-client_id"
+  content="466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com"
+/>
+```
+
+### Login with apple
+
+1. [Nastavte si apple sign in](https://console.firebase.google.com/project/_/authentication/providers)
+2. [Následujte instrukce zde](https://firebase.google.com/docs/auth/ios/apple?hl=en&authuser=0)
+
+### Firebase Analytics
+
+1. Povolte Analytics a crashlytics ve Firebase
+2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_conf/analytics.dart)
