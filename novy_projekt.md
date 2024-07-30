@@ -17,32 +17,33 @@
 
 1. [Vytvořte ikonky pro ios/macos](https://www.appicon.co/#app-icon) - JE důležité nahrát ikonku v JPG formátu a ne PNG. PNG je ok ale bez transparentního pozadí
 2. Vytvořte ikonky pro android pomocí image asset studio v android studiu
-3. Vložte ikonky do složky [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
-4. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
-5. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`)
-6. Vložte favicony do složky [web/icons](web/icons)
+3. Vyberte vlevo místo projektu android (v projekt navigátoru)
+4. kliněte pravým tlačítkem na res a vyberte new -> Image Asset
+5. Vložte ikonky do složky [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
+6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
+7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`)
+8. Vložte favicony do složky [web/icons](web/icons) bez manifestu.
 
 ### Splash screeny
 
 1. Nahrajte transparentní png soubor [na web](https://www.appicon.co/#app-icon)
 2. Vytáhněte si z `Assets.xcassets/AppIcon.appiconset` ikonku 512.png, zkopírujte si jí jinam, přejmenujte na LaunchImage.png a nahrajte ji sem: [https://www.appicon.co/#image-sets](https://www.appicon.co/#image-sets)
 3. Vytáhněte si LaunchImage a vložte do [ios/Runner/Assets.xcassets/LaunchImage.imageset](ios/Runner/Assets.xcassets/LaunchImage.imageset)
+4. Zkontrolujte ios/Runner/LaunchScreen.storyboard a upravte splash screen podle potřeb. To může být například jiná barva pozadí...
+5. Zkontrolujte barvu pozadí u androidu v [android/app/src/main/res/values/ic_launcher_background.xml](android/app/src/main/res/values/ic_launcher_background.xml) a upravte podle potřeb
 
 ### **Matějova část -- insert instructions here -- **
 
-### Deep linking
-
-1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
-2. přepište url na vaši doménu - `core.appelevate.cz` ve vscode replace
-3. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
+### Vytvořte Aplikaci v Google Play Console a App Store Connect
 
 ### Firebase
 
 1. Vytvořte nový projekt v Firebase.
-2. Spusťte
+2. V (.firebaserc)[.firebaserc] změňte `app-elevate-core` na název vašeho projektu
+3. Spusťte
 
 ```bash
-sh scripts/flutterfire_configure.sh
+flutterfire configure
 ```
 
 3. Zkontrolujte, že zkompiluje macOS a že byly vytvořeny tři aplikace - iOS, Android a Web
@@ -190,3 +191,9 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 ```
 
 12. Smažte workflow soubor vytvořený firebase
+
+### Deep linking
+
+1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
+2. přepište url na vaši doménu - `core.appelevate.cz` ve vscode replace
+3. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
