@@ -141,9 +141,6 @@ class TextsCs extends Texts {
   }
 
   @override
-  String get providerTestPage => 'Stránka testování poskytovatele';
-
-  @override
   String get remoteConfig => 'Vzdálená konfigurace';
 
   @override

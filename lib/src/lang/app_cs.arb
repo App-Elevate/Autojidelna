@@ -39,7 +39,6 @@
   "password": "Heslo",
   "passwordMustBeAtLeast6CharactersLong": "Heslo musí mít alespoň 6 znaků",
   "providerId": "ID poskytovatele: {id}",
-  "providerTestPage": "Stránka testování poskytovatele",
   "remoteConfig": "Vzdálená konfigurace",
   "requestNotificationPermission": "Požádat o povolení notifikací",
   "resetPassword": "Obnovit heslo",
