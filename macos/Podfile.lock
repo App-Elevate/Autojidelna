@@ -134,8 +134,6 @@ PODS:
     - nanopb (< 2.30911.0, >= 2.30908.0)
     - PromisesSwift (~> 2.1)
   - FirebaseSharedSwift (10.29.0)
-  - flutter_localization (0.0.1):
-    - FlutterMacOS
   - flutter_secure_storage_macos (6.1.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
@@ -238,7 +236,6 @@ DEPENDENCIES:
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
   - firebase_crashlytics (from `Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos`)
   - firebase_remote_config (from `Flutter/ephemeral/.symlinks/plugins/firebase_remote_config/macos`)
-  - flutter_localization (from `Flutter/ephemeral/.symlinks/plugins/flutter_localization/macos`)
   - flutter_secure_storage_macos (from `Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
@@ -292,8 +289,6 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_crashlytics/macos
   firebase_remote_config:
     :path: Flutter/ephemeral/.symlinks/plugins/firebase_remote_config/macos
-  flutter_localization:
-    :path: Flutter/ephemeral/.symlinks/plugins/flutter_localization/macos
   flutter_secure_storage_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/flutter_secure_storage_macos/macos
   FlutterMacOS:
@@ -336,7 +331,6 @@ SPEC CHECKSUMS:
   FirebaseRemoteConfigInterop: 6efda51fb5e2f15b16585197e26eaa09574e8a4d
   FirebaseSessions: dbd14adac65ce996228652c1fc3a3f576bdf3ecc
   FirebaseSharedSwift: 20530f495084b8d840f78a100d8c5ee613375f6e
-  flutter_localization: 4035848ae2ed142875d5fd3dde328250a5e81f42
   flutter_secure_storage_macos: 59459653abe1adb92abbc8ea747d79f8d19866c9
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
