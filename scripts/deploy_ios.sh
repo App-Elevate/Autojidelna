@@ -21,7 +21,7 @@ cd ios
 bundle install 
 bundle exec fastlane match appstore --readonly 
 cd .. 
-flutter build ipa --split-debug-info build/symbolsIos --obfuscate --release --no-codesign
+flutter build ipa --split-debug-info build/symbolsIos --obfuscate --release
 cd ios 
 bundle exec fastlane release
 cd ..

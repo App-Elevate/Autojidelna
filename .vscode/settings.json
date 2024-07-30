@@ -1,0 +1,11 @@
+{
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.arb$",
+        "isAsync": true,
+        "cmd": "dart run arb_utils sort ${file} && flutter gen-l10n"
+      }
+    ]
+  }
+}

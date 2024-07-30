@@ -25,7 +25,7 @@ Future<UserCredential?> handleGoogleSignInNative() async {
 }
 
 /// Handles the sign in with Google on the web.
-Future<UserCredential?> handleSignInWeb() async {
+Future<UserCredential?> handleGoogleSignInWeb() async {
   try {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();

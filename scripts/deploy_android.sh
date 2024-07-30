@@ -21,3 +21,11 @@ flutter build appbundle --split-debug-info build/symbolsAndroid --obfuscate
 open https://play.google.com/console/
 firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json) 
 firebase crashlytics:symbols:upload --app=$firebase_id build/symbolsAndroid
+PATH_TO_NATIVE_SYMBOLS="build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
+CURRENT_EXECUTION_PATH=$(pwd)
+cd $PATH_TO_NATIVE_SYMBOLS
+zip -r symbols.zip .
+cd $CURRENT_EXECUTION_PATH
+mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
+export APP_PACKAGE_NAME=$(ggrep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
+sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab $RUN_NUMBER internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip

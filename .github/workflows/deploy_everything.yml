@@ -40,6 +40,11 @@ on:
         required: true
         type: boolean
         default: false
+      skip:
+        description: "Skip all deployments?"
+        required: true
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -52,7 +57,7 @@ concurrency:
 jobs:
   version:
     name: Create version number
-    if: ${{ github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'}}
+    if: ${{ (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch') && github.event.inputs.skip == 'false' }}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
@@ -129,9 +134,16 @@ jobs:
           channel: "stable"
           cache: true
 
+      - name: Install Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: setup flutterfire
+        run: dart pub global activate flutterfire_cli
+
       - name: Get Certificates
         run: |
-          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 --no-commit
+          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0 
+          git revert 67afac41f5d4b2b09e36c1cddb1296e50ef5be53 
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
@@ -277,7 +289,8 @@ jobs:
       - name: Deploy to Cloudflare Pages
         run: |
           # Push the new branch to the repository
-          git commit -a -m "Built web"
+          git add .
+          git commit -m "Built web"
           git push origin dist-cloudflare-pages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -369,6 +382,7 @@ jobs:
     name: "[Android] Deploy to Google Play Store"
     environment:
       name: google-play
+      url: https://play.google.com/store/apps/details?id=${{ needs.version.outputs.app_id }}
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS. Should propably work on windows as well
@@ -413,14 +427,21 @@ jobs:
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
 
-      - name: Release Build to internal track
-        uses: r0adkll/upload-google-play@v1
+      - name: Symbols extraction
+        run: |
+          PATH_TO_NATIVE_SYMBOLS="build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
+          CURRENT_EXECUTION_PATH=$(pwd)
+          cd $PATH_TO_NATIVE_SYMBOLS
+          zip -r symbols.zip .
+          cd $CURRENT_EXECUTION_PATH
+          mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
+      - uses: vacxe/google-play-cli-kt@master
+        env:
+          JAVA_HOME: ""
         with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: ${{needs.version.outputs.app_id}}
-          releaseFiles: build/app/outputs/bundle/release/app-release.aab
-          track: internal
-          status: draft
+          service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+          package-name: ${{needs.version.outputs.app_id}}
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4

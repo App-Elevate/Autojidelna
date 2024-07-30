@@ -2,6 +2,12 @@
 
 Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
 
+## Doporučený environment
+
+- macOS má aktuálně implementované všechny skripty, ale pro windows uživatele nebude náročné si je upravit.
+- Doporučený editor je Visual Studio Code s rozšířeními [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter), [Arb-files](https://marketplace.visualstudio.com/items?itemName=Google.arb-editor), [Run on save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) a [Build Runner](https://marketplace.visualstudio.com/items?itemName=GaetSchwartz.build-runner&ssr=false#review-details).
+- macOS má zároveň podporu kompilace pro iOS a macOS.
+
 ## Spuštění aplikace
 
 ### Android
