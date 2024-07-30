@@ -62,6 +62,13 @@ class TextsEn extends Texts {
   String get deleteAccount => 'Delete account';
 
   @override
+  String get deleteAccountConfirm => 'Delete account';
+
+  @override
+  String get deleteAccountDialog =>
+      'Are you sure you want to delete your account?';
+
+  @override
   String get demoPageTitle => 'Demo Page';
 
   @override

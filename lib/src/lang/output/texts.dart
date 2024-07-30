@@ -191,6 +191,18 @@ abstract class Texts {
   /// **'Delete account'**
   String get deleteAccount;
 
+  /// No description provided for @deleteAccountConfirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get deleteAccountConfirm;
+
+  /// No description provided for @deleteAccountDialog.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get deleteAccountDialog;
+
   /// No description provided for @demoPageTitle.
   ///
   /// In en, this message translates to:

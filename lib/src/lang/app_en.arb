@@ -24,6 +24,8 @@
   "createAccount": "Create account with email and password",
   "debug": " - debug",
   "deleteAccount": "Delete account",
+  "deleteAccountConfirm": "Delete account",
+  "deleteAccountDialog": "Are you sure you want to delete your account?",
   "demoPageTitle": "Demo Page",
   "disconnectedFromANetwork": "Disconnected from a network",
   "disconnectedFromTheInternet": "Disconnected from the internet",

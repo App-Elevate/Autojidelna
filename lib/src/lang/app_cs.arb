@@ -16,6 +16,8 @@
   "createAccount": "Vytvořit účet s e-mailem a heslem",
   "debug": " - debug",
   "deleteAccount": "Smazat účet",
+  "deleteAccountConfirm": "Smazat účet",
+  "deleteAccountDialog": "Opravdu chcete smazat svůj účet?",
   "demoPageTitle": "Demo stránka",
   "disconnectedFromANetwork": "Odpojeno od sítě",
   "disconnectedFromTheInternet": "Odpojeno od internetu",
