@@ -59,13 +59,7 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
         AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
         AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
         AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
-        AutoRoute(page: RoutingTestDetailPage.page, path: '/settings/detail'),
-        AutoRoute(page: RoutingTestDetailDetail.page, path: '/settings/detail/detail'),
-        AutoRoute(page: ProviderTestPage.page, path: '/settings/provider'),
         AutoRoute(page: LoginPage.page, path: '/settings/login'),
         AutoRoute(page: DeleteAccountPage.page, path: '/settings/delete', guards: [AuthGuard()]),
-        AutoRoute(page: SecretPage.page, path: '/settings/secret', guards: [AuthGuard()]),
-        AutoRoute(page: GoogleSecretPage.page, path: '/settings/google', guards: [GoogleGuard()]),
-        AutoRoute(page: AppleSecretPage.page, path: '/settings/apple', guards: [AppleGuard()]),
       ];
 }

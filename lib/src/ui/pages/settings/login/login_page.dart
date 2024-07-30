@@ -69,15 +69,11 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: <Widget>[
               ElevatedButton(
-                onPressed: () async => context.router.navigate(const SettingsPage()),
-                child: Text(lang.goToSettings),
-              ),
-              ElevatedButton(
                 onPressed: () async => FirebaseAuth.instance.signInAnonymously(),
                 child: Text(lang.signInAnonymously),
               ),
               ElevatedButton(
-                onPressed: () async => kIsWeb ? handleSignInWeb() : handleGoogleSignInNative(),
+                onPressed: () async => kIsWeb ? handleGoogleSignInWeb() : handleGoogleSignInNative(),
                 child: Text(lang.signInWithGoogle),
               ),
               ElevatedButton(

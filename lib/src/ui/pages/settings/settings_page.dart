@@ -17,12 +17,6 @@ class SettingsPage extends StatelessWidget {
       body: Center(
         child: Column(
           children: <Widget>[
-            Text(lang.routingTestPageDetail),
-            Text(lang.routingTestPageDetail1),
-            ElevatedButton(
-              onPressed: () async => context.router.push(const RoutingTestDetailPage()),
-              child: Text(lang.routingGoToDetailPage),
-            ),
             ElevatedButton(
               onPressed: () async => context.router.push(const RoutingParamPage()),
               child: Text(lang.routingGoToParamDetailPage),
@@ -32,24 +26,8 @@ class SettingsPage extends StatelessWidget {
               child: Text(lang.language),
             ),
             ElevatedButton(
-              onPressed: () async => context.router.push(const ProviderTestPage()),
-              child: Text(lang.remoteConfig),
-            ),
-            ElevatedButton(
               onPressed: () async => context.router.push(LoginPage()),
               child: Text(lang.login),
-            ),
-            ElevatedButton(
-              onPressed: () async => context.router.push(const SecretPage()),
-              child: Text(lang.secret),
-            ),
-            ElevatedButton(
-              onPressed: () async => context.router.push(const GoogleSecretPage()),
-              child: Text(lang.secretGoogle),
-            ),
-            ElevatedButton(
-              onPressed: () async => context.router.push(const AppleSecretPage()),
-              child: Text(lang.appleSecret),
             ),
             Consumer<IsOnline>(
               builder: (context, IsOnline isOnline, child) {
