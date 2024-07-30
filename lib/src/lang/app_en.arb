@@ -71,7 +71,6 @@
       }
     }
   },
-  "providerTestPage": "Provider Test Page",
   "remoteConfig": "Remote Config",
   "requestNotificationPermission": "Request Notification Permission",
   "resetPassword": "Reset password",

@@ -329,12 +329,6 @@ abstract class Texts {
   /// **'Provider ID: {id}'**
   String providerId(String id);
 
-  /// No description provided for @providerTestPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Provider Test Page'**
-  String get providerTestPage;
-
   /// No description provided for @remoteConfig.
   ///
   /// In en, this message translates to:

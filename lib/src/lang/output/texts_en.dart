@@ -143,9 +143,6 @@ class TextsEn extends Texts {
   }
 
   @override
-  String get providerTestPage => 'Provider Test Page';
-
-  @override
   String get remoteConfig => 'Remote Config';
 
   @override
