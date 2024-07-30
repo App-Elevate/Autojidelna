@@ -18,7 +18,7 @@ class AboutAppButton extends StatelessWidget {
       onPressed: () => showAboutDialog(
         context: context,
         applicationName: lang.appName,
-        applicationVersion: App.packageInfo.version + (kDebugMode ? lang.debug : ''),
+        applicationVersion: '${App.packageInfo.version} (${App.packageInfo.buildNumber})${kDebugMode ? lang.debug : ''}',
         applicationIcon: GestureDetector(
           onTap: appElevateClick,
           child: Image.asset(
