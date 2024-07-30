@@ -741,14 +741,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  iconsax_flutter:
-    dependency: transitive
-    description:
-      name: iconsax_flutter
-      sha256: "95b65699da8ea98f87c5d232f06b0debaaf1ec1332b697e4d90969ec9a93037d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
   ini:
     dependency: transitive
     description:
@@ -1005,65 +997,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
-  pausable_timer:
-    dependency: transitive
-    description:
-      name: pausable_timer
-      sha256: "6ef1a95441ec3439de6fb63f39a011b67e693198e7dae14e20675c3c00e86074"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0+3"
-  permission_handler:
-    dependency: "direct main"
-    description:
-      path: permission_handler
-      ref: master
-      resolved-ref: a6ef4a519542740cfec98537e4188960045a95b4
-      url: "https://github.com/alex-melnyk/flutter-permission-handler.git"
-    source: git
-    version: "11.2.0"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: b29a799ca03be9f999aa6c39f7de5209482d638e6f857f6b93b0875c618b7e54
-      url: "https://pub.dev"
-    source: hosted
-    version: "12.0.7"
-  permission_handler_apple:
-    dependency: "direct overridden"
-    description:
-      path: permission_handler_apple
-      ref: master
-      resolved-ref: a6ef4a519542740cfec98537e4188960045a95b4
-      url: "https://github.com/alex-melnyk/flutter-permission-handler.git"
-    source: git
-    version: "9.3.0"
-  permission_handler_html:
-    dependency: "direct overridden"
-    description:
-      path: permission_handler_html
-      ref: main
-      resolved-ref: "96422310e460221935bdbe20ab244677271c2b03"
-      url: "https://github.com/raldhafiri/flutter-permission-handler.git"
-    source: git
-    version: "0.1.2"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: "48d4fcf201a1dad93ee869ab0d4101d084f49136ec82a8a06ed9cfeacab9fd20"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.2.1"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: "1a790728016f79a41216d88672dbc5df30e686e811ad4e698bfc51f76ad91f1e"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.1"
   petitparser:
     dependency: transitive
     description:
@@ -1349,14 +1282,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
-  toastification:
-    dependency: "direct main"
-    description:
-      name: toastification
-      sha256: "5e751acc2fb5b8d008138dac255d62290fde4e5a24824f29809ac098c3dfe395"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.0"
   typed_data:
     dependency: transitive
     description:

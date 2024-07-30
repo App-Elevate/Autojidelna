@@ -11,7 +11,6 @@ import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:toastification/toastification.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -77,14 +76,12 @@ class MyAppWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ToastificationWrapper(
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => IsOnline(), lazy: false),
-          ChangeNotifierProvider(create: (context) => Rmc(), lazy: false),
-        ],
-        child: const MyApp(),
-      ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => IsOnline(), lazy: false),
+        ChangeNotifierProvider(create: (context) => Rmc(), lazy: false),
+      ],
+      child: const MyApp(),
     );
   }
 }
