@@ -97,7 +97,7 @@ class App {
     retryWithExponentialBackoff(
       () async => await FirebaseAppCheck.instance.activate(
         // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-        webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
+        webProvider: ReCaptchaEnterpriseProvider('6LeEpBsqAAAAABcQaiCNcoHuzkhCZtdwCCNHVWmp'),
         androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
         appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
       ),
@@ -116,10 +116,11 @@ class App {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
     FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
 
-    if (settings.authorizationStatus == AuthorizationStatus.notDetermined) {
-      App.firstRun = true;
+    if (settings.authorizationStatus == AuthorizationStatus.notDetermined &&
+        Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
+      App.shouldAskForNotification = true;
     } else {
-      App.firstRun = false;
+      App.shouldAskForNotification = false;
     }
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
@@ -139,7 +140,7 @@ class App {
 
   static late final PackageInfo packageInfo;
 
-  static late final bool firstRun;
+  static late final bool shouldAskForNotification;
 
   static const defaultLocale = Locale('en');
 

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_conf/messaging.dart';
-import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/_routing/guards.dart';
@@ -31,11 +30,8 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
       unawaited(router.pushNamed(route));
       return;
     }
-    if (Messaging.grantedPermission || resolver.route.name == RequestPermissionPage.name || !App.firstRun) {
-      resolver.next();
-    } else {
-      unawaited(resolver.redirect(RequestPermissionPage(onResult: (didLogin) => resolver.next(didLogin))));
-    }
+    resolver.next();
+    return;
   }
 
   @override
@@ -44,6 +40,7 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
           page: RouterPage.page,
           initial: true,
           path: '/',
+          guards: [NotificationGuard()],
           children: <AutoRoute>[
             AutoRoute(page: DemoPage.page, path: 'demo'),
             AutoRoute(page: CrashlyticsPage.page, path: '', initial: true),
