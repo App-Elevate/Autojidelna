@@ -242,6 +242,8 @@ Rulesets:
 />
 ```
 
+6. Spusťte `flutterfire configure` a ověřte, že macos zkompiluje
+
 ### Login with apple
 
 1. [Nastavte si apple sign in](https://console.firebase.google.com/project/_/authentication/providers)
