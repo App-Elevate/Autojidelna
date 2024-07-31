@@ -230,10 +230,10 @@ Rulesets:
 ### Google Sign In
 
 1. Registrujte google ve [firebase auth](https://console.firebase.google.com/project/_/authentication/providers)
-2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent)
+2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent). Je potřeba nastavit i doménu, která bude používat google sign in. (Stačí pouze production domény)
 3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/project/_/settings/general/ios) (nevkládejte do projektu)
 4. [Postupujte dle instrukcí zde](https://pub.dev/packages/google_sign_in_ios#macos-setup) - je potřeba udělat všechny kroky pro iOS i MacOS.
-5. [Získejte id Oauth klíče pro web a nahraďte již existující v index.html:](https://console.cloud.google.com/apis/credentials)
+5. [Získejte id Oauth klíče pro web a nahraďte již existující v index.html:](https://console.cloud.google.com/apis/credentials). Nezapomeňte sem přidat všechny domény, které budou používat google sign in.
 
 ```html
 <meta
@@ -243,6 +243,7 @@ Rulesets:
 ```
 
 6. Spusťte `flutterfire configure` a ověřte, že macos zkompiluje
+7. Ve firebase přidejte doménu všech webů, které budou používat google sign in: [zde](https://console.firebase.google.com/u/0/project/fantasy-dance-studio/authentication/settings)
 
 ### Login with apple
 
