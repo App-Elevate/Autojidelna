@@ -40,7 +40,7 @@
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
   <meta name="theme-color" content="#ffffff">
-  <meta name="google-signin-client_id" content="466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com">
+  <meta name="google-signin-client_id" content="544624851632-f7a96fje0mapmvgup70dkbsvqdq9d676.apps.googleusercontent.com">
 
   <!-- iOS meta tags & icons -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -55,22 +55,14 @@
       self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; // Replace true with the debug token you get from the Firebase console
     }
   </script>
-  <script src="flutter_bootstrap.js" async></script>
-  <script>
-       if ('serviceWorker' in navigator) {
-          // Service workers are supported. Use them.
-          window.addEventListener('load', function () {
-            // ADD THIS LINE
-            navigator.serviceWorker.register('/firebase-messaging-sw.js');
-
-            // Wait for registration to finish before dropping the <script> tag.
-            // Otherwise, the browser will load the script multiple times,
-            // potentially different versions.
-            var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-
-            //  ...
-          });
-      }
+  <script src="flutter_bootstrap.js" async>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('firebase-messaging-sw.js', {
+          scope: '/firebase-cloud-messaging-push-scope',
+        });
+      });
+    }
   </script>
 </body>
 </html>

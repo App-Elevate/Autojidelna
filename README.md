@@ -141,3 +141,5 @@ cd macos && bundle install && bundle exec fastlane match appstore --additional-c
 ```
 
 a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potřeba mít přístup k certifikátům.
+
+# [Vytváření nové aplikace](novy_projekt.md)

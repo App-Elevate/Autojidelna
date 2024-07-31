@@ -1,0 +1,27 @@
+{
+  "id": 1073093,
+  "name": "*",
+  "target": "branch",
+  "source_type": "Repository",
+  "source": "App-Elevate/CORE.aplikace",
+  "enforcement": "active",
+  "conditions": {
+    "ref_name": {
+      "exclude": [
+        "refs/heads/dist-cloudflare-pages"
+      ],
+      "include": [
+        "refs/heads/*"
+      ]
+    }
+  },
+  "rules": [
+    {
+      "type": "non_fast_forward"
+    },
+    {
+      "type": "required_signatures"
+    }
+  ],
+  "bypass_actors": []
+}

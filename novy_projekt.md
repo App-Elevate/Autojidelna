@@ -191,7 +191,27 @@ sh scripts/deploy_macos.sh
 firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 ```
 
-12. Smažte workflow soubor vytvořený firebase
+12. Hned vedle toho upravte `firebaseProjectId` na váš projekt v firebase
+
+13. Smažte workflow soubor vytvořený firebase
+
+### Pravidla a Github Repozitář
+
+1. Přeneste všechny variably a upravte je do nového repozitáře
+
+`CLOUDFLARE_PAGES_URL` - url vašeho cloudflare pages
+`CLOUDFLARE_ZONE_ID` - zone id vašeho cloudflare
+`COMMENT_CLOSED` - komentář, který se má napsat, když se PR zavře kvůli špatnému názvu
+`COMMENT_NICE` - komentář, který se má napsat, když PR projde zkouškou
+`FIREBASE_HOSTING_URL` - url vašeho firebase hosting
+
+2. Přeneste pravidla a upravte je do nového repozitáře
+
+Rulesets:
+
+`*` - vyžadovat signing a blokovat force pushe
+`main` - restrict updates + deletions, vše co `*` a require pull request reviews a status checks to pass before merging
+`version` - vše co `*` a require pull request before merging
 
 ### [Firebase App Check](https://console.firebase.google.com/u/0/project/_/appcheck/apps)
 
@@ -205,13 +225,13 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
 2. přepište url v souboru [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) na vaši doménu
 3. Přepište url v souboru [ios/Runner/Runner.entitlements](ios/Runner/Runner.entitlements) na vaši doménu a v souboru [ios/Runner/RunnerRelease.entitlements](ios/Runner/RunnerRelease.entitlements)
-4. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`
+4. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`. Pokud nahrajete na daný web flutter web, tak je to automaticky dostupné.
 
 ### Google Sign In
 
 1. Registrujte google ve [firebase auth](https://console.firebase.google.com/project/_/authentication/providers)
 2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent)
-3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/_/app-elevate-core/settings/general/ios) (nevkládejte do projektu)
+3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/project/_/settings/general/ios) (nevkládejte do projektu)
 4. [Postupujte dle instrukcí zde](https://pub.dev/packages/google_sign_in_ios#macos-setup) - je potřeba udělat všechny kroky pro iOS i MacOS.
 5. [Získejte id Oauth klíče pro web a nahraďte již existující v index.html:](https://console.cloud.google.com/apis/credentials)
 
@@ -231,3 +251,15 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 
 1. Povolte Analytics a crashlytics ve Firebase
 2. Přidejte dimenze, které naleznete v [analytics.dart](lib/src/_conf/analytics.dart)
+
+### Firebase Remote Config
+
+1. Inicializujte hodnoty v [remote_config.dart](lib/src/_global/providers/remote_config.dart#L110)
+2. Na to můžete použít buďto [tento template](dev_files/remote_config_template.json) nebo manuálně nahrát na [firebase](https://console.firebase.google.com/u/0/project/_/remoteconfig)
+3. Zkontrolujte, že se hodnoty načítají v aplikaci
+
+### Firebase messaging
+
+1. Upravte hodnoty v [firebase-messaging-sw.js](web/firebase-messaging-sw.js), tak aby souvisely s tím, co je v [firebase_options.dart](lib/firebase_options.dart)
+2. Nahrajte APNs certifikát do [firebase](https://console.firebase.google.com/u/0/project/_/settings/cloudmessaging/ios)
+3. Tady hned vygenerujte vapid klíč pod web push certificates a vložte ho do [messaging.dart](lib/src/_messaging/messaging.dart#L34)
