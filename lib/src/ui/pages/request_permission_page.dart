@@ -5,6 +5,7 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
@@ -33,6 +34,7 @@ class RequestPermissionPage extends StatelessWidget {
               ElevatedButton(
                 onPressed: () async {
                   onResult!(true);
+                  if (kIsWeb) unawaited(Hive.box(Boxes.settings).put(HiveKeys.shouldAskForNotificationPermission, false));
                   final permission = await FirebaseMessaging.instance.requestPermission(
                     alert: true,
                     announcement: false,
