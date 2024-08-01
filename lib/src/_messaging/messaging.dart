@@ -34,11 +34,18 @@ class Messaging {
       }
       apnsToken = apnsTokenLocal;
     }
-    final fcmToken = await FirebaseMessaging.instance
-        .getToken(vapidKey: kIsWeb ? 'BCA2GZa5SucDxk3knHVJ_ip_PDiVcqNnbTgnw2aT1kmdt9QtG2SvH7E91DrvfssjuNZhHqAbYCM4yRmI3BmnSes' : null);
-    if (fcmToken != null) {
-      await onSuccessfulToken(fcmToken);
-    }
+    final fcmToken = await retryWithExponentialBackoff(
+      () async {
+        final token = await FirebaseMessaging.instance
+            .getToken(vapidKey: kIsWeb ? 'BCA2GZa5SucDxk3knHVJ_ip_PDiVcqNnbTgnw2aT1kmdt9QtG2SvH7E91DrvfssjuNZhHqAbYCM4yRmI3BmnSes' : null);
+        if (token == null) {
+          throw Exception('Token is null');
+        }
+        return token;
+      },
+      infinite: true,
+    );
+    await onSuccessfulToken(fcmToken);
   }
 
   static Future<void> onSuccessfulToken(String token) async {
