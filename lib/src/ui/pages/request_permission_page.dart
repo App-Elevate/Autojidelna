@@ -35,7 +35,7 @@ class RequestPermissionPage extends StatelessWidget {
                 onPressed: () async {
                   onResult!(true);
                   if (kIsWeb) unawaited(Hive.box(Boxes.settings).put(HiveKeys.shouldAskForNotificationPermission, false));
-                  final permission = await FirebaseMessaging.instance.requestPermission(
+                  await FirebaseMessaging.instance.requestPermission(
                     alert: true,
                     announcement: false,
                     badge: true,
@@ -44,12 +44,9 @@ class RequestPermissionPage extends StatelessWidget {
                     provisional: false,
                     sound: true,
                   );
-                  if (permission.authorizationStatus == AuthorizationStatus.authorized ||
-                      permission.authorizationStatus == AuthorizationStatus.provisional) {
-                    Future.delayed(const Duration(seconds: 1), () {
-                      Messaging.onNotificationPermissionGranted();
-                    });
-                  }
+                  Future.delayed(const Duration(seconds: 1), () {
+                    Messaging.onNotificationPermissionGranted();
+                  });
                 },
                 child: Text(lang.requestNotificationPermission),
               ),
