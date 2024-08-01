@@ -127,8 +127,10 @@ class App {
       if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
         await Messaging.onNotificationPermissionGranted();
       }
-    } else {
+    } else if (Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
       App.shouldAskForNotification = true;
+    } else {
+      App.shouldAskForNotification = false;
     }
 
     _initFirebaseMessagingExecuted = true;
