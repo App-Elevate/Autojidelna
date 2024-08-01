@@ -94,7 +94,7 @@ class App {
     assert(_initAppCheckExecuted == false, 'App.initAppCheck() must be called only once');
     if (_initAppCheckExecuted) return;
 
-    retryWithExponentialBackoff(
+    await retryWithExponentialBackoff(
       () async => await FirebaseAppCheck.instance.activate(
         // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
         webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
