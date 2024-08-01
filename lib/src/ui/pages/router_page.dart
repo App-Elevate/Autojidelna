@@ -18,16 +18,12 @@ class RouterPage extends StatefulWidget {
 class _RouterPageState extends State<RouterPage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-  int index = 1;
   bool isExtended = false;
 
   changeIndex(int newIndex, TabsRouter tabsRouter) {
     if (!mounted || !context.mounted) return;
     if (Breakpoints.smallDesktop.isActive(context)) changeExtention(context);
-    setState(() {
-      index = newIndex;
-    });
-    tabsRouter.setActiveIndex(index);
+    tabsRouter.setActiveIndex(newIndex);
   }
 
   changeExtention(BuildContext context) {
@@ -103,6 +99,7 @@ class _RouterPageState extends State<RouterPage> {
       ),
       builder: (context, child) {
         final tabsRouter = AutoTabsRouter.of(context);
+        final index = tabsRouter.activeIndex;
         return Scaffold(
           key: _key,
           appBar: appBars[index],

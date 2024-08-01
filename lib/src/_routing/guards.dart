@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/app.dart';
+import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -28,6 +30,18 @@ class AuthGuard extends AutoRouteGuard {
           ),
         ),
       );
+    }
+  }
+}
+
+class NotificationGuard extends AutoRouteGuard {
+  @override
+  void onNavigation(NavigationResolver resolver, StackRouter router) {
+    if (Messaging.grantedPermission || resolver.route.name == RequestPermissionPage.name || !App.shouldAskForNotification) {
+      resolver.next();
+      return;
+    } else {
+      unawaited(resolver.redirect(RequestPermissionPage(onResult: (didLogin) => resolver.next(didLogin))));
     }
   }
 }

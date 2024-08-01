@@ -15,13 +15,13 @@ class InitApp {
       App.initHive().then(
         (_) async => await Future.wait([
           App.initLocalization(),
+          App.initFirebaseMessaging(),
         ]),
       ),
       App.initAppCheck(),
       App.initSecureStorage(),
       App.initRemoteConfig(),
       App.initGoogleSignIn(),
-      App.initFirebaseMessaging(),
       App.initPlatform(),
     ]);
     // Stop the stopwatch

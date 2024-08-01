@@ -111,18 +111,29 @@ class App {
   static Future<void> initFirebaseMessaging() async {
     assert(_initFirebaseMessagingExecuted == false, 'App.initFirebaseMessaging() must be called only once');
     if (_initFirebaseMessagingExecuted) return;
-    NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
-    await Messaging.setupInteractedMessage();
-    FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-    FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
+    if (!kIsWeb) {
+      NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
+      await Messaging.setupInteractedMessage();
+      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
 
-    if (settings.authorizationStatus == AuthorizationStatus.notDetermined) {
-      App.firstRun = true;
+      if (settings.authorizationStatus == AuthorizationStatus.notDetermined &&
+          Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
+        App.shouldAskForNotification = true;
+      } else {
+        App.shouldAskForNotification = false;
+      }
+
+      if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
+        await Messaging.onNotificationPermissionGranted();
+      }
+    } else if (Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
+      App.shouldAskForNotification = true;
     } else {
-      App.firstRun = false;
+      App.shouldAskForNotification = false;
     }
 
-    if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
+    if (kIsWeb && Hive.box(Boxes.settings).get(HiveKeys.webNotificationsAccepted, defaultValue: false)) {
       await Messaging.onNotificationPermissionGranted();
     }
 
@@ -139,7 +150,7 @@ class App {
 
   static late final PackageInfo packageInfo;
 
-  static late final bool firstRun;
+  static late final bool shouldAskForNotification;
 
   static const defaultLocale = Locale('en');
 
