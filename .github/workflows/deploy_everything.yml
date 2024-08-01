@@ -95,6 +95,12 @@ jobs:
           name: pubspec
           path: pubspec.yaml
 
+      - name: Upload version.txt
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
+
       - name: Get applicationId
         id: extract_app_id
         run: |
