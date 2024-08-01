@@ -116,6 +116,24 @@ body {
       self.FIREBASE_APPCHECK_DEBUG_TOKEN = true; // Replace true with the debug token you get from the Firebase console
     }
   </script>
-  <script src="flutter_bootstrap.js" async></script>
+  <script src="flutter_bootstrap.js" async>
+    function isIOS() {
+      const userAgent = window.navigator.userAgent || window.navigator.vendor || window.opera;
+
+      // iOS detection using user agent
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+          return true;
+      }
+
+      return false;
+    }
+    if ('serviceWorker' in navigator && !isIOS()) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('firebase-messaging-sw.js', {
+          scope: '/firebase-cloud-messaging-push-scope',
+        });
+      });
+    }
+  </script>
 </body>
 </html>
