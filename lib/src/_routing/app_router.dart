@@ -2,21 +2,25 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_conf/messaging.dart';
-import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/_routing/guards.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends $AppRouter implements AutoRouteGuard {
+  bool isValid(AutoRoute route, String baseRoute, {String prevRoute = ''}) {
+    if (route.children != null && route.children!.routes.isNotEmpty) {
+      final match = route.children!.routes.any((child) => isValid(child, baseRoute, prevRoute: prevRoute + route.path));
+      if (match) return true;
+    }
+    final regexPattern = RegExp('^${(prevRoute + route.path).replaceAllMapped(RegExp(r':\w+'), (match) => r'[^/]+')}\$');
+    return regexPattern.hasMatch(baseRoute);
+  }
+
   bool isRouteValid(String routeName) {
     final uri = Uri.parse(routeName);
-    final baseRoute = uri.path;
-    return routes.any((route) {
-      // Convert the route pattern to a regex pattern
-      final regexPattern = RegExp('^${route.path.replaceAllMapped(RegExp(r':\w+'), (match) => r'[^/]+')}\$');
-      return regexPattern.hasMatch(baseRoute);
-    });
+    String baseRoute = uri.path;
+    return routes.any((route) => isValid(route, baseRoute));
   }
 
   @override
@@ -28,14 +32,14 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
       final uri = Uri.parse(routeName);
       final route = uri.path + (uri.hasQuery ? '?${uri.query}' : '');
       resolver.next();
-      unawaited(router.pushNamed(route));
+      Future.delayed(
+        Duration.zero,
+        () => unawaited(router.root.navigateNamed(route)),
+      );
       return;
     }
-    if (Messaging.grantedPermission || resolver.route.name == RequestPermissionPage.name || !App.firstRun) {
-      resolver.next();
-    } else {
-      unawaited(resolver.redirect(RequestPermissionPage(onResult: (didLogin) => resolver.next(didLogin))));
-    }
+    resolver.next();
+    return;
   }
 
   @override
@@ -43,6 +47,7 @@ class AppRouter extends $AppRouter implements AutoRouteGuard {
         AutoRoute(
           page: RouterPage.page,
           initial: true,
+          guards: [NotificationGuard()],
           path: '/',
           children: <AutoRoute>[
             AutoRoute(page: DemoPage.page, path: 'demo'),

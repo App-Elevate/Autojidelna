@@ -1,0 +1,55 @@
+{
+  "parameters": {
+    "json": {
+      "defaultValue": {
+        "value": "{\"hello\":\"hello\"}"
+      },
+      "valueType": "JSON"
+    },
+    "author_message": {
+      "defaultValue": {
+        "value": "Remote Config Connected. 🥳"
+      },
+      "valueType": "STRING"
+    },
+    "double_num": {
+      "defaultValue": {
+        "value": "5.5"
+      },
+      "valueType": "STRING"
+    },
+    "integer": {
+      "defaultValue": {
+        "value": "1"
+      },
+      "valueType": "NUMBER"
+    },
+    "bool_true": {
+      "defaultValue": {
+        "value": "false"
+      },
+      "valueType": "BOOLEAN"
+    }
+  },
+  "version": {
+    "versionNumber": "53",
+    "updateTime": "2024-07-08T17:03:23.735724Z",
+    "updateUser": {
+      "email": "tom@appelevate.cz"
+    },
+    "updateOrigin": "CONSOLE",
+    "updateType": "INCREMENTAL_UPDATE"
+  },
+  "parameterGroups": {
+    "links": {
+      "parameters": {
+        "appelevate_link": {
+          "defaultValue": {
+            "value": "https://appelevate.cz/"
+          },
+          "valueType": "STRING"
+        }
+      }
+    }
+  }
+}

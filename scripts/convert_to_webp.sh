@@ -85,15 +85,17 @@ convert_directory() {
       # Generate the output file name
       output="${file%.*}.webp"
 
-      # Convert the file to webp
-      cwebp -lossless "$file" -o "$output"
-
-      # Check if the conversion was successful
-      if [ $? -eq 0 ]; then
-        echo "Converted $file to $output"
-      else
-        echo "Failed to convert $file"
-      fi
+      # Convert the file to webp, capturing errors
+      {
+        cwebp -lossless "$file" -o "$output"
+        if [ $? -eq 0 ]; then
+          echo "Converted $file to $output"
+        else
+          echo "Failed to convert $file"
+        fi
+      } || {
+        echo "Error occurred during conversion of $file. Continuing..."
+      }
     fi
   done
 }

@@ -17,5 +17,6 @@ class MessagingProvider extends ChangeNotifier {
 
   void notificationMessageHandled() {
     _message = null;
+    Messaging.currentMessage = null;
   }
 }
