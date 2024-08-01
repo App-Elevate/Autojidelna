@@ -97,7 +97,7 @@ class App {
     retryWithExponentialBackoff(
       () async => await FirebaseAppCheck.instance.activate(
         // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-        webProvider: ReCaptchaEnterpriseProvider('6LeEpBsqAAAAABcQaiCNcoHuzkhCZtdwCCNHVWmp'),
+        webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
         androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
         appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
       ),
