@@ -133,6 +133,10 @@ class App {
       App.shouldAskForNotification = false;
     }
 
+    if (kIsWeb && Hive.box(Boxes.settings).get(HiveKeys.webNotificationsAccepted, defaultValue: false)) {
+      await Messaging.onNotificationPermissionGranted();
+    }
+
     _initFirebaseMessagingExecuted = true;
   }
 

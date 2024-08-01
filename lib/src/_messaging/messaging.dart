@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_conf/messaging.dart';
 import 'package:coree/src/_messaging/exponential_backoff.dart';
 import 'package:coree/src/_messaging/messaging_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
 class Messaging {
   // ignore: cancel_subscriptions
@@ -23,6 +25,7 @@ class Messaging {
 
   static Future<void> onNotificationPermissionGranted() async {
     grantedPermission = true;
+    if (kIsWeb) unawaited(Hive.box(Boxes.settings).put(HiveKeys.webNotificationsAccepted, true));
     if (!kIsWeb && (Platform.isIOS || Platform.isMacOS)) {
       final apnsTokenLocal =
           await retryWithExponentialBackoff(() async => await FirebaseMessaging.instance.getAPNSToken(), ignoreError: true, infinite: true);
