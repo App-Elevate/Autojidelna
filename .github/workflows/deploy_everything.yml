@@ -142,7 +142,7 @@ jobs:
 
       - name: Get Certificates
         run: |
-          git revert 93895e4ef4e2aa7d1cf56e0feb1add17a2d326a9
+          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
@@ -199,7 +199,7 @@ jobs:
 
       - name: Get Certificates
         run: |
-          git revert 93895e4ef4e2aa7d1cf56e0feb1add17a2d326a9
+          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
           cd macos
           bundle install
           bundle exec fastlane setup_ci_keychain
