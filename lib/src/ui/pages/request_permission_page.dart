@@ -44,7 +44,7 @@ class RequestPermissionPage extends StatelessWidget {
                     provisional: false,
                     sound: true,
                   );
-                  Future.delayed(const Duration(seconds: 1), () {
+                  Future.delayed(const Duration(seconds: 5), () {
                     Messaging.onNotificationPermissionGranted();
                   });
                 },
