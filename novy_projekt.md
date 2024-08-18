@@ -204,6 +204,7 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 `COMMENT_CLOSED` - komentář, který se má napsat, když se PR zavře kvůli špatnému názvu
 `COMMENT_NICE` - komentář, který se má napsat, když PR projde zkouškou
 `FIREBASE_HOSTING_URL` - url vašeho firebase hosting
+`FLUTTER_VERSION` - aktuální verze flutteru
 
 2. Přeneste pravidla a upravte je do nového repozitáře
 
