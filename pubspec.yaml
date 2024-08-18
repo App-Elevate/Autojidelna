@@ -38,7 +38,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
 
-  auto_route: ^8.2.0
+  auto_route: ^9.2.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   provider: ^6.1.2
@@ -51,7 +51,7 @@ dependencies:
   firebase_remote_config: ^5.0.2
   firebase_messaging: ^15.0.3
   google_sign_in: ^6.2.1
-  flutter_adaptive_scaffold: ^0.1.11+1
+  flutter_adaptive_scaffold: ^0.2.1
 
   package_info_plus: ^8.0.0 # Package info used in about page
 
@@ -76,7 +76,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
 
-  auto_route_generator: ^8.0.0
+  auto_route_generator: ^9.0.0
   hive_generator: ^2.0.1
 
   build_runner: ^2.4.11
