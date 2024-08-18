@@ -30,111 +30,6 @@ import 'package:firebase_auth/firebase_auth.dart' as _i15;
 import 'package:flutter/foundation.dart' as _i14;
 import 'package:flutter/material.dart' as _i16;
 
-abstract class $AppRouter extends _i13.RootStackRouter {
-  $AppRouter({super.navigatorKey});
-
-  @override
-  final Map<String, _i13.PageFactory> pagesMap = {
-    CrashlyticsPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i1.CrashlyticsPage(),
-      );
-    },
-    DebugPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i2.DebugPage(),
-      );
-    },
-    DeleteAccountPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i3.DeleteAccountPage(),
-      );
-    },
-    DemoPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i4.DemoPage(),
-      );
-    },
-    LocalizationsPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i5.LocalizationsPage(),
-      );
-    },
-    LoginPage.name: (routeData) {
-      final args =
-          routeData.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i6.LoginPage(
-          key: args.key,
-          onResult: args.onResult,
-          providerId: args.providerId,
-        ),
-      );
-    },
-    RequestPermissionPage.name: (routeData) {
-      final args = routeData.argsAs<RequestPermissionPageArgs>(
-          orElse: () => const RequestPermissionPageArgs());
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i7.RequestPermissionPage(
-          key: args.key,
-          onResult: args.onResult,
-        ),
-      );
-    },
-    RouterPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i8.RouterPage(),
-      );
-    },
-    RoutingParamPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i9.RoutingParamPage(),
-      );
-    },
-    RoutingPathParamDetailPage.name: (routeData) {
-      final pathParams = routeData.inheritedPathParams;
-      final args = routeData.argsAs<RoutingPathParamDetailPageArgs>(
-          orElse: () => RoutingPathParamDetailPageArgs(
-              filmid: pathParams.getString('filmid')));
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i10.RoutingPathParamDetailPage(
-          key: args.key,
-          filmid: args.filmid,
-        ),
-      );
-    },
-    RoutingQueryParamDetailPage.name: (routeData) {
-      final queryParams = routeData.queryParams;
-      final args = routeData.argsAs<RoutingQueryParamDetailPageArgs>(
-          orElse: () => RoutingQueryParamDetailPageArgs(
-              filmid: queryParams.optInt('key')));
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: _i11.RoutingQueryParamDetailPage(
-          key: args.key,
-          filmid: args.filmid,
-        ),
-      );
-    },
-    SettingsPage.name: (routeData) {
-      return _i13.AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const _i12.SettingsPage(),
-      );
-    },
-  };
-}
-
 /// generated route for
 /// [_i1.CrashlyticsPage]
 class CrashlyticsPage extends _i13.PageRouteInfo<void> {
@@ -146,7 +41,12 @@ class CrashlyticsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'CrashlyticsPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i1.CrashlyticsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -160,7 +60,12 @@ class DebugPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'DebugPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i2.DebugPage();
+    },
+  );
 }
 
 /// generated route for
@@ -174,7 +79,12 @@ class DeleteAccountPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'DeleteAccountPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i3.DeleteAccountPage();
+    },
+  );
 }
 
 /// generated route for
@@ -188,7 +98,12 @@ class DemoPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'DemoPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i4.DemoPage();
+    },
+  );
 }
 
 /// generated route for
@@ -202,7 +117,12 @@ class LocalizationsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'LocalizationsPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i5.LocalizationsPage();
+    },
+  );
 }
 
 /// generated route for
@@ -225,8 +145,18 @@ class LoginPage extends _i13.PageRouteInfo<LoginPageArgs> {
 
   static const String name = 'LoginPage';
 
-  static const _i13.PageInfo<LoginPageArgs> page =
-      _i13.PageInfo<LoginPageArgs>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      final args =
+          data.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
+      return _i6.LoginPage(
+        key: args.key,
+        onResult: args.onResult,
+        providerId: args.providerId,
+      );
+    },
+  );
 }
 
 class LoginPageArgs {
@@ -253,7 +183,7 @@ class LoginPageArgs {
 class RequestPermissionPage
     extends _i13.PageRouteInfo<RequestPermissionPageArgs> {
   RequestPermissionPage({
-    _i16.Key? key,
+    _i14.Key? key,
     void Function(bool)? onResult,
     List<_i13.PageRouteInfo>? children,
   }) : super(
@@ -267,8 +197,17 @@ class RequestPermissionPage
 
   static const String name = 'RequestPermissionPage';
 
-  static const _i13.PageInfo<RequestPermissionPageArgs> page =
-      _i13.PageInfo<RequestPermissionPageArgs>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      final args = data.argsAs<RequestPermissionPageArgs>(
+          orElse: () => const RequestPermissionPageArgs());
+      return _i7.RequestPermissionPage(
+        key: args.key,
+        onResult: args.onResult,
+      );
+    },
+  );
 }
 
 class RequestPermissionPageArgs {
@@ -277,7 +216,7 @@ class RequestPermissionPageArgs {
     this.onResult,
   });
 
-  final _i16.Key? key;
+  final _i14.Key? key;
 
   final void Function(bool)? onResult;
 
@@ -298,7 +237,12 @@ class RouterPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'RouterPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.RouterPage();
+    },
+  );
 }
 
 /// generated route for
@@ -312,7 +256,12 @@ class RoutingParamPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'RoutingParamPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i9.RoutingParamPage();
+    },
+  );
 }
 
 /// generated route for
@@ -335,8 +284,19 @@ class RoutingPathParamDetailPage
 
   static const String name = 'RoutingPathParamDetailPage';
 
-  static const _i13.PageInfo<RoutingPathParamDetailPageArgs> page =
-      _i13.PageInfo<RoutingPathParamDetailPageArgs>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<RoutingPathParamDetailPageArgs>(
+          orElse: () => RoutingPathParamDetailPageArgs(
+              filmid: pathParams.getString('filmid')));
+      return _i10.RoutingPathParamDetailPage(
+        key: args.key,
+        filmid: args.filmid,
+      );
+    },
+  );
 }
 
 class RoutingPathParamDetailPageArgs {
@@ -375,8 +335,19 @@ class RoutingQueryParamDetailPage
 
   static const String name = 'RoutingQueryParamDetailPage';
 
-  static const _i13.PageInfo<RoutingQueryParamDetailPageArgs> page =
-      _i13.PageInfo<RoutingQueryParamDetailPageArgs>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      final queryParams = data.queryParams;
+      final args = data.argsAs<RoutingQueryParamDetailPageArgs>(
+          orElse: () => RoutingQueryParamDetailPageArgs(
+              filmid: queryParams.optInt('key')));
+      return _i11.RoutingQueryParamDetailPage(
+        key: args.key,
+        filmid: args.filmid,
+      );
+    },
+  );
 }
 
 class RoutingQueryParamDetailPageArgs {
@@ -406,5 +377,10 @@ class SettingsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'SettingsPage';
 
-  static const _i13.PageInfo<void> page = _i13.PageInfo<void>(name);
+  static _i13.PageInfo page = _i13.PageInfo(
+    name,
+    builder: (data) {
+      return const _i12.SettingsPage();
+    },
+  );
 }

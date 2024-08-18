@@ -56,7 +56,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return PopScope(
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, _) {
         if (didPop && widget.onResult != null) {
           widget.onResult!(null);
         }

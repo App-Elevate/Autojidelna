@@ -7,7 +7,7 @@ import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/_routing/guards.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
-class AppRouter extends $AppRouter implements AutoRouteGuard {
+class AppRouter extends RootStackRouter implements AutoRouteGuard {
   bool isValid(AutoRoute route, String baseRoute, {String prevRoute = ''}) {
     if (route.children != null && route.children!.routes.isNotEmpty) {
       final match = route.children!.routes.any((child) => isValid(child, baseRoute, prevRoute: prevRoute + route.path));
