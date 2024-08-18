@@ -156,6 +156,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Install Firebase CLI
@@ -219,6 +220,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Get Certificates
@@ -271,6 +273,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
       - name: Build web
         run: flutter build web --release
@@ -446,6 +449,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Start release build

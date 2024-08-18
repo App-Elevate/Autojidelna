@@ -137,6 +137,7 @@ jobs:
         if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Install dependencies
@@ -165,6 +166,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Build iOS
@@ -190,6 +192,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Build Android
@@ -208,6 +211,7 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+          flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
 
       - name: Build Web
