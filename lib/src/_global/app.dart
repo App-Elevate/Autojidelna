@@ -146,7 +146,7 @@ class App {
 
   static late final GoogleSignIn googleSignIn;
 
-  static late Locale currentLocale;
+  static Locale currentLocale = defaultLocale;
 
   static late final PackageInfo packageInfo;
 

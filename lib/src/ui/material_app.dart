@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
     } else {
       if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.defaultLocale.languageCode));
       _locale ??= App.defaultLocale;
+      if (_locale == null) App.currentLocale = App.defaultLocale;
     }
     App.translate = _onTranslatedLanguage;
   }
