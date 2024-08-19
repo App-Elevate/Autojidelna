@@ -5,12 +5,14 @@ import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/providers/is_online.dart';
 import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/_messaging/messaging.dart';
+import 'package:coree/src/_sentry/sentry.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/_routing/app_router.dart';
 import 'package:coree/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -60,6 +62,7 @@ class _MyAppState extends State<MyApp> {
       locale: _locale,
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
+        navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
         reevaluateListenable: Messaging.messagingProvider,
         includePrefixMatches: true,
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
