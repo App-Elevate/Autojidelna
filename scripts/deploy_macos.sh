@@ -22,6 +22,7 @@ bundle install
 bundle exec fastlane match appstore --readonly --additional_cert_types=mac_installer_distribution
 cd ..
 flutter build macos --split-debug-info build/symbolsMacOS --obfuscate
+dart run sentry_dart_plugin
 cd macos
 bundle exec fastlane release
 cd ..

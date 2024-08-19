@@ -18,5 +18,6 @@ version=$(sh scripts/version.sh $RUN_NUMBER)
 echo "Deploying version $version to firebase hosting"
 
 flutter build web --release
+dart run sentry_dart_plugin
 
 firebase deploy --only hosting 

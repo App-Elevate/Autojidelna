@@ -16,7 +16,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # of the product and file versions while build-number is used as the build suffix.
 
 # The version is set automatically by deployment. Do not change it manually unless you are manually publishing the app.
-version: 1.0.3+230
+version: 1.0.4+235
 
 environment:
   sdk: ">=3.4.3 <4.0.0"
@@ -77,6 +77,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^4.0.0
+  sentry_dart_plugin: ^2.0.0
 
   auto_route_generator: ^9.0.0
   hive_generator: ^2.0.1
@@ -125,3 +126,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  upload_sources: true
+  project: appe-coree
+  org: app-elevate
+  wait_for_processing: true
