@@ -111,7 +111,11 @@ open macos/Runner.xcworkspace
 
 4. Ve fastfile v [ios/fastlane/Fastfile](ios/fastlane/Fastfile#L67) vyplňte project a org
 
-5. V fastfile v [macos/fastlane/Fastfile](macos/fastlane/Fastfile#L73) vyplňte project a org
+5. Ve fastfile v [ios/fastlane/Fastfile](ios/fastlane/Fastfile#L95) vyplňte project a org
+
+6. V fastfile v [macos/fastlane/Fastfile](macos/fastlane/Fastfile#L73) vyplňte project a org
+
+7. V fastfile v [macos/fastlane/Fastfile](macos/fastlane/Fastfile#L101) vyplňte project a org
 
 ### Android
 
