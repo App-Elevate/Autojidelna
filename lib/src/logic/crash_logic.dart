@@ -2,10 +2,10 @@ import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 /// This is a test function that will crash the app.
-void crashlyticsTestFunction() async {
+void crashTestFunction() async {
   if (kIsWeb) {
     try {
-      throw StateError('HEY SENTRY WEB');
+      throw StateError('Crash WEB');
     } catch (exception, stackTrace) {
       await Sentry.captureException(
         exception,
@@ -14,5 +14,5 @@ void crashlyticsTestFunction() async {
     }
     return;
   }
-  throw StateError('HEY SENTRY');
+  throw StateError('Crash native');
 }

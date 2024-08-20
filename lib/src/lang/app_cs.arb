@@ -69,6 +69,7 @@
   "signInWithEmailAndPassword": "Přihlásit se pomocí e-mailu a hesla",
   "signInWithGoogle": "Přihlásit se pomocí Google",
   "signOut": "Odhlásit se",
+  "typeCrash": "Napište \"crash\" pro pád aplikace",
   "userDisplayName": "Zobrazované jméno uživatele: {name}",
   "userEmail": "E-mail uživatele: {email}",
   "userEmailVerified": "E-mail uživatele ověřen: {bool}",

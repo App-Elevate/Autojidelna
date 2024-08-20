@@ -244,6 +244,9 @@ class TextsEn extends Texts {
   String get signOut => 'Sign out';
 
   @override
+  String get typeCrash => 'Type \"crash\" to crash the app';
+
+  @override
   String userDisplayName(String name) {
     return 'User Display Name: $name';
   }

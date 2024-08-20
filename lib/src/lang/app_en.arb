@@ -110,6 +110,7 @@
   "signInWithEmailAndPassword": "Sign in with email and password",
   "signInWithGoogle": "Sign in with Google",
   "signOut": "Sign out",
+  "typeCrash": "Type \"crash\" to crash the app",
   "userDisplayName": "User Display Name: {name}",
   "@userDisplayName": {
     "placeholders": {

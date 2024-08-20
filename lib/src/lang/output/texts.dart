@@ -517,6 +517,12 @@ abstract class Texts {
   /// **'Sign out'**
   String get signOut;
 
+  /// No description provided for @typeCrash.
+  ///
+  /// In en, this message translates to:
+  /// **'Type \"crash\" to crash the app'**
+  String get typeCrash;
+
   /// No description provided for @userDisplayName.
   ///
   /// In en, this message translates to:

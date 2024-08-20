@@ -245,6 +245,9 @@ class TextsCs extends Texts {
   String get signOut => 'Odhlásit se';
 
   @override
+  String get typeCrash => 'Napište \"crash\" pro pád aplikace';
+
+  @override
   String userDisplayName(String name) {
     return 'Zobrazované jméno uživatele: $name';
   }
