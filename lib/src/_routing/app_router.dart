@@ -12,6 +12,7 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => staticRoutes;
   static final List<AutoRoute> staticRoutes = [
+    RedirectRoute(path: '*', redirectTo: '/'),
     AutoRoute(
       page: RouterPage.page,
       initial: true,
