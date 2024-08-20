@@ -19,7 +19,7 @@ class RequestPermissionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return PopScope(
-      onPopInvokedWithResult: (didPop, _) {
+      onPopInvoked: (didPop) {
         if (didPop && onResult != null) {
           onResult!(false);
         }

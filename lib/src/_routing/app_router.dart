@@ -12,7 +12,6 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => staticRoutes;
   static final List<AutoRoute> staticRoutes = [
-    RedirectRoute(path: '*', redirectTo: '/'),
     AutoRoute(
       page: RouterPage.page,
       initial: true,
@@ -35,5 +34,6 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
     AutoRoute(page: LoginPage.page, path: '/settings/login'),
     AutoRoute(page: DeleteAccountPage.page, path: '/settings/delete', guards: [AuthGuard()]),
+    RedirectRoute(path: '*', redirectTo: '/'),
   ];
 }

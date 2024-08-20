@@ -2,8 +2,6 @@ import 'package:intl/intl.dart' as intl;
 
 import 'texts.dart';
 
-// ignore_for_file: type=lint
-
 /// The translations for English (`en`).
 class TextsEn extends Texts {
   TextsEn([String locale = 'en']) : super(locale);
