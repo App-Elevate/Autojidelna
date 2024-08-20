@@ -85,6 +85,7 @@ void runMyApp() async {
         ),
       ),
     );
+  } else {
+    runApp(const MyAppWrapper());
   }
-  runApp(const MyAppWrapper());
 }
