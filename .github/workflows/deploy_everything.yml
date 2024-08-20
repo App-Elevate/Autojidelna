@@ -185,6 +185,7 @@ jobs:
           cd ios  
           bundle exec fastlane release_ci
         env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
@@ -244,6 +245,7 @@ jobs:
           bundle exec fastlane release_ci
           cd ..
         env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
@@ -276,7 +278,12 @@ jobs:
           flutter-version: ${{ vars.FLUTTER_VERSION }}
           cache: true
       - name: Build web
-        run: flutter build web --release
+        run: flutter build web --release --source-maps
+      - name: Sentry symbols upload
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          dart run sentry_dart_plugin
       - name: Copy index.html to 404.html
         run: cp build/web/index.html build/web/404.html
       - name: Upload build artifact
@@ -455,6 +462,12 @@ jobs:
       - name: Start release build
         run: |
           flutter build appbundle --split-debug-info symbolsAndroid --obfuscate --release
+
+      - name: Sentry symbols upload
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+        run: |
+          dart run sentry_dart_plugin
 
       - name: Symbols extraction
         run: |

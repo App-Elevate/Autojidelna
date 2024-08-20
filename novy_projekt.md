@@ -99,6 +99,20 @@ open macos/Runner.xcworkspace
 2. Vypněte Platformy, které nepoužíváte tím, že okomentujete `if: cokoliv` a nahradíte `if: false`
 3. Odstraňte debug sha256 hash z [assetlinks.json](web/.well-known/assetlinks.json#L9) (je to ten druhý na řádku 9)
 
+### Sentry
+
+1. Povolte Organizační secret pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
+
+- `SENTRY_AUTH_TOKEN` - token pro přístup k Sentry
+
+2. V [pubspec.yaml](pubspec.yaml) Vyplňte project a org
+
+3. V [main.dart](lib/main.dart) vyplňte dsn
+
+4. Ve fastfile v [ios/fastlane/Fastfile](ios/fastlane/Fastfile#L67) vyplňte project a org
+
+5. V fastfile v [macos/fastlane/Fastfile](macos/fastlane/Fastfile#L73) vyplňte project a org
+
 ### Android
 
 1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):

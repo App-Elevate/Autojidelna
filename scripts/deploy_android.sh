@@ -18,6 +18,7 @@ version=$(sh scripts/version.sh $RUN_NUMBER)
 echo "Deploying Android version $version"
 
 flutter build appbundle --split-debug-info build/symbolsAndroid --obfuscate 
+dart run sentry_dart_plugin
 firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json) 
 firebase crashlytics:symbols:upload --app=$firebase_id build/symbolsAndroid
 PATH_TO_NATIVE_SYMBOLS="build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib"
