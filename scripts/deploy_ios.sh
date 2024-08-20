@@ -22,7 +22,6 @@ bundle install
 bundle exec fastlane match appstore --readonly 
 cd .. 
 flutter build ipa --split-debug-info build/symbolsIos --obfuscate --release
-dart run sentry_dart_plugin
 cd ios 
 bundle exec fastlane release
 cd ..
