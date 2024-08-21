@@ -20,11 +20,6 @@ on:
         required: true
         type: boolean
         default: true
-      ios:
-        description: "Deploy iOS?"
-        required: true
-        type: boolean
-        default: true
       cloudflare:
         description: "Deploy to Cloudflare Pages?"
         required: true
@@ -139,7 +134,7 @@ jobs:
     environment:
       name: app-store
     needs: version
-    if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
+    if: false #${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
