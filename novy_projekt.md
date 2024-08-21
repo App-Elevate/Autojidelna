@@ -237,13 +237,13 @@ Rulesets:
 1. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu. V opačném případě se dá vytvořit. Tento klíč se potom přidá do deviceCheck v firebase.
 2. Je potřeba vzít sha-256 a sha-1 z google play a nahrát je [na firebase](https://console.firebase.google.com/u/0/project/_/settings/general/android) + Zapnout play Integrity v Google play. Potom ještě zapnout [zde v firebase](https://console.firebase.google.com/u/0/project/_/appcheck/apps).
 3. Vytvořte captchu klíč pro web [zde pro recaptcha v3](https://www.google.com/recaptcha/admin/create) nebo ještě lépe [zde pro recaptcha enterprise](https://console.cloud.google.com/security/recaptcha)
-4. Nahraďte klíč v [App.dart](lib/src/_global/app.dart#L100)
+4. Nahraďte klíč v [App.dart](lib/src/_global/app.dart#L100) a [index.html](web/index.html#L123) (v url - `https://www.google.com/recaptcha/enterprise.js?render=6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_`)
 
 ### Deep linking
 
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
 2. přepište url v souboru [AndroidManifest.xml](android/app/src/main/AndroidManifest.xml) na vaši doménu
-3. Přepište url v souboru [ios/Runner/Runner.entitlements](ios/Runner/Runner.entitlements) na vaši doménu a v souboru [ios/Runner/RunnerRelease.entitlements](ios/Runner/RunnerRelease.entitlements)
+3. Přepište url v souboru [ios/Runner/Runner.entitlements](ios/Runner/Runner.entitlements) na vaši doménu
 4. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`. Pokud nahrajete na daný web flutter web, tak je to automaticky dostupné.
 
 ### Google Sign In
