@@ -28,23 +28,8 @@ body {
 .spinner {
   animation: rotator 1.4s linear infinite;
 }
-@keyframes slideDownOut {
-    from {
-        transform: translateY(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateY(100%);
-        opacity: 0;
-    }
-}
-
-.hide-recaptcha {
-    animation: slideDownOut 1s forwards;
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    z-index: 9999;
+.grecaptcha-badge { 
+    visibility: hidden !important;
 }
 @keyframes rotator {
   0% {
@@ -140,19 +125,6 @@ body {
       var script = document.createElement("script");
       script.src = "https://www.google.com/recaptcha/enterprise.js?render=6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7";
       document.head.appendChild(script);
-      window.onload = function() {
-        setTimeout(function() {
-            var recaptchaBadge = document.querySelector('.grecaptcha-badge');
-            if (recaptchaBadge) {
-                recaptchaBadge.classList.add('hide-recaptcha');
-
-                // Remove the badge after the animation ends
-                recaptchaBadge.addEventListener('animationend', function() {
-                    recaptchaBadge.remove();
-                });
-            }
-        }, 5000);
-      };
     }
   </script>
   <script src="flutter_bootstrap.js" async>
