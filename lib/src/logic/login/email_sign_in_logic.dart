@@ -52,7 +52,7 @@ Future<void> handlePasswordReset(String email) async {
 /// This will send an email verification to the user.
 Future<void> handleEmailVerification() async {
   User? user = FirebaseAuth.instance.currentUser;
-  if (user != null && !user.emailVerified) {
+  if (user != null && !user.emailVerified && user.email != null) {
     await user.sendEmailVerification();
   }
 }

@@ -11,6 +11,9 @@ Future<UserCredential?> handleGoogleSignInNative() async {
     // Obtain the auth details from the request
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
+    if (googleAuth?.accessToken == null || googleAuth?.idToken == null) {
+      return null;
+    }
     // Create a new credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
