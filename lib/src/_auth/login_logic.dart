@@ -1,6 +1,6 @@
 import 'package:coree/src/_conf/secure_storage.dart';
 import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/logic/login/apple_sign_in_logic.dart';
+import 'package:coree/src/_auth/apple_sign_in_logic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 /// Handles the sign out of the user.

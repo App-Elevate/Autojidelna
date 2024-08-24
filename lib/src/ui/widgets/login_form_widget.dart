@@ -1,5 +1,5 @@
 import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/logic/login/email_sign_in_logic.dart';
+import 'package:coree/src/_auth/email_sign_in_logic.dart';
 import 'package:flutter/material.dart';
 
 class LoginForm extends StatefulWidget {
