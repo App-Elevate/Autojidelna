@@ -11,6 +11,7 @@ enum RemoteConfigValueType {
   int,
   double,
   json,
+  dateTime,
 }
 
 /// Remote Config change notifier which can be used to get Remote Config values.
@@ -34,6 +35,8 @@ class Rmc extends ChangeNotifier {
         return MapEntry(key, RemoteConfigValueType.int);
       } else if (value is double) {
         return MapEntry(key, RemoteConfigValueType.double);
+      } else if (value is DateTime) {
+        return MapEntry(key, RemoteConfigValueType.dateTime);
       } else {
         return MapEntry(key, RemoteConfigValueType.string);
       }
@@ -54,6 +57,8 @@ class Rmc extends ChangeNotifier {
           return MapEntry(key, value.asDouble());
         case RemoteConfigValueType.json:
           return MapEntry(key, jsonDecode(value.asString()));
+        case RemoteConfigValueType.dateTime:
+          return MapEntry(key, DateTime.tryParse(value.asString()));
         default:
           return MapEntry(key, value.asString());
       }
