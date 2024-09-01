@@ -88,7 +88,7 @@ class Rmc extends ChangeNotifier {
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
     unawaited(
-      App.remoteConfig.fetchAndActivate().onError((_, __) => false).then((_) async {
+      App.remoteConfig.fetchAndActivate().catchError((_, __) => false).then((_) async {
         value = parseRemoteConfigValues(App.remoteConfig.getAll());
       }),
     );

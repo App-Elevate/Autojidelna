@@ -49,10 +49,12 @@ class Messaging {
   }
 
   static Future<void> onSuccessfulToken(String token) async {
-    onTokenRefresh ??= FirebaseMessaging.instance.onTokenRefresh.listen((fcmToken) {
-      onSuccessfulToken(fcmToken);
-    });
-    onTokenRefresh!.onError((_) => null);
+    onTokenRefresh ??= FirebaseMessaging.instance.onTokenRefresh.listen(
+      (fcmToken) {
+        onSuccessfulToken(fcmToken);
+      },
+      onError: (_) => null,
+    );
     retryWithExponentialBackoff(
       () async => await FirebaseMessaging.instance.subscribeToTopic(MessagingConf.allTopic),
       ignoreError: true,
