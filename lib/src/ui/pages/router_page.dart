@@ -28,7 +28,9 @@ class _RouterPageState extends State<RouterPage> {
 
   changeExtention(BuildContext context) {
     if (!mounted || !context.mounted) return;
-    if (Breakpoints.smallDesktop.isActive(context)) isExtended ? _key.currentState!.closeDrawer() : _key.currentState!.openDrawer();
+    if (Breakpoints.smallDesktop.isActive(context) || Breakpoint.activeBreakpointOf(context) == Breakpoints.standard) {
+      _key.currentState!.isDrawerOpen ? _key.currentState!.closeDrawer() : _key.currentState!.openDrawer();
+    }
     setState(() {
       isExtended = !isExtended;
     });
@@ -90,6 +92,20 @@ class _RouterPageState extends State<RouterPage> {
     ];
     drawerDestinations.addAll(destinations.map((NavigationDestination destination) => toDrawerDestination(destination)).toList());
 
+    final breakpoint = Breakpoint.activeBreakpointOf(context) == Breakpoints.standard;
+    if (breakpoint) {
+      final height = MediaQuery.of(context).size.height;
+      final width = MediaQuery.of(context).size.width;
+      print('height: $height, width: $width');
+      print('breakpoints: $breakpoint');
+      print('breakpointss: $breakpoint');
+      print('breakpointsss: $breakpoint');
+      print('breakpointssss: $breakpoint');
+      print('breakpoinsst: $breakpoint');
+      print('breakpoini: $breakpoint');
+      print('breakpoisknt: $breakpoint');
+    }
+
     return AutoTabsRouter(
       routes: routes,
       transitionBuilder: (context, child, animation) => FadeTransition(
@@ -103,7 +119,8 @@ class _RouterPageState extends State<RouterPage> {
         return Scaffold(
           key: _key,
           appBar: appBars[index],
-          drawer: Breakpoints.smallDesktop.isActive(context)
+          // First is the mobile view on web. Second is the horizontal view on mobile
+          drawer: Breakpoints.smallDesktop.isActive(context) || Breakpoint.activeBreakpointOf(context) == Breakpoints.standard
               ? NavigationDrawer(
                   selectedIndex: index,
                   onDestinationSelected: (value) => changeIndex(value, tabsRouter),
