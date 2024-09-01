@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:coree/src/_routing/app_router.gr.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/ui/widgets/router_page_appbars/crashlytics_page_appbar.dart';
+import 'package:coree/src/ui/widgets/router_page_appbars/default_appbar.dart';
 import 'package:coree/src/ui/widgets/router_page_appbars/demo_page_appbar.dart';
 import 'package:coree/src/ui/widgets/router_page_appbars/login_page_appbar.dart';
 import 'package:flutter/material.dart';
@@ -57,10 +57,16 @@ class _RouterPageState extends State<RouterPage> {
           )
         : null;
 
-    final List<PreferredSizeWidget> appBars = [
-      DemoPageAppBar(leading: leading, leadingWidth: leadingWidth),
-      CrashliticsPageAppBar(leading: leading, leadingWidth: leadingWidth),
-      SettingsPageAppBar(leading: leading, leadingWidth: leadingWidth),
+    final defaultAppBar = DefaultAppbar(
+      leading: leading,
+      leadingWidth: leadingWidth,
+    );
+
+    // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
+    final List<PreferredSizeWidget Function(BuildContext context)> appBars = [
+      (context) => DemoPageAppBar(leading: leading, leadingWidth: leadingWidth),
+      (context) => defaultAppBar,
+      (context) => SettingsPageAppBar(leading: leading, leadingWidth: leadingWidth),
     ];
 
     final List<NavigationDestination> destinations = [
@@ -104,7 +110,7 @@ class _RouterPageState extends State<RouterPage> {
         final index = tabsRouter.activeIndex;
         return Scaffold(
           key: _key,
-          appBar: appBars[index],
+          appBar: appBars[index](context),
           // First is the mobile view on web. Second is the horizontal view on mobile
           drawer: Breakpoints.smallDesktop.isActive(context) || Breakpoint.activeBreakpointOf(context) == Breakpoints.standard
               ? NavigationDrawer(

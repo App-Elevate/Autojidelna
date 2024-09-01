@@ -28,8 +28,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     initLocale();
-    // Also handle any interaction when the app is in the background via a
-    // Stream listener
     super.initState();
   }
 

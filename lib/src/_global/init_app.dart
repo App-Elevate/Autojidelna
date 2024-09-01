@@ -23,6 +23,7 @@ class InitApp {
       App.initRemoteConfig(),
       App.initGoogleSignIn(),
       App.initPlatform(),
+      App.initRotation(),
     ]);
     // Stop the stopwatch
     stopwatch.stop();

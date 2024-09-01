@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,6 +31,7 @@ class App {
   static bool _initRemoteConfigExecuted = false;
   static bool _initGoogleSignInExecuted = false;
   static bool _initHiveExecuted = false;
+  static bool _initRotationExecuted = false;
   static bool _initAppCheckExecuted = false;
   static bool _initFirebaseMessagingExecuted = false;
   static Future<void> initPlatform() async {
@@ -51,6 +53,15 @@ class App {
     box.put(HiveKeys.locale, locale);
 
     _initLocalizationExecuted = true;
+  }
+
+  static Future<void> initRotation() async {
+    assert(_initRotationExecuted == false, 'App.initRemoteConfig() must be called only once');
+    if (_initRotationExecuted) return;
+
+    SystemChrome.setPreferredOrientations(App.defaultRotations);
+
+    _initRotationExecuted = true;
   }
 
   static Future<void> initRemoteConfig() async {
@@ -153,6 +164,13 @@ class App {
   static late final bool shouldAskForNotification;
 
   static const defaultLocale = Locale('en');
+
+  static const defaultRotations = [
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.landscapeLeft,
+    DeviceOrientation.landscapeRight,
+  ];
 
   /// This function is used to change the language of the app.
   ///

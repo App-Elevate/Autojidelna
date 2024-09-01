@@ -16,11 +16,11 @@ enum RemoteConfigValueType {
 
 /// Remote Config change notifier which can be used to get Remote Config values.
 ///
-/// You can get current values from [values]. You hovewer have to be subscribed to the changes to get the updated values.
+/// You can get current values from [value]. You hovewer have to be subscribed to the changes to get the updated values.
 ///
 /// This subscription is made using provider.
 ///
-/// If you want to use the values in a function, you can use the static [value] variable.
+/// If you want to use the values in a function, you can use the static [values] variable.
 class Rmc extends ChangeNotifier {
   /// Method to get the Remote Config value types. This is grabbed from the default values.
   static Map<String, RemoteConfigValueType> get remoteConfigValueTypes {
@@ -69,37 +69,36 @@ class Rmc extends ChangeNotifier {
   final Map<String, dynamic> _values = Map.from(defaultValues);
 
   /// Current Remote Config values - These don't update the ui - use only in functions
-  static final Map<String, dynamic> value = Map.from(Rmc.defaultValues);
+  static final Map<String, dynamic> values = Map.from(Rmc.defaultValues);
   StreamSubscription<RemoteConfigUpdate>? _subscription;
 
-  Map<String, dynamic> get values => _values;
-  set values(Map<String, dynamic> values) {
-    values.forEach((key, newValue) {
+  Map<String, dynamic> get value => _values;
+  set value(Map<String, dynamic> value) {
+    value.forEach((key, newValue) {
       if (newValue != _values[key]) {
         _values[key] = newValue;
       }
-      if (newValue != value[key]) {
-        value[key] = newValue;
+      if (newValue != values[key]) {
+        values[key] = newValue;
       }
     });
+    notifyListeners();
   }
 
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
     unawaited(
-      App.remoteConfig.fetchAndActivate().onError((_, __) => false).then((shouldContinue) async {
-        if (!shouldContinue) return;
-        values = parseRemoteConfigValues(App.remoteConfig.getAll());
-        notifyListeners();
+      App.remoteConfig.fetchAndActivate().onError((_, __) => false).then((_) async {
+        value = parseRemoteConfigValues(App.remoteConfig.getAll());
       }),
     );
     if (!kIsWeb) {
       _subscription ??= App.remoteConfig.onConfigUpdated.listen(
         (_) async {
           await App.remoteConfig.activate();
-          values = parseRemoteConfigValues(App.remoteConfig.getAll());
-          notifyListeners();
+          value = parseRemoteConfigValues(App.remoteConfig.getAll());
         },
+        cancelOnError: false,
         onError: (Object error, StackTrace stackTrace) => null,
       );
     }
