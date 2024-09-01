@@ -63,7 +63,7 @@ class _RouterPageState extends State<RouterPage> {
     );
 
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
-    final List<PreferredSizeWidget Function(BuildContext context)> appBars = [
+    final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
       (context) => DemoPageAppBar(leading: leading, leadingWidth: leadingWidth),
       (context) => defaultAppBar,
       (context) => SettingsPageAppBar(leading: leading, leadingWidth: leadingWidth),
@@ -115,7 +115,7 @@ class _RouterPageState extends State<RouterPage> {
         final index = tabsRouter.activeIndex;
         return Scaffold(
           key: _key,
-          appBar: appBars[index](context),
+          appBar: appBars[index]?.call(context),
           // First is the mobile view on web. Second is the horizontal view on mobile
           drawer: Breakpoints.smallDesktop.isActive(context) || Breakpoint.activeBreakpointOf(context) == Breakpoints.standard
               ? NavigationDrawer(
