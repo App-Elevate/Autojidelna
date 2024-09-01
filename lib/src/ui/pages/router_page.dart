@@ -92,20 +92,6 @@ class _RouterPageState extends State<RouterPage> {
     ];
     drawerDestinations.addAll(destinations.map((NavigationDestination destination) => toDrawerDestination(destination)).toList());
 
-    final breakpoint = Breakpoint.activeBreakpointOf(context) == Breakpoints.standard;
-    if (breakpoint) {
-      final height = MediaQuery.of(context).size.height;
-      final width = MediaQuery.of(context).size.width;
-      print('height: $height, width: $width');
-      print('breakpoints: $breakpoint');
-      print('breakpointss: $breakpoint');
-      print('breakpointsss: $breakpoint');
-      print('breakpointssss: $breakpoint');
-      print('breakpoinsst: $breakpoint');
-      print('breakpoini: $breakpoint');
-      print('breakpoisknt: $breakpoint');
-    }
-
     return AutoTabsRouter(
       routes: routes,
       transitionBuilder: (context, child, animation) => FadeTransition(
