@@ -81,6 +81,11 @@ class _RouterPageState extends State<RouterPage> {
       Container(color: Colors.green),
     ];
 
+    assert(
+      appBars.length == destinations.length && destinations.length == routes.length && secondaryBodies.length == destinations.length,
+      'The number of appBars, destinations, routes and secondaryBodies must be equal',
+    );
+
     final List<NavigationRailDestination> railDestinations =
         destinations.map((NavigationDestination destination) => AdaptiveScaffold.toRailDestination(destination)).toList();
 
