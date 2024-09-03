@@ -21,7 +21,11 @@ cd ios
 bundle install 
 bundle exec fastlane match appstore --readonly 
 cd .. 
-flutter build ipa --split-debug-info build/symbolsIos --obfuscate --release
+# Extract the Flutter version
+flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
+# Now flutter_version contains the current version of Flutter
+echo "The current Flutter version is: $flutter_version"
+shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
 cd ios 
 bundle exec fastlane release
 cd ..

@@ -17,7 +17,12 @@ trap handle_sigint SIGINT
 version=$(sh scripts/version.sh $RUN_NUMBER)
 echo "Deploying Android version $version"
 
-flutter build appbundle --split-debug-info build/symbolsAndroid --obfuscate 
+# Extract the Flutter version
+flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
+# Now flutter_version contains the current version of Flutter
+echo "The current Flutter version is: $flutter_version"
+shorebird release android --flutter-version=$flutter_version -- --split-debug-info="build/symbolsAndroid" --obfuscate
+
 dart run sentry_dart_plugin
 firebase_id=$(jq -r '.client[0].client_info.mobilesdk_app_id' android/app/google-services.json) 
 firebase crashlytics:symbols:upload --app=$firebase_id build/symbolsAndroid

@@ -186,8 +186,11 @@ jobs:
           MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
           MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
 
+      - name: 🐦 Setup Shorebird
+        uses: shorebirdtech/setup-shorebird@v1
+
       - name: Building IPA
-        run: flutter build ipa --split-debug-info symbolsIos --obfuscate --release || true
+        run: shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
 
       - name: Signing the app and publishing to App Store
         run: |
