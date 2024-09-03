@@ -36,9 +36,11 @@ workflows:
 
           # Add Shorebird to PATH
           echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
+          export PATH="/Users/builder/.shorebird/bin:$PATH"
 
       - name: 🚀 Shorebird Release
-        script: shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
+        script: |
+          shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
 
       - name: Sign and upload symbols to Sentry
         script: |
