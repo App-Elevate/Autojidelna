@@ -473,7 +473,7 @@ jobs:
         uses: shorebirdtech/setup-shorebird@v1
 
       - name: 🚀 Use Shorebird
-        run: shorebird release android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info=symbolsAndroid -- --obfuscate -- --release
+        run: shorebird release android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info="symbolsAndroid" --obfuscate
 
       - name: Sentry symbols upload
         env:
