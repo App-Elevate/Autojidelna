@@ -231,6 +231,9 @@ PODS:
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
   - RecaptchaInterop (100.0.0)
+  - Sentry (8.36.0):
+    - Sentry/Core (= 8.36.0)
+  - Sentry/Core (8.36.0)
   - Sentry/HybridSDK (8.33.0)
   - sentry_flutter (8.7.0):
     - Flutter
@@ -267,6 +270,7 @@ DEPENDENCIES:
   - GTMSessionFetcher
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
+  - Sentry (= 8.36.0)
   - sentry_flutter (from `.symlinks/plugins/sentry_flutter/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
@@ -384,6 +388,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: 68e94cbc6bde8fc670632c0f14891183737c212f
+PODFILE CHECKSUM: 7a1f1bed485a2f8de0e742d34a0e62daacb68b72
 
 COCOAPODS: 1.15.2

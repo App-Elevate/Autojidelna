@@ -5,6 +5,13 @@ workflows:
     max_build_duration: 120
     integrations:
       app_store_connect: App Elevate Distribution
+    triggering:
+      events:
+        - tag
+      include:
+        tags:
+          - v*.*.*+*
+          - v*.*.*+*-patch*
     environment:
       flutter: 3.22.3
       xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
@@ -36,10 +43,10 @@ workflows:
 
           # Add Shorebird to PATH
           echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
-          export PATH="/Users/builder/.shorebird/bin:$PATH"
 
       - name: 🚀 Shorebird Release
         script: |
+          export PATH="/Users/builder/.shorebird/bin:$PATH"
           flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
           shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
 
