@@ -6,12 +6,13 @@ workflows:
     integrations:
       app_store_connect: App Elevate Distribution
     triggering:
-      events:
+      events: # List the events that trigger builds
         - tag
-      include:
-        tags:
-          - v*.*.*+*
-          - v*.*.*+*-patch*
+      tag_patterns: # Include or exclude watched tag labels
+        - pattern: "v*.*.*+*"
+          include: true
+        - pattern: "v*.*.*+*patch*"
+          include: false
     environment:
       flutter: 3.22.3
       xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
