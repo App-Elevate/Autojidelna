@@ -40,6 +40,7 @@ workflows:
 
       - name: 🚀 Shorebird Release
         script: |
+          flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
           shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
 
       - name: Sign and upload symbols to Sentry
