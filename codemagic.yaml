@@ -1,14 +1,33 @@
 workflows:
   deploy_ios:
     name: Deploy to App Store
-    max_build_duration: 120
     instance_type: mac_mini_m2
+    max_build_duration: 120
     environment:
       flutter: 3.22.3
+      xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
+      cocoapods: default
       groups:
         # Exports the SHOREBIRD_TOKEN environment variable
         - shorebird
+        - sentry
+        - fastlane
+        - app_store_connect
     scripts:
+      - name: Install Firebase CLI
+        script: |
+          curl -sL https://firebase.tools | bash
+
+      - name: setup flutterfire
+        script: |
+          dart pub global activate flutterfire_cli
+      - name: Install Fastlane plugins
+        script: |
+          cd ios
+          bundle install
+          bundle exec fastlane setup_ci_keychain
+          cd ..
+
       - name: 🐦 Setup Shorebird
         script: |
           # Install Shorebird
@@ -16,6 +35,28 @@ workflows:
 
           # Add Shorebird to PATH
           echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
-      - name: 🚀 Shorebird Patch
-        #  'shorebird patch ios' if ios
-        script: shorebird patch android
+
+      - name: 🚀 Shorebird Release
+        script: shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
+
+      - name: Sign and upload symbols to Sentry
+        script: |
+          cd ios
+          bundle exec fastlane release_ci
+          cd ..
+          rm -rf build/ios/ipa/*.ipa
+          mv ios/fastlane/*.ipa build/ios/ipa/
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
+      email:
+        recipients:
+          - protitom@gmail.com
+        notify:
+          failure: true # To receive a notification when a build fails
+      app_store_connect:
+        auth: integration
