@@ -4,7 +4,7 @@ workflows:
     instance_type: mac_mini_m2
     max_build_duration: 120
     integrations:
-      app_store_connect: codemagic
+      app_store_connect: App Elevate Distribution
     environment:
       flutter: 3.22.3
       xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
@@ -53,11 +53,5 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
-      # See the following link for details about email publishing - https://docs.codemagic.io/publishing-yaml/distribution/#email
-      email:
-        recipients:
-          - protitom@gmail.com
-        notify:
-          failure: true # To receive a notification when a build fails
       app_store_connect:
         auth: integration
