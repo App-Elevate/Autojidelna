@@ -62,6 +62,7 @@
   "noThankYou": "No, thank you",
   "password": "Password",
   "passwordMustBeAtLeast6CharactersLong": "Password must be at least 6 characters long",
+  "patch": "patch",
   "providerId": "Provider ID: {id}",
   "@providerId": {
     "placeholders": {

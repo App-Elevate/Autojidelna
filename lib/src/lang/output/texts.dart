@@ -323,6 +323,12 @@ abstract class Texts {
   /// **'Password must be at least 6 characters long'**
   String get passwordMustBeAtLeast6CharactersLong;
 
+  /// No description provided for @patch.
+  ///
+  /// In en, this message translates to:
+  /// **'patch'**
+  String get patch;
+
   /// No description provided for @providerId.
   ///
   /// In en, this message translates to:

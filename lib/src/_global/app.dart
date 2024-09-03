@@ -2,6 +2,7 @@ import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_messaging/exponential_backoff.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
@@ -11,6 +12,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 /// Global app class.
 ///
@@ -34,6 +37,24 @@ class App {
   static bool _initRotationExecuted = false;
   static bool _initAppCheckExecuted = false;
   static bool _initFirebaseMessagingExecuted = false;
+  static bool _initCodePushExecuted = false;
+
+  static Future<void> initCodePush() async {
+    assert(_initCodePushExecuted == false, 'App.initCodePush() must be called only once');
+    if (_initCodePushExecuted) return;
+
+    currentPatchNumber = await ShorebirdCodePush().currentPatchNumber();
+    Sentry.configureScope((scope) {
+      scope.setTag('shorebird_patch_number', '$currentPatchNumber');
+    });
+    FirebaseCrashlytics.instance.setCustomKey(
+      'shorebird_patch_number',
+      '$currentPatchNumber',
+    );
+
+    _initCodePushExecuted = true;
+  }
+
   static Future<void> initPlatform() async {
     assert(_initPlatformExecuted == false, 'App.initPlatform() must be called only once');
     if (_initPlatformExecuted) return;
@@ -162,6 +183,8 @@ class App {
   static late final PackageInfo packageInfo;
 
   static late final bool shouldAskForNotification;
+
+  static late final int? currentPatchNumber;
 
   static const defaultLocale = Locale('en');
 

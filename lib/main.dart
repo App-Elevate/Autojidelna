@@ -6,7 +6,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:shorebird_code_push/shorebird_code_push.dart';
 
 void main() async {
   // Get the current patch number. This will be null if no patch is installed.
@@ -48,10 +47,6 @@ void main() async {
 
 void runMyApp() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final patchNumber = await ShorebirdCodePush().currentPatchNumber();
-  Sentry.configureScope((scope) {
-    scope.setTag('shorebird_patch_number', '$patchNumber');
-  });
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -79,10 +74,6 @@ void runMyApp() async {
       return true;
     };
   }
-  FirebaseCrashlytics.instance.setCustomKey(
-    'shorebird_patch_number',
-    '$patchNumber',
-  );
 
   await InitApp.init();
 

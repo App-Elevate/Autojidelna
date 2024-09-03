@@ -138,6 +138,9 @@ class TextsEn extends Texts {
       'Password must be at least 6 characters long';
 
   @override
+  String get patch => 'patch';
+
+  @override
   String providerId(String id) {
     return 'Provider ID: $id';
   }

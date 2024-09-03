@@ -136,6 +136,9 @@ class TextsCs extends Texts {
       'Heslo musí mít alespoň 6 znaků';
 
   @override
+  String get patch => 'patch';
+
+  @override
   String providerId(String id) {
     return 'ID poskytovatele: $id';
   }

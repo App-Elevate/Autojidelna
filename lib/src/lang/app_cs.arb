@@ -38,6 +38,7 @@
   "noThankYou": "Ne, děkuji",
   "password": "Heslo",
   "passwordMustBeAtLeast6CharactersLong": "Heslo musí mít alespoň 6 znaků",
+  "patch": "patch",
   "providerId": "ID poskytovatele: {id}",
   "remoteConfig": "Vzdálená konfigurace",
   "requestNotificationPermission": "Požádat o povolení notifikací",
