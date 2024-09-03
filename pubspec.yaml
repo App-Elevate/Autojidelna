@@ -66,6 +66,7 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   http: ^1.2.1
+  shorebird_code_push: ^1.1.4
 
 dev_dependencies:
   flutter_test:
