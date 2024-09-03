@@ -133,6 +133,8 @@ jobs:
 
       - name: save this as a version
         run: |
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
           git add pubspec.yaml
           git tag v$(cat version.txt)
           git commit -m "Update app version to $(cat version.txt)"
