@@ -24,13 +24,13 @@ platform :ios do
         default_keychain: true,
         add_to_search_list: true,
         unlock: true,
-        password: "temp-keychain_password"
+        password: "temp"
         )
 
     match(
       readonly: true,
       keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
+      keychain_password: "temp",
       type: "appstore"
     )
   end
@@ -42,13 +42,13 @@ platform :ios do
       default_keychain: true,
       add_to_search_list: true,
       unlock: true,
-      password: "temp-keychain_password"
+      password: "temp"
       )
 
     match(
       readonly: true,
       keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
+      keychain_password: "temp",
       type: "appstore"
       )
     build_app(

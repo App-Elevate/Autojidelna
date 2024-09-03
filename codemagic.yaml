@@ -32,6 +32,8 @@ workflows:
           dart pub global activate flutterfire_cli
       - name: Install Fastlane plugins
         script: |
+          git fetch --unshallow
+          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
           cd ios
           bundle install
           bundle exec fastlane setup_ci_keychain
@@ -47,9 +49,7 @@ workflows:
 
       - name: 🚀 Shorebird Release
         script: |
-          export PATH="/Users/builder/.shorebird/bin:$PATH"
-          flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
-          shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
+          shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
 
       - name: Sign and upload symbols to Sentry
         script: |
