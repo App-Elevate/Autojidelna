@@ -12,7 +12,6 @@ workflows:
         - shorebird
         - sentry
         - fastlane
-        - app_store_connect
     scripts:
       - name: Install Firebase CLI
         script: |
