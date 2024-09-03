@@ -54,6 +54,8 @@ env:
 
 jobs:
   version:
+    permissions:
+      contents: write
     name: Create version number
     if: ${{ github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.event.inputs.skip == 'false') }}
     # Works only on ubuntu
