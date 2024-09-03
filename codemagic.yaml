@@ -1,0 +1,21 @@
+workflows:
+  deploy_ios:
+    name: Deploy to App Store
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+    environment:
+      flutter: 3.22.3
+      groups:
+        # Exports the SHOREBIRD_TOKEN environment variable
+        - shorebird
+    scripts:
+      - name: 🐦 Setup Shorebird
+        script: |
+          # Install Shorebird
+          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+
+          # Add Shorebird to PATH
+          echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
+      - name: 🚀 Shorebird Patch
+        #  'shorebird patch ios' if ios
+        script: shorebird patch android
