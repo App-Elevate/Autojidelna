@@ -20,21 +20,35 @@ on:
         required: true
         type: boolean
         default: true
+      ios:
+        description: "Deploy iOS?"
+        required: true
+        type: boolean
+        default: true
+      macos:
+        description: "Deploy macOS?"
+        required: true
+        type: boolean
+        default: true
       cloudflare:
         description: "Deploy to Cloudflare Pages?"
         required: true
         type: boolean
-        default: false
+        default: true
       github_pages:
         description: "Deploy to GitHub Pages?"
         required: true
         type: boolean
-        default: false
+        default: true
       firebase_hosting:
         description: "Deploy to Firebase Hosting?"
         required: true
         type: boolean
-        default: false
+        default: true
+      patch:
+        description: "Fill in to patch a specific version"
+        required: false
+        type: string
       skip:
         description: "Skip all deployments?"
         required: true
@@ -142,137 +156,6 @@ jobs:
           git tag v$(cat version.txt)+${{ github.run_number }}
           git push -u origin v$(cat version.txt)+${{ github.run_number }} # Push the tag
 
-  deploy_ios:
-    name: "[iOS] Deploy to App Store"
-    runs-on: macos-latest
-    timeout-minutes: 13
-    environment:
-      name: app-store
-    needs: version
-    if: false #${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Get pubspec
-        uses: actions/download-artifact@v4
-        with:
-          name: pubspec
-
-      # Install flutter
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          flutter-version: ${{ vars.FLUTTER_VERSION }}
-          cache: true
-
-      - name: Install Firebase CLI
-        run: curl -sL https://firebase.tools | bash
-
-      - name: setup flutterfire
-        run: dart pub global activate flutterfire_cli
-
-      - name: Get Certificates
-        run: |
-          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
-          cd ios
-          bundle install
-          bundle exec fastlane setup_ci_keychain
-          cd ..
-        env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-
-      - name: 🐦 Setup Shorebird
-        uses: shorebirdtech/setup-shorebird@v1
-
-      - name: Building IPA
-        run: shorebird release ios --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
-
-      - name: Signing the app and publishing to App Store
-        run: |
-          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
-          cd ios  
-          bundle exec fastlane release_ci
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-
-      # Collect the file and upload as artifact
-      - name: collect ipa artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-ipa
-          # Path to the release files
-          path: ios/*.ipa
-
-      - name: Remove private keys
-        if: always()
-        run: rm -rf private_keys
-  deploy_macos:
-    name: "[macOS] Deploy to App Store"
-    runs-on: macos-latest
-    environment:
-      name: app-store-macos
-    needs: version
-    if: ${{ github.event.inputs.macos == 'true' }}
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Get pubspec
-        uses: actions/download-artifact@v4
-        with:
-          name: pubspec
-
-      # Install flutter
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          flutter-version: ${{ vars.FLUTTER_VERSION }}
-          cache: true
-
-      - name: Get Certificates
-        run: |
-          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
-          cd macos
-          bundle install
-          bundle exec fastlane setup_ci_keychain
-          cd ..
-        env:
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-
-      - name: Building macos
-        run: flutter build macos --split-debug-info symbolsMacOS --obfuscate --release
-
-      - name: Signing the app and publishing to App Store
-        run: |
-          echo ${{ secrets.IOS_APPSTORE_CERT_BASE64 }} | base64 --decode > private_keys/app_store.p8
-          cd macos  
-          bundle exec fastlane release_ci
-          cd ..
-        env:
-          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          MATCH_GIT_BASIC_AUTHORIZATION: ${{ secrets.IOS_KEYS_PAT }}
-          MATCH_PASSWORD: ${{ secrets.IOS_KEYS_MATCH_PASSWORD }}
-
-      # Collect the file and upload as artifact
-      - name: collect ipa artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-ipa
-          # Path to the release files
-          path: macos/*.pkg
-
-      - name: Remove private keys
-        if: always()
-        run: rm -rf private_keys
   build_web:
     name: "[Web] Build Web"
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' || github.event.inputs.github_pages == 'true' || github.event.inputs.firebase_hosting == 'true' }}
@@ -426,6 +309,7 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
   deploy_android:
     name: "[Android] Deploy to Google Play Store"
     environment:
