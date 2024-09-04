@@ -45,28 +45,25 @@ workflows:
           check_and_update_plist() {
             local key=$1
             local value=$2
-            local plist_path=$3
+            local value_type=$3  # Add data type as a parameter (string, integer, or boolean)
+            local plist_path=$4
 
             # Check if the key exists in the plist
             if /usr/libexec/PlistBuddy -c "Print :$key" "$plist_path" 2>/dev/null; then
-              echo "Key $key exists, updating it to $value"
               /usr/libexec/PlistBuddy -c "Set :$key $value" "$plist_path"
             else
-              echo "Key $key does not exist, adding it with value $value"
-              /usr/libexec/PlistBuddy -c "Add :$key string $value" "$plist_path"
+              /usr/libexec/PlistBuddy -c "Add :$key $value_type $value" "$plist_path"
             fi
           }
 
           # Update CFBundleShortVersionString
-          check_and_update_plist "CFBundleShortVersionString" "$APP_VERSION" "$EXTENSION_PLIST_PATH"
+          check_and_update_plist "CFBundleShortVersionString" "$APP_VERSION" "string" "$EXTENSION_PLIST_PATH"
 
           # Update CFBundleVersion
-          check_and_update_plist "CFBundleVersion" "$BUILD_NUMBER" "$EXTENSION_PLIST_PATH"
+          check_and_update_plist "CFBundleVersion" "$BUILD_NUMBER" "string" "$EXTENSION_PLIST_PATH"
 
           # Update manageAppVersionAndBuildNumber
-          check_and_update_plist "manageAppVersionAndBuildNumber" "false" "$EXTENSION_PLIST_PATH"
-
-          check_and_update_plist "generateAppStoreInformation" "false" "$EXTENSION_PLIST_PATH"
+          check_and_update_plist "manageAppVersionAndBuildNumber" "false" "bool" "$EXTENSION_PLIST_PATH"
 
       - name: 🐦 Setup Shorebird
         script: |
