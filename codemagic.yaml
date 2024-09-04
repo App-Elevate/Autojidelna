@@ -48,7 +48,7 @@ workflows:
 
       - name: 🚀 Shorebird Release
         script: |
-          shorebird release ios --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
+          shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
 
       - name: Sign and upload symbols to Sentry
         script: |
