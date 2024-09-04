@@ -237,6 +237,9 @@ PODS:
   - PromisesObjC (2.4.0)
   - PromisesSwift (2.4.0):
     - PromisesObjC (= 2.4.0)
+  - Sentry (8.36.0):
+    - Sentry/Core (= 8.36.0)
+  - Sentry/Core (8.36.0)
   - Sentry/HybridSDK (8.33.0)
   - sentry_flutter (8.7.0):
     - Flutter
@@ -262,6 +265,7 @@ DEPENDENCIES:
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
   - package_info_plus (from `Flutter/ephemeral/.symlinks/plugins/package_info_plus/macos`)
   - path_provider_foundation (from `Flutter/ephemeral/.symlinks/plugins/path_provider_foundation/darwin`)
+  - Sentry (= 8.36.0)
   - sentry_flutter (from `Flutter/ephemeral/.symlinks/plugins/sentry_flutter/macos`)
   - shared_preferences_foundation (from `Flutter/ephemeral/.symlinks/plugins/shared_preferences_foundation/darwin`)
   - url_launcher_macos (from `Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos`)
@@ -377,6 +381,6 @@ SPEC CHECKSUMS:
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   url_launcher_macos: 5f437abeda8c85500ceb03f5c1938a8c5a705399
 
-PODFILE CHECKSUM: 056bc6c20527bade1ae73256b6344d30c3cfd22c
+PODFILE CHECKSUM: f744fcbb106d50670c15cf5ee94bf6310abb84c6
 
 COCOAPODS: 1.15.2

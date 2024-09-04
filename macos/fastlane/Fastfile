@@ -24,7 +24,7 @@ platform :mac do
       default_keychain: true,
       add_to_search_list: true,
       unlock: true,
-      password: "temp-keychain_password"
+      password: "temp"
     )
     # Fetch App Store Certificates
     match(
@@ -34,7 +34,7 @@ platform :mac do
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       additional_cert_types: ["mac_installer_distribution"],
       keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
+      keychain_password: "temp",
     )
   end
   desc "Push a new release build to the App Store"

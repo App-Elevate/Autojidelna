@@ -107,9 +107,6 @@ workflows:
         - pattern: "v*.*.*+*patch*"
           include: false
     environment:
-      ios_signing:
-        distribution_type: app_store # or app_store | development | enterprise
-        bundle_identifier: cz.appelevate.coree # for wildcard provisional profiles
       flutter: 3.22.3
       xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
       cocoapods: default
@@ -119,13 +116,14 @@ workflows:
         - sentry
         - fastlane
     scripts:
-      - name: Certs
-        script: |
-          xcode-project use-profiles
-
       - name: setup flutterfire
         script: |
           dart pub global activate flutterfire_cli
+
+      - name: Get Certs
+        script: |
+          cd macos
+          bundle exec fastlane setup_ci_keychain
 
       - name: 🚀 build Flutter
         script: |
