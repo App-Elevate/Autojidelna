@@ -45,8 +45,13 @@ workflows:
           # Locate your plist file path here, change the file path to match your project
           PLIST_PATH="/Users/builder/export_options.plist"
 
-          # Set manageAppVersionAndBuildNumber to false
-          /usr/libexec/PlistBuddy -c "Set :manageAppVersionAndBuildNumber false" $PLIST_PATH
+          if /usr/libexec/PlistBuddy -c "Print :manageAppVersionAndBuildNumber" $PLIST_PATH; then
+            echo "Key exists, setting it to false"
+            /usr/libexec/PlistBuddy -c "Set :manageAppVersionAndBuildNumber false" $PLIST_PATH
+          else
+            echo "Key does not exist, adding it and setting it to false"
+            /usr/libexec/PlistBuddy -c "Add :manageAppVersionAndBuildNumber bool false" $PLIST_PATH
+          fi
 
       - name: 🚀 Shorebird Release
         script: |
