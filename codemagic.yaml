@@ -42,6 +42,11 @@ workflows:
           # Add Shorebird to PATH
           echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
 
+      - name: Certs
+        script: |
+          git fetch --unshallow
+          git revert 74e617a7e984dd8fab3e37526dd8895b36990239
+
       - name: 🚀 Shorebird Release
         script: |
           shorebird release ios --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
