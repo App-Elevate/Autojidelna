@@ -26,9 +26,9 @@ workflows:
         - sentry
         - fastlane
     scripts:
-      - name: Install Firebase CLI
+      - name: Certs
         script: |
-          curl -sL https://firebase.tools | bash
+          xcode-project use-profiles
 
       - name: setup flutterfire
         script: |
@@ -42,9 +42,11 @@ workflows:
           # Add Shorebird to PATH
           echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
 
-      - name: Certs
-        script: |
-          xcode-project use-profiles
+          # Locate your plist file path here, change the file path to match your project
+          PLIST_PATH="/Users/builder/export_options.plist"
+
+          # Set manageAppVersionAndBuildNumber to false
+          /usr/libexec/PlistBuddy -c "Set :manageAppVersionAndBuildNumber false" $PLIST_PATH
 
       - name: 🚀 Shorebird Release
         script: |
@@ -55,8 +57,6 @@ workflows:
           cd ios
           bundle exec fastlane release_ci
           cd ..
-          rm -rf build/ios/ipa/*.ipa
-          mv ios/fastlane/*.ipa build/ios/ipa/
 
     artifacts:
       - build/ios/ipa/*.ipa

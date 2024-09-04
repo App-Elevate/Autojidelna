@@ -37,35 +37,12 @@ platform :ios do
 
   desc "Push a new release build to the App Store"
   lane :release_ci do
-    create_keychain(
-      name: "AppSigning",
-      default_keychain: true,
-      add_to_search_list: true,
-      unlock: true,
-      password: "temp"
-      )
-
-    match(
-      readonly: true,
-      keychain_name: "AppSigning",
-      keychain_password: "temp",
-      type: "appstore"
-      )
-    build_app(
-      skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
-      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-      )
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
       project_slug: 'appe-coree',
       include_sources: true, # Optional. For source context.
     )
-    delete_keychain(
-      name: "AppSigning"
-    )
-    sh "security default-keychain -s login.keychain || true"
   end
 
   desc "Push a new release build to the App Store"
