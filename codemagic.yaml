@@ -127,7 +127,7 @@ workflows:
         script: |
           dart pub global activate flutterfire_cli
 
-      - name: 🚀 Shorebird Release
+      - name: 🚀 build Flutter
         script: |
           flutter build macos --release
 
@@ -138,7 +138,7 @@ workflows:
           cd ..
 
     artifacts:
-      - build/ios/ipa/*.ipa
+      - macos/*.pkg
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
