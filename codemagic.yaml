@@ -11,7 +11,7 @@ workflows:
       tag_patterns: # Include or exclude watched tag labels
         - pattern: "v*.*.*+*"
           include: true
-        - pattern: "v*.*.*+*patch*"
+        - pattern: "v*.*.*+*-patch*"
           include: false
     environment:
       ios_signing:
@@ -103,7 +103,7 @@ workflows:
       tag_patterns: # Include or exclude watched tag labels
         - pattern: "v*.*.*+*"
           include: true
-        - pattern: "v*.*.*+*patch*"
+        - pattern: "v*.*.*+*-patch*"
           include: false
     environment:
       flutter: 3.22.3
