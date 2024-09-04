@@ -66,6 +66,8 @@ workflows:
           # Update manageAppVersionAndBuildNumber
           check_and_update_plist "manageAppVersionAndBuildNumber" "false" "$EXTENSION_PLIST_PATH"
 
+          check_and_update_plist "generateAppStoreInformation" "false" "$EXTENSION_PLIST_PATH"
+
       - name: 🐦 Setup Shorebird
         script: |
           # Install Shorebird
