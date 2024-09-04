@@ -45,7 +45,7 @@ platform :mac do
       default_keychain: true,
       add_to_search_list: true,
       unlock: true,
-      password: "temp-keychain_password"
+      password: "temp"
     )
     # Fetch App Store Certificates
     match(
@@ -55,27 +55,18 @@ platform :mac do
       app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
       additional_cert_types: ["mac_installer_distribution"],
       keychain_name: "AppSigning",
-      keychain_password: "temp-keychain_password",
+      keychain_password: "temp",
     )
     build_mac_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       export_method: "app-store",
       installer_cert_name: ENV["DEVELOPER_INSTALLER_CERT_NAME"],
     )
-    api_key = app_store_connect_api_key(
-      key_id: ENV["APP_STORE_KEY_ID"],
-      issuer_id: ENV["APP_STORE_ISSUER_ID"],
-      key_filepath: "./../private_keys/app_store.p8",
-      in_house: false
-    )
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
       project_slug: 'appe-coree',
       include_sources: true, # Optional. For source context.
-    )
-    upload_to_testflight(
-      skip_waiting_for_build_processing: true,
     )
     delete_keychain(
       name: "AppSigning"

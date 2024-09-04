@@ -1,6 +1,99 @@
 workflows:
   deploy_ios:
-    name: Deploy to App Store
+    name: "[iOS] Deploy to App Store"
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    integrations:
+      app_store_connect: App Elevate Distribution
+    triggering:
+      events: # List the events that trigger builds
+        - tag
+      tag_patterns: # Include or exclude watched tag labels
+        - pattern: "v*.*.*+*"
+          include: true
+        - pattern: "v*.*.*+*patch*"
+          include: false
+    environment:
+      ios_signing:
+        distribution_type: app_store # or app_store | development | enterprise
+        bundle_identifier: cz.appelevate.coree # for wildcard provisional profiles
+      flutter: 3.22.3
+      xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
+      cocoapods: default
+      groups:
+        # Exports the SHOREBIRD_TOKEN environment variable
+        - shorebird
+        - sentry
+    scripts:
+      - name: Certs
+        script: |
+          xcode-project use-profiles
+
+      - name: setup flutterfire
+        script: |
+          dart pub global activate flutterfire_cli
+
+      - name: Fixing Plist
+        script: |
+          # Locate your plist file path here, change the file path to match your project
+          EXTENSION_PLIST_PATH="/Users/builder/export_options.plist"
+
+          APP_VERSION=$(grep '^version:' pubspec.yaml | cut -d ' ' -f 2 | cut -d '+' -f 1)
+          BUILD_NUMBER=$(grep '^version:' pubspec.yaml | cut -d '+' -f 2)
+
+          # Function to check if a key exists in the plist
+          check_and_update_plist() {
+            local key=$1
+            local value=$2
+            local plist_path=$3
+
+            # Check if the key exists in the plist
+            if /usr/libexec/PlistBuddy -c "Print :$key" "$plist_path" 2>/dev/null; then
+              echo "Key $key exists, updating it to $value"
+              /usr/libexec/PlistBuddy -c "Set :$key $value" "$plist_path"
+            else
+              echo "Key $key does not exist, adding it with value $value"
+              /usr/libexec/PlistBuddy -c "Add :$key string $value" "$plist_path"
+            fi
+          }
+
+          # Update CFBundleShortVersionString
+          check_and_update_plist "CFBundleShortVersionString" "$APP_VERSION" "$EXTENSION_PLIST_PATH"
+
+          # Update CFBundleVersion
+          check_and_update_plist "CFBundleVersion" "$BUILD_NUMBER" "$EXTENSION_PLIST_PATH"
+
+          # Update manageAppVersionAndBuildNumber
+          check_and_update_plist "manageAppVersionAndBuildNumber" "false" "$EXTENSION_PLIST_PATH"
+
+      - name: 🐦 Setup Shorebird
+        script: |
+          # Install Shorebird
+          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
+
+          # Add Shorebird to PATH
+          echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
+
+      - name: 🚀 Shorebird Release
+        script: |
+          shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
+
+      - name: upload symbols to Sentry
+        script: |
+          cd ios
+          bundle exec fastlane release_ci
+          cd ..
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      app_store_connect:
+        auth: integration
+
+  deploy_macos:
+    name: "[macOS] Deploy to App Store"
     instance_type: mac_mini_m2
     max_build_duration: 120
     integrations:
@@ -34,32 +127,13 @@ workflows:
         script: |
           dart pub global activate flutterfire_cli
 
-      - name: 🐦 Setup Shorebird
-        script: |
-          # Install Shorebird
-          curl --proto '=https' --tlsv1.2 https://raw.githubusercontent.com/shorebirdtech/install/main/install.sh -sSf | bash
-
-          # Add Shorebird to PATH
-          echo PATH="$HOME/.shorebird/bin:$PATH" >> $CM_ENV
-
-          # Locate your plist file path here, change the file path to match your project
-          PLIST_PATH="/Users/builder/export_options.plist"
-
-          if /usr/libexec/PlistBuddy -c "Print :manageAppVersionAndBuildNumber" $PLIST_PATH; then
-            echo "Key exists, setting it to false"
-            /usr/libexec/PlistBuddy -c "Set :manageAppVersionAndBuildNumber false" $PLIST_PATH
-          else
-            echo "Key does not exist, adding it and setting it to false"
-            /usr/libexec/PlistBuddy -c "Add :manageAppVersionAndBuildNumber bool false" $PLIST_PATH
-          fi
-
       - name: 🚀 Shorebird Release
         script: |
-          shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
+          flutter build macos --release
 
-      - name: Sign and upload symbols to Sentry
+      - name: sign and upload symbols to Sentry
         script: |
-          cd ios
+          cd macos
           bundle exec fastlane release_ci
           cd ..
 

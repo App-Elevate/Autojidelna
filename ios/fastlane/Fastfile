@@ -16,26 +16,7 @@
 default_platform(:ios)
 
 platform :ios do
-  desc "Create Keychain for Ci/CD"
-  lane :setup_ci_keychain do 
-    # Create the keychain
-    create_keychain(
-        name: "AppSigning",
-        default_keychain: true,
-        add_to_search_list: true,
-        unlock: true,
-        password: "temp"
-        )
-
-    match(
-      readonly: true,
-      keychain_name: "AppSigning",
-      keychain_password: "temp",
-      type: "appstore"
-    )
-  end
-
-  desc "Push a new release build to the App Store"
+  desc "Upload Source Maps to Sentry"
   lane :release_ci do
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
@@ -47,15 +28,7 @@ platform :ios do
 
   desc "Push a new release build to the App Store"
   lane :release do
-    match(
-      readonly: true,
-      type: "appstore"
-      )
-    build_app(
-      skip_build_archive: true,
-      archive_path: "../build/ios/archive/Runner.xcarchive",
-      export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
-      )
+    sh 'mv ../../build/ios/ipa/coree.ipa ../Runner.ipa'
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
