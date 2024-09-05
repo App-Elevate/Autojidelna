@@ -127,7 +127,7 @@ jobs:
           echo "$version+${{ github.run_number }}" > version.txt
 
       - name: Get version from yaml
-        if: ${{ github.event.inputs.version == '' }} && ${{ github.event.inputs.patch == 'false' }}
+        if: ${{ github.event.inputs.version == '' }} && ${{ github.event.inputs.patch == 'true' }}
         run: |
           sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml > version.txt
 
