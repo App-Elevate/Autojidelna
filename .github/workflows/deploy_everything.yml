@@ -187,7 +187,7 @@ jobs:
               NEW_TAG="${VERSION_PREFIX}-patch1"
             else
               # Extract the patch number and increment it
-              LAST_PATCH_NUMBER=$(echo "$HIGHEST_TAG" | sed -E "s/${VERSION_PREFIX}-patch([0-9]+)/\1/")
+              LAST_PATCH_NUMBER=$(echo "$HIGHEST_TAG" | sed 's/.*patch\([0-9]*\).*/\1/')
               NEW_PATCH_NUMBER=$((LAST_PATCH_NUMBER + 1))
               NEW_TAG="${VERSION_PREFIX}-patch${NEW_PATCH_NUMBER}"
             fi
