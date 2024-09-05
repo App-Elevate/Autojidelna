@@ -57,7 +57,7 @@ on:
         default: false
       version:
         description: "Custom version (format: 1.1.1 or 1.1.1+1):"
-        required: true
+        required: false
         type: string
         default: ""
 
