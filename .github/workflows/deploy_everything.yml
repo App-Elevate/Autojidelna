@@ -362,6 +362,10 @@ jobs:
     # Works on ubuntu and macOS. Should propably work on windows as well
     runs-on: ubuntu-latest
     steps:
+      - name: test
+        run: |
+          echo ${{ needs.version.outputs.build_number }}
+          exit 1
       - name: Checkout code
         uses: actions/checkout@v4
 
