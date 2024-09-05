@@ -142,24 +142,19 @@ jobs:
       - name: Set version as variables
         id: version
         run: |
-          echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
-          echo "build_number=$(sed 's/.*+//' version.txt)" >> "$GITHUB_OUTPUT"
-          echo "full_version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
           echo "version=$(sed 's/\+.*//' version.txt)"
           echo "build_number=$(sed 's/.*+//' version.txt)"
           echo "full_version=$(cat version.txt)"
+
+          echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
+          echo "build_number=$(sed 's/.*+//' version.txt)" >> "$GITHUB_OUTPUT"
+          echo "full_version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
         with:
           name: pubspec
           path: pubspec.yaml
-
-      - name: Upload version.txt
-        uses: actions/upload-artifact@v4
-        with:
-          name: version
-          path: version.txt
 
       - name: Get applicationId
         id: extract_app_id
@@ -177,10 +172,11 @@ jobs:
 
       - name: save this as a version
         run: |
+          rm -f version.txt
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
           git add pubspec.yaml
-          git commit -m "Update app version to $(cat version.txt)"
+          git commit -m "Update app version to $(cat version.txt)" || true
           VERSION_PREFIX=$(cat version.txt)
           # Get the highest existing patch tag, if any
 
