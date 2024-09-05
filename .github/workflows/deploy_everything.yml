@@ -137,12 +137,12 @@ jobs:
       - name:
         id: version
         run: |
-          echo echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
-          echo echo "build_number=$(sed 's/.*+//' version.txt)" >> "$GITHUB_OUTPUT"
-          echo echo "full_version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
-          echo echo "version=$(sed 's/\+.*//' version.txt)"
-          echo echo "build_number=$(sed 's/.*+//' version.txt)"
-          echo echo "full_version=$(cat version.txt)"
+          echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
+          echo "build_number=$(sed 's/.*+//' version.txt)" >> "$GITHUB_OUTPUT"
+          echo "full_version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
+          echo "version=$(sed 's/\+.*//' version.txt)"
+          echo "build_number=$(sed 's/.*+//' version.txt)"
+          echo "full_version=$(cat version.txt)"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
@@ -364,7 +364,7 @@ jobs:
     steps:
       - name: test
         run: |
-          echo ${{ needs.version.outputs.build_number }}
+          echo $BUILD_NUMBER
           exit 1
       - name: Checkout code
         uses: actions/checkout@v4
