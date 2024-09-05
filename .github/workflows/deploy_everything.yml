@@ -364,7 +364,7 @@ jobs:
     steps:
       - name: test
         run: |
-          echo $BUILD_NUMBER
+          echo ${{ needs.version.outputs.build_number }}
           exit 1
       - name: Checkout code
         uses: actions/checkout@v4
