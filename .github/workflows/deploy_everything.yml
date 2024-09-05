@@ -93,7 +93,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get version
-        if: ${{ github.event.inputs.version == '' }}
+        if: ${{ github.event.inputs.version == '' }} && ${{ github.event.inputs.patch == 'false' }}
         run: |
           if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
@@ -126,6 +126,11 @@ jobs:
           done
           echo "$version+${{ github.run_number }}" > version.txt
 
+      - name: Get version from yaml
+        if: ${{ github.event.inputs.version == '' }} && ${{ github.event.inputs.patch == 'false' }}
+        run: |
+          sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml > version.txt
+
       - name: Get version from input
         if: ${{ github.event.inputs.version != '' }}
         run: echo "${{ github.event.inputs.version }}" | sed 's/^[^+]*$/&+${{ github.run_number }}/' > version.txt
@@ -134,7 +139,7 @@ jobs:
         run: |
           sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)/" pubspec.yaml
 
-      - name:
+      - name: Set version as variables
         id: version
         run: |
           echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
@@ -402,7 +407,12 @@ jobs:
         uses: shorebirdtech/setup-shorebird@v1
 
       - name: 🚀 Use Shorebird
+        if: ${{ github.event.inputs.patch == 'false' }}
         run: shorebird release android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info="symbolsAndroid" --obfuscate
+
+      - name: 🚀 Use Shorebird
+        if: ${{ github.event.inputs.patch == 'true' }}
+        run: shorebird patch android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info="symbolsAndroid" --obfuscate
 
       - name: Sentry symbols upload
         env:
@@ -419,6 +429,7 @@ jobs:
           cd $CURRENT_EXECUTION_PATH
           mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
       - uses: vacxe/google-play-cli-kt@master
+        if: ${{ github.event.inputs.patch == 'false' }}
         env:
           JAVA_HOME: ""
         with:
