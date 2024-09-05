@@ -45,12 +45,18 @@ on:
         required: true
         type: boolean
         default: true
-      patch:
-        description: "Fill in to patch a specific version"
-        required: false
-        type: string
       skip:
         description: "Skip all deployments?"
+        required: true
+        type: boolean
+        default: false
+      version:
+        description: "Custom version (format: 1.1.1 or 1.1.1+1)"
+        required: false
+        type: string
+        default: ""
+      patch:
+        description: "Make it an instant patch release"
         required: true
         type: boolean
         default: false
@@ -75,6 +81,9 @@ jobs:
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
+      build_number: ${{ steps.version.outputs.build_number }}
+      full_version: ${{ steps.version.outputs.full_version }}
+      version: ${{ steps.version.outputs.version }}
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
     steps:
@@ -85,6 +94,7 @@ jobs:
 
       - name: Get version
         id: version
+        if: ${{ github.event.inputs.version == '' }}
         run: |
           if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
@@ -115,11 +125,23 @@ jobs:
               exit 1
             fi
           done
-          echo "$version" > version.txt
+          echo "$version+${{ github.run_number }}" > version.txt
+
+      - name: Get version from input
+        id: version_input
+        if: ${{ github.event.inputs.version != '' }}
+        run: echo "${{ github.event.inputs.version }}" | sed 's/^[^+]*$/&+${{ github.run_number }}/' > version.txt
 
       - name: Update version in YAML
         run: |
-          sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)+${{ github.run_number }}/" pubspec.yaml
+          sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)/" pubspec.yaml
+
+      - name:
+        id: version
+        run: |
+          echo echo "version=\"$(sed 's/\+.*//' version.txt)\"" >> "$GITHUB_OUTPUT"
+          echo echo "build_number=\"$(sed 's/.*+//' version.txt)\"" >> "$GITHUB_OUTPUT"
+          echo echo "full_version=\"$(cat version.txt)\"" >> "$GITHUB_OUTPUT"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
@@ -153,8 +175,25 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git add pubspec.yaml
           git commit -m "Update app version to $(cat version.txt)"
-          git tag v$(cat version.txt)+${{ github.run_number }}
-          git push -u origin v$(cat version.txt)+${{ github.run_number }} # Push the tag
+          VERSION_PREFIX=$(cat version.txt)
+          # Get the highest existing patch tag, if any
+
+          if [ "${{ github.event.inputs.patch }}" = "true" ]; then
+            HIGHEST_TAG=$(git tag -l "${VERSION_PREFIX}-patch*" | sort -V | tail -n 1)
+            # Check if a tag was found
+            if [ -z "$HIGHEST_TAG" ]; then
+              # No tags found, create the first patch tag
+              NEW_TAG="${VERSION_PREFIX}-patch1"
+            else
+              # Extract the patch number and increment it
+              LAST_PATCH_NUMBER=$(echo "$HIGHEST_TAG" | sed -E "s/${VERSION_PREFIX}-patch([0-9]+)/\1/")
+              NEW_PATCH_NUMBER=$((LAST_PATCH_NUMBER + 1))
+              NEW_TAG="${VERSION_PREFIX}-patch${NEW_PATCH_NUMBER}"
+            fi
+            git tag $NEW_TAG # Create the tag
+            git push -u origin $NEW_TAG # Push the tag
+          else
+          fi
 
   build_web:
     name: "[Web] Build Web"
@@ -382,7 +421,7 @@ jobs:
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ github.run_number }} internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ needs.version.outputs.build_number }} internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4
