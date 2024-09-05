@@ -69,9 +69,6 @@ concurrency:
   group: "deploy"
   cancel-in-progress: false
 
-env:
-  SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
-
 jobs:
   version:
     permissions:
@@ -92,7 +89,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Get version
+      - name: Get version from branch name or merge commit
         if: ${{ github.event.inputs.version == '' && github.event.inputs.patch == 'false' }}
         run: |
           if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
@@ -131,7 +128,7 @@ jobs:
         run: |
           sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml > version.txt
 
-      - name: Get version from input
+      - name: Get version from input (and build number if not provided)
         if: ${{ github.event.inputs.version != '' }}
         run: echo "${{ github.event.inputs.version }}" | sed 's/^[^+]*$/&+${{ github.run_number }}/' > version.txt
 
@@ -170,7 +167,7 @@ jobs:
           echo "firebase_id=$firebase_id"
           echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
 
-      - name: save this as a version
+      - name: Create version tag
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
@@ -359,7 +356,7 @@ jobs:
       url: https://play.google.com/store/apps/details?id=${{ needs.version.outputs.app_id }}
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
-    # Works on ubuntu and macOS. Should propably work on windows as well
+    # Works on ubuntu and macOS.
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -403,10 +400,14 @@ jobs:
 
       - name: 🚀 Use Shorebird
         if: ${{ github.event.inputs.patch == 'false' }}
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
         run: shorebird release android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info="symbolsAndroid" --obfuscate
 
       - name: 🚀 Use Shorebird
         if: ${{ github.event.inputs.patch == 'true' }}
+        env:
+          SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
         run: shorebird patch android --release-version=${{ needs.version.outputs.full_version }} -- --split-debug-info="symbolsAndroid" --obfuscate
 
       - name: Sentry symbols upload
