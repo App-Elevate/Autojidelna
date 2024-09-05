@@ -140,6 +140,9 @@ jobs:
           echo echo "version=$(sed 's/\+.*//' version.txt)" >> "$GITHUB_OUTPUT"
           echo echo "build_number=$(sed 's/.*+//' version.txt)" >> "$GITHUB_OUTPUT"
           echo echo "full_version=$(cat version.txt)" >> "$GITHUB_OUTPUT"
+          echo echo "version=$(sed 's/\+.*//' version.txt)"
+          echo echo "build_number=$(sed 's/.*+//' version.txt)"
+          echo echo "full_version=$(cat version.txt)"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
