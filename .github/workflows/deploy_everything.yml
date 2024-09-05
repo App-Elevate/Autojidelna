@@ -191,6 +191,8 @@ jobs:
             git tag $NEW_TAG # Create the tag
             git push -u origin $NEW_TAG # Push the tag
           else
+            git tag $VERSION_PREFIX # Create the tag
+            git push -u origin $VERSION_PREFIX # Push the tag
           fi
 
   build_web:
