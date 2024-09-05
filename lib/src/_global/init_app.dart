@@ -24,6 +24,7 @@ class InitApp {
       App.initGoogleSignIn(),
       App.initPlatform(),
       App.initRotation(),
+      App.initCodePush(),
     ]);
     // Stop the stopwatch
     stopwatch.stop();
