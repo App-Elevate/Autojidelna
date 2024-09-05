@@ -176,7 +176,7 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git add pubspec.yaml
           git commit -m "Update app version to $(cat version.txt)" || true
-          VERSION_PREFIX=$(cat version.txt)
+          VERSION_PREFIX="$(cat version.txt)"
           # Get the highest existing patch tag, if any
 
           if [ "${{ github.event.inputs.patch }}" = "true" ]; then
