@@ -407,7 +407,7 @@ jobs:
 
       - name: 🚀 Use Shorebird
         if: ${{ github.event.inputs.patch == 'true' }}
-        run: shorebird patch android -- --split-debug-info="symbolsAndroid" --obfuscate
+        run: shorebird patch android --release-version=${{ needs.version.outputs.full_version }} -- --split-debug-info="symbolsAndroid" --obfuscate
 
       - name: Sentry symbols upload
         env:
