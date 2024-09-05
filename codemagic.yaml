@@ -1,7 +1,7 @@
 workflows:
   deploy_ios:
     name: "[iOS] Deploy to App Store"
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     max_build_duration: 120
     integrations:
       app_store_connect: App Elevate Distribution
@@ -93,7 +93,7 @@ workflows:
 
   deploy_macos:
     name: "[macOS] Deploy to App Store"
-    instance_type: mac_mini_m2
+    instance_type: mac_mini_m1
     max_build_duration: 120
     integrations:
       app_store_connect: App Elevate Distribution
