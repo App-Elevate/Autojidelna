@@ -97,7 +97,7 @@ jobs:
         run: |
           if [[ "${GITHUB_REF#refs/heads/}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
             echo "Branch name matches the pattern *.*.* - stopping"
-            echo "${GITHUB_REF#refs/heads/}" > version.txt
+            echo "${GITHUB_REF#refs/heads/}+${{ github.run_number }}" > version.txt
             exit 0
           fi
           echo "Branch name doesn't match the pattern *.*.* - continuing"
