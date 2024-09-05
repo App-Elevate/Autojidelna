@@ -164,7 +164,7 @@ abstract class Texts {
   /// No description provided for @crashlyticsPage.
   ///
   /// In en, this message translates to:
-  /// **'Crashlytics Page'**
+  /// **'Crashlytics Page Patched'**
   String get crashlyticsPage;
 
   /// No description provided for @crashlyticsTestCrash.
