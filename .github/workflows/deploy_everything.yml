@@ -204,16 +204,16 @@ jobs:
           curl -H "Content-Type: application/json" \
           -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
           --data '{
-            "appId": "${{ vars.codemagic_app_id }}",
+            "appId": "${{ vars.CODEMAGIC_APP_ID }}",
             "workflowId": "deploy_ios",
             "tag": "${{ steps.tag.outputs.tag }}",
             "environment": {
               "variables": {
                 "patch": "${{ github.event.inputs.patch }}",
-                "flutter_version": "${{ vars.FLUTTER_VERSION }}",
+                "flutter_version": "${{ vars.FLUTTER_VERSION }}"
               },
               "softwareVersions": {
-                "flutter": "${{ vars.FLUTTER_VERSION }}",
+                "flutter": "${{ vars.FLUTTER_VERSION }}"
               }
             }
           }' \
@@ -225,12 +225,12 @@ jobs:
           curl -H "Content-Type: application/json" \
           -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
           --data '{
-            "appId": "${{ vars.codemagic_app_id }}",
+            "appId": "${{ vars.CODEMAGIC_APP_ID }}",
             "workflowId": "deploy_macos",
             "tag": "${{ steps.tag.outputs.tag }}",
             "environment": {
               "softwareVersions": {
-                "flutter": "${{ vars.FLUTTER_VERSION }}",
+                "flutter": "${{ vars.FLUTTER_VERSION }}"
               }
             }
           }' \
