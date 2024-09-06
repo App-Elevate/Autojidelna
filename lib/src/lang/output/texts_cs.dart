@@ -40,7 +40,7 @@ class TextsCs extends Texts {
   String get connectedToTheInternet => 'Připojeno k internetu';
 
   @override
-  String get counting => 'Počítání';
+  String get counting => 'Počítání unPatched';
 
   @override
   String get crashlytics => 'Crashlytics';
