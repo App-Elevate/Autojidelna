@@ -1,11 +1,13 @@
 name: "Cleanup artefacts"
 on:
   workflow_dispatch:
+
+permissions:
+  actions: write
 jobs:
   delete-artifacts:
     runs-on: ubuntu-latest
     steps:
       - uses: kolpav/purge-artifacts-action@v1
         with:
-          token: $
           expire-in: 7days # Set this to 0 to delete all artifacts
