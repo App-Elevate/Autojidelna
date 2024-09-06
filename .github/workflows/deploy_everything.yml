@@ -202,7 +202,7 @@ jobs:
         if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
         run: |
           LABEL=""
-          if [[ "${{ github.event.input.patch }}" == "true" ]]; then
+          if [[ "${{ github.event.inputs.patch }}" == "true" ]]; then
             LABEL="\"labels\": [\"patch\"],"
           fi
 
