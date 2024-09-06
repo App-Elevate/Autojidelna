@@ -218,7 +218,7 @@ class TextsCs extends Texts {
   String get secretGoogle => 'secret Google';
 
   @override
-  String get secretGoogleContent => 'Flutter ++ Google = ❤️';
+  String get secretGoogleContent => 'Flutter + Google = ❤️';
 
   @override
   String get secretPage => 'Tajná stránka';
