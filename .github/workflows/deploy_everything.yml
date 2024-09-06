@@ -203,7 +203,7 @@ jobs:
         run: |
           LABEL=""
           if [[ "${{ github.event.input.patch }}" == "true" ]]; then
-            LABEL="\"labels\": ["patch"],"
+            LABEL="\"labels\": [\"patch\"],"
           fi
 
           curl -H "Content-Type: application/json" \
