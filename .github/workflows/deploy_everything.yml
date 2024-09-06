@@ -209,8 +209,8 @@ jobs:
             "tag": "${{ steps.tag.outputs.tag }}",
             "environment": {
               "variables": {
-                "patch": "${{ github.event.inputs.patch }}",
-                "flutter_version": "${{ vars.FLUTTER_VERSION }}"
+                "PATCH": "${{ github.event.inputs.patch }}",
+                "FLUTTER_VERSION": "${{ vars.FLUTTER_VERSION }}"
               },
               "softwareVersions": {
                 "flutter": "${{ vars.FLUTTER_VERSION }}"
