@@ -83,6 +83,7 @@ jobs:
       version: ${{ steps.version.outputs.version }}
       app_id: ${{ steps.extract_app_id.outputs.app_id }}
       firebase_id: ${{ steps.firebase_id.outputs.firebase_id }}
+      tag: ${{ steps.tag.outputs.tag }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -168,6 +169,7 @@ jobs:
           echo "firebase_id=$firebase_id" >> "$GITHUB_OUTPUT"
 
       - name: Create version tag
+        id: tag
         run: |
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git config --global user.name "github-actions[bot]"
@@ -194,15 +196,43 @@ jobs:
           git tag $NEW_TAG # Create the tag
           git push -u origin $NEW_TAG # Push the tag
 
+          echo "tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
+
       - name: Run iOS Deployment
         if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
         run: |
           curl -H "Content-Type: application/json" \
-          -H "x-auth-token: <API Token>" \
+          -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
           --data '{
-            "appId": "<app_id>",
-            "workflowId": "<workflow_id>",
-            "tag": "<git_branch_name>"
+            "appId": "${{ vars.codemagic_app_id }}",
+            "workflowId": "deploy_ios",
+            "tag": "${{ steps.tag.outputs.tag }}",
+            "environment": {
+              "variables": {
+                "patch": "${{ github.event.inputs.patch }}",
+                "flutter_version": "${{ vars.FLUTTER_VERSION }}",
+              },
+              "softwareVersions": {
+                "flutter": "${{ vars.FLUTTER_VERSION }}",
+              }
+            }
+          }' \
+          -X POST https://api.codemagic.io/builds
+
+      - name: Run macOS Deployment
+        if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
+          --data '{
+            "appId": "${{ vars.codemagic_app_id }}",
+            "workflowId": "deploy_macos",
+            "tag": "${{ steps.tag.outputs.tag }}",
+            "environment": {
+              "softwareVersions": {
+                "flutter": "${{ vars.FLUTTER_VERSION }}",
+              }
+            }
           }' \
           -X POST https://api.codemagic.io/builds
 

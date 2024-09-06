@@ -22,6 +22,7 @@ workflows:
       cocoapods: default
       vars:
         patch: "false"
+        flutter_version: "3.22.3"
       groups:
         # Exports the SHOREBIRD_TOKEN environment variable
         - shorebird
@@ -78,9 +79,9 @@ workflows:
       - name: 🚀 Shorebird Release
         script: |
           if [ "$PATCH" = "true" ]; then
-            shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=3.22.3 -- --split-debug-info="build/symbolsIos"
-          else
             shorebird patch ios --release-version=$(sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml) --export-options-plist=/Users/builder/export_options.plist -- --split-debug-info="build/symbolsIos"
+          else
+            shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=$FLUTTER_VERSION -- --split-debug-info="build/symbolsIos"
           fi
 
       - name: upload symbols to Sentry
