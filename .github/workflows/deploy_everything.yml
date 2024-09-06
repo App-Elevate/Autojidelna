@@ -148,9 +148,9 @@ jobs:
           echo "full_version: $(cat version.txt)"
 
           PAYLOAD=$(cat <<EOF
-          version=\"$(sed 's/\+.*//' version.txt)\"
-          build_number=\"$(sed 's/.*+//' version.txt)\"
-          full_version=\"$(cat version.txt)\"
+          version=$(sed 's/\+.*//' version.txt)
+          build_number=$(sed 's/.*+//' version.txt)
+          full_version=$(cat version.txt)
           EOF
           )
           echo "$PAYLOAD" >> "$GITHUB_OUTPUT"
