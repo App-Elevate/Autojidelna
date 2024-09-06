@@ -178,7 +178,7 @@ jobs:
           VERSION_PREFIX="$(cat version.txt)"
           # Get the highest existing patch tag, if any
 
-          if [ "${{ github.event.inputs.patch }}" != "false" ]; then
+          if [ "${{ github.event.inputs.patch }}" == "true" ]; then
             HIGHEST_TAG=$(git tag -l "${VERSION_PREFIX}-patch*" | sort -V | tail -n 1)
             # Check if a tag was found
             if [ -z "$HIGHEST_TAG" ]; then
