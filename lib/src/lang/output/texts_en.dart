@@ -47,7 +47,7 @@ class TextsEn extends Texts {
   String get crashlytics => 'Crashlytics';
 
   @override
-  String get crashlyticsPage => 'Crashlytics Page IOS PATCH';
+  String get crashlyticsPage => 'Crashlytics Page';
 
   @override
   String get crashlyticsTestCrash => 'Crashlytics test crash!';
