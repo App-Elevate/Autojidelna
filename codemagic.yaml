@@ -24,7 +24,7 @@ workflows:
         script: |
           xcode-project use-profiles
 
-      - name: setup flutterfire
+      - name: Setup flutterfire
         script: |
           dart pub global activate flutterfire_cli
 
@@ -76,13 +76,14 @@ workflows:
             shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=$FLUTTER_VERSION -- --split-debug-info="build/symbolsIos"
           fi
 
-      - name: upload symbols to Sentry
+      - name: Upload symbols to Sentry
         script: |
           cd ios
           bundle exec fastlane release_ci
           cd ..
 
     artifacts:
+      - /Users/builder/export_options.plist
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
@@ -106,7 +107,7 @@ workflows:
         - sentry
         - fastlane
     scripts:
-      - name: setup flutterfire
+      - name: Setup flutterfire
         script: |
           dart pub global activate flutterfire_cli
 
@@ -117,17 +118,18 @@ workflows:
           bundle exec fastlane setup_ci_keychain
           cd ..
 
-      - name: 🚀 build Flutter
+      - name: 🚀 Build Flutter
         script: |
           flutter build macos --release
 
-      - name: sign and upload symbols to Sentry
+      - name: 🚀 Sign and upload symbols to Sentry
         script: |
           cd macos
           bundle exec fastlane release_ci
           cd ..
 
     artifacts:
+      - /Users/builder/export_options.plist
       - macos/*.pkg
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
