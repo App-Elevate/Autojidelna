@@ -28,7 +28,7 @@ class TextsCs extends Texts {
   String get appleSecret => 'Apple velký tajemství';
 
   @override
-  String get appleSecretContent => 'Flutter + Apple = ❤️';
+  String get appleSecretContent => 'Flutter ++ Apple = ❤️';
 
   @override
   String get buttonPushed => 'Tlačítko jste stiskli tolikrát:';
@@ -218,7 +218,7 @@ class TextsCs extends Texts {
   String get secretGoogle => 'secret Google';
 
   @override
-  String get secretGoogleContent => 'Flutter ++ Google = ❤️';
+  String get secretGoogleContent => 'Flutter + Google = ❤️';
 
   @override
   String get secretPage => 'Tajná stránka';
