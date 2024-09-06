@@ -137,6 +137,12 @@ jobs:
         run: |
           sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)/" pubspec.yaml
 
+      - name: Upload pubspec.yaml
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
+
       - name: Set version as variables
         id: version
         run: |
