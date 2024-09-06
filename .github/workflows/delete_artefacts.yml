@@ -1,4 +1,4 @@
-ame: "Delete old artifacts"
+name: "Delete old artifacts"
 on:
   workflow_dispatch:
 
