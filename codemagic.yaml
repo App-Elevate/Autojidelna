@@ -82,6 +82,13 @@ workflows:
           bundle exec fastlane release_ci
           cd ..
 
+      - name: Cancel if it's a patch release
+        script: |
+          if [ "$PATCH" = "true" ]; then
+            echo "Skipping the deployment as it's a patch release."
+            exit 0
+          fi
+
     artifacts:
       - /Users/builder/export_options.plist
       - build/ios/ipa/*.ipa
