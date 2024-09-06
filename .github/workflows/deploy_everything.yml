@@ -74,7 +74,7 @@ jobs:
     permissions:
       contents: write
     name: Create version number
-    if: ${{ github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.event.inputs.skip == 'false') }}
+    if: ${{ github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.event.inputs.skip != 'true') }}
     # Works only on ubuntu
     runs-on: ubuntu-latest
     outputs:
@@ -178,7 +178,7 @@ jobs:
           VERSION_PREFIX="$(cat version.txt)"
           # Get the highest existing patch tag, if any
 
-          if [ "${{ github.event.inputs.patch }}" = "true" ]; then
+          if [ "${{ github.event.inputs.patch }}" != "false" ]; then
             HIGHEST_TAG=$(git tag -l "${VERSION_PREFIX}-patch*" | sort -V | tail -n 1)
             # Check if a tag was found
             if [ -z "$HIGHEST_TAG" ]; then
@@ -202,7 +202,7 @@ jobs:
         if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
         run: |
           LABEL=""
-          if [[ "${{ github.event.input.patch }}" == "true" ]]; then
+          if [[ "${{ github.event.input.patch }}" != "false" ]]; then
             LABEL="\"labels\": [\"patch\"],"
           fi
 
@@ -456,7 +456,7 @@ jobs:
         uses: shorebirdtech/setup-shorebird@v1
 
       - name: 🚀 Use Shorebird
-        if: ${{ github.event.inputs.patch == 'false' }}
+        if: ${{ github.event.inputs.patch != 'true' }}
         env:
           SHOREBIRD_TOKEN: ${{ secrets.SHOREBIRD_TOKEN }}
         run: shorebird release android --flutter-version=${{ vars.FLUTTER_VERSION }} -- --split-debug-info="symbolsAndroid" --obfuscate
@@ -482,7 +482,7 @@ jobs:
           cd $CURRENT_EXECUTION_PATH
           mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
       - uses: vacxe/google-play-cli-kt@master
-        if: ${{ github.event.inputs.patch == 'false' }}
+        if: ${{ github.event.inputs.patch != 'true' }}
         env:
           JAVA_HOME: ""
         with:
