@@ -46,7 +46,7 @@ class TextsCs extends Texts {
   String get crashlytics => 'Crashlytics';
 
   @override
-  String get crashlyticsPage => 'Stránka Crashlytics';
+  String get crashlyticsPage => 'Stránka Crashlytics Patched';
 
   @override
   String get crashlyticsTestCrash => 'Testovací pád Crashlytics yohooo!';
