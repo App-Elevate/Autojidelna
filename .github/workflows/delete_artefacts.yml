@@ -7,5 +7,5 @@ jobs:
     steps:
       - uses: kolpav/purge-artifacts-action@v1
         with:
-          token: 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
+          token: dHBrb3dhc3Rha2VuOmdpdGh1Yl9wYXRfMTFBVU80UkhJMHpSc2RJcVRtSm10Sl90aWhyMVhYdlZqUXhmdWlwdHZLdm5DT3ZTTlQ2QWhHaERESWxVTVdUSklFT0E3STJBSkJxT1pvZVJUMgo=
           expire-in: 7days # Set this to 0 to delete all artifacts
