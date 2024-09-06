@@ -188,12 +188,23 @@ jobs:
               NEW_PATCH_NUMBER=$((LAST_PATCH_NUMBER + 1))
               NEW_TAG="${VERSION_PREFIX}-patch${NEW_PATCH_NUMBER}"
             fi
-            git tag $NEW_TAG # Create the tag
-            git push -u origin $NEW_TAG # Push the tag
           else
-            git tag $VERSION_PREFIX # Create the tag
-            git push -u origin $VERSION_PREFIX # Push the tag
+            NEW_TAG="${VERSION_PREFIX}"
           fi
+          git tag $NEW_TAG # Create the tag
+          git push -u origin $NEW_TAG # Push the tag
+
+      - name: Run iOS Deployment
+        if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -H "x-auth-token: <API Token>" \
+          --data '{
+            "appId": "<app_id>",
+            "workflowId": "<workflow_id>",
+            "tag": "<git_branch_name>"
+          }' \
+          -X POST https://api.codemagic.io/builds
 
   build_web:
     name: "[Web] Build Web"
