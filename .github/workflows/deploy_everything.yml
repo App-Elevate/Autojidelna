@@ -206,9 +206,8 @@ jobs:
             LABEL="\"labels\": [\"patch\"],"
           fi
 
-          curl -H "Content-Type: application/json" \
-          -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
-          --data '{
+          PAYLOAD=$(cat <<EOF
+          {
             "appId": "${{ vars.CODEMAGIC_APP_ID }}",
             "workflowId": "deploy_ios",
             "tag": "${{ steps.tag.outputs.tag }}",
@@ -222,15 +221,20 @@ jobs:
                 "flutter": "${{ vars.FLUTTER_VERSION }}"
               }
             }
-          }' \
-          -X POST https://api.codemagic.io/builds
+          }
+          EOF
+          )
+
+          curl -H "Content-Type: application/json" \
+               -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
+               --data "$PAYLOAD" \
+               -X POST https://api.codemagic.io/builds
 
       - name: Run macOS Deployment
         if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
         run: |
-          curl -H "Content-Type: application/json" \
-          -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
-          --data '{
+          PAYLOAD=$(cat <<EOF
+          {
             "appId": "${{ vars.CODEMAGIC_APP_ID }}",
             "workflowId": "deploy_macos",
             "tag": "${{ steps.tag.outputs.tag }}",
@@ -239,8 +243,14 @@ jobs:
                 "flutter": "${{ vars.FLUTTER_VERSION }}"
               }
             }
-          }' \
-          -X POST https://api.codemagic.io/builds
+          }
+          EOF
+          )
+
+          curl -H "Content-Type: application/json" \
+               -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
+               --data "$PAYLOAD" \
+               -X POST https://api.codemagic.io/builds
 
   build_web:
     name: "[Web] Build Web"
