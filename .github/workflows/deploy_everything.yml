@@ -201,12 +201,18 @@ jobs:
       - name: Run iOS Deployment
         if: ${{ github.event.pull_request.merged == true || github.event.inputs.ios == 'true' }}
         run: |
+          LABEL=""
+          if [[ "${{ github.event.input.patch }}" == "true" ]]; then
+            LABEL="\"labels\": ["patch"],"
+          fi
+
           curl -H "Content-Type: application/json" \
           -H "x-auth-token: ${{ secrets.CODEMAGIC_TOKEN }}" \
           --data '{
             "appId": "${{ vars.CODEMAGIC_APP_ID }}",
             "workflowId": "deploy_ios",
             "tag": "${{ steps.tag.outputs.tag }}",
+            $LABEL
             "environment": {
               "variables": {
                 "PATCH": "${{ github.event.inputs.patch }}",
