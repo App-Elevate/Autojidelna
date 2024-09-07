@@ -76,7 +76,7 @@ cd macos && bundle install && bundle exec fastlane match appstore --additional_c
 
 9. Vytvořte commit
 
-10. nahraďte původní hash committem 1. kroku ve workflow souboru v [codemagic.yaml](../codemagic.yaml#L20)
+10. nahraďte původní hash committem 1. kroku ve workflow souboru v [codemagic.yaml](../codemagic.yaml#L21)
 
 ### Firebase
 
