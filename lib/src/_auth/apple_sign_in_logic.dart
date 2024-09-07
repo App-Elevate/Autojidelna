@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 
 /// Handles the sign in with Apple. This will sign in the user with Apple and store the authorization code.
 Future<UserCredential?> handleSignInWithApple() async {
+  if (!App.gotAppCheckToken) return null;
   late final UserCredential userCredential;
   try {
     final appleProvider = AppleAuthProvider();
@@ -30,6 +31,7 @@ Future<UserCredential?> handleSignInWithApple() async {
 ///
 /// This unlinks the Apple sign in from the Firebase user.
 Future<void> revokeTokenApple() async {
+  if (!App.gotAppCheckToken) return;
   // Keep the authorization code returned from Apple platforms
   String? authCode = await App.secureStorage.read(key: SecureStorage.appleAuthKey, iOptions: SecureStorage.options);
 

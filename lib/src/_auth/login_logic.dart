@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 /// Handles the sign out of the user.
 Future<void> handleSignOut() async {
+  if (!App.gotAppCheckToken) return;
   if (FirebaseAuth.instance.currentUser != null &&
       FirebaseAuth.instance.currentUser!.providerData.any((element) => element.providerId == 'google.com')) {
     await App.googleSignIn.signOut();
@@ -18,6 +19,7 @@ Future<void> handleSignOut() async {
 
 /// Handles the deletion of the user account. With delinking of Google and Apple sign in.
 Future<void> handleAccountDeletion() async {
+  if (!App.gotAppCheckToken) return;
   if (FirebaseAuth.instance.currentUser != null &&
       FirebaseAuth.instance.currentUser!.providerData.any((element) => element.providerId == 'google.com')) {
     await App.googleSignIn.disconnect();

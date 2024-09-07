@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/logic/crash_logic.dart';
@@ -29,6 +30,7 @@ class DebugPage extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
             ),
+            Text(App.gotAppCheckToken ? 'Got App Check Token' : 'No App Check Token'),
           ],
         ),
       ),

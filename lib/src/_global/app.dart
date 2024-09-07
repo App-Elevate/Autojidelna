@@ -1,5 +1,4 @@
 import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_messaging/exponential_backoff.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -126,16 +125,28 @@ class App {
     assert(_initAppCheckExecuted == false, 'App.initAppCheck() must be called only once');
     if (_initAppCheckExecuted) return;
 
-    await retryWithExponentialBackoff(
-      () async => await FirebaseAppCheck.instance.activate(
-        // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-        webProvider: ReCaptchaEnterpriseProvider('6LcZHQ0qAAAAAMDHZjUfWBOkvKR_eqxFixd7WeR7'),
-        androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-        appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
-      ),
-      exitAfterFirstTryCallback: (_) => null,
-      infinite: true,
+    await FirebaseAppCheck.instance.activate(
+      // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
+      webProvider: ReCaptchaEnterpriseProvider('6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_'),
+      androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
+      appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
     );
+    FirebaseAppCheck.instance.onTokenChange.listen(
+      (token) {
+        gotAppCheckToken = token != null;
+      },
+      onError: (e, stackTrace) {
+        Sentry.captureException(e, stackTrace: stackTrace);
+      },
+      cancelOnError: false,
+    );
+    try {
+      await FirebaseAppCheck.instance.getToken().then((token) {
+        gotAppCheckToken = token != null;
+      });
+    } catch (e, stackTrace) {
+      Sentry.captureException(e, stackTrace: stackTrace);
+    }
 
     _initAppCheckExecuted = true;
   }
@@ -185,6 +196,8 @@ class App {
   static late final bool shouldAskForNotification;
 
   static late final int? currentPatchNumber;
+
+  static bool gotAppCheckToken = false;
 
   static const defaultLocale = Locale('en');
 

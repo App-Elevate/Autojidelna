@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 /// Handles the sign in with Google on iOS or Android.
 Future<UserCredential?> handleGoogleSignInNative() async {
+  if (!App.gotAppCheckToken) return null;
   try {
     // Trigger the authentication flow
     final GoogleSignInAccount? googleUser = await App.googleSignIn.signIn();
@@ -29,6 +30,7 @@ Future<UserCredential?> handleGoogleSignInNative() async {
 
 /// Handles the sign in with Google on the web.
 Future<UserCredential?> handleGoogleSignInWeb() async {
+  if (!App.gotAppCheckToken) return null;
   try {
     // Create a new provider
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
