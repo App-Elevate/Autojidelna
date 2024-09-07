@@ -19,6 +19,8 @@
 		A823E4EB77D091BFAA171D89 /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 139B8286AC8814FB5E4039B9 /* Pods_RunnerTests.framework */; };
 		E28B20332C4EF4A40055BE6B /* NotificationService.m in Sources */ = {isa = PBXBuildFile; fileRef = E28B20322C4EF4A40055BE6B /* NotificationService.m */; };
 		E28B20372C4EF4A40055BE6B /* ImageNotification.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = E28B202F2C4EF4A40055BE6B /* ImageNotification.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E2C435852C8BA645003D8704 /* imgdebug.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E2C435842C8BA645003D8704 /* imgdebug.xcconfig */; };
+		E2C435872C8BA658003D8704 /* imgrelease.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = E2C435862C8BA658003D8704 /* imgrelease.xcconfig */; };
 		E2D2FD1A2C42B61700B8E71F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E2D2FD192C42B61700B8E71F /* InfoPlist.xcstrings */; };
 		FA392633454B9C7631DE0F92 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B0676E3E9685E315AB6823D /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
@@ -98,6 +100,8 @@
 		E28B20312C4EF4A40055BE6B /* NotificationService.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NotificationService.h; sourceTree = "<group>"; };
 		E28B20322C4EF4A40055BE6B /* NotificationService.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NotificationService.m; sourceTree = "<group>"; };
 		E28B20342C4EF4A40055BE6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E2C435842C8BA645003D8704 /* imgdebug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = imgdebug.xcconfig; sourceTree = "<group>"; };
+		E2C435862C8BA658003D8704 /* imgrelease.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = imgrelease.xcconfig; sourceTree = "<group>"; };
 		E2D2FD192C42B61700B8E71F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		E74F63FCF3E4FA417B0F5CBA /* Pods_ImageNotification.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ImageNotification.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -223,6 +227,8 @@
 				E28B20312C4EF4A40055BE6B /* NotificationService.h */,
 				E28B20322C4EF4A40055BE6B /* NotificationService.m */,
 				E28B20342C4EF4A40055BE6B /* Info.plist */,
+				E2C435842C8BA645003D8704 /* imgdebug.xcconfig */,
+				E2C435862C8BA658003D8704 /* imgrelease.xcconfig */,
 			);
 			path = ImageNotification;
 			sourceTree = "<group>";
@@ -362,6 +368,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2C435872C8BA658003D8704 /* imgrelease.xcconfig in Resources */,
+				E2C435852C8BA645003D8704 /* imgdebug.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +660,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -852,6 +861,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -883,6 +893,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
 				PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -895,7 +906,7 @@
 		};
 		E28B20382C4EF4A40055BE6B /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7BE3B796B61E719E411E34EA /* Pods-ImageNotification.debug.xcconfig */;
+			baseConfigurationReference = E2C435842C8BA645003D8704 /* imgdebug.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -932,12 +943,13 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		E28B20392C4EF4A40055BE6B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5035073D22E1E917CCF1E7C /* Pods-ImageNotification.release.xcconfig */;
+			baseConfigurationReference = E2C435862C8BA658003D8704 /* imgrelease.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -948,7 +960,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "";
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6G8NMAQR5W;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -964,7 +976,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -973,12 +985,13 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		E28B203A2C4EF4A40055BE6B /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5C347887EDD934FADC90F1DA /* Pods-ImageNotification.profile.xcconfig */;
+			baseConfigurationReference = E2C435862C8BA658003D8704 /* imgrelease.xcconfig */;
 			buildSettings = {
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -989,7 +1002,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = "";
+				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = 6G8NMAQR5W;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -1005,7 +1018,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = "";
+				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = cz.appelevate.coree.ImageNotification;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1014,6 +1027,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Profile;
 		};
