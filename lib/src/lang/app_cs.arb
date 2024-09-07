@@ -11,7 +11,7 @@
   "connectedToTheInternet": "Připojeno k internetu",
   "counting": "Počítání",
   "crashlytics": "Crashlytics",
-  "crashlyticsPage": "Stránka Crashlytics",
+  "crashlyticsPage": "Stránka Crashlytics patched",
   "crashlyticsTestCrash": "Testovací pád Crashlytics yohooo!",
   "createAccount": "Vytvořit účet s e-mailem a heslem",
   "debug": " - debug",
