@@ -25,7 +25,7 @@ cd ..
 flutter_version=$(flutter --version | grep 'Flutter' | awk '{print $2}')
 # Now flutter_version contains the current version of Flutter
 echo "The current Flutter version is: $flutter_version"
-yes | shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=$flutter_version -- --split-debug-info="build/symbolsIos"
+yes | shorebird release ios --flutter-version=$flutter_version 
 cd ios 
 bundle exec fastlane release
 cd ..
