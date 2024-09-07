@@ -71,9 +71,9 @@ workflows:
       - name: 🚀 Shorebird Release
         script: |
           if [ "$PATCH" = "true" ]; then
-            shorebird patch ios --release-version=$(sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml) --export-options-plist=/Users/builder/export_options.plist -- --split-debug-info="build/symbolsIos"
+            shorebird patch ios --release-version=$(sed -n 's/^version: \(.*\)$/\1/p' pubspec.yaml) --export-options-plist=/Users/builder/export_options.plist
           else
-            shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=$FLUTTER_VERSION -- --split-debug-info="build/symbolsIos"
+            shorebird release ios --export-options-plist=/Users/builder/export_options.plist --flutter-version=$FLUTTER_VERSION
           fi
 
       - name: Upload symbols to Sentry
@@ -94,6 +94,7 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
+      - /Users/builder/Library/Application Support/shorebird/logs/*.log
     publishing:
       app_store_connect:
         auth: integration
