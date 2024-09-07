@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_global/providers/is_online.dart';
-import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/_sentry/sentry.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
@@ -81,7 +80,7 @@ class MyAppWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => IsOnline(), lazy: false),
-        ChangeNotifierProvider(create: (context) => Rmc(), lazy: false),
+        ChangeNotifierProvider.value(value: App.remoteConfigProvider),
       ],
       child: const MyApp(),
     );

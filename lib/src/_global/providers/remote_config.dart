@@ -68,14 +68,14 @@ class Rmc extends ChangeNotifier {
   }
 
   /// Current Remote Config values
-  late final Map<String, dynamic> _values;
+  late final Map<dynamic, dynamic> _values;
 
   /// Current Remote Config values - These don't update the ui - use only in functions
-  static final Map<String, dynamic> values = Map.from(Rmc.defaultValues);
+  static final Map<dynamic, dynamic> values = Map.from(Rmc.defaultValues);
   StreamSubscription<RemoteConfigUpdate>? _subscription;
 
-  Map<String, dynamic> get value => _values;
-  set value(Map<String, dynamic> value) {
+  Map<dynamic, dynamic> get value => _values;
+  set value(Map<dynamic, dynamic> value) {
     value.forEach((key, newValue) {
       if (newValue != _values[key]) {
         _values[key] = newValue;
@@ -91,11 +91,6 @@ class Rmc extends ChangeNotifier {
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
     _values = values;
-    unawaited(
-      App.remoteConfig.fetchAndActivate().catchError((_, __) => false).then((_) async {
-        value = parseRemoteConfigValues(App.remoteConfig.getAll());
-      }),
-    );
     if (!kIsWeb) {
       _subscription ??= App.remoteConfig.onConfigUpdated.listen(
         (_) async {
@@ -105,6 +100,17 @@ class Rmc extends ChangeNotifier {
         cancelOnError: false,
         onError: (Object error, StackTrace stackTrace) => null,
       );
+    }
+  }
+
+  Future<void> init() async {
+    final values = Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: defaultValues);
+    value = Map.from(values);
+    try {
+      await App.remoteConfig.fetchAndActivate();
+      value = parseRemoteConfigValues(App.remoteConfig.getAll());
+    } catch (e) {
+      // ignore it will be caught by the subscription
     }
   }
 

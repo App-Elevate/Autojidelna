@@ -44,13 +44,17 @@ class App {
     if (_initCodePushExecuted) return;
 
     currentPatchNumber = await ShorebirdCodePush().currentPatchNumber();
-    Sentry.configureScope((scope) {
-      scope.setTag('shorebird_patch_number', '$currentPatchNumber');
-    });
-    FirebaseCrashlytics.instance.setCustomKey(
-      'shorebird_patch_number',
-      '$currentPatchNumber',
-    );
+    if (!kDebugMode) {
+      Sentry.configureScope((scope) {
+        scope.setTag('shorebird_patch_number', '$currentPatchNumber');
+      });
+    }
+    if (!kDebugMode && !kProfileMode && !kIsWeb) {
+      FirebaseCrashlytics.instance.setCustomKey(
+        'shorebird_patch_number',
+        '$currentPatchNumber',
+      );
+    }
 
     _initCodePushExecuted = true;
   }
@@ -90,10 +94,7 @@ class App {
     if (_initRemoteConfigExecuted) return;
 
     remoteConfig = FirebaseRemoteConfig.instance;
-    final Map<dynamic, dynamic> rmcValues = await Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: {});
-    rmcValues.forEach((key, value) {
-      if (value != null) Rmc.values[key] = value;
-    });
+    await remoteConfigProvider.init();
 
     _initRemoteConfigExecuted = true;
   }
@@ -204,6 +205,8 @@ class App {
   static late final int? currentPatchNumber;
 
   static bool gotAppCheckToken = false;
+
+  static final remoteConfigProvider = Rmc();
 
   static const defaultLocale = Locale('en');
 
