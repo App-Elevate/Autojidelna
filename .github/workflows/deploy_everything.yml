@@ -238,7 +238,7 @@ jobs:
                -X POST https://api.codemagic.io/builds
 
       - name: Run macOS Deployment
-        if: ${{ github.event.pull_request.merged == true || github.event.inputs.macos == 'true' }}
+        if: ${{ (github.event.pull_request.merged == true || github.event.inputs.macos == 'true') && github.event.inputs.patch != 'true' }}
         run: |
           PAYLOAD=$(cat <<EOF
           {

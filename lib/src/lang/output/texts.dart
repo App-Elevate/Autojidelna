@@ -470,7 +470,7 @@ abstract class Texts {
   /// No description provided for @secretGoogleContent.
   ///
   /// In en, this message translates to:
-  /// **'Flutter ++ Google = ❤️'**
+  /// **'Flutter + Google = ❤️'**
   String get secretGoogleContent;
 
   /// No description provided for @secretPage.
