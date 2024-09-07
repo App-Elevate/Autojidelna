@@ -90,7 +90,7 @@ class App {
     if (_initRemoteConfigExecuted) return;
 
     remoteConfig = FirebaseRemoteConfig.instance;
-    final Map<String, dynamic> rmcValues = await Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: {});
+    final Map<dynamic, dynamic> rmcValues = await Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: {});
     rmcValues.forEach((key, value) {
       if (value != null) Rmc.values[key] = value;
     });
