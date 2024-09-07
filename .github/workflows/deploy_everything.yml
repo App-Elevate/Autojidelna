@@ -74,6 +74,8 @@ jobs:
     permissions:
       contents: write
     name: Create version number
+    environment:
+      name: app-store
     if: ${{ github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.event.inputs.skip != 'true') }}
     # Works only on ubuntu
     runs-on: ubuntu-latest

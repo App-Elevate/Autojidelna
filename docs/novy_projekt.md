@@ -19,22 +19,29 @@
 2. Vytvořte ikonky pro android pomocí image asset studio v android studiu
 3. Vyberte vlevo místo projektu android (v projekt navigátoru)
 4. kliněte pravým tlačítkem na res a vyberte new -> Image Asset
-5. Vložte ikonky do složky [ios/Runner/Assets.xcassets/AppIcon.appiconset](ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
-6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
+5. Vložte ikonky do složky [ios/Runner/Assets.xcassets/AppIcon.appiconset](../ios/Runner/Assets.xcassets/AppIcon.appiconset) u ios
+6. Vložte ikonky do složky [macos/Runner/Assets.xcassets/AppIcon.appiconset](../macos/Runner/Assets.xcassets/AppIcon.appiconset) u macos
 7. Vytvořte favicony pro [webovou aplikaci](https://www.favicon-generator.org/) (nezapoměňte odškrtnout `Include your favicon.ico in the public gallery`)
-8. Vložte favicony do složky [web/icons](web/icons) bez manifestu.
+8. Vložte favicony do složky [web/icons](../web/icons) bez manifestu.
 
 ### Splash screeny
 
 1. Nahrajte transparentní png soubor [na web](https://www.appicon.co/#app-icon)
 2. Vytáhněte si z `Assets.xcassets/AppIcon.appiconset` ikonku 512.png, zkopírujte si jí jinam, přejmenujte na LaunchImage.png a nahrajte ji sem: [https://www.appicon.co/#image-sets](https://www.appicon.co/#image-sets)
-3. Vytáhněte si LaunchImage a vložte do [ios/Runner/Assets.xcassets/LaunchImage.imageset](ios/Runner/Assets.xcassets/LaunchImage.imageset)
+3. Vytáhněte si LaunchImage a vložte do [../ios/Runner/Assets.xcassets/LaunchImage.imageset](ios/Runner/Assets.xcassets/LaunchImage.imageset)
 4. Zkontrolujte ios/Runner/LaunchScreen.storyboard a upravte splash screen podle potřeb. To může být například jiná barva pozadí...
-5. Zkontrolujte barvu pozadí u androidu v [android/app/src/main/res/values/ic_launcher_background.xml](android/app/src/main/res/values/ic_launcher_background.xml) a upravte podle potřeb
+5. Zkontrolujte barvu pozadí u androidu v [../android/app/src/main/res/values/ic_launcher_background.xml](android/app/src/main/res/values/ic_launcher_background.xml) a upravte podle potřeb
 
 ### **Matějova část -- insert instructions here -- **
 
 ### Vytvořte Aplikaci v Google Play Console a App Store Connect
+
+### Vytvořte novou aplikaci v shorebird:
+
+```bash
+rm -f shorebird.yaml
+shorebird init
+```
 
 ### První build
 
@@ -69,7 +76,7 @@ cd macos && bundle install && bundle exec fastlane match appstore --additional_c
 
 9. Vytvořte commit
 
-10. nahraďte původní hash committem 8. kroku ve workflow souboru v [deploy_everything.yml](.github/workflows/deploy_everything.yml#L145) (můžete nahradit oba hashe)
+10. nahraďte původní hash committem 1. kroku ve workflow souboru v [codemagic.yaml](../codemagic.yaml#L20)
 
 ### Firebase
 
@@ -126,6 +133,7 @@ open macos/Runner.xcworkspace
 - `ANDROID_KEY_PASSWORD` - heslo klíče
 - `ANDROID_STORE_PASSWORD` - další heslo klíče
 - `GOOGLE_PLAY_SERVICE_ACCOUNT` - service account pro přístup k google play. Tento účet je vytvořený pod projektem app-elevate-core a využívá jeho api.
+- `SHOREBIRD_TOKEN` - token pro přístup k shorebird
 
 2. Vytvořte novou aplikaci v Google Play Console
 3. Přidejte práva uživateli `google-play-github-actions@app-elevate-core.iam.gserviceaccount.com` a to toto: `Release apps to testing tracks` na nově vytvořenou aplikaci
@@ -135,45 +143,59 @@ open macos/Runner.xcworkspace
 
 ### iOS
 
-1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
+1. Vytvořte novou aplikaci v codemagic.
+2. Stáhněte všechny provisioning profily pro aplikaci
+3. Přidejte certifikáty pro iOS z vaší klíčenky.
+4. Ujistěte se, že všechny tyto jsou nastaveny pro váš apple dev tým v codemagic:
 
-- `IOS_APPSTORE_CERT_BASE64` - účet pro nahrání na App Store - linknutý na tým, každý tým musí mít svůj certifikát. Je to certifikát v .p8 formátu zakódovaný do base64
-- `IOS_KEYS_MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
-- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token` a je potřeba ho vytvořit na githubu v fine-grained personal access tokens. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží do secrets jako `IOS_KEYS_PAT`. Mělo by však stačit ho pouze povolit pro repo
+- `SENTRY_AUTH_TOKEN` - token pro přístup k Sentry,
+- `SHOREBIRD_TOKEN` - token pro přístup k shorebird
 
-2. Vytvořte novou aplikaci v App Store Connect
-3. Nakonfigurujte [AppFile](ios/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect. Toto můžete udělat jak manuálně, tak pomocí
+6. Vytvořte novou aplikaci v App Store Connect
+7. Nakonfigurujte [AppFile](ios/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect. Toto můžete udělat jak manuálně, tak pomocí
 
 ```bash
 cd ios && bundle install && bundle exec fastlane match init && cd ..
 ```
 
-4. Otestujte, že vše funguje pomocí
+8. Otestujte, že vše funguje pomocí
 
 ```bash
 sh scripts/deploy_ios.sh
 ```
 
+9. potom spusťte build na codemagic.
+
+10. Zkopírujte codemagic id aplikace (z url, když máte otevřený build, tak to je první string) a vložte ho jako variable `CODEMAGIC_APP_ID` do Github repo
+
 ### macos
 
-1. Povolte Organizační secrety pro nový repozitář (App Elevate -> Settings -> secrets and variables -> actions):
+1. Vytvořte novou aplikaci v codemagic.
+2. Stáhněte všechny provisioning profily pro aplikaci
+3. Přidejte certifikáty pro macOS z vaší klíčenky.
+4. Ujistěte se, že všechny tyto jsou nastaveny pro váš apple dev tým v codemagic:
 
-- `IOS_APPSTORE_CERT_BASE64` - účet pro nahrání na App Store - linknutý na tým, každý tým musí mít svůj certifikát. Je to certifikát v .p8 formátu zakódovaný do base64
-- `IOS_KEYS_MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
-- `IOS_KEYS_PAT` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token` a je potřeba ho vytvořit na githubu v fine-grained personal access tokens. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží do secrets jako `IOS_KEYS_PAT`
+- `MATCH_PASSWORD` - heslo pro certifikáty uložené v repo ios-keys
+- `MATCH_GIT_BASIC_AUTHORIZATION` - Personal Access Token pro přístup k repo ios-keys, tento token je ve formátu `username:token`. Příklad: `tom:github_pat_0abcdef1234567890abcdef1234567890abcdef1234567890abcdef`. Tento token se následně zakóduje do base64 a uloží se do codemagic secretů jako `MATCH_GIT_BASIC_AUTHORIZATION`
+- `SENTRY_AUTH_TOKEN` - token pro přístup k Sentry, stejný jako pro github actions
+- `SHOREBIRD_TOKEN` - token pro přístup k shorebird
 
-2. Vytvořte novou aplikaci v App Store Connect
-3. Nakonfigurujte [AppFile](macos/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect. Toto můžete udělat jak manuálně, tak pomocí
+5. Vytvořte novou aplikaci v App Store Connect
+6. Nakonfigurujte [AppFile](macos/fastlane/Appfile), aby souvisely hodnoty s vaším týmem v App Store Connect. Toto můžete udělat jak manuálně, tak pomocí
 
 ```bash
 cd macos && bundle install && bundle exec fastlane match init && cd ..
 ```
 
-4. Otestujte, že vše funguje pomocí
+7. Otestujte, že vše funguje pomocí
 
 ```bash
 sh scripts/deploy_macos.sh
 ```
+
+8. potom spusťte build na codemagic.
+
+9. Zkopírujte codemagic id aplikace (z url, když máte otevřený build, tak to je první string) a vložte ho jako variable `CODEMAGIC_APP_ID` do Github repo
 
 ### Cloudflare Pages
 

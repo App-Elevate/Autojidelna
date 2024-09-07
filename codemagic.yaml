@@ -1,4 +1,53 @@
 workflows:
+  deploy_macos:
+    name: "[macOS] Deploy to App Store"
+    instance_type: mac_mini_m1
+    max_build_duration: 120
+    integrations:
+      app_store_connect: App Elevate Distribution
+    environment:
+      flutter: 3.22.3
+      xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
+      cocoapods: default
+      groups:
+        # Exports the SHOREBIRD_TOKEN environment variable
+        - shorebird
+        - sentry
+        - fastlane
+    scripts:
+      - name: use appstore keys
+        script: |
+          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0
+      - name: Setup flutterfire
+        script: |
+          dart pub global activate flutterfire_cli
+
+      - name: Get Certs
+        script: |
+          cd macos
+          bundle install
+          bundle exec fastlane setup_ci_keychain
+          cd ..
+
+      - name: 🚀 Build Flutter
+        script: |
+          flutter build macos --release
+
+      - name: 🚀 Sign and upload symbols to Sentry
+        script: |
+          cd macos
+          bundle exec fastlane release_ci
+          cd ..
+
+    artifacts:
+      - /Users/builder/export_options.plist
+      - macos/*.pkg
+      - /tmp/xcodebuild_logs/*.log
+      - flutter_drive.log
+    publishing:
+      app_store_connect:
+        auth: integration
+
   deploy_ios:
     name: "[iOS] Deploy to App Store"
     instance_type: mac_mini_m1
@@ -94,52 +143,6 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
       - /Users/builder/Library/Application Support/shorebird/logs/*.log
-    publishing:
-      app_store_connect:
-        auth: integration
-
-  deploy_macos:
-    name: "[macOS] Deploy to App Store"
-    instance_type: mac_mini_m1
-    max_build_duration: 120
-    integrations:
-      app_store_connect: App Elevate Distribution
-    environment:
-      flutter: 3.22.3
-      xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
-      cocoapods: default
-      groups:
-        # Exports the SHOREBIRD_TOKEN environment variable
-        - shorebird
-        - sentry
-        - fastlane
-    scripts:
-      - name: Setup flutterfire
-        script: |
-          dart pub global activate flutterfire_cli
-
-      - name: Get Certs
-        script: |
-          cd macos
-          bundle install
-          bundle exec fastlane setup_ci_keychain
-          cd ..
-
-      - name: 🚀 Build Flutter
-        script: |
-          flutter build macos --release
-
-      - name: 🚀 Sign and upload symbols to Sentry
-        script: |
-          cd macos
-          bundle exec fastlane release_ci
-          cd ..
-
-    artifacts:
-      - /Users/builder/export_options.plist
-      - macos/*.pkg
-      - /tmp/xcodebuild_logs/*.log
-      - flutter_drive.log
     publishing:
       app_store_connect:
         auth: integration
