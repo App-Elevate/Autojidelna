@@ -46,6 +46,11 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
       - flutter_drive.log
     publishing:
+      email:
+        recipients:
+          - protitom@gmail.com
+        notify:
+          failure: true # To receive a notification when a build fails
       app_store_connect:
         auth: integration
 
@@ -145,5 +150,10 @@ workflows:
       - flutter_drive.log
       - /Users/builder/Library/Application Support/shorebird/logs/*.log
     publishing:
+      email:
+        recipients:
+          - protitom@gmail.com
+        notify:
+          failure: true # To receive a notification when a build fails
       app_store_connect:
         auth: integration
