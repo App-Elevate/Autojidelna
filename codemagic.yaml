@@ -85,8 +85,7 @@ workflows:
       - name: Cancel if it's a patch release
         script: |
           if [ "$PATCH" = "true" ]; then
-            echo "Skipping the deployment as it's a patch release."
-            exit 0
+            rm -rf build/ios/ipa
           fi
 
     artifacts:
