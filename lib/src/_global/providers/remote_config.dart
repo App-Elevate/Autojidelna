@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_global/app.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 enum RemoteConfigValueType {
   string,
@@ -66,7 +68,7 @@ class Rmc extends ChangeNotifier {
   }
 
   /// Current Remote Config values
-  final Map<String, dynamic> _values = Map.from(defaultValues);
+  late final Map<String, dynamic> _values;
 
   /// Current Remote Config values - These don't update the ui - use only in functions
   static final Map<String, dynamic> values = Map.from(Rmc.defaultValues);
@@ -82,11 +84,13 @@ class Rmc extends ChangeNotifier {
         values[key] = newValue;
       }
     });
+    unawaited(Hive.box(Boxes.cache).put(HiveKeys.remoteConfigValues, value));
     notifyListeners();
   }
 
   /// Constructor for Remote Config - It is called when any value is first requested.
   Rmc() {
+    _values = values;
     unawaited(
       App.remoteConfig.fetchAndActivate().catchError((_, __) => false).then((_) async {
         value = parseRemoteConfigValues(App.remoteConfig.getAll());

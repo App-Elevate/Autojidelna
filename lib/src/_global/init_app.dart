@@ -11,16 +11,13 @@ class InitApp {
 
     // We're using Future.wait to run multiple Futures in parallel
     // These Futures must take less than 200 ms to run
+    await App.initHive();
+    await App.initRemoteConfig();
     await Future.wait([
-      App.initHive().then(
-        (_) async => await Future.wait([
-          App.initLocalization(),
-          App.initFirebaseMessaging(),
-        ]),
-      ),
+      App.initLocalization(),
+      App.initFirebaseMessaging(),
       App.initAppCheck(),
       App.initSecureStorage(),
-      App.initRemoteConfig(),
       App.initGoogleSignIn(),
       App.initPlatform(),
       App.initRotation(),

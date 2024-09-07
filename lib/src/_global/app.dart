@@ -1,4 +1,5 @@
 import 'package:coree/src/_conf/hive.dart';
+import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -89,6 +90,10 @@ class App {
     if (_initRemoteConfigExecuted) return;
 
     remoteConfig = FirebaseRemoteConfig.instance;
+    final Map<String, dynamic> rmcValues = await Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: {});
+    rmcValues.forEach((key, value) {
+      if (value != null) Rmc.values[key] = value;
+    });
 
     _initRemoteConfigExecuted = true;
   }
@@ -113,6 +118,7 @@ class App {
 
     await Hive.initFlutter();
     await Hive.openBox(Boxes.settings);
+    await Hive.openBox(Boxes.cache);
 
     _initHiveExecuted = true;
   }

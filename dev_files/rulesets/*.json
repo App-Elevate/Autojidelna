@@ -8,7 +8,8 @@
   "conditions": {
     "ref_name": {
       "exclude": [
-        "refs/heads/dist-cloudflare-pages"
+        "refs/heads/dist-cloudflare-pages",
+        "refs/heads/*patch*"
       ],
       "include": [
         "refs/heads/*"
