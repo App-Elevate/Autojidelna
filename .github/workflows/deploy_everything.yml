@@ -113,7 +113,7 @@ jobs:
             if [[ $commit_message =~ [0-9]+\.[0-9]+\.[0-9]+ ]]; then
               # Extract the version number
               echo "Found a version number in the commit message"
-              version=$(echo "$commit_message" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
+              version=$(echo "$commit_message" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -n 1)
               break
             fi
 
@@ -126,14 +126,8 @@ jobs:
               exit 1
             fi
           done
-          echo "$version+${{ github.run_number }}" > version.txt
           echo "$version+${{ github.run_number }}"
-
-      - name: Upload version
-        uses: actions/upload-artifact@v4
-        with:
-          name: version
-          path: version.txt
+          echo "$version+${{ github.run_number }}" > version.txt
 
       - name: Get version from yaml
         if: ${{ github.event.inputs.version == '' && github.event.inputs.patch == 'true' }}
@@ -147,6 +141,12 @@ jobs:
       - name: Update version in YAML
         run: |
           sed -i "s/^version: .*/version: $(tr -d '\n' < version.txt)/" pubspec.yaml
+
+      - name: Upload version
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
 
       - name: Set version as variables
         id: version
