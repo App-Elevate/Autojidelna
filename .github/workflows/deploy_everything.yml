@@ -146,19 +146,21 @@ jobs:
         id: version
         run: |
           # Extract version, build_number, and full_version
-          version=$(sed 's/\+.*//' version.txt)
-          build_number=$(sed 's/.*+//' version.txt)
-          full_version=$(cat version.txt)
+           version=$(sed 's/\+.*//' version.txt | tr -d '\n')
+           build_number=$(sed 's/.*+//' version.txt | tr -d '\n')
+           full_version=$(cat version.txt | tr -d '\n')
 
-          # Log to the console
-          echo "version: $version"
-          echo "build_number: $build_number"
-          echo "full_version: $full_version"
+           # Log to the console
+           echo "version: $version"
+           echo "build_number: $build_number"
+           echo "full_version: $full_version"
 
-          # Output to $GITHUB_OUTPUT
-          echo "version=$version" >> "$GITHUB_OUTPUT"
-          echo "build_number=$build_number" >> "$GITHUB_OUTPUT"
-          echo "full_version=$full_version" >> "$GITHUB_OUTPUT"
+           # Output to $GITHUB_OUTPUT
+           {
+             echo "version=$version"
+             echo "build_number=$build_number"
+             echo "full_version=$full_version"
+           } >> "$GITHUB_OUTPUT"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
