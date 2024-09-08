@@ -28,7 +28,7 @@ class TextsCs extends Texts {
   String get appleSecret => 'Apple velký tajemství';
 
   @override
-  String get appleSecretContent => 'Flutter ++ Apple = ❤️';
+  String get appleSecretContent => 'Flutter + Apple = ❤️';
 
   @override
   String get buttonPushed => 'Tlačítko jste stiskli tolikrát:';
