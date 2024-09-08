@@ -114,7 +114,7 @@ open macos/Runner.xcworkspace
 
 2. V [pubspec.yaml](../pubspec.yaml) Vyplňte project a org
 
-3. V [main.dart](../lib/main.dart) vyplňte dsn
+3. V [main.dart](../lib/src/_conf/tokens.dart) vyplňte dsn
 
 4. Ve fastfile v [ios/fastlane/Fastfile](../ios/fastlane/Fastfile#L67) vyplňte project a org
 
@@ -259,7 +259,7 @@ Rulesets:
 1. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu. V opačném případě se dá vytvořit. Tento klíč se potom přidá do deviceCheck v firebase.
 2. Je potřeba vzít sha-256 a sha-1 z google play a nahrát je [na firebase](https://console.firebase.google.com/u/0/project/_/settings/general/android) + Zapnout play Integrity v Google play. Potom ještě zapnout [zde v firebase](https://console.firebase.google.com/u/0/project/_/appcheck/apps).
 3. Vytvořte captchu klíč pro web [zde pro recaptcha v3](https://www.google.com/recaptcha/admin/create) nebo ještě lépe [zde pro recaptcha enterprise](https://console.cloud.google.com/security/recaptcha)
-4. Nahraďte klíč v [App.dart](../lib/src/_global/app.dart#L100) a [index.html](../web/index.html#L123) (v url - `https://www.google.com/recaptcha/enterprise.js?render=6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_`)
+4. Nahraďte klíč v [App.dart](../lib/src/_conf/tokens.dart) a [index.html](../web/index.html#L123) (v url - `https://www.google.com/recaptcha/enterprise.js?render=6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_`)
 
 ### Deep linking
 
@@ -306,4 +306,4 @@ Rulesets:
 
 1. Upravte hodnoty v [firebase-messaging-sw.js](../web/firebase-messaging-sw.js), tak aby souvisely s tím, co je v [firebase_options.dart](../lib/firebase_options.dart)
 2. Nahrajte APNs certifikát do [firebase](https://console.firebase.google.com/u/0/project/_/settings/cloudmessaging/ios)
-3. Tady hned vygenerujte vapid klíč pod web push certificates a vložte ho do [messaging.dart](../lib/src/_messaging/messaging.dart#L34)
+3. Tady hned vygenerujte vapid klíč pod web push certificates a vložte ho do [tokens.dart](../lib/src/_conf/tokens.dart)

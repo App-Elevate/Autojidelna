@@ -1,4 +1,5 @@
 import 'package:coree/src/_conf/hive.dart';
+import 'package:coree/src/_conf/tokens.dart';
 import 'package:coree/src/_global/providers/remote_config.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
@@ -134,7 +135,7 @@ class App {
 
     await FirebaseAppCheck.instance.activate(
       // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-      webProvider: ReCaptchaEnterpriseProvider('6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_'),
+      webProvider: ReCaptchaEnterpriseProvider(Tokens.reCaptchaEnterprise),
       androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
       appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
     );

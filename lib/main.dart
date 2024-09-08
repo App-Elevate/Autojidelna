@@ -1,4 +1,5 @@
 import 'package:coree/firebase_options.dart';
+import 'package:coree/src/_conf/tokens.dart';
 import 'package:coree/src/_global/init_app.dart';
 import 'package:coree/src/ui/material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,7 +13,7 @@ void main() async {
   if (!kDebugMode) {
     await SentryFlutter.init(
       (options) {
-        options.dsn = 'https://33df7767c0e6b4e1ea5991c7cd6d3cbc@o4507799131258880.ingest.de.sentry.io/4507799137878096';
+        options.dsn = Tokens.sentryDsn;
         // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
         // We recommend adjusting this value in production.
         options.tracesSampleRate = 1.0;

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:coree/src/_conf/hive.dart';
 import 'package:coree/src/_conf/messaging.dart';
+import 'package:coree/src/_conf/tokens.dart';
 import 'package:coree/src/_messaging/exponential_backoff.dart';
 import 'package:coree/src/_messaging/messaging_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -36,8 +37,7 @@ class Messaging {
     }
     final fcmToken = await retryWithExponentialBackoff(
       () async {
-        final token = await FirebaseMessaging.instance
-            .getToken(vapidKey: kIsWeb ? 'BCA2GZa5SucDxk3knHVJ_ip_PDiVcqNnbTgnw2aT1kmdt9QtG2SvH7E91DrvfssjuNZhHqAbYCM4yRmI3BmnSes' : null);
+        final token = await FirebaseMessaging.instance.getToken(vapidKey: kIsWeb ? Tokens.messagingVapidToken : null);
         if (token == null) {
           throw Exception('Token is null');
         }
