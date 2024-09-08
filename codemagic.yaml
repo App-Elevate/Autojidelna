@@ -51,6 +51,7 @@ workflows:
           - protitom@gmail.com
         notify:
           failure: true # To receive a notification when a build fails
+          success: false
       app_store_connect:
         auth: integration
 
@@ -155,5 +156,6 @@ workflows:
           - protitom@gmail.com
         notify:
           failure: true # To receive a notification when a build fails
+          success: false
       app_store_connect:
         auth: integration
