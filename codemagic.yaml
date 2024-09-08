@@ -32,7 +32,7 @@ workflows:
 
       - name: 🚀 Build Flutter
         script: |
-          flutter build macos --release
+          flutter build macos
 
       - name: 🚀 Sign and upload symbols to Sentry
         script: |
