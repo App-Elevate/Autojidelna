@@ -153,25 +153,6 @@ jobs:
         if: ${{ needs.filter.outputs.android == 'true' || needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' || needs.filter.outputs.web == 'true' || needs.filter.outputs.test == 'true' || github.event_name != 'pull_request' }}
         run: flutter test
 
-  build_ios:
-    name: Build iOS
-    runs-on: macos-latest
-    needs: filter
-    if: github.event.inputs.ios == 'true'
-    # if: ${{ needs.filter.outputs.ios == 'true' || needs.filter.outputs.lib == 'true' }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          flutter-version: ${{ vars.FLUTTER_VERSION }}
-          cache: true
-
-      - name: Build iOS
-        run: flutter build ipa --release --no-codesign
-
   build_android:
     name: Build Android
     runs-on: ubuntu-latest
