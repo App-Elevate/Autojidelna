@@ -126,8 +126,14 @@ jobs:
               exit 1
             fi
           done
-          echo "$version+${{ github.run_number }}"
           echo "$version+${{ github.run_number }}" > version.txt
+          echo "$version+${{ github.run_number }}"
+
+      - name: Upload version
+        uses: actions/upload-artifact@v4
+        with:
+          name: version
+          path: version.txt
 
       - name: Get version from yaml
         if: ${{ github.event.inputs.version == '' && github.event.inputs.patch == 'true' }}
