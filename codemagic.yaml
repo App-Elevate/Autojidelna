@@ -19,11 +19,24 @@ workflows:
         script: |
           git fetch --unshallow
           git revert 467969017dbff7058ced4b3c873046e90a397b73
+      - name: Setup flutterfire
+        script: |
+          dart pub global activate flutterfire_cli
 
       - name: Get Certs
         script: |
           cd macos
           bundle install
+          bundle exec fastlane setup_ci_keychain
+          cd ..
+
+      - name: 🚀 Build Flutter
+        script: |
+          flutter build macos --release
+
+      - name: 🚀 Sign and upload symbols to Sentry
+        script: |
+          cd macos
           bundle exec fastlane release_ci
           cd ..
 

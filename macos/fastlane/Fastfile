@@ -16,6 +16,27 @@
 default_platform(:mac)
 
 platform :mac do
+  desc "Create Keychain for Ci/CD"
+  lane :setup_ci_keychain do
+    # Create the keychain
+    create_keychain(
+      name: "AppSigning",
+      default_keychain: true,
+      add_to_search_list: true,
+      unlock: true,
+      password: "temp"
+    )
+    # Fetch App Store Certificates
+    match(
+      type: "appstore",
+      readonly: true,
+      platform: "macos",
+      app_identifier: CredentialsManager::AppfileConfig.try_fetch_value(:app_identifier),
+      additional_cert_types: ["mac_installer_distribution"],
+      keychain_name: "AppSigning",
+      keychain_password: "temp",
+    )
+  end
   desc "Push a new release build to the App Store"
   lane :release_ci do
     # Create the keychain
@@ -36,8 +57,6 @@ platform :mac do
       keychain_name: "AppSigning",
       keychain_password: "temp",
     )
-    sh 'flutter build macos --release'
-    sh 'dart pub global activate flutterfire_cli'
     build_mac_app(
       export_team_id: CredentialsManager::AppfileConfig.try_fetch_value(:team_id),
       export_method: "app-store",

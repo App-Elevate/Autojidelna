@@ -15,6 +15,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 ## Mac
 
+### mac setup_ci_keychain
+
+```sh
+[bundle exec] fastlane mac setup_ci_keychain
+```
+
+Create Keychain for Ci/CD
+
 ### mac release_ci
 
 ```sh
