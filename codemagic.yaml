@@ -18,7 +18,7 @@ workflows:
       - name: use appstore keys
         script: |
           git fetch --unshallow
-          git revert 2aeb5c23f8c157d1b826cd6d66ed5bbfe2780bd0
+          git revert 467969017dbff7058ced4b3c873046e90a397b73
       - name: Setup flutterfire
         script: |
           dart pub global activate flutterfire_cli
