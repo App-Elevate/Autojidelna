@@ -145,17 +145,20 @@ jobs:
       - name: Set version as variables
         id: version
         run: |
-          echo "version: $(sed 's/\+.*//' version.txt)"
-          echo "build_number: $(sed 's/.*+//' version.txt)"
-          echo "full_version: $(cat version.txt)"
-
-          PAYLOAD=$(cat <<EOF
+          # Extract version, build_number, and full_version
           version=$(sed 's/\+.*//' version.txt)
           build_number=$(sed 's/.*+//' version.txt)
           full_version=$(cat version.txt)
-          EOF
-          )
-          echo "$PAYLOAD" >> "$GITHUB_OUTPUT"
+
+          # Log to the console
+          echo "version: $version"
+          echo "build_number: $build_number"
+          echo "full_version: $full_version"
+
+          # Output to $GITHUB_OUTPUT
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "build_number=$build_number" >> "$GITHUB_OUTPUT"
+          echo "full_version=$full_version" >> "$GITHUB_OUTPUT"
 
       - name: Upload pubspec.yaml
         uses: actions/upload-artifact@v4
