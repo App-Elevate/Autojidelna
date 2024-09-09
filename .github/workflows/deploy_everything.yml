@@ -301,6 +301,7 @@ jobs:
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
+          include-hidden-files: true
           name: web-build
           path: build/web
 
