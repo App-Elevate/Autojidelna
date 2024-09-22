@@ -3,6 +3,7 @@ import 'package:coree/src/_global/app.dart';
 import 'package:coree/src/_messaging/messaging.dart';
 import 'package:coree/src/lang/l10n_context_extension.dart';
 import 'package:coree/src/logic/crash_logic.dart';
+import 'package:coree/src/ui/widgets/token_field_widget.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -31,6 +32,7 @@ class DebugPage extends StatelessWidget {
               ),
             ),
             Text(App.gotAppCheckToken ? 'Got App Check Token' : 'No App Check Token'),
+            const TokenFieldWidget(),
           ],
         ),
       ),
