@@ -1,5 +1,11 @@
 import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
+import 'package:autojidelna/src/logic/canteenwrapper.dart';
+import 'package:autojidelna/src/logic/notifications.dart';
+import 'package:autojidelna/src/types/all.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
@@ -29,6 +35,7 @@ class App {
   static bool _initHiveExecuted = false;
   static bool _initRotationExecuted = false;
   static bool _initCodePushExecuted = false;
+  static bool _initNotificationsExecuted = false;
 
   static Future<void> initCodePush() async {
     assert(_initCodePushExecuted == false, 'App.initCodePush() must be called only once');
@@ -48,6 +55,51 @@ class App {
     }
 
     _initCodePushExecuted = true;
+  }
+
+  static Future<void> initNotifications() async {
+    assert(_initNotificationsExecuted == false, 'App.initNotifications() must be called only once');
+    if (_initNotificationsExecuted) return;
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String? lastVersion = Hive.box(Boxes.appState).get(HiveKeys.lastVersion);
+
+    // Removing the already set notifications if we updated versions
+    if (lastVersion != version) {
+      // Set the new version
+      Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
+
+      try {
+        LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+
+        for (LoggedInUser uzivatel in loginData.users) {
+          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
+          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
+        }
+      } catch (e) {
+        //do nothing
+      }
+      await AwesomeNotifications().dispose();
+    }
+
+    // Initialize the notifications
+    initAwesome();
+
+    // Setting listeners for when the app is running and notification button is clicked
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod,
+    );
+
+    // Detecting if the app was opened from a notification and handling it if it was
+    ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
+    await NotificationController.handleNotificationAction(receivedAction);
+
+    // Initializing the background fetch
+    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    _initNotificationsExecuted = true;
   }
 
   static Future<void> initPlatform() async {
@@ -97,6 +149,9 @@ class App {
     await Hive.initFlutter();
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
+    await Hive.openBox(Boxes.appState);
+    await Hive.openBox(Boxes.statistics);
+    await Hive.openBox(Boxes.notifications);
 
     _initHiveExecuted = true;
   }

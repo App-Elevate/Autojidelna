@@ -19,6 +19,7 @@ class InitApp {
       App.initPlatform(),
       App.initRotation(),
       App.initCodePush(),
+      App.initNotifications(),
     ]);
     // Stop the stopwatch
     stopwatch.stop();
