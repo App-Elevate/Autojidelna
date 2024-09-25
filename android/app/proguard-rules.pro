@@ -1,5 +1,0 @@
--dontwarn com.google.j2objc.annotations.ReflectionSupport
--dontwarn com.google.j2objc.annotations.RetainedWith
--dontwarn com.google.android.gms.safetynet.SafetyNet
--dontwarn com.google.android.gms.safetynet.SafetyNetApi$AttestationResponse
--dontwarn com.google.android.gms.safetynet.SafetyNetClient

@@ -1,2 +1,0 @@
-#include? "Pods/Target Support Files/Pods-ImageNotification/Pods-ImageNotification.release.xcconfig"
-#include "Flutter/Generated.xcconfig"
