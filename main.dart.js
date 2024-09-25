@@ -55726,7 +55726,7 @@ jf(a,b){return new A.bB(A.bmT(b),t.cx)},
 qi(a){return B.b.p(A.a(["cs","en"],t.s),a.gdm(0))},
 oX(a){return!1}}
 A.a_2.prototype={
-gZ4(){return"Aplikace, kter\xe1 je z\xe1klad pro dal\u0161\xed aplikace."},
+gZ4(){return"Aplikace pro objedn\xe1v\xe1n\xed ze syst\xe9mu Icanteen. C\xedl t\xe9to aplikace je zjednodu\u0161it, zrychlit, (p\u0159\xedpadn\u011b i zautomatizovat) objedn\xe1v\xe1n\xed ob\u011bd\u016f."},
 gZ5(a){return"Autoj\xeddelna"},
 gZF(){return"Tla\u010d\xedtko jste stiskli tolikr\xe1t:"},
 ga_u(){return"Po\u010d\xedt\xe1n\xed"},
@@ -55755,7 +55755,7 @@ ga3W(){return"Nastaven\xed"},
 gPR(){return"Nastaven\xed"},
 ga4f(){return'Napi\u0161te "crash" pro p\xe1d aplikace'}}
 A.a_3.prototype={
-gZ4(){return"Application that is the basis for other applications."},
+gZ4(){return"Application for ordering from the Icanteen system. The aim of this application is to simplify, speed up (or even automate) the ordering of lunches."},
 gZ5(a){return"Autoj\xeddelna"},
 gZF(){return"You have pushed the button this many times:"},
 ga_u(){return"Counting"},

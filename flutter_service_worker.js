@@ -24,7 +24,7 @@ const RESOURCES = {"assets/AssetManifest.json": "dbe130943c116a37a491f0895bf4223
 "canvaskit/chromium/canvaskit.js": "901bb9e28fac643b7da75ecfd3339f3f",
 "canvaskit/chromium/canvaskit.wasm": "399e2344480862e2dfa26f12fa5891d7",
 "canvaskit/skwasm.js.symbols": "c3c05bd50bdf59da8626bbe446ce65a3",
-"main.dart.js": "9b77a003d14de7a8071b59e739e95f51",
+"main.dart.js": "2d41049178d0a204439d7ef7d4896c08",
 "icons/ms-icon-310x310.png": "ffe731a562e7f3b5aa75e0b973cfad44",
 "icons/apple-icon.png": "d6a0df6a0990e8fee34a3aa7b58b046e",
 "icons/browserconfig.xml": "653d077300a12f09a69caeea7a8947f8",
@@ -51,7 +51,7 @@ const RESOURCES = {"assets/AssetManifest.json": "dbe130943c116a37a491f0895bf4223
 "icons/apple-icon-152x152.png": "c8870b01cd3928d74212b2441feda7e7",
 "icons/favicon-96x96.png": "afbf9794f2b66f4ba84cfe3116912e4e",
 "icons/android-icon-144x144.png": "1da03c758354f4433696d30f6e22c52f",
-"flutter_bootstrap.js": "5026a35df30a0f49e294de85d8709e61",
+"flutter_bootstrap.js": "d8c8658ada7ee911385bf1937b6bb8a5",
 ".well-known/assetlinks.json": "bda4b060282dd2fa732bf45b1991f235",
 ".well-known/apple-app-site-association": "c28d5dd618d9d665b14a05e870a4764e",
 "firebase-messaging-sw.js": "f59c0ad89bd4a5e329b408a474e44781",
@@ -59,7 +59,7 @@ const RESOURCES = {"assets/AssetManifest.json": "dbe130943c116a37a491f0895bf4223
 "redirect.js": "5796bb6e5906aff3e582ad3b780f627e",
 "index.html": "ee42cf4b8790938c1e47b63fe27e219b",
 "/": "ee42cf4b8790938c1e47b63fe27e219b",
-"version.json": "d10b56971581daaa74ea599f8802977a",
+"version.json": "5302befcfa3e8b017d3cac0183ed08d7",
 "manifest.json": "620d362b862df3a78fb9832e14d2e788",
 "privacy-policy/index.html": "25f5741dbfbac9b33fc382a0f75750c9"};
 // The application shell files that are downloaded before a service worker can
