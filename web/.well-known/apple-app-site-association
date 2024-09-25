@@ -4,7 +4,7 @@
     "details": [
       {
         "appIDs": [
-          "6G8NMAQR5W.cz.appelevate.coree"
+          "6G8NMAQR5W.cz.appelevate.autojidelna"
         ],
         "paths": [
           "*"
@@ -19,7 +19,7 @@
   },
   "webcredentials": {
     "apps": [
-      "6G8NMAQR5W.cz.appelevate.coree"
+      "6G8NMAQR5W.cz.appelevate.autojidelna"
     ]
   }
 }

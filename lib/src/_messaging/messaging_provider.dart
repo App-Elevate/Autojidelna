@@ -1,4 +1,4 @@
-import 'package:coree/src/_messaging/messaging.dart';
+import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 

@@ -9,23 +9,18 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i13;
-import 'package:coree/src/ui/pages/crashlytics_page.dart' as _i1;
-import 'package:coree/src/ui/pages/debug_page.dart' as _i2;
-import 'package:coree/src/ui/pages/demo_page.dart' as _i4;
-import 'package:coree/src/ui/pages/request_permission_page.dart' as _i7;
-import 'package:coree/src/ui/pages/router_page.dart' as _i8;
-import 'package:coree/src/ui/pages/settings/localization/localizations_page.dart'
-    as _i5;
-import 'package:coree/src/ui/pages/settings/login/delete_account_page.dart'
-    as _i3;
-import 'package:coree/src/ui/pages/settings/login/login_page.dart' as _i6;
-import 'package:coree/src/ui/pages/settings/routing/routing_param_page.dart'
-    as _i9;
-import 'package:coree/src/ui/pages/settings/routing/routing_path_param_detail_page.dart'
-    as _i10;
-import 'package:coree/src/ui/pages/settings/routing/routing_query_param_detail_page.dart'
-    as _i11;
-import 'package:coree/src/ui/pages/settings/settings_page.dart' as _i12;
+import 'package:autojidelna/src/ui/pages/crashlytics_page.dart' as _i1;
+import 'package:autojidelna/src/ui/pages/debug_page.dart' as _i2;
+import 'package:autojidelna/src/ui/pages/demo_page.dart' as _i4;
+import 'package:autojidelna/src/ui/pages/request_permission_page.dart' as _i7;
+import 'package:autojidelna/src/ui/pages/router_page.dart' as _i8;
+import 'package:autojidelna/src/ui/pages/settings/localization/localizations_page.dart' as _i5;
+import 'package:autojidelna/src/ui/pages/settings/login/delete_account_page.dart' as _i3;
+import 'package:autojidelna/src/ui/pages/settings/login/login_page.dart' as _i6;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_param_page.dart' as _i9;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_path_param_detail_page.dart' as _i10;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_query_param_detail_page.dart' as _i11;
+import 'package:autojidelna/src/ui/pages/settings/settings_page.dart' as _i12;
 import 'package:firebase_auth/firebase_auth.dart' as _i15;
 import 'package:flutter/foundation.dart' as _i14;
 import 'package:flutter/material.dart' as _i16;
@@ -148,8 +143,7 @@ class LoginPage extends _i13.PageRouteInfo<LoginPageArgs> {
   static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
+      final args = data.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
       return _i6.LoginPage(
         key: args.key,
         onResult: args.onResult,
@@ -180,8 +174,7 @@ class LoginPageArgs {
 
 /// generated route for
 /// [_i7.RequestPermissionPage]
-class RequestPermissionPage
-    extends _i13.PageRouteInfo<RequestPermissionPageArgs> {
+class RequestPermissionPage extends _i13.PageRouteInfo<RequestPermissionPageArgs> {
   RequestPermissionPage({
     _i14.Key? key,
     void Function(bool)? onResult,
@@ -200,8 +193,7 @@ class RequestPermissionPage
   static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<RequestPermissionPageArgs>(
-          orElse: () => const RequestPermissionPageArgs());
+      final args = data.argsAs<RequestPermissionPageArgs>(orElse: () => const RequestPermissionPageArgs());
       return _i7.RequestPermissionPage(
         key: args.key,
         onResult: args.onResult,
@@ -266,8 +258,7 @@ class RoutingParamPage extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.RoutingPathParamDetailPage]
-class RoutingPathParamDetailPage
-    extends _i13.PageRouteInfo<RoutingPathParamDetailPageArgs> {
+class RoutingPathParamDetailPage extends _i13.PageRouteInfo<RoutingPathParamDetailPageArgs> {
   RoutingPathParamDetailPage({
     _i16.Key? key,
     required String filmid,
@@ -288,9 +279,7 @@ class RoutingPathParamDetailPage
     name,
     builder: (data) {
       final pathParams = data.inheritedPathParams;
-      final args = data.argsAs<RoutingPathParamDetailPageArgs>(
-          orElse: () => RoutingPathParamDetailPageArgs(
-              filmid: pathParams.getString('filmid')));
+      final args = data.argsAs<RoutingPathParamDetailPageArgs>(orElse: () => RoutingPathParamDetailPageArgs(filmid: pathParams.getString('filmid')));
       return _i10.RoutingPathParamDetailPage(
         key: args.key,
         filmid: args.filmid,
@@ -317,8 +306,7 @@ class RoutingPathParamDetailPageArgs {
 
 /// generated route for
 /// [_i11.RoutingQueryParamDetailPage]
-class RoutingQueryParamDetailPage
-    extends _i13.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
+class RoutingQueryParamDetailPage extends _i13.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
   RoutingQueryParamDetailPage({
     _i16.Key? key,
     int? filmid,
@@ -339,9 +327,7 @@ class RoutingQueryParamDetailPage
     name,
     builder: (data) {
       final queryParams = data.queryParams;
-      final args = data.argsAs<RoutingQueryParamDetailPageArgs>(
-          orElse: () => RoutingQueryParamDetailPageArgs(
-              filmid: queryParams.optInt('key')));
+      final args = data.argsAs<RoutingQueryParamDetailPageArgs>(orElse: () => RoutingQueryParamDetailPageArgs(filmid: queryParams.optInt('key')));
       return _i11.RoutingQueryParamDetailPage(
         key: args.key,
         filmid: args.filmid,

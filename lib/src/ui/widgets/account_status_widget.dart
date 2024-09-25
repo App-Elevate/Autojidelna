@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:coree/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

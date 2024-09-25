@@ -1,5 +1,5 @@
-import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/ui/widgets/buttons/about_app_button_widget.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/widgets/buttons/about_app_button_widget.dart';
 import 'package:flutter/material.dart';
 
 class DemoPageAppBar extends StatelessWidget implements PreferredSizeWidget {

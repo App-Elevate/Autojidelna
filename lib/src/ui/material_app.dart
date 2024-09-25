@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/_global/providers/is_online.dart';
-import 'package:coree/src/_messaging/messaging.dart';
-import 'package:coree/src/_sentry/sentry.dart';
-import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/_routing/app_router.dart';
-import 'package:coree/src/logic/deep_link_transformer_logic.dart';
+import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/is_online.dart';
+import 'package:autojidelna/src/_messaging/messaging.dart';
+import 'package:autojidelna/src/_sentry/sentry.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/_routing/app_router.dart';
+import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';

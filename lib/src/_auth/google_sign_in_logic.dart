@@ -1,4 +1,4 @@
-import 'package:coree/src/_global/app.dart';
+import 'package:autojidelna/src/_global/app.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

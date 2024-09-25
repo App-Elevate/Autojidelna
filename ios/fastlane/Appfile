@@ -1,4 +1,4 @@
-app_identifier(["cz.appelevate.coree", "cz.appelevate.coree.ImageNotification"]) # The bundle identifier of your app
+app_identifier(["cz.appelevate.autojidelna", "cz.appelevate.autojidelna.ImageNotification"]) # The bundle identifier of your app
 apple_id("protitom@icloud.com") # Your Apple Developer Portal username
 
 itc_team_id("127134957") # App Store Connect Team ID

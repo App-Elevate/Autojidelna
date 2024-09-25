@@ -22,7 +22,7 @@ class TextsCs extends Texts {
   String get appDescription => 'Aplikace, která je základ pro další aplikace.';
 
   @override
-  String get appName => 'APPE Coree';
+  String get appName => 'Autojídelna';
 
   @override
   String get appleSecret => 'Apple velký tajemství';

@@ -21,18 +21,18 @@ platform :ios do
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
-      project_slug: 'appe-coree',
+      project_slug: 'autojidelna',
       include_sources: true, # Optional. For source context.
     )
   end
 
   desc "Push a new release build to the App Store"
   lane :release do
-    sh 'mv ../../build/ios/ipa/coree.ipa ../Runner.ipa'
+    sh 'mv ../../build/ios/ipa/autojidelna.ipa ../Runner.ipa'
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
-      project_slug: 'appe-coree',
+      project_slug: 'autojidelna',
       include_sources: true, # Optional. For source context.
     )
     begin

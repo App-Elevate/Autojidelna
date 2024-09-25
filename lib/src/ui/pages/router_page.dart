@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_routing/app_router.gr.dart';
-import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/ui/widgets/router_page_appbars/default_appbar.dart';
-import 'package:coree/src/ui/widgets/router_page_appbars/demo_page_appbar.dart';
-import 'package:coree/src/ui/widgets/router_page_appbars/login_page_appbar.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/widgets/router_page_appbars/default_appbar.dart';
+import 'package:autojidelna/src/ui/widgets/router_page_appbars/demo_page_appbar.dart';
+import 'package:autojidelna/src/ui/widgets/router_page_appbars/login_page_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 

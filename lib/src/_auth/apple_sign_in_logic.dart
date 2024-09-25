@@ -1,6 +1,6 @@
-import 'package:coree/src/_conf/secure_storage.dart';
-import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/_auth/login_logic.dart';
+import 'package:autojidelna/src/_conf/secure_storage.dart';
+import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_auth/login_logic.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 

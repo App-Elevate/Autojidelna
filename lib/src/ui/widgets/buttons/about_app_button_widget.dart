@@ -1,9 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_conf/assets.dart';
-import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/_routing/app_router.gr.dart';
-import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/logic/about_app_button_logic.dart';
+import 'package:autojidelna/src/_conf/assets.dart';
+import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/logic/about_app_button_logic.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

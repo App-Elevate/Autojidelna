@@ -3,10 +3,9 @@
     "relation": ["delegate_permission/common.handle_all_urls"],
     "target": {
       "namespace": "android_app",
-      "package_name": "cz.appelevate.coree",
+      "package_name": "cz.appelevate.autojidelna",
       "sha256_cert_fingerprints": [
-        "D5:13:D4:F5:A5:36:53:AF:3A:C8:67:C7:8A:64:8B:BA:F3:89:D6:BD:29:1B:7A:1E:90:5C:B6:75:83:13:6D:33",
-        "8D:7E:54:EE:B7:5F:D0:D3:E7:E0:D2:71:72:71:71:EC:43:5C:5F:BE:77:25:53:18:01:D5:B8:ED:94:EB:FD:FB"
+        "D5:13:D4:F5:A5:36:53:AF:3A:C8:67:C7:8A:64:8B:BA:F3:89:D6:BD:29:1B:7A:1E:90:5C:B6:75:83:13:6D:33"
       ]
     }
   }

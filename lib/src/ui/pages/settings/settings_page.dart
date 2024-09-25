@@ -1,8 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_global/providers/is_online.dart';
-import 'package:coree/src/lang/l10n_context_extension.dart';
-import 'package:coree/src/_routing/app_router.gr.dart';
-import 'package:coree/src/ui/widgets/account_status_widget.dart';
+import 'package:autojidelna/src/_global/providers/is_online.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/ui/widgets/account_status_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

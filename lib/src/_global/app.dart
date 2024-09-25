@@ -1,7 +1,7 @@
-import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_conf/tokens.dart';
-import 'package:coree/src/_global/providers/remote_config.dart';
-import 'package:coree/src/_messaging/messaging.dart';
+import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_conf/tokens.dart';
+import 'package:autojidelna/src/_global/providers/remote_config.dart';
+import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

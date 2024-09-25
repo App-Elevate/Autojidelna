@@ -1,4 +1,4 @@
-import 'package:coree/src/_global/app.dart';
+import 'package:autojidelna/src/_global/app.dart';
 import 'package:flutter/foundation.dart';
 
 /// Initialize the app

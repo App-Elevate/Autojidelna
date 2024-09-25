@@ -116,7 +116,7 @@ abstract class Texts {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'APPE Coree'**
+  /// **'Autojídelna'**
   String get appName;
 
   /// No description provided for @appleSecret.

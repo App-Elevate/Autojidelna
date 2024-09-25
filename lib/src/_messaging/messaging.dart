@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:coree/src/_conf/hive.dart';
-import 'package:coree/src/_conf/messaging.dart';
-import 'package:coree/src/_conf/tokens.dart';
-import 'package:coree/src/_messaging/exponential_backoff.dart';
-import 'package:coree/src/_messaging/messaging_provider.dart';
+import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_conf/messaging.dart';
+import 'package:autojidelna/src/_conf/tokens.dart';
+import 'package:autojidelna/src/_messaging/exponential_backoff.dart';
+import 'package:autojidelna/src/_messaging/messaging_provider.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';

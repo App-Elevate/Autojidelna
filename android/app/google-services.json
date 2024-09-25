@@ -1,57 +1,77 @@
 {
   "project_info": {
-    "project_number": "466976066624",
-    "project_id": "app-elevate-core",
-    "storage_bucket": "app-elevate-core.appspot.com"
+    "project_number": "108088693003",
+    "firebase_url": "https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "autojidelna",
+    "storage_bucket": "autojidelna.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:466976066624:android:da815df5188176e15423a5",
+        "mobilesdk_app_id": "1:108088693003:android:a876fdaf042a909d96d20e",
         "android_client_info": {
-          "package_name": "cz.appelevate.coree"
+          "package_name": "com.tomprotiva.autojidelna"
         }
       },
       "oauth_client": [
         {
-          "client_id": "466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "cz.appelevate.coree",
-            "certificate_hash": "0e6160c6543881ec3f8c4748497577874d86b927"
-          }
-        },
-        {
-          "client_id": "466976066624-8m852qlcq1t1gsc8f37j43ro3267fmq2.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "cz.appelevate.coree",
-            "certificate_hash": "4dfb5fdb0deb11c3c54485a9fa54c24b09c36ee1"
-          }
-        },
-        {
-          "client_id": "466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com",
+          "client_id": "108088693003-nu0jmettp9aohnmu1kbtdp98ar24n895.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCdSDmDUCZGXYmdKo13eLD02mhe3FGdsug"
+          "current_key": "AIzaSyACTnrxRr55tjfBo6asnamXJdB7gy2VqcQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com",
+              "client_id": "108088693003-nu0jmettp9aohnmu1kbtdp98ar24n895.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com",
+              "client_id": "108088693003-8svtmkptltbqo5a7a8lj2g04a7m01s95.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "cz.appelevate.coree",
-                "app_store_id": "6504736528"
+                "bundle_id": "com.example.autojidelna"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108088693003:android:eb6d15855fefa46f96d20e",
+        "android_client_info": {
+          "package_name": "cz.appelevate.autojidelna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108088693003-nu0jmettp9aohnmu1kbtdp98ar24n895.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACTnrxRr55tjfBo6asnamXJdB7gy2VqcQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108088693003-nu0jmettp9aohnmu1kbtdp98ar24n895.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "108088693003-8svtmkptltbqo5a7a8lj2g04a7m01s95.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.autojidelna"
               }
             }
           ]

@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:coree/src/_conf/messaging.dart';
-import 'package:coree/src/_global/app.dart';
-import 'package:coree/src/_messaging/messaging.dart';
-import 'package:coree/src/_routing/app_router.dart';
-import 'package:coree/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/_conf/messaging.dart';
+import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_messaging/messaging.dart';
+import 'package:autojidelna/src/_routing/app_router.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class AuthGuard extends AutoRouteGuard {

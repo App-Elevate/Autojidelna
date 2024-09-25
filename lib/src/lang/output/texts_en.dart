@@ -23,7 +23,7 @@ class TextsEn extends Texts {
       'Application that is the basis for other applications.';
 
   @override
-  String get appName => 'APPE Coree';
+  String get appName => 'Autojídelna';
 
   @override
   String get appleSecret => 'Apple Femboy Secret';

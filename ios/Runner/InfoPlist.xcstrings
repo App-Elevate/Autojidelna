@@ -7,13 +7,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appe Coree"
+            "value" : "Autojídelna"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appe Coree"
+            "value" : "Autojídelna"
           }
         }
       }
@@ -24,13 +24,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree potřebuje lokaci pro zobrazení koordinací"
+            "value" : "Autojídelna potřebuje lokaci pro zobrazení koordinací"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree needs location to show coordinates"
+            "value" : "Autojídelna needs location to show coordinates"
           }
         }
       }
@@ -41,13 +41,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree potřebuje lokaci pro zobrazení koordinací"
+            "value" : "Autojídelna potřebuje lokaci pro zobrazení koordinací"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree needs location to show coordinates"
+            "value" : "Autojídelna needs location to show coordinates"
           }
         }
       }
@@ -58,13 +58,13 @@
         "cs" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree potřebuje lokaci pro zobrazení koordinací"
+            "value" : "Autojídelna potřebuje lokaci pro zobrazení koordinací"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "APPE Coree needs location to show coordinates"
+            "value" : "Autojídelna needs location to show coordinates"
           }
         }
       }

@@ -509,7 +509,7 @@ jobs:
         with:
           service-account-json: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
           package-name: ${{needs.version.outputs.app_id}}
-          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ needs.version.outputs.build_number }} internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
+          custom-script: "sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab ${{ needs.version.outputs.build_number }} internal draft build/app/outputs/mapping/release/mapping.txt build/symbols.zip"
 
       - name: Release Artifact Upload
         uses: actions/upload-artifact@v4

@@ -35,4 +35,4 @@ cd $CURRENT_EXECUTION_PATH
 export PLAYSTORE_SERVICE_ACCOUNT_JSON_FILE="/Users/tom/.auth/login.json"
 mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
 export APP_PACKAGE_NAME=$(ggrep -oP 'applicationId\s*=\s*"\K[^"]+' android/app/build.gradle)
-sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab $RUN_NUMBER internal completed build/app/outputs/mapping/release/mapping.txt build/symbols.zip
+sh scripts/ci/deploy_google_play.sh build/app/outputs/bundle/release/app-release.aab $RUN_NUMBER internal draft build/app/outputs/mapping/release/mapping.txt build/symbols.zip

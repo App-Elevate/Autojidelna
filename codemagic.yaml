@@ -18,7 +18,7 @@ workflows:
       - name: use appstore keys
         script: |
           git fetch --unshallow
-          git revert 467969017dbff7058ced4b3c873046e90a397b73
+          git revert eeb29f19af485fc56006f3607b66df2b73b71527
       - name: Setup flutterfire
         script: |
           dart pub global activate flutterfire_cli
@@ -64,7 +64,7 @@ workflows:
     environment:
       ios_signing:
         distribution_type: app_store # or app_store | development | enterprise
-        bundle_identifier: cz.appelevate.coree # for wildcard provisional profiles
+        bundle_identifier: cz.appelevate.autojidelna # for wildcard provisional profiles
       flutter: 3.22.3
       xcode: 15.4 # <-- set to specific version e.g. 14.3, 15.0 to avoid unexpected updates.
       cocoapods: default

@@ -65,7 +65,7 @@ platform :mac do
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
-      project_slug: 'appe-coree',
+      project_slug: 'appe-autojidelna',
       include_sources: true, # Optional. For source context.
     )
     delete_keychain(
@@ -92,7 +92,7 @@ platform :mac do
     sentry_debug_files_upload(
       auth_token: ENV["SENTRY_AUTH_TOKEN"],
       org_slug: 'app-elevate',
-      project_slug: 'appe-coree',
+      project_slug: 'appe-autojidelna',
       include_sources: true, # Optional. For source context.
     )
 
@@ -108,7 +108,7 @@ platform :mac do
     )
     rescue => e
       sh "open -a transporter"
-      sh "open -R ./../Appe_Coree.pkg"
+      sh "open -R ./../Autojidelna.pkg"
     end
   end
 end

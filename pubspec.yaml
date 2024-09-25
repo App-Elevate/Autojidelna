@@ -1,5 +1,5 @@
-name: coree
-description: "APPE Coree description"
+name: autojidelna
+description: "Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: "none" # Remove this line if you wish to publish to pub.dev
@@ -133,6 +133,6 @@ sentry:
   upload_debug_symbols: true
   upload_source_maps: true
   upload_sources: true
-  project: appe-coree
+  project: autojidelna
   org: app-elevate
   wait_for_processing: true

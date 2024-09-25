@@ -38,7 +38,7 @@ if (keystorePropertiesFileDebug.exists()) {
 }
 
 android {
-    namespace = "cz.appelevate.coree"
+    namespace = "cz.appelevate.autojidelna"
     compileSdk = flutter.compileSdkVersion
 
     compileOptions {
@@ -48,7 +48,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "cz.appelevate.coree"
+        applicationId = "cz.appelevate.autojidelna"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdk = 24 // less than 24 breaks dex

@@ -1,7 +1,7 @@
-import 'package:coree/firebase_options.dart';
-import 'package:coree/src/_conf/tokens.dart';
-import 'package:coree/src/_global/init_app.dart';
-import 'package:coree/src/ui/material_app.dart';
+import 'package:autojidelna/firebase_options.dart';
+import 'package:autojidelna/src/_conf/tokens.dart';
+import 'package:autojidelna/src/_global/init_app.dart';
+import 'package:autojidelna/src/ui/material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';

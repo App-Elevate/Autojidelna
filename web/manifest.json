@@ -1,11 +1,11 @@
 {
-  "name": "APPE Coree",
-  "short_name": "APPE Coree",
+  "name": "Autojídelna",
+  "short_name": "Autojídelna",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#0175C2",
   "theme_color": "#0175C2",
-  "description": "APPE Coree description",
+  "description": "Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [

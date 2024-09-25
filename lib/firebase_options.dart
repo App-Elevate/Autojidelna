@@ -43,43 +43,43 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyARLbCza3INmFGD3P62q7Bl0H_Hag_Ndzg',
-    appId: '1:466976066624:web:6591f71f8c1987b75423a5',
-    messagingSenderId: '466976066624',
-    projectId: 'app-elevate-core',
-    authDomain: 'app-elevate-core.firebaseapp.com',
-    storageBucket: 'app-elevate-core.appspot.com',
-    measurementId: 'G-GQN6RGH7K1',
+    apiKey: 'AIzaSyBlMC15yTKNCS-J3Fncd3LxjiNaZgjKgaw',
+    appId: '1:108088693003:web:0843b05cd66085bf96d20e',
+    messagingSenderId: '108088693003',
+    projectId: 'autojidelna',
+    authDomain: 'autojidelna.firebaseapp.com',
+    databaseURL: 'https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'autojidelna.appspot.com',
+    measurementId: 'G-3SKH2E1QEC',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCdSDmDUCZGXYmdKo13eLD02mhe3FGdsug',
-    appId: '1:466976066624:android:da815df5188176e15423a5',
-    messagingSenderId: '466976066624',
-    projectId: 'app-elevate-core',
-    storageBucket: 'app-elevate-core.appspot.com',
+    apiKey: 'AIzaSyACTnrxRr55tjfBo6asnamXJdB7gy2VqcQ',
+    appId: '1:108088693003:android:eb6d15855fefa46f96d20e',
+    messagingSenderId: '108088693003',
+    projectId: 'autojidelna',
+    databaseURL: 'https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'autojidelna.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBu_bCobnJpHaCDMFNJ2LdbK5jTnu7LWn8',
-    appId: '1:466976066624:ios:d5c850ab29d9e3455423a5',
-    messagingSenderId: '466976066624',
-    projectId: 'app-elevate-core',
-    storageBucket: 'app-elevate-core.appspot.com',
-    androidClientId: '466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com',
-    iosClientId: '466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com',
-    iosBundleId: 'cz.appelevate.coree',
+    apiKey: 'AIzaSyAEdu5514F6Wveeh0hHnfiDgf6AV4YYVoI',
+    appId: '1:108088693003:ios:3ee0dec76b21a50596d20e',
+    messagingSenderId: '108088693003',
+    projectId: 'autojidelna',
+    databaseURL: 'https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'autojidelna.appspot.com',
+    iosBundleId: 'cz.appelevate.autojidelna',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBu_bCobnJpHaCDMFNJ2LdbK5jTnu7LWn8',
-    appId: '1:466976066624:ios:d5c850ab29d9e3455423a5',
-    messagingSenderId: '466976066624',
-    projectId: 'app-elevate-core',
-    storageBucket: 'app-elevate-core.appspot.com',
-    androidClientId: '466976066624-00lrq3t4v88ognums3uf6gcfm9bcfc51.apps.googleusercontent.com',
-    iosClientId: '466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com',
-    iosBundleId: 'cz.appelevate.coree',
+    apiKey: 'AIzaSyAEdu5514F6Wveeh0hHnfiDgf6AV4YYVoI',
+    appId: '1:108088693003:ios:3ee0dec76b21a50596d20e',
+    messagingSenderId: '108088693003',
+    projectId: 'autojidelna',
+    databaseURL: 'https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'autojidelna.appspot.com',
+    iosBundleId: 'cz.appelevate.autojidelna',
   );
 
 }

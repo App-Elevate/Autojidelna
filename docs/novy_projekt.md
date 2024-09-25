@@ -6,10 +6,10 @@
 
 ### název
 
-1. změňte všechny výskyty `APPE Coree` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije).
-2. změňte všechny výskyty `APPE_Coree` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Udržte stejnou strukturu. Tento název nepodporuje mezery a speciální znaky)
-3. změňte všechny výskyty `coree` na název vaší aplikace (bacha ne `core` ale `coree`). Toto je app_id a je důležité, aby bylo unikátní. U vybírání jména u iOS používat camel case u android snake case.
-4. změňte všechny výskyty `APPE Coree description` na popis vaší aplikace
+1. změňte všechny výskyty `Autojídelna` na název vaší aplikace (V celé složce, pomocí např. find and replace ve vscode. Je to ověřené, nic to nerozbije).
+2. změňte všechny výskyty `Autojidelna` na název vaší aplikace (V macos složce, pomocí např. find and replace ve vscode. Udržte stejnou strukturu. Tento název nepodporuje mezery a speciální znaky)
+3. změňte všechny výskyty `autojidelna` na název vaší aplikace (bacha ne `core` ale `autojidelna`). Toto je app_id a je důležité, aby bylo unikátní. U vybírání jména u iOS používat camel case u android snake case.
+4. změňte všechny výskyty `Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.` na popis vaší aplikace
 5. změňte všechny výskyty `6G8NMAQR5W` na váš developer tým u apple - je to důležité pro fastline a deeplinking
 6. změňte výskyt `3rd Party Mac Developer Installer: TOM\xC3\x81\xC5\xA0 PROTIVA (6G8NMAQR5W)` na váš developer tým u apple - je to důležité pro macos
 
@@ -48,8 +48,8 @@ shorebird init
 1. Vytvořte novou aplikaci pomocí fastlane match:
 
 ```bash
-cd ios && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree --skip_itc && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree.ImageNotification --skip_itc && cd ..
-cd macos && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.coree --skip_itc && cd ..
+cd ios && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.autojidelna --skip_itc && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.autojidelna.ImageNotification --skip_itc && cd ..
+cd macos && bundle install && bundle exec fastlane produce -u protitom@icloud.com -a cz.appelevate.autojidelna --skip_itc && cd ..
 ```
 
 2. inicializujte klíče pomocí fastlane match (je potřeba být přihlášený jako majitel klíčů - obvykle Tom)
@@ -76,7 +76,7 @@ cd macos && bundle install && bundle exec fastlane match appstore --additional_c
 
 9. Vytvořte commit
 
-10. nahraďte původní hash committem 1. kroku ve workflow souboru v [codemagic.yaml](../codemagic.yaml#L21)
+10. nahraďte původní hash committem, který přepíná z appstore na dev ve workflow souboru v [codemagic.yaml](../codemagic.yaml#L21)
 
 ### Firebase
 
@@ -105,7 +105,6 @@ open macos/Runner.xcworkspace
 1. Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions)
 2. Vypněte Platformy, které nepoužíváte tím, že okomentujete `if: cokoliv` a nahradíte `if: false`
 3. Odstraňte debug sha256 hash z [assetlinks.json](../web/.well-known/assetlinks.json#L9) (je to ten druhý na řádku 9)
-4. Vytvořte variable `FLUTTER_VERSION` - aktuální verze flutteru (např. `3.22.4`)
 
 ### Sentry
 
@@ -245,6 +244,7 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 `COMMENT_CLOSED` - komentář, který se má napsat, když se PR zavře kvůli špatnému názvu
 `COMMENT_NICE` - komentář, který se má napsat, když PR projde zkouškou
 `FIREBASE_HOSTING_URL` - url vašeho firebase hosting
+`FLUTTER_VERSION` - aktuální verze flutteru
 
 2. Přeneste pravidla a upravte je do nového repozitáře
 
