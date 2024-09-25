@@ -28,9 +28,9 @@
 
 1. Nahrajte transparentní png soubor [na web](https://www.appicon.co/#app-icon)
 2. Vytáhněte si z `Assets.xcassets/AppIcon.appiconset` ikonku 512.png, zkopírujte si jí jinam, přejmenujte na LaunchImage.png a nahrajte ji sem: [https://www.appicon.co/#image-sets](https://www.appicon.co/#image-sets)
-3. Vytáhněte si LaunchImage a vložte do [../ios/Runner/Assets.xcassets/LaunchImage.imageset](ios/Runner/Assets.xcassets/LaunchImage.imageset)
+3. Vytáhněte si LaunchImage a vložte do [ios/Runner/Assets.xcassets/LaunchImage.imageset](../ios/Runner/Assets.xcassets/LaunchImage.imageset)
 4. Zkontrolujte ios/Runner/LaunchScreen.storyboard a upravte splash screen podle potřeb. To může být například jiná barva pozadí...
-5. Zkontrolujte barvu pozadí u androidu v [../android/app/src/main/res/values/ic_launcher_background.xml](android/app/src/main/res/values/ic_launcher_background.xml) a upravte podle potřeb
+5. Zkontrolujte barvu pozadí u androidu v [android/app/src/main/res/values/ic_launcher_background.xml](../android/app/src/main/res/values/ic_launcher_background.xml) a upravte podle potřeb
 
 ### **Matějova část -- insert instructions here -- **
 
@@ -105,6 +105,7 @@ open macos/Runner.xcworkspace
 1. Povolte Github Actions pro nový repozitář (App Elevate -> Settings -> Actions)
 2. Vypněte Platformy, které nepoužíváte tím, že okomentujete `if: cokoliv` a nahradíte `if: false`
 3. Odstraňte debug sha256 hash z [assetlinks.json](../web/.well-known/assetlinks.json#L9) (je to ten druhý na řádku 9)
+4. Vytvořte variable `FLUTTER_VERSION` - aktuální verze flutteru (např. `3.22.4`)
 
 ### Sentry
 
@@ -244,7 +245,6 @@ firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_APP_ELEVATE_CORE }}
 `COMMENT_CLOSED` - komentář, který se má napsat, když se PR zavře kvůli špatnému názvu
 `COMMENT_NICE` - komentář, který se má napsat, když PR projde zkouškou
 `FIREBASE_HOSTING_URL` - url vašeho firebase hosting
-`FLUTTER_VERSION` - aktuální verze flutteru
 
 2. Přeneste pravidla a upravte je do nového repozitáře
 
