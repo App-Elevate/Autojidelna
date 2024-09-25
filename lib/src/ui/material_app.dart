@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
-import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
@@ -59,7 +58,6 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
         navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
-        reevaluateListenable: Messaging.messagingProvider,
         includePrefixMatches: true,
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
       ),

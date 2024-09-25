@@ -1,8 +1,6 @@
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
-import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +28,6 @@ class App {
   static bool _initRemoteConfigExecuted = false;
   static bool _initHiveExecuted = false;
   static bool _initRotationExecuted = false;
-  static bool _initFirebaseMessagingExecuted = false;
   static bool _initCodePushExecuted = false;
 
   static Future<void> initCodePush() async {
@@ -106,38 +103,6 @@ class App {
 
   static Future<void> initSecureStorage() async {
     secureStorage = const FlutterSecureStorage();
-  }
-
-  static Future<void> initFirebaseMessaging() async {
-    assert(_initFirebaseMessagingExecuted == false, 'App.initFirebaseMessaging() must be called only once');
-    if (_initFirebaseMessagingExecuted) return;
-    if (!kIsWeb) {
-      NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
-      await Messaging.setupInteractedMessage();
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-      FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
-
-      if (settings.authorizationStatus == AuthorizationStatus.notDetermined &&
-          Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
-        App.shouldAskForNotification = true;
-      } else {
-        App.shouldAskForNotification = false;
-      }
-
-      if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
-        await Messaging.onNotificationPermissionGranted();
-      }
-    } else if (Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
-      App.shouldAskForNotification = true;
-    } else {
-      App.shouldAskForNotification = false;
-    }
-
-    if (kIsWeb && Hive.box(Boxes.settings).get(HiveKeys.webNotificationsAccepted, defaultValue: false)) {
-      await Messaging.onNotificationPermissionGranted();
-    }
-
-    _initFirebaseMessagingExecuted = true;
   }
 
   static late final FlutterSecureStorage secureStorage;

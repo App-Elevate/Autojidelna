@@ -49,7 +49,6 @@ dependencies:
   firebase_crashlytics: ^4.0.4
   firebase_analytics: ^11.0.1
   firebase_remote_config: ^5.0.2
-  firebase_messaging: ^15.0.3
   flutter_adaptive_scaffold: ^0.2.1
 
   package_info_plus: ^8.0.0 # Package info used in about page
