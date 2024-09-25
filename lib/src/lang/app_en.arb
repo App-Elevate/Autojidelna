@@ -10,10 +10,8 @@
       }
     }
   },
-  "appDescription": "Application that is the basis for other applications.",
+  "appDescription": "Application for ordering from the Icanteen system. The aim of this application is to simplify, speed up (or even automate) the ordering of lunches.",
   "appName": "Autojídelna",
-  "appleSecret": "Apple Femboy Secret",
-  "appleSecretContent": "Flutter + Apple = ❤️",
   "buttonPushed": "You have pushed the button this many times:",
   "connectedToANetwork": "Connected to a network",
   "connectedToTheInternet": "Connected to the internet",
@@ -101,8 +99,6 @@
   "routingTestPageDetail": "This is a routing test page.",
   "routingTestPageDetail1": "It is used to test routing.",
   "secret": "secret",
-  "secretGoogle": "secret Google",
-  "secretGoogleContent": "Flutter + Google = ❤️",
   "secretPage": "Secret Page",
   "settings": "Settings",
   "showLocale": "Show locale",

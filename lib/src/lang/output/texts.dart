@@ -110,7 +110,7 @@ abstract class Texts {
   /// No description provided for @appDescription.
   ///
   /// In en, this message translates to:
-  /// **'Application that is the basis for other applications.'**
+  /// **'Application for ordering from the Icanteen system. The aim of this application is to simplify, speed up (or even automate) the ordering of lunches.'**
   String get appDescription;
 
   /// No description provided for @appName.
@@ -118,18 +118,6 @@ abstract class Texts {
   /// In en, this message translates to:
   /// **'Autojídelna'**
   String get appName;
-
-  /// No description provided for @appleSecret.
-  ///
-  /// In en, this message translates to:
-  /// **'Apple Femboy Secret'**
-  String get appleSecret;
-
-  /// No description provided for @appleSecretContent.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter + Apple = ❤️'**
-  String get appleSecretContent;
 
   /// No description provided for @buttonPushed.
   ///
@@ -460,18 +448,6 @@ abstract class Texts {
   /// In en, this message translates to:
   /// **'secret'**
   String get secret;
-
-  /// No description provided for @secretGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'secret Google'**
-  String get secretGoogle;
-
-  /// No description provided for @secretGoogleContent.
-  ///
-  /// In en, this message translates to:
-  /// **'Flutter + Google = ❤️'**
-  String get secretGoogleContent;
 
   /// No description provided for @secretPage.
   ///

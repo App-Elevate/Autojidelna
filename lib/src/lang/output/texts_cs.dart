@@ -19,16 +19,11 @@ class TextsCs extends Texts {
   }
 
   @override
-  String get appDescription => 'Aplikace, která je základ pro další aplikace.';
+  String get appDescription =>
+      'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.';
 
   @override
   String get appName => 'Autojídelna';
-
-  @override
-  String get appleSecret => 'Apple velký tajemství';
-
-  @override
-  String get appleSecretContent => 'Flutter ++ Apple = ❤️';
 
   @override
   String get buttonPushed => 'Tlačítko jste stiskli tolikrát:';
@@ -213,12 +208,6 @@ class TextsCs extends Texts {
 
   @override
   String get secret => 'tajemství';
-
-  @override
-  String get secretGoogle => 'secret Google';
-
-  @override
-  String get secretGoogleContent => 'Flutter + Google = ❤️';
 
   @override
   String get secretPage => 'Tajná stránka';

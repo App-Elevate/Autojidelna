@@ -20,16 +20,10 @@ class TextsEn extends Texts {
 
   @override
   String get appDescription =>
-      'Application that is the basis for other applications.';
+      'Application for ordering from the Icanteen system. The aim of this application is to simplify, speed up (or even automate) the ordering of lunches.';
 
   @override
   String get appName => 'Autojídelna';
-
-  @override
-  String get appleSecret => 'Apple Femboy Secret';
-
-  @override
-  String get appleSecretContent => 'Flutter + Apple = ❤️';
 
   @override
   String get buttonPushed => 'You have pushed the button this many times:';
@@ -213,12 +207,6 @@ class TextsEn extends Texts {
 
   @override
   String get secret => 'secret';
-
-  @override
-  String get secretGoogle => 'secret Google';
-
-  @override
-  String get secretGoogleContent => 'Flutter + Google = ❤️';
 
   @override
   String get secretPage => 'Secret Page';
