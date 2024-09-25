@@ -32,8 +32,6 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
     AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
     AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
-    AutoRoute(page: LoginPage.page, path: '/settings/login'),
-    AutoRoute(page: DeleteAccountPage.page, path: '/settings/delete', guards: [AuthGuard()]),
     RedirectRoute(path: '*', redirectTo: '/'),
   ];
 }

@@ -207,12 +207,14 @@ sh scripts/deploy_macos.sh
 
 ### Github Pages
 
+0. Povolte Github Pages v [deploy_everything.yml](../.github/workflows/deploy_everything.yml) - nahoře a potom nahraďte `if: false` za obsah za komentářem
 1. Zapněte Github Pages v nastavení repozitáře.
 2. Přidejte doménu do nastavení Github Pages
 3. Nyní se vám automaticky vytvoří nový deployment při každém mergu do mainu
 
 ### Firebase Hosting
 
+0. Povolte Firebase Hosting v [deploy_everything.yml](../.github/workflows/deploy_everything.yml) - nahoře a potom nahraďte `if: false` za obsah za komentářem
 1. `firebase init`
 2. Vyberte hosting
 3. Vyberte projekt
@@ -254,13 +256,6 @@ Rulesets:
 `main` - restrict updates + deletions, vše co `*` a require pull request reviews a status checks to pass before merging
 `version` - vše co `*` a require pull request before merging
 
-### [Firebase App Check](https://console.firebase.google.com/u/0/project/_/appcheck/apps)
-
-1. Je potřeba nahrát klíč pro deviceCheck fo firebase. Tento klíč má tom v klíčence developer accountu. V opačném případě se dá vytvořit. Tento klíč se potom přidá do deviceCheck v firebase.
-2. Je potřeba vzít sha-256 a sha-1 z google play a nahrát je [na firebase](https://console.firebase.google.com/u/0/project/_/settings/general/android) + Zapnout play Integrity v Google play. Potom ještě zapnout [zde v firebase](https://console.firebase.google.com/u/0/project/_/appcheck/apps).
-3. Vytvořte captchu klíč pro web [zde pro recaptcha v3](https://www.google.com/recaptcha/admin/create) nebo ještě lépe [zde pro recaptcha enterprise](https://console.cloud.google.com/security/recaptcha)
-4. Nahraďte klíč v [App.dart](../lib/src/_conf/tokens.dart) a [index.html](../web/index.html#L123) (v url - `https://www.google.com/recaptcha/enterprise.js?render=6LfrH50pAAAAAGCGbAnEQoYXcA8Q3AlGobmwnNt_`)
-
 ### Deep linking
 
 1. Využijte automatického podepisování na google play a nahraďte první sha256 v (assetlinks.json)[web/.well-known/assetlinks.json]
@@ -268,30 +263,7 @@ Rulesets:
 3. Přepište url v souboru [ios/Runner/Runner.entitlements](../ios/Runner/Runner.entitlements) na vaši doménu
 4. Nahrajte .well-known složku na váš webserver, aby byl dostupný na `https://vase-domena/.well-known/assetlinks.json`. Pokud nahrajete na daný web flutter web, tak je to automaticky dostupné.
 
-### Google Sign In
-
-1. Registrujte google ve [firebase auth](https://console.firebase.google.com/project/_/authentication/providers)
-2. [Nastavte consent screen podle potřeb](https://console.cloud.google.com/apis/credentials/consent). Je potřeba nastavit i doménu, která bude používat google sign in. (Stačí pouze production domény)
-3. [Stáhněte si Google-Service_info.plist](https://console.firebase.google.com/project/_/settings/general/ios) (nevkládejte do projektu)
-4. [Postupujte dle instrukcí zde](https://pub.dev/packages/google_sign_in_ios#macos-setup) - je potřeba udělat všechny kroky pro iOS i MacOS.
-5. [Získejte id Oauth klíče pro web](https://console.cloud.google.com/apis/credentials) a nahraďte již existující v [index.html](../web/index.html). Nezapomeňte sem přidat všechny domény, které budou používat google sign in.
-
-```html
-<meta
-  name="google-signin-client_id"
-  content="466976066624-flggbo7lv9782nok34diek7f3mg2c4mr.apps.googleusercontent.com"
-/>
-```
-
-6. Spusťte `flutterfire configure` a ověřte, že macos zkompiluje
-7. Ve firebase přidejte doménu všech webů, které budou používat google sign in: [zde](https://console.firebase.google.com/u/0/project/_/authentication/settings)
-
-### Login with apple
-
-1. [Nastavte si apple sign in](https://console.firebase.google.com/project/_/authentication/providers)
-2. [Následujte instrukce zde](https://firebase.google.com/docs/auth/ios/apple?hl=en&authuser=0)
-
-### Firebase Analytics
+#### Firebase Analytics
 
 1. Povolte Analytics a crashlytics ve Firebase
 2. Přidejte dimenze, které naleznete v [analytics.dart](../lib/src/_conf/analytics.dart)

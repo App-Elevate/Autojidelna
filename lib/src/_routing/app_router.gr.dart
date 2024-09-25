@@ -8,27 +8,28 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i13;
+import 'package:auto_route/auto_route.dart' as _i11;
 import 'package:autojidelna/src/ui/pages/crashlytics_page.dart' as _i1;
 import 'package:autojidelna/src/ui/pages/debug_page.dart' as _i2;
-import 'package:autojidelna/src/ui/pages/demo_page.dart' as _i4;
-import 'package:autojidelna/src/ui/pages/request_permission_page.dart' as _i7;
-import 'package:autojidelna/src/ui/pages/router_page.dart' as _i8;
-import 'package:autojidelna/src/ui/pages/settings/localization/localizations_page.dart' as _i5;
-import 'package:autojidelna/src/ui/pages/settings/login/delete_account_page.dart' as _i3;
-import 'package:autojidelna/src/ui/pages/settings/login/login_page.dart' as _i6;
-import 'package:autojidelna/src/ui/pages/settings/routing/routing_param_page.dart' as _i9;
-import 'package:autojidelna/src/ui/pages/settings/routing/routing_path_param_detail_page.dart' as _i10;
-import 'package:autojidelna/src/ui/pages/settings/routing/routing_query_param_detail_page.dart' as _i11;
-import 'package:autojidelna/src/ui/pages/settings/settings_page.dart' as _i12;
-import 'package:firebase_auth/firebase_auth.dart' as _i15;
-import 'package:flutter/foundation.dart' as _i14;
-import 'package:flutter/material.dart' as _i16;
+import 'package:autojidelna/src/ui/pages/demo_page.dart' as _i3;
+import 'package:autojidelna/src/ui/pages/request_permission_page.dart' as _i5;
+import 'package:autojidelna/src/ui/pages/router_page.dart' as _i6;
+import 'package:autojidelna/src/ui/pages/settings/localization/localizations_page.dart'
+    as _i4;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_param_page.dart'
+    as _i7;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_path_param_detail_page.dart'
+    as _i8;
+import 'package:autojidelna/src/ui/pages/settings/routing/routing_query_param_detail_page.dart'
+    as _i9;
+import 'package:autojidelna/src/ui/pages/settings/settings_page.dart' as _i10;
+import 'package:flutter/foundation.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
 
 /// generated route for
 /// [_i1.CrashlyticsPage]
-class CrashlyticsPage extends _i13.PageRouteInfo<void> {
-  const CrashlyticsPage({List<_i13.PageRouteInfo>? children})
+class CrashlyticsPage extends _i11.PageRouteInfo<void> {
+  const CrashlyticsPage({List<_i11.PageRouteInfo>? children})
       : super(
           CrashlyticsPage.name,
           initialChildren: children,
@@ -36,7 +37,7 @@ class CrashlyticsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'CrashlyticsPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
       return const _i1.CrashlyticsPage();
@@ -46,8 +47,8 @@ class CrashlyticsPage extends _i13.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.DebugPage]
-class DebugPage extends _i13.PageRouteInfo<void> {
-  const DebugPage({List<_i13.PageRouteInfo>? children})
+class DebugPage extends _i11.PageRouteInfo<void> {
+  const DebugPage({List<_i11.PageRouteInfo>? children})
       : super(
           DebugPage.name,
           initialChildren: children,
@@ -55,7 +56,7 @@ class DebugPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'DebugPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
       return const _i2.DebugPage();
@@ -64,28 +65,9 @@ class DebugPage extends _i13.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.DeleteAccountPage]
-class DeleteAccountPage extends _i13.PageRouteInfo<void> {
-  const DeleteAccountPage({List<_i13.PageRouteInfo>? children})
-      : super(
-          DeleteAccountPage.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'DeleteAccountPage';
-
-  static _i13.PageInfo page = _i13.PageInfo(
-    name,
-    builder: (data) {
-      return const _i3.DeleteAccountPage();
-    },
-  );
-}
-
-/// generated route for
-/// [_i4.DemoPage]
-class DemoPage extends _i13.PageRouteInfo<void> {
-  const DemoPage({List<_i13.PageRouteInfo>? children})
+/// [_i3.DemoPage]
+class DemoPage extends _i11.PageRouteInfo<void> {
+  const DemoPage({List<_i11.PageRouteInfo>? children})
       : super(
           DemoPage.name,
           initialChildren: children,
@@ -93,18 +75,18 @@ class DemoPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'DemoPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i4.DemoPage();
+      return const _i3.DemoPage();
     },
   );
 }
 
 /// generated route for
-/// [_i5.LocalizationsPage]
-class LocalizationsPage extends _i13.PageRouteInfo<void> {
-  const LocalizationsPage({List<_i13.PageRouteInfo>? children})
+/// [_i4.LocalizationsPage]
+class LocalizationsPage extends _i11.PageRouteInfo<void> {
+  const LocalizationsPage({List<_i11.PageRouteInfo>? children})
       : super(
           LocalizationsPage.name,
           initialChildren: children,
@@ -112,73 +94,22 @@ class LocalizationsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'LocalizationsPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i5.LocalizationsPage();
+      return const _i4.LocalizationsPage();
     },
   );
 }
 
 /// generated route for
-/// [_i6.LoginPage]
-class LoginPage extends _i13.PageRouteInfo<LoginPageArgs> {
-  LoginPage({
-    _i14.Key? key,
-    dynamic Function(_i15.User?)? onResult,
-    String? providerId,
-    List<_i13.PageRouteInfo>? children,
-  }) : super(
-          LoginPage.name,
-          args: LoginPageArgs(
-            key: key,
-            onResult: onResult,
-            providerId: providerId,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'LoginPage';
-
-  static _i13.PageInfo page = _i13.PageInfo(
-    name,
-    builder: (data) {
-      final args = data.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
-      return _i6.LoginPage(
-        key: args.key,
-        onResult: args.onResult,
-        providerId: args.providerId,
-      );
-    },
-  );
-}
-
-class LoginPageArgs {
-  const LoginPageArgs({
-    this.key,
-    this.onResult,
-    this.providerId,
-  });
-
-  final _i14.Key? key;
-
-  final dynamic Function(_i15.User?)? onResult;
-
-  final String? providerId;
-
-  @override
-  String toString() {
-    return 'LoginPageArgs{key: $key, onResult: $onResult, providerId: $providerId}';
-  }
-}
-
-/// generated route for
-/// [_i7.RequestPermissionPage]
-class RequestPermissionPage extends _i13.PageRouteInfo<RequestPermissionPageArgs> {
+/// [_i5.RequestPermissionPage]
+class RequestPermissionPage
+    extends _i11.PageRouteInfo<RequestPermissionPageArgs> {
   RequestPermissionPage({
-    _i14.Key? key,
+    _i12.Key? key,
     void Function(bool)? onResult,
-    List<_i13.PageRouteInfo>? children,
+    List<_i11.PageRouteInfo>? children,
   }) : super(
           RequestPermissionPage.name,
           args: RequestPermissionPageArgs(
@@ -190,11 +121,12 @@ class RequestPermissionPage extends _i13.PageRouteInfo<RequestPermissionPageArgs
 
   static const String name = 'RequestPermissionPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<RequestPermissionPageArgs>(orElse: () => const RequestPermissionPageArgs());
-      return _i7.RequestPermissionPage(
+      final args = data.argsAs<RequestPermissionPageArgs>(
+          orElse: () => const RequestPermissionPageArgs());
+      return _i5.RequestPermissionPage(
         key: args.key,
         onResult: args.onResult,
       );
@@ -208,7 +140,7 @@ class RequestPermissionPageArgs {
     this.onResult,
   });
 
-  final _i14.Key? key;
+  final _i12.Key? key;
 
   final void Function(bool)? onResult;
 
@@ -219,9 +151,9 @@ class RequestPermissionPageArgs {
 }
 
 /// generated route for
-/// [_i8.RouterPage]
-class RouterPage extends _i13.PageRouteInfo<void> {
-  const RouterPage({List<_i13.PageRouteInfo>? children})
+/// [_i6.RouterPage]
+class RouterPage extends _i11.PageRouteInfo<void> {
+  const RouterPage({List<_i11.PageRouteInfo>? children})
       : super(
           RouterPage.name,
           initialChildren: children,
@@ -229,18 +161,18 @@ class RouterPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'RouterPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i8.RouterPage();
+      return const _i6.RouterPage();
     },
   );
 }
 
 /// generated route for
-/// [_i9.RoutingParamPage]
-class RoutingParamPage extends _i13.PageRouteInfo<void> {
-  const RoutingParamPage({List<_i13.PageRouteInfo>? children})
+/// [_i7.RoutingParamPage]
+class RoutingParamPage extends _i11.PageRouteInfo<void> {
+  const RoutingParamPage({List<_i11.PageRouteInfo>? children})
       : super(
           RoutingParamPage.name,
           initialChildren: children,
@@ -248,21 +180,22 @@ class RoutingParamPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'RoutingParamPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i9.RoutingParamPage();
+      return const _i7.RoutingParamPage();
     },
   );
 }
 
 /// generated route for
-/// [_i10.RoutingPathParamDetailPage]
-class RoutingPathParamDetailPage extends _i13.PageRouteInfo<RoutingPathParamDetailPageArgs> {
+/// [_i8.RoutingPathParamDetailPage]
+class RoutingPathParamDetailPage
+    extends _i11.PageRouteInfo<RoutingPathParamDetailPageArgs> {
   RoutingPathParamDetailPage({
-    _i16.Key? key,
+    _i13.Key? key,
     required String filmid,
-    List<_i13.PageRouteInfo>? children,
+    List<_i11.PageRouteInfo>? children,
   }) : super(
           RoutingPathParamDetailPage.name,
           args: RoutingPathParamDetailPageArgs(
@@ -275,12 +208,14 @@ class RoutingPathParamDetailPage extends _i13.PageRouteInfo<RoutingPathParamDeta
 
   static const String name = 'RoutingPathParamDetailPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
       final pathParams = data.inheritedPathParams;
-      final args = data.argsAs<RoutingPathParamDetailPageArgs>(orElse: () => RoutingPathParamDetailPageArgs(filmid: pathParams.getString('filmid')));
-      return _i10.RoutingPathParamDetailPage(
+      final args = data.argsAs<RoutingPathParamDetailPageArgs>(
+          orElse: () => RoutingPathParamDetailPageArgs(
+              filmid: pathParams.getString('filmid')));
+      return _i8.RoutingPathParamDetailPage(
         key: args.key,
         filmid: args.filmid,
       );
@@ -294,7 +229,7 @@ class RoutingPathParamDetailPageArgs {
     required this.filmid,
   });
 
-  final _i16.Key? key;
+  final _i13.Key? key;
 
   final String filmid;
 
@@ -305,12 +240,13 @@ class RoutingPathParamDetailPageArgs {
 }
 
 /// generated route for
-/// [_i11.RoutingQueryParamDetailPage]
-class RoutingQueryParamDetailPage extends _i13.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
+/// [_i9.RoutingQueryParamDetailPage]
+class RoutingQueryParamDetailPage
+    extends _i11.PageRouteInfo<RoutingQueryParamDetailPageArgs> {
   RoutingQueryParamDetailPage({
-    _i16.Key? key,
+    _i13.Key? key,
     int? filmid,
-    List<_i13.PageRouteInfo>? children,
+    List<_i11.PageRouteInfo>? children,
   }) : super(
           RoutingQueryParamDetailPage.name,
           args: RoutingQueryParamDetailPageArgs(
@@ -323,12 +259,14 @@ class RoutingQueryParamDetailPage extends _i13.PageRouteInfo<RoutingQueryParamDe
 
   static const String name = 'RoutingQueryParamDetailPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
       final queryParams = data.queryParams;
-      final args = data.argsAs<RoutingQueryParamDetailPageArgs>(orElse: () => RoutingQueryParamDetailPageArgs(filmid: queryParams.optInt('key')));
-      return _i11.RoutingQueryParamDetailPage(
+      final args = data.argsAs<RoutingQueryParamDetailPageArgs>(
+          orElse: () => RoutingQueryParamDetailPageArgs(
+              filmid: queryParams.optInt('key')));
+      return _i9.RoutingQueryParamDetailPage(
         key: args.key,
         filmid: args.filmid,
       );
@@ -342,7 +280,7 @@ class RoutingQueryParamDetailPageArgs {
     this.filmid,
   });
 
-  final _i16.Key? key;
+  final _i13.Key? key;
 
   final int? filmid;
 
@@ -353,9 +291,9 @@ class RoutingQueryParamDetailPageArgs {
 }
 
 /// generated route for
-/// [_i12.SettingsPage]
-class SettingsPage extends _i13.PageRouteInfo<void> {
-  const SettingsPage({List<_i13.PageRouteInfo>? children})
+/// [_i10.SettingsPage]
+class SettingsPage extends _i11.PageRouteInfo<void> {
+  const SettingsPage({List<_i11.PageRouteInfo>? children})
       : super(
           SettingsPage.name,
           initialChildren: children,
@@ -363,10 +301,10 @@ class SettingsPage extends _i13.PageRouteInfo<void> {
 
   static const String name = 'SettingsPage';
 
-  static _i13.PageInfo page = _i13.PageInfo(
+  static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i12.SettingsPage();
+      return const _i10.SettingsPage();
     },
   );
 }

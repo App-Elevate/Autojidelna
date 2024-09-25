@@ -16,9 +16,7 @@ class InitApp {
     await Future.wait([
       App.initLocalization(),
       App.initFirebaseMessaging(),
-      App.initAppCheck(),
       App.initSecureStorage(),
-      App.initGoogleSignIn(),
       App.initPlatform(),
       App.initRotation(),
       App.initCodePush(),

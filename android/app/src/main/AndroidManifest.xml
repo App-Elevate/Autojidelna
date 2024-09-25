@@ -143,9 +143,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="github.core.appelevate.cz" />
-                <data android:scheme="http" android:host="firebase.core.appelevate.cz" />
-                <data android:scheme="http" android:host="core.appelevate.cz" />
+                <data android:scheme="http" android:host="aplikace.autojidelna.cz" />
                 <data android:scheme="https" />
             </intent-filter>
             <!-- Specifies an Android theme to apply to this Activity as soon as

@@ -1,9 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/crash_logic.dart';
-import 'package:autojidelna/src/ui/widgets/token_field_widget.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -31,8 +29,6 @@ class DebugPage extends StatelessWidget {
                 border: const OutlineInputBorder(),
               ),
             ),
-            Text(App.gotAppCheckToken ? 'Got App Check Token' : 'No App Check Token'),
-            const TokenFieldWidget(),
           ],
         ),
       ),

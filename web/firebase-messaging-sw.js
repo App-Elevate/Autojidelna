@@ -4,13 +4,15 @@ importScripts(
 );
 
 firebase.initializeApp({
-  apiKey: 'AIzaSyARLbCza3INmFGD3P62q7Bl0H_Hag_Ndzg',
-  authDomain: 'app-elevate-core.firebaseapp.com',
-  projectId: 'app-elevate-core',
-  storageBucket: 'app-elevate-core.appspot.com',
-  messagingSenderId: '466976066624',
-  appId: '1:466976066624:web:6591f71f8c1987b75423a5',
-  measurementId: 'G-GQN6RGH7K1',
+  apiKey: "AIzaSyBlMC15yTKNCS-J3Fncd3LxjiNaZgjKgaw",
+  appId: "1:108088693003:web:0843b05cd66085bf96d20e",
+  messagingSenderId: "108088693003",
+  projectId: "autojidelna",
+  authDomain: "autojidelna.firebaseapp.com",
+  databaseURL:
+    "https://autojidelna-default-rtdb.europe-west1.firebasedatabase.app",
+  storageBucket: "autojidelna.appspot.com",
+  measurementId: "G-3SKH2E1QEC",
 });
 
 const messaging = firebase.messaging();

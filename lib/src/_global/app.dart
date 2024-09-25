@@ -1,8 +1,6 @@
 import 'package:autojidelna/src/_conf/hive.dart';
-import 'package:autojidelna/src/_conf/tokens.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/_messaging/messaging.dart';
-import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
@@ -10,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -24,8 +21,6 @@ import 'package:shorebird_code_push/shorebird_code_push.dart';
 ///
 /// Remote config: [remoteConfig]
 ///
-/// Google sign in: [googleSignIn]
-///
 /// Package info: [packageInfo]
 ///
 /// Secure storage: [secureStorage]
@@ -33,10 +28,8 @@ class App {
   static bool _initPlatformExecuted = false;
   static bool _initLocalizationExecuted = false;
   static bool _initRemoteConfigExecuted = false;
-  static bool _initGoogleSignInExecuted = false;
   static bool _initHiveExecuted = false;
   static bool _initRotationExecuted = false;
-  static bool _initAppCheckExecuted = false;
   static bool _initFirebaseMessagingExecuted = false;
   static bool _initCodePushExecuted = false;
 
@@ -100,20 +93,6 @@ class App {
     _initRemoteConfigExecuted = true;
   }
 
-  static Future<void> initGoogleSignIn() async {
-    assert(_initGoogleSignInExecuted == false, 'App.initRemoteConfig() must be called only once');
-    if (_initGoogleSignInExecuted) return;
-    const List<String> scopes = <String>[
-      'email',
-      'profile',
-    ];
-
-    googleSignIn = GoogleSignIn(
-      scopes: scopes,
-    );
-    _initGoogleSignInExecuted = true;
-  }
-
   static Future<void> initHive() async {
     assert(_initHiveExecuted == false, 'App.initHive() must be called only once');
     if (_initHiveExecuted) return;
@@ -127,36 +106,6 @@ class App {
 
   static Future<void> initSecureStorage() async {
     secureStorage = const FlutterSecureStorage();
-  }
-
-  static Future<void> initAppCheck() async {
-    assert(_initAppCheckExecuted == false, 'App.initAppCheck() must be called only once');
-    if (_initAppCheckExecuted) return;
-
-    await FirebaseAppCheck.instance.activate(
-      // this is also an option: ReCaptchaV3Provider('6LdNRA0qAAAAABvSy9wAVVjdlhcbuXTasRoK6Z4h')
-      webProvider: ReCaptchaEnterpriseProvider(Tokens.reCaptchaEnterprise),
-      androidProvider: kDebugMode ? AndroidProvider.debug : AndroidProvider.playIntegrity,
-      appleProvider: kDebugMode ? AppleProvider.debug : AppleProvider.appAttestWithDeviceCheckFallback,
-    );
-    FirebaseAppCheck.instance.onTokenChange.listen(
-      (token) {
-        gotAppCheckToken = token != null;
-      },
-      onError: (e, stackTrace) {
-        Sentry.captureException(e, stackTrace: stackTrace);
-      },
-      cancelOnError: false,
-    );
-    try {
-      await FirebaseAppCheck.instance.getToken().then((token) {
-        gotAppCheckToken = token != null;
-      });
-    } catch (e, stackTrace) {
-      Sentry.captureException(e, stackTrace: stackTrace);
-    }
-
-    _initAppCheckExecuted = true;
   }
 
   static Future<void> initFirebaseMessaging() async {
@@ -195,8 +144,6 @@ class App {
 
   static late final FirebaseRemoteConfig remoteConfig;
 
-  static late final GoogleSignIn googleSignIn;
-
   static Locale currentLocale = defaultLocale;
 
   static late final PackageInfo packageInfo;
@@ -204,8 +151,6 @@ class App {
   static late final bool shouldAskForNotification;
 
   static late final int? currentPatchNumber;
-
-  static bool gotAppCheckToken = false;
 
   static final remoteConfigProvider = Rmc();
 

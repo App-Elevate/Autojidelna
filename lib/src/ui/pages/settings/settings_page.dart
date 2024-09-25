@@ -1,10 +1,7 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:autojidelna/src/_global/providers/is_online.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
-import 'package:autojidelna/src/ui/widgets/account_status_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 @RoutePage()
 class SettingsPage extends StatelessWidget {
@@ -25,25 +22,6 @@ class SettingsPage extends StatelessWidget {
               onPressed: () async => context.router.push(const LocalizationsPage()),
               child: Text(lang.language),
             ),
-            ElevatedButton(
-              onPressed: () async => context.router.push(LoginPage()),
-              child: Text(lang.login),
-            ),
-            Consumer<IsOnline>(
-              builder: (context, IsOnline isOnline, child) {
-                return Text(
-                  isOnline.isOnline ? lang.connectedToTheInternet : lang.disconnectedFromTheInternet,
-                );
-              },
-            ),
-            Consumer<IsOnline>(
-              builder: (context, IsOnline isOnline, child) {
-                return Text(
-                  isOnline.isOnlineLocal ? lang.connectedToANetwork : lang.disconnectedFromANetwork,
-                );
-              },
-            ),
-            const AccountStatusWidget(),
           ],
         ),
       ),

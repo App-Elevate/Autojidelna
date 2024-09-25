@@ -57,12 +57,8 @@ mixin _$GithubRelease {
   @JsonKey(name: 'body')
   String get body => throw _privateConstructorUsedError;
 
-  /// Serializes this GithubRelease to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GithubReleaseCopyWith<GithubRelease> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -106,8 +102,6 @@ class _$GithubReleaseCopyWithImpl<$Res, $Val extends GithubRelease>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -206,8 +200,6 @@ class _$GithubReleaseCopyWithImpl<$Res, $Val extends GithubRelease>
     ) as $Val);
   }
 
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GithubAuthorCopyWith<$Res> get author {
@@ -257,8 +249,6 @@ class __$$GithubReleaseImplCopyWithImpl<$Res>
       _$GithubReleaseImpl _value, $Res Function(_$GithubReleaseImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -511,7 +501,7 @@ class _$GithubReleaseImpl
             (identical(other.body, body) || other.body == body));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -534,9 +524,7 @@ class _$GithubReleaseImpl
       zipballUrl,
       body);
 
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GithubReleaseImplCopyWith<_$GithubReleaseImpl> get copyWith =>
@@ -628,11 +616,8 @@ abstract class _GithubRelease implements GithubRelease {
   @override
   @JsonKey(name: 'body')
   String get body;
-
-  /// Create a copy of GithubRelease
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GithubReleaseImplCopyWith<_$GithubReleaseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -680,12 +665,8 @@ mixin _$GithubAuthor {
   @JsonKey(name: 'site_admin')
   bool get siteAdmin => throw _privateConstructorUsedError;
 
-  /// Serializes this GithubAuthor to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GithubAuthor
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GithubAuthorCopyWith<GithubAuthor> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -727,8 +708,6 @@ class _$GithubAuthorCopyWithImpl<$Res, $Val extends GithubAuthor>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GithubAuthor
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -865,8 +844,6 @@ class __$$GithubAuthorImplCopyWithImpl<$Res>
       _$GithubAuthorImpl _value, $Res Function(_$GithubAuthorImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GithubAuthor
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1114,7 +1091,7 @@ class _$GithubAuthorImpl with DiagnosticableTreeMixin implements _GithubAuthor {
                 other.siteAdmin == siteAdmin));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1137,9 +1114,7 @@ class _$GithubAuthorImpl with DiagnosticableTreeMixin implements _GithubAuthor {
       type,
       siteAdmin);
 
-  /// Create a copy of GithubAuthor
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GithubAuthorImplCopyWith<_$GithubAuthorImpl> get copyWith =>
@@ -1235,11 +1210,8 @@ abstract class _GithubAuthor implements GithubAuthor {
   @override
   @JsonKey(name: 'site_admin')
   bool get siteAdmin;
-
-  /// Create a copy of GithubAuthor
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GithubAuthorImplCopyWith<_$GithubAuthorImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1277,12 +1249,8 @@ mixin _$GithubAsset {
   @JsonKey(name: 'browser_download_url')
   String get browserDownloadUrl => throw _privateConstructorUsedError;
 
-  /// Serializes this GithubAsset to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GithubAssetCopyWith<GithubAsset> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1321,8 +1289,6 @@ class _$GithubAssetCopyWithImpl<$Res, $Val extends GithubAsset>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1396,8 +1362,6 @@ class _$GithubAssetCopyWithImpl<$Res, $Val extends GithubAsset>
     ) as $Val);
   }
 
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $GithubUploaderCopyWith<$Res> get uploader {
@@ -1442,8 +1406,6 @@ class __$$GithubAssetImplCopyWithImpl<$Res>
       _$GithubAssetImpl _value, $Res Function(_$GithubAssetImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1630,7 +1592,7 @@ class _$GithubAssetImpl with DiagnosticableTreeMixin implements _GithubAsset {
                 other.browserDownloadUrl == browserDownloadUrl));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -1648,9 +1610,7 @@ class _$GithubAssetImpl with DiagnosticableTreeMixin implements _GithubAsset {
       updatedAt,
       browserDownloadUrl);
 
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GithubAssetImplCopyWith<_$GithubAssetImpl> get copyWith =>
@@ -1723,11 +1683,8 @@ abstract class _GithubAsset implements GithubAsset {
   @override
   @JsonKey(name: 'browser_download_url')
   String get browserDownloadUrl;
-
-  /// Create a copy of GithubAsset
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GithubAssetImplCopyWith<_$GithubAssetImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1775,12 +1732,8 @@ mixin _$GithubUploader {
   @JsonKey(name: 'site_admin')
   bool get siteAdmin => throw _privateConstructorUsedError;
 
-  /// Serializes this GithubUploader to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-
-  /// Create a copy of GithubUploader
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   $GithubUploaderCopyWith<GithubUploader> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -1822,8 +1775,6 @@ class _$GithubUploaderCopyWithImpl<$Res, $Val extends GithubUploader>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of GithubUploader
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -1960,8 +1911,6 @@ class __$$GithubUploaderImplCopyWithImpl<$Res>
       _$GithubUploaderImpl _value, $Res Function(_$GithubUploaderImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of GithubUploader
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -2211,7 +2160,7 @@ class _$GithubUploaderImpl
                 other.siteAdmin == siteAdmin));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -2234,9 +2183,7 @@ class _$GithubUploaderImpl
       type,
       siteAdmin);
 
-  /// Create a copy of GithubUploader
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$GithubUploaderImplCopyWith<_$GithubUploaderImpl> get copyWith =>
@@ -2333,11 +2280,8 @@ abstract class _GithubUploader implements GithubUploader {
   @override
   @JsonKey(name: 'site_admin')
   bool get siteAdmin;
-
-  /// Create a copy of GithubUploader
-  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
+  @JsonKey(ignore: true)
   _$$GithubUploaderImplCopyWith<_$GithubUploaderImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
-import 'package:autojidelna/src/_global/providers/is_online.dart';
 import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
@@ -79,7 +78,6 @@ class MyAppWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => IsOnline(), lazy: false),
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
       ],
       child: const MyApp(),
