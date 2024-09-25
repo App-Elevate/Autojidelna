@@ -35,16 +35,16 @@ on:
         required: true
         type: boolean
         default: true
-      github_pages:
-        description: "Deploy to GitHub Pages?"
-        required: true
-        type: boolean
-        default: true
-      firebase_hosting:
-        description: "Deploy to Firebase Hosting?"
-        required: true
-        type: boolean
-        default: true
+      # github_pages:
+      #   description: "Deploy to GitHub Pages?"
+      #   required: true
+      #   type: boolean
+      #   default: true
+      # firebase_hosting:
+      #   description: "Deploy to Firebase Hosting?"
+      #   required: true
+      #   type: boolean
+      #   default: true
       patch:
         description: "Make it an instant patch release?"
         required: true
@@ -355,7 +355,7 @@ jobs:
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
     runs-on: ubuntu-latest
-    if: ${{ github.event.pull_request.merged == true || github.event.inputs.firebase_hosting == 'true' }}
+    if: false #${{ github.event.pull_request.merged == true || github.event.inputs.firebase_hosting == 'true' }}
     environment:
       name: firebase-hosting
       url: ${{ vars.FIREBASE_HOSTING_URL }}
@@ -381,7 +381,7 @@ jobs:
 
   deploy_github_pages:
     name: "[Web] Deploy to GitHub Pages"
-    if: ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
+    if: false # ${{ github.event.pull_request.merged == true || github.event.inputs.github_pages == 'true' }}
     permissions:
       contents: read
       pages: write
