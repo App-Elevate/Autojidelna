@@ -4,6 +4,7 @@ import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -152,7 +153,7 @@ Future<bool> initAwesome() async {
 
 Future<void> doNotifications({bool force = false}) async {
   //TODO: add more langueages
-  final lang = lookupTexts(const Locale('cs'));
+  final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
   LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
   AwesomeNotifications().createNotification(

@@ -1,6 +1,7 @@
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
+import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/all.dart';
@@ -175,7 +176,7 @@ class App {
 
   static final remoteConfigProvider = Rmc();
 
-  static const defaultLocale = Locale('cs');
+  static final defaultLocale = Locales.cs;
 
   static const defaultRotations = [
     DeviceOrientation.portraitUp,
