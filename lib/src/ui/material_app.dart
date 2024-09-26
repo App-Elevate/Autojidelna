@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
@@ -52,18 +54,15 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      theme: AppThemes.theme.copyWith(colorScheme: context.watch<ThemeProvider>().colorScheme),
+      locale: _locale,
       supportedLocales: Texts.supportedLocales,
       localizationsDelegates: Texts.localizationsDelegates,
-      locale: _locale,
-      debugShowCheckedModeBanner: false,
       routerConfig: _appRouter.config(
-        navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
         includePrefixMatches: true,
+        navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
         deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
-      ),
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
       ),
     );
   }
@@ -77,6 +76,7 @@ class MyAppWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
       child: const MyApp(),
     );

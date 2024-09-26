@@ -147,6 +147,7 @@ class App {
     if (_initHiveExecuted) return;
 
     await Hive.initFlutter();
+    await Hive.openBox(Boxes.theme);
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
     await Hive.openBox(Boxes.appState);
@@ -174,7 +175,7 @@ class App {
 
   static final remoteConfigProvider = Rmc();
 
-  static const defaultLocale = Locale('en');
+  static const defaultLocale = Locale('cs');
 
   static const defaultRotations = [
     DeviceOrientation.portraitUp,
