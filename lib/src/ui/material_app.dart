@@ -53,17 +53,23 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      theme: AppThemes.theme.copyWith(colorScheme: context.watch<ThemeProvider>().colorScheme),
-      locale: _locale,
-      supportedLocales: Texts.supportedLocales,
-      localizationsDelegates: Texts.localizationsDelegates,
-      routerConfig: _appRouter.config(
-        includePrefixMatches: true,
-        navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
-        deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
-      ),
+    return Consumer<ThemeProvider>(
+      builder: (context, theme, ___) {
+        return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          themeMode: theme.themeMode,
+          theme: AppThemes.theme.copyWith(colorScheme: theme.colorScheme),
+          darkTheme: AppThemes.theme.copyWith(colorScheme: theme.colorScheme),
+          locale: _locale,
+          supportedLocales: Texts.supportedLocales,
+          localizationsDelegates: Texts.localizationsDelegates,
+          routerConfig: _appRouter.config(
+            includePrefixMatches: true,
+            navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
+            deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
+          ),
+        );
+      },
     );
   }
 }
