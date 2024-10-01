@@ -18,9 +18,9 @@ class ThemeModePicker extends StatelessWidget {
           selected: {themeMode.read},
           onSelectionChanged: (Set<ThemeMode> selected) => themeMode.set(selected.first),
           segments: [
-            ButtonSegment<ThemeMode>(value: ThemeMode.system, label: Text(lang.systemThemeMode)),
-            ButtonSegment<ThemeMode>(value: ThemeMode.light, label: Text(lang.lightThemeMode)),
-            ButtonSegment<ThemeMode>(value: ThemeMode.dark, label: Text(lang.darkThemeMode)),
+            ButtonSegment<ThemeMode>(value: ThemeMode.system, label: Text(lang.themeModeSystem)),
+            ButtonSegment<ThemeMode>(value: ThemeMode.light, label: Text(lang.themeModeLight)),
+            ButtonSegment<ThemeMode>(value: ThemeMode.dark, label: Text(lang.themeModeDark)),
           ],
         ),
       ),
