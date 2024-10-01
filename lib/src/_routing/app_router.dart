@@ -15,6 +15,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(page: MorePage.page, path: 'more'),
       ],
     ),
+    AutoRoute(page: DishDetailPage.page, path: '/detail'),
+    AutoRoute(page: LoginPage.page, path: '/login'),
     AutoRoute(page: AccountPage.page, path: '/account'),
     AutoRoute(page: StatisticsPage.page, path: '/statistics'),
     AutoRoute(page: SettingsPage.page, path: '/settings'),
