@@ -11,20 +11,11 @@ class AppRouter extends RootStackRouter {
       initial: true,
       path: '/',
       children: <AutoRoute>[
-        AutoRoute(page: DemoPage.page, path: 'demo'),
-        AutoRoute(page: CrashlyticsPage.page, path: '', initial: true),
-        AutoRoute(
-          page: SettingsPage.page,
-          path: 'settings',
-        ),
+        // TODO
       ],
     ),
     AutoRoute(page: RequestPermissionPage.page, path: '/request-permission'),
     AutoRoute(page: DebugPage.page, path: '/demo/debug'),
-    AutoRoute(page: RoutingParamPage.page, path: '/settings/param'),
-    AutoRoute(page: LocalizationsPage.page, path: '/settings/localizations'),
-    AutoRoute(page: RoutingQueryParamDetailPage.page, path: '/settings/param/detail'),
-    AutoRoute(page: RoutingPathParamDetailPage.page, path: '/settings/param/:filmid'),
     RedirectRoute(path: '*', redirectTo: '/'),
   ];
 }
