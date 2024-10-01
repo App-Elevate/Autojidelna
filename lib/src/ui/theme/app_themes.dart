@@ -99,6 +99,8 @@ class AppThemes {
   static ThemeData theme(ColorScheme colorScheme, bool amoledMode) => ThemeData(
         useMaterial3: true,
         applyElevationOverlayColor: true,
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
 
         // COLOR
         colorScheme: colorScheme,
@@ -111,7 +113,169 @@ class AppThemes {
 
         // TYPOGRAPHY & ICONOGRAPHY
         textTheme: textTheme,
+        typography: Typography.material2021(),
 
-        // TODO: COMPONENT THEMES
+        // COMPONENT THEMES
+        iconTheme: IconThemeData(size: 30, color: colorScheme.onSurface),
+        appBarTheme: AppBarTheme(
+          scrolledUnderElevation: amoledMode ? 0 : 2,
+          elevation: amoledMode ? 0 : 2,
+          actionsIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
+        ),
+        cardTheme: CardTheme(
+          elevation: 2,
+          clipBehavior: Clip.hardEdge,
+          surfaceTintColor: colorScheme.surfaceTint,
+        ),
+        dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
+        drawerTheme: DrawerThemeData(
+          surfaceTintColor: colorScheme.surfaceTint,
+          backgroundColor: colorScheme.surface,
+          scrimColor: colorScheme.scrim,
+          elevation: 2,
+          width: 275,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          indicatorColor: colorScheme.secondary,
+          surfaceTintColor: colorScheme.surfaceTint,
+          elevation: amoledMode ? 0 : null,
+        ),
+
+        // Popups
+        snackBarTheme: SnackBarThemeData(
+          backgroundColor: colorScheme.inverseSurface,
+          elevation: amoledMode ? 0 : 2,
+          contentTextStyle: TextStyle(fontFamily: Fonts.body, color: colorScheme.onInverseSurface),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16)),
+          ),
+          behavior: SnackBarBehavior.floating,
+          insetPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          showCloseIcon: true,
+          closeIconColor: colorScheme.onInverseSurface,
+        ),
+        dialogTheme: DialogTheme(
+          backgroundColor: colorScheme.surface,
+          elevation: 3,
+          surfaceTintColor: colorScheme.surfaceTint,
+          alignment: Alignment.center,
+          iconColor: colorScheme.onSurface,
+          titleTextStyle: TextStyle(
+            fontFamily: Fonts.headings,
+            color: colorScheme.onSurface,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          contentTextStyle: const TextStyle(fontFamily: Fonts.body, fontSize: 15),
+          actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
+        ),
+
+        // Inputs
+        inputDecorationTheme: const InputDecorationTheme(
+          alignLabelWithHint: true,
+          isDense: true,
+          errorMaxLines: 1,
+          labelStyle: TextStyle(fontFamily: Fonts.body),
+          floatingLabelAlignment: FloatingLabelAlignment.start,
+          hintStyle: TextStyle(fontFamily: Fonts.body),
+          helperStyle: TextStyle(fontFamily: Fonts.body),
+          border: OutlineInputBorder(),
+        ),
+
+        // List tiles
+        listTileTheme: ListTileThemeData(
+          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          dense: false,
+          selectedColor: colorScheme.primary,
+          iconColor: colorScheme.primary.withOpacity(.75),
+          titleTextStyle: TextStyle(
+            fontSize: 19,
+            fontFamily: Fonts.body,
+            fontWeight: FontWeight.w400,
+            color: colorScheme.onSurface,
+          ),
+          subtitleTextStyle: TextStyle(
+            fontSize: 13,
+            fontFamily: Fonts.body,
+            color: colorScheme.onSurfaceVariant,
+          ),
+          visualDensity: VisualDensity.comfortable,
+        ),
+        expansionTileTheme: ExpansionTileThemeData(
+          collapsedTextColor: colorScheme.primary,
+          textColor: colorScheme.onSurface,
+          childrenPadding: const EdgeInsets.only(bottom: 8),
+        ),
+        bottomSheetTheme: BottomSheetThemeData(
+          modalElevation: 1,
+          clipBehavior: Clip.hardEdge,
+          surfaceTintColor: colorScheme.surfaceTint,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+            side: BorderSide(color: amoledMode ? colorScheme.surfaceContainerHighest : Colors.transparent, strokeAlign: 1),
+          ),
+        ),
+
+        // Buttons
+        switchTheme: const SwitchThemeData(splashRadius: 0),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            textStyle: const WidgetStatePropertyAll(
+              TextStyle(
+                fontFamily: Fonts.headings,
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                height: 1.25,
+              ),
+            ),
+            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+              if (states.contains(WidgetState.disabled)) return colorScheme.surfaceContainerHighest; // Disabled color
+              return colorScheme.surface; // Regular color
+            }),
+            foregroundColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
+              return colorScheme.onSurface;
+            }),
+            fixedSize: const WidgetStatePropertyAll(Size.fromHeight(50)),
+            splashFactory: InkRipple.splashFactory,
+            alignment: Alignment.center,
+            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+            elevation: const WidgetStatePropertyAll(4),
+          ),
+        ),
+        iconButtonTheme: const IconButtonThemeData(
+          style: ButtonStyle(splashFactory: NoSplash.splashFactory),
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor: WidgetStatePropertyAll(colorScheme.onSurface),
+            textStyle: const WidgetStatePropertyAll(
+              TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                height: 1.25,
+              ),
+            ),
+            splashFactory: NoSplash.splashFactory,
+            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            side: WidgetStatePropertyAll(BorderSide(width: 1.75, color: colorScheme.onSurfaceVariant)),
+          ),
+        ),
+        segmentedButtonTheme: SegmentedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.resolveWith<Color>(
+              (Set<WidgetState> states) {
+                if (states.contains(WidgetState.selected)) {
+                  return colorScheme.primary;
+                }
+                return Colors.transparent;
+              },
+            ),
+          ),
+        ),
       );
 }
