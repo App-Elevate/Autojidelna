@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -18,11 +19,11 @@ class LocalizationsPage extends StatelessWidget {
         child: Column(
           children: [
             ElevatedButton(
-              onPressed: () => App.translate(const Locale('en')),
+              onPressed: () => App.translate(Locales.en),
               child: Text(lang.languageEnglish),
             ),
             ElevatedButton(
-              onPressed: () => App.translate(const Locale('cs')),
+              onPressed: () => App.translate(Locales.cs),
               child: Text(lang.languageCzech),
             ),
           ],

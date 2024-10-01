@@ -1,6 +1,8 @@
+import 'package:autojidelna/src/_conf/adapters.hive.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
+import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/all.dart';
@@ -147,6 +149,10 @@ class App {
     if (_initHiveExecuted) return;
 
     await Hive.initFlutter();
+    Hive.registerAdapter(ThemeModeAdapter());
+    Hive.registerAdapter(ThemeStyleAdapter());
+    Hive.registerAdapter(DateFormatOptionsAdapter());
+    await Hive.openBox(Boxes.theme);
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
     await Hive.openBox(Boxes.appState);
@@ -174,7 +180,7 @@ class App {
 
   static final remoteConfigProvider = Rmc();
 
-  static const defaultLocale = Locale('en');
+  static final defaultLocale = Locales.cs;
 
   static const defaultRotations = [
     DeviceOrientation.portraitUp,

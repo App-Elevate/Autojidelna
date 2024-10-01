@@ -1,11 +1,5 @@
 // Purpose: stores constants used throughout the app.
 
-import 'package:flutter/material.dart';
-
-class Locales {
-  static Locale get csCZ => const Locale('cs', 'CZ');
-}
-
 class NotificationIds {
   static String kreditChannel(String userName, String url) => 'kredit_channel_${userName}_$url';
   static String objednanoChannel(String userName, String url) => 'objednano_channel_${userName}_$url';
