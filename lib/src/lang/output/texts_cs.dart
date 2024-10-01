@@ -44,10 +44,19 @@ class TextsCs extends Texts {
   String get login => 'Přihlásit se';
 
   @override
+  String get menu => 'Jídelníček';
+
+  @override
+  String get more => 'Více';
+
+  @override
   String get noFood => 'Žádná jídla pro tento den.';
 
   @override
   String get noThankYou => 'Ne, děkuji';
+
+  @override
+  String get orders => 'Objednávky';
 
   @override
   String get password => 'Heslo';

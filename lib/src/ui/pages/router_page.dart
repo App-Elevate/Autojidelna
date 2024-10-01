@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/ui/widgets/router_page_appbars/default_appbar.dart';
+import 'package:autojidelna/src/ui/widgets/appbars/default_appbar.dart';
+import 'package:autojidelna/src/ui/widgets/appbars/menu_page.dart';
+import 'package:autojidelna/src/ui/widgets/appbars/more_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
@@ -33,10 +36,6 @@ class _RouterPageState extends State<RouterPage> {
     });
   }
 
-  final List<PageRouteInfo> routes = [
-    // TODO
-  ];
-
   @override
   Widget build(BuildContext context) {
     final lang = context.l10n;
@@ -57,15 +56,31 @@ class _RouterPageState extends State<RouterPage> {
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
     // note: using null will not show the appbar at all. This includes the navigation drawer button. Use with caution.
     final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
-      // TODO
+      (context) => const MenuAppBar(),
+      (context) => const MoreAppBar(),
     ];
 
-    final List<NavigationDestination> destinations = [
-      // TODO
+    final List<PageRouteInfo> routes = [
+      const MenuPage(),
+      const MorePage(),
     ];
 
     final List<Widget?> secondaryBodies = [
-      // TODO
+      null,
+      null,
+    ];
+
+    final List<NavigationDestination> destinations = [
+      NavigationDestination(
+        icon: const Icon(Icons.menu_book),
+        selectedIcon: const Icon(Icons.menu_book_outlined),
+        label: lang.menu,
+      ),
+      NavigationDestination(
+        icon: const Icon(Icons.more_horiz),
+        selectedIcon: const Icon(Icons.more_horiz_outlined),
+        label: lang.more,
+      ),
     ];
 
     assert(

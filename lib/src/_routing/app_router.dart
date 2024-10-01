@@ -11,7 +11,8 @@ class AppRouter extends RootStackRouter {
       initial: true,
       path: '/',
       children: <AutoRoute>[
-        // TODO
+        AutoRoute(page: MenuPage.page, path: 'menu', initial: true),
+        AutoRoute(page: MorePage.page, path: 'more'),
       ],
     ),
     AutoRoute(page: RequestPermissionPage.page, path: '/request-permission'),

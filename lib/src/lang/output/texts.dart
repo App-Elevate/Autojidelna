@@ -145,6 +145,18 @@ abstract class Texts {
   /// **'Přihlásit se'**
   String get login;
 
+  /// No description provided for @menu.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jídelníček'**
+  String get menu;
+
+  /// No description provided for @more.
+  ///
+  /// In cs, this message translates to:
+  /// **'Více'**
+  String get more;
+
   /// No description provided for @noFood.
   ///
   /// In cs, this message translates to:
@@ -156,6 +168,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Ne, děkuji'**
   String get noThankYou;
+
+  /// No description provided for @orders.
+  ///
+  /// In cs, this message translates to:
+  /// **'Objednávky'**
+  String get orders;
 
   /// No description provided for @password.
   ///
