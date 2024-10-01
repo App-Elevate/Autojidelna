@@ -7,11 +7,23 @@ class TextsCs extends Texts {
   TextsCs([String locale = 'cs']) : super(locale);
 
   @override
+  String get about => 'O aplikaci';
+
+  @override
+  String get analytics => 'Shromažďování údajů';
+
+  @override
   String get appName => 'Autojídelna';
 
   @override
   String get appDescription =>
       'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.';
+
+  @override
+  String get appearance => 'Vzhled';
+
+  @override
+  String get convenience => 'Pohodlí';
 
   @override
   String get gettingDataNotifications => 'Získávám data pro oznámení';
@@ -54,6 +66,9 @@ class TextsCs extends Texts {
 
   @override
   String get noThankYou => 'Ne, děkuji';
+
+  @override
+  String get notifications => 'Oznámení';
 
   @override
   String get orders => 'Objednávky';

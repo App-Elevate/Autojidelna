@@ -91,6 +91,18 @@ abstract class Texts {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('cs')];
 
+  /// No description provided for @about.
+  ///
+  /// In cs, this message translates to:
+  /// **'O aplikaci'**
+  String get about;
+
+  /// No description provided for @analytics.
+  ///
+  /// In cs, this message translates to:
+  /// **'Shromažďování údajů'**
+  String get analytics;
+
   /// No description provided for @appName.
   ///
   /// In cs, this message translates to:
@@ -102,6 +114,18 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.'**
   String get appDescription;
+
+  /// No description provided for @appearance.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vzhled'**
+  String get appearance;
+
+  /// No description provided for @convenience.
+  ///
+  /// In cs, this message translates to:
+  /// **'Pohodlí'**
+  String get convenience;
 
   /// No description provided for @gettingDataNotifications.
   ///
@@ -168,6 +192,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Ne, děkuji'**
   String get noThankYou;
+
+  /// No description provided for @notifications.
+  ///
+  /// In cs, this message translates to:
+  /// **'Oznámení'**
+  String get notifications;
 
   /// No description provided for @orders.
   ///
