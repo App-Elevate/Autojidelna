@@ -60,12 +60,54 @@ class AppThemes {
         ),
       };
 
-  static ThemeData get theme => ThemeData(
+  static ColorScheme get colorSchemeLight => const ColorScheme(
+        brightness: Brightness.light,
+        primary: Colors.purpleAccent,
+        onPrimary: Colors.white,
+        secondary: Color(0x7B009687),
+        onSecondary: Colors.white,
+        error: Colors.red,
+        onError: Colors.black,
+        surface: Colors.white,
+        onSurface: Colors.black,
+        surfaceContainerHighest: Colors.black12,
+        onSurfaceVariant: Colors.black54,
+        scrim: Colors.black54,
+        surfaceTint: Colors.black,
+        inverseSurface: Color(0xFF121212),
+        onInverseSurface: Colors.white,
+      );
+
+  static ColorScheme get colorSchemeDark => const ColorScheme(
+        brightness: Brightness.dark,
+        primary: Color(0xffbb86fc),
+        onPrimary: Colors.white,
+        secondary: Color(0xff018786),
+        onSecondary: Colors.white,
+        error: Color(0xFFCF6679),
+        onError: Colors.white,
+        surface: Color(0xff121212),
+        onSurface: Colors.white,
+        surfaceContainerHighest: Colors.white12,
+        onSurfaceVariant: Colors.white54,
+        scrim: Colors.black54,
+        surfaceTint: Colors.white,
+        inverseSurface: Color(0xFFdddddd),
+        onInverseSurface: Colors.black,
+      );
+
+  static ThemeData theme(ColorScheme colorScheme, bool amoledMode) => ThemeData(
         useMaterial3: true,
         applyElevationOverlayColor: true,
 
         // COLOR
-        // colorScheme: ColorSheme is gotten from ThemeProvider
+        colorScheme: colorScheme,
+        canvasColor: colorScheme.surface,
+        disabledColor: colorScheme.surfaceContainerHighest,
+        scaffoldBackgroundColor: colorScheme.surface,
+        shadowColor: Colors.transparent,
+        splashColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
 
         // TYPOGRAPHY & ICONOGRAPHY
         textTheme: textTheme,

@@ -44,14 +44,23 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  ColorScheme get colorScheme {
-    ColorStyle colorStyle = AppThemes.colorStyles[_themeStyle]!;
-    bool lightThemeMode = _themeMode == ThemeMode.light;
-    return ColorScheme.fromSeed(
-      seedColor: lightThemeMode ? colorStyle.primaryLight : colorStyle.primaryDark,
-      primary: lightThemeMode ? colorStyle.secondaryLight : colorStyle.secondaryDark,
-      brightness: lightThemeMode ? Brightness.light : Brightness.dark,
-      surface: _amoledMode && !lightThemeMode ? Colors.black : null,
+  ColorScheme colorSchemeLight(ThemeStyle themeStyle) {
+    ColorStyle colorStyle = AppThemes.colorStyles[themeStyle]!;
+
+    return AppThemes.colorSchemeLight.copyWith(
+      primary: colorStyle.primaryLight,
+      secondary: colorStyle.secondaryLight,
+    );
+  }
+
+  ColorScheme colorSchemeDark(ThemeStyle themeStyle) {
+    ColorStyle colorStyle = AppThemes.colorStyles[themeStyle]!;
+
+    return AppThemes.colorSchemeDark.copyWith(
+      primary: colorStyle.primaryDark,
+      secondary: colorStyle.secondaryDark,
+      surface: amoledMode ? Colors.black : const Color(0xff121212),
+      scrim: amoledMode ? Colors.black87 : Colors.black54,
     );
   }
 }

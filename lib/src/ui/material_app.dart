@@ -58,8 +58,8 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           themeMode: theme.themeMode,
-          theme: AppThemes.theme.copyWith(colorScheme: theme.colorScheme),
-          darkTheme: AppThemes.theme.copyWith(colorScheme: theme.colorScheme),
+          theme: AppThemes.theme(theme.colorSchemeLight(theme.themeStyle), theme.amoledMode),
+          darkTheme: AppThemes.theme(theme.colorSchemeDark(theme.themeStyle), theme.amoledMode),
           locale: _locale,
           supportedLocales: Texts.supportedLocales,
           localizationsDelegates: Texts.localizationsDelegates,
