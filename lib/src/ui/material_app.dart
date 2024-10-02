@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
@@ -83,6 +84,7 @@ class MyAppWrapper extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => Settings())
       ],
       child: const MyApp(),
     );

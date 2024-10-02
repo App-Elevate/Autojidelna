@@ -13,6 +13,19 @@ class TextsCs extends Texts {
   String get analytics => 'Shromažďování údajů';
 
   @override
+  String get analyticsDescription_1 =>
+      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
+
+  @override
+  String get analyticsDescription_2 => 'Zdrojovém kódu';
+
+  @override
+  String get analyticsDescription_3 => ' nebo v ';
+
+  @override
+  String get analyticsDescription_4 => 'Zásadách ochrany osobních údajů.';
+
+  @override
   String get appName => 'Autojídelna';
 
   @override
@@ -87,6 +100,9 @@ class TextsCs extends Texts {
 
   @override
   String get signOut => 'Odhlásit se';
+
+  @override
+  String get stopAnalytics => 'Zastavit sledování analytických služeb';
 
   @override
   String get themeModeSystem => 'Systém';
