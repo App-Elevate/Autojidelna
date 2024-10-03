@@ -13,10 +13,7 @@ class SectionTitle extends StatelessWidget {
         const CustomDivider(height: 8),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.primary),
-          ),
+          child: Text(title, style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
         ),
         const CustomDivider(height: 8, isTransparent: false),
         const CustomDivider(height: 4),
