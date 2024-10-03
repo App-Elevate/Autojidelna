@@ -42,6 +42,9 @@ class TextsCs extends Texts {
   String get appearance => 'Vzhled';
 
   @override
+  String get calendarBigMarkers => 'Velké ukazatele v kalendáři';
+
+  @override
   String get cancel => 'Zrušit';
 
   @override
@@ -49,6 +52,12 @@ class TextsCs extends Texts {
 
   @override
   String get dateFormat => 'Formát dat';
+
+  @override
+  String get debug => 'Debug';
+
+  @override
+  String get experimental => 'Experimentální';
 
   @override
   String get gettingDataNotifications => 'Získávám data pro oznámení';
@@ -66,9 +75,6 @@ class TextsCs extends Texts {
   }
 
   @override
-  String get debug => 'Debug';
-
-  @override
   String get language => 'Jazyk';
 
   @override
@@ -76,6 +82,9 @@ class TextsCs extends Texts {
 
   @override
   String get languageEnglish => 'Angličtina';
+
+  @override
+  String get listUi => 'List UI';
 
   @override
   String get login => 'Přihlásit se';
@@ -112,6 +121,9 @@ class TextsCs extends Texts {
 
   @override
   String get signOut => 'Odhlásit se';
+
+  @override
+  String get skipWeekends => 'Přeskakovat víkendy';
 
   @override
   String get stopAnalytics => 'Zastavit sledování analytických služeb';

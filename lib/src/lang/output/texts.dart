@@ -157,6 +157,12 @@ abstract class Texts {
   /// **'Vzhled'**
   String get appearance;
 
+  /// No description provided for @calendarBigMarkers.
+  ///
+  /// In cs, this message translates to:
+  /// **'Velké ukazatele v kalendáři'**
+  String get calendarBigMarkers;
+
   /// No description provided for @cancel.
   ///
   /// In cs, this message translates to:
@@ -175,6 +181,18 @@ abstract class Texts {
   /// **'Formát dat'**
   String get dateFormat;
 
+  /// No description provided for @debug.
+  ///
+  /// In cs, this message translates to:
+  /// **'Debug'**
+  String get debug;
+
+  /// No description provided for @experimental.
+  ///
+  /// In cs, this message translates to:
+  /// **'Experimentální'**
+  String get experimental;
+
   /// No description provided for @gettingDataNotifications.
   ///
   /// In cs, this message translates to:
@@ -186,12 +204,6 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}'**
   String internetConnectionState(String arg);
-
-  /// No description provided for @debug.
-  ///
-  /// In cs, this message translates to:
-  /// **'Debug'**
-  String get debug;
 
   /// No description provided for @language.
   ///
@@ -210,6 +222,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Angličtina'**
   String get languageEnglish;
+
+  /// No description provided for @listUi.
+  ///
+  /// In cs, this message translates to:
+  /// **'List UI'**
+  String get listUi;
 
   /// No description provided for @login.
   ///
@@ -282,6 +300,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Odhlásit se'**
   String get signOut;
+
+  /// No description provided for @skipWeekends.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přeskakovat víkendy'**
+  String get skipWeekends;
 
   /// No description provided for @stopAnalytics.
   ///

@@ -11,9 +11,12 @@
   "appName": "Autojídelna",
   "appDescription": "Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.",
   "appearance": "Vzhled",
+  "calendarBigMarkers": "Velké ukazatele v kalendáři",
   "cancel": "Zrušit",
   "convenience": "Pohodlí",
   "dateFormat": "Formát dat",
+  "debug": "Debug",
+  "experimental": "Experimentální",
   "gettingDataNotifications": "Získávám data pro oznámení",
   "internetConnectionState": "{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}",
   "@internetConnectionState": {
@@ -25,10 +28,10 @@
       }
     }
   },
-  "debug": "Debug",
   "language": "Jazyk",
   "languageCzech": "Čeština",
   "languageEnglish": "Angličtina",
+  "listUi": "List UI",
   "login": "Přihlásit se",
   "menu": "Jídelníček",
   "more": "Více",
@@ -41,6 +44,7 @@
   "requestNotificationPermission": "Požádat o povolení notifikací",
   "settings": "Nastavení",
   "signOut": "Odhlásit se",
+  "skipWeekends": "Přeskakovat víkendy",
   "stopAnalytics": "Zastavit sledování analytických služeb",
   "theme": "Schéma",
   "themeModeSystem": "Systém",
