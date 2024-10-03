@@ -36,6 +36,9 @@ class TextsCs extends Texts {
   String get appearance => 'Vzhled';
 
   @override
+  String get cancel => 'Zrušit';
+
+  @override
   String get convenience => 'Pohodlí';
 
   @override

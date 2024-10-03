@@ -145,6 +145,12 @@ abstract class Texts {
   /// **'Vzhled'**
   String get appearance;
 
+  /// No description provided for @cancel.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zrušit'**
+  String get cancel;
+
   /// No description provided for @convenience.
   ///
   /// In cs, this message translates to:

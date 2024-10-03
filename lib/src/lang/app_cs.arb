@@ -9,6 +9,7 @@
   "appName": "Autojídelna",
   "appDescription": "Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.",
   "appearance": "Vzhled",
+  "cancel": "Zrušit",
   "convenience": "Pohodlí",
   "gettingDataNotifications": "Získávám data pro oznámení",
   "internetConnectionState": "{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}",
