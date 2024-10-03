@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/ui/widgets/appbars/default_appbar.dart';
 import 'package:autojidelna/src/ui/widgets/appbars/menu_page.dart';
 import 'package:autojidelna/src/ui/widgets/appbars/more_page.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +50,6 @@ class _RouterPageState extends State<RouterPage> {
           )
         : null;
 
-    final defaultAppBar = DefaultAppbar(leading: leading, leadingWidth: leadingWidth);
-
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
     // note: using null will not show the appbar at all. This includes the navigation drawer button. Use with caution.
     final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
@@ -98,7 +95,7 @@ class _RouterPageState extends State<RouterPage> {
           contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(128)),
           leading: const Icon(Icons.menu),
-          title: const Text('Menu'), // TODO: add to localizations
+          title: Text(lang.navigationRailExpantionButtonTitle), // TODO: add to localizations
           onTap: () => changeExtention(context),
         ),
       ),

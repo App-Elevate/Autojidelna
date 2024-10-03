@@ -93,6 +93,9 @@ class TextsCs extends Texts {
   String get menu => 'Jídelníček';
 
   @override
+  String get navigationRailExpantionButtonTitle => 'Menu';
+
+  @override
   String get more => 'Více';
 
   @override

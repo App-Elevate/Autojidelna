@@ -241,6 +241,12 @@ abstract class Texts {
   /// **'Jídelníček'**
   String get menu;
 
+  /// No description provided for @navigationRailExpantionButtonTitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Menu'**
+  String get navigationRailExpantionButtonTitle;
+
   /// No description provided for @more.
   ///
   /// In cs, this message translates to:
