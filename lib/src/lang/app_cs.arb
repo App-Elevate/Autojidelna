@@ -1,6 +1,8 @@
 {
   "@@locale": "cs",
   "about": "O aplikaci",
+  "amoledMode": "AMOLED mód",
+  "amoledModeSubtitle": "Přidej se k temné straně síly!",
   "analytics": "Shromažďování údajů",
   "analyticsDescription_1": "Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ",
   "analyticsDescription_2": "Zdrojovém kódu",
@@ -40,8 +42,10 @@
   "settings": "Nastavení",
   "signOut": "Odhlásit se",
   "stopAnalytics": "Zastavit sledování analytických služeb",
+  "theme": "Schéma",
   "themeModeSystem": "Systém",
   "themeModeLight": "Světlý",
   "themeModeDark": "Tmavý",
-  "typeCrash": "Napište \"crash\" pro pád aplikace"
+  "typeCrash": "Napište \"crash\" pro pád aplikace",
+  "view": "Zobrazení"
 }

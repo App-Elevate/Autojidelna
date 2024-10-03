@@ -10,6 +10,12 @@ class TextsCs extends Texts {
   String get about => 'O aplikaci';
 
   @override
+  String get amoledMode => 'AMOLED mód';
+
+  @override
+  String get amoledModeSubtitle => 'Přidej se k temné straně síly!';
+
+  @override
   String get analytics => 'Shromažďování údajů';
 
   @override
@@ -111,6 +117,9 @@ class TextsCs extends Texts {
   String get stopAnalytics => 'Zastavit sledování analytických služeb';
 
   @override
+  String get theme => 'Schéma';
+
+  @override
   String get themeModeSystem => 'Systém';
 
   @override
@@ -121,4 +130,7 @@ class TextsCs extends Texts {
 
   @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
+
+  @override
+  String get view => 'Zobrazení';
 }

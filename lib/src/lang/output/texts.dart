@@ -97,6 +97,18 @@ abstract class Texts {
   /// **'O aplikaci'**
   String get about;
 
+  /// No description provided for @amoledMode.
+  ///
+  /// In cs, this message translates to:
+  /// **'AMOLED mód'**
+  String get amoledMode;
+
+  /// No description provided for @amoledModeSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidej se k temné straně síly!'**
+  String get amoledModeSubtitle;
+
   /// No description provided for @analytics.
   ///
   /// In cs, this message translates to:
@@ -277,6 +289,12 @@ abstract class Texts {
   /// **'Zastavit sledování analytických služeb'**
   String get stopAnalytics;
 
+  /// No description provided for @theme.
+  ///
+  /// In cs, this message translates to:
+  /// **'Schéma'**
+  String get theme;
+
   /// No description provided for @themeModeSystem.
   ///
   /// In cs, this message translates to:
@@ -300,6 +318,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Napište \"crash\" pro pád aplikace'**
   String get typeCrash;
+
+  /// No description provided for @view.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zobrazení'**
+  String get view;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {
