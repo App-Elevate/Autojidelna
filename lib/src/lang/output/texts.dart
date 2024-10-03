@@ -157,6 +157,12 @@ abstract class Texts {
   /// **'Pohodlí'**
   String get convenience;
 
+  /// No description provided for @dateFormat.
+  ///
+  /// In cs, this message translates to:
+  /// **'Formát dat'**
+  String get dateFormat;
+
   /// No description provided for @gettingDataNotifications.
   ///
   /// In cs, this message translates to:

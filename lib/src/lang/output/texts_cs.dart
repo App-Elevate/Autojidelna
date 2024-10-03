@@ -42,6 +42,9 @@ class TextsCs extends Texts {
   String get convenience => 'Pohodlí';
 
   @override
+  String get dateFormat => 'Formát dat';
+
+  @override
   String get gettingDataNotifications => 'Získávám data pro oznámení';
 
   @override

@@ -11,6 +11,7 @@
   "appearance": "Vzhled",
   "cancel": "Zrušit",
   "convenience": "Pohodlí",
+  "dateFormat": "Formát dat",
   "gettingDataNotifications": "Získávám data pro oznámení",
   "internetConnectionState": "{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}",
   "@internetConnectionState": {
