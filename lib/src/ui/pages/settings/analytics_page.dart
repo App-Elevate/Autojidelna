@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
@@ -7,7 +9,6 @@ import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -63,11 +64,8 @@ class AnalyticsPage extends StatelessWidget {
     );
   }
 
-  void openDataCollectionUrl(bool sourceCode) async {
-    PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    String appVersion = packageInfo.version;
-
-    String url = sourceCode ? Links.currentVersionCode(appVersion) : Links.privacyPolicy;
-    launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+  void openDataCollectionUrl(bool sourceCode) {
+    String url = sourceCode ? Links.currentVersionCode : Links.privacyPolicy;
+    unawaited(launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication));
   }
 }
