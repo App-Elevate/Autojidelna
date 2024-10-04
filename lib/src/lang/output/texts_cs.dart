@@ -42,6 +42,14 @@ class TextsCs extends Texts {
   String get appearance => 'Vzhled';
 
   @override
+  String appLegalese(DateTime year) {
+    final intl.DateFormat yearDateFormat = intl.DateFormat.y(localeName);
+    final String yearString = yearDateFormat.format(year);
+
+    return '© 2023 - $yearString Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3';
+  }
+
+  @override
   String get calendarBigMarkers => 'Velké ukazatele v kalendáři';
 
   @override
@@ -84,6 +92,9 @@ class TextsCs extends Texts {
   String get languageEnglish => 'Angličtina';
 
   @override
+  String get licenses => 'Licence';
+
+  @override
   String get listUi => 'List UI';
 
   @override
@@ -117,6 +128,9 @@ class TextsCs extends Texts {
   String get patch => 'patch';
 
   @override
+  String get privacyPolicy => 'Zásady ochrany osobních údajů';
+
+  @override
   String get requestNotificationPermission => 'Požádat o povolení notifikací';
 
   @override
@@ -145,6 +159,21 @@ class TextsCs extends Texts {
 
   @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
+
+  @override
+  String get version => 'Verze';
+
+  @override
+  String versionSubtitle(String arg, String version) {
+    String _temp0 = intl.Intl.selectLogic(
+      arg,
+      {
+        'true': 'Debug',
+        'other': 'Stable',
+      },
+    );
+    return '$_temp0 $version';
+  }
 
   @override
   String get view => 'Zobrazení';

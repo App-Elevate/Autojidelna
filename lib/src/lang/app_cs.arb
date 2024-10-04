@@ -11,6 +11,16 @@
   "appName": "Autojídelna",
   "appDescription": "Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.",
   "appearance": "Vzhled",
+  "appLegalese": "© 2023 - {year} Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3",
+  "@appLegalese": {
+    "description": "appLegalese",
+    "placeholders": {
+      "year": {
+        "type": "DateTime",
+        "format": "y"
+      }
+    }
+  },
   "calendarBigMarkers": "Velké ukazatele v kalendáři",
   "cancel": "Zrušit",
   "convenience": "Pohodlí",
@@ -31,6 +41,7 @@
   "language": "Jazyk",
   "languageCzech": "Čeština",
   "languageEnglish": "Angličtina",
+  "licenses": "Licence",
   "listUi": "List UI",
   "login": "Přihlásit se",
   "menu": "Jídelníček",
@@ -42,6 +53,7 @@
   "orders": "Objednávky",
   "password": "Heslo",
   "patch": "patch",
+  "privacyPolicy": "Zásady ochrany osobních údajů",
   "requestNotificationPermission": "Požádat o povolení notifikací",
   "settings": "Nastavení",
   "signOut": "Odhlásit se",
@@ -52,5 +64,19 @@
   "themeModeLight": "Světlý",
   "themeModeDark": "Tmavý",
   "typeCrash": "Napište \"crash\" pro pád aplikace",
+  "version": "Verze",
+  "versionSubtitle": "{arg, select, true{Debug} other{Stable}} {version}",
+  "@versionSubtitle": {
+    "description": "versionSubtitle",
+    "placeholders": {
+      "arg": {
+        "type": "String",
+        "example": "true"
+      },
+      "version": {
+        "type": "String"
+      }
+    }
+  },
   "view": "Zobrazení"
 }

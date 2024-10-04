@@ -157,6 +157,12 @@ abstract class Texts {
   /// **'Vzhled'**
   String get appearance;
 
+  /// appLegalese
+  ///
+  /// In cs, this message translates to:
+  /// **'© 2023 - {year} Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3'**
+  String appLegalese(DateTime year);
+
   /// No description provided for @calendarBigMarkers.
   ///
   /// In cs, this message translates to:
@@ -222,6 +228,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Angličtina'**
   String get languageEnglish;
+
+  /// No description provided for @licenses.
+  ///
+  /// In cs, this message translates to:
+  /// **'Licence'**
+  String get licenses;
 
   /// No description provided for @listUi.
   ///
@@ -289,6 +301,12 @@ abstract class Texts {
   /// **'patch'**
   String get patch;
 
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zásady ochrany osobních údajů'**
+  String get privacyPolicy;
+
   /// No description provided for @requestNotificationPermission.
   ///
   /// In cs, this message translates to:
@@ -348,6 +366,18 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Napište \"crash\" pro pád aplikace'**
   String get typeCrash;
+
+  /// No description provided for @version.
+  ///
+  /// In cs, this message translates to:
+  /// **'Verze'**
+  String get version;
+
+  /// versionSubtitle
+  ///
+  /// In cs, this message translates to:
+  /// **'{arg, select, true{Debug} other{Stable}} {version}'**
+  String versionSubtitle(String arg, String version);
 
   /// No description provided for @view.
   ///
