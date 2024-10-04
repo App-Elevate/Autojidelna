@@ -33,14 +33,7 @@ class AboutPage extends StatelessWidget {
       body: ScrollViewColumn(
         children: [
           // logo
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 85.0),
-            child: SvgPicture.asset(
-              Assets.logo,
-              colorFilter: ColorFilter.mode(Theme.of(context).colorScheme.onSurface, BlendMode.srcIn),
-              height: MediaQuery.sizeOf(context).height * .10,
-            ),
-          ),
+          Padding(padding: const EdgeInsets.symmetric(vertical: 85.0), child: logo),
           const CustomDivider(isTransparent: false),
           // version list tile
           ListTile(
