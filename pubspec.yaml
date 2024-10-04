@@ -48,6 +48,7 @@ dependencies:
   flutter_adaptive_scaffold: ^0.2.1
 
   package_info_plus: ^8.0.0 # Package info used in about page
+  share_plus: ^10.0.2
 
   url_launcher: ^6.3.0
 

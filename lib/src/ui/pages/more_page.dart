@@ -25,7 +25,7 @@ class MorePage extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.person_outline),
           title: Text(lang.account),
-          onTap: () => unawaited(router.push(const AccountPage())),
+          onTap: () async => router.push(const AccountPage()),
         ),
         /* TODO: make the page
         ListTile(
@@ -37,17 +37,17 @@ class MorePage extends StatelessWidget {
         ListTile(
           leading: const Icon(Icons.settings_outlined),
           title: Text(lang.settings),
-          onTap: () => unawaited(router.push(const SettingsPage())),
+          onTap: () async => router.push(const SettingsPage()),
         ),
         ListTile(
           leading: const Icon(Icons.info_outline),
           title: Text(lang.about),
-          onTap: () => unawaited(router.push(const AboutPage())),
+          onTap: () async => router.push(const AboutPage()),
         ),
         ListTile(
           leading: const Icon(Icons.share_outlined),
           title: Text(lang.shareApp),
-          onTap: () => unawaited(Share.share(Links.autojidelna, subject: lang.appName)),
+          onTap: () async => Share.share(Links.autojidelna, subject: lang.appName),
         ),
       ],
     );
