@@ -1,6 +1,7 @@
 {
   "@@locale": "cs",
   "about": "O aplikaci",
+  "account": "Účet",
   "amoledMode": "AMOLED mód",
   "amoledModeSubtitle": "Přidej se k temné straně síly!",
   "analytics": "Shromažďování údajů",
@@ -56,6 +57,7 @@
   "privacyPolicy": "Zásady ochrany osobních údajů",
   "requestNotificationPermission": "Požádat o povolení notifikací",
   "settings": "Nastavení",
+  "shareApp": "Sdílet aplikaci",
   "signOut": "Odhlásit se",
   "skipWeekends": "Přeskakovat víkendy",
   "stopAnalytics": "Zastavit sledování analytických služeb",

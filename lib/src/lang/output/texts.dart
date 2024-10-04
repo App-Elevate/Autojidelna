@@ -97,6 +97,12 @@ abstract class Texts {
   /// **'O aplikaci'**
   String get about;
 
+  /// No description provided for @account.
+  ///
+  /// In cs, this message translates to:
+  /// **'Účet'**
+  String get account;
+
   /// No description provided for @amoledMode.
   ///
   /// In cs, this message translates to:
@@ -318,6 +324,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Nastavení'**
   String get settings;
+
+  /// No description provided for @shareApp.
+  ///
+  /// In cs, this message translates to:
+  /// **'Sdílet aplikaci'**
+  String get shareApp;
 
   /// No description provided for @signOut.
   ///

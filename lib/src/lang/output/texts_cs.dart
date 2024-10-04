@@ -10,6 +10,9 @@ class TextsCs extends Texts {
   String get about => 'O aplikaci';
 
   @override
+  String get account => 'Účet';
+
+  @override
   String get amoledMode => 'AMOLED mód';
 
   @override
@@ -135,6 +138,9 @@ class TextsCs extends Texts {
 
   @override
   String get settings => 'Nastavení';
+
+  @override
+  String get shareApp => 'Sdílet aplikaci';
 
   @override
   String get signOut => 'Odhlásit se';

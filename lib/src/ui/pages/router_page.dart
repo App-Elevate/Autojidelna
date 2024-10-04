@@ -53,8 +53,8 @@ class _RouterPageState extends State<RouterPage> {
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
     // note: using null will not show the appbar at all. This includes the navigation drawer button. Use with caution.
     final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
-      (context) => const MenuAppBar(),
-      (context) => const MoreAppBar(),
+      (_) => const MenuAppBar(),
+      (_) => const MoreAppBar(),
     ];
 
     final List<PageRouteInfo> routes = [
