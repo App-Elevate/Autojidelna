@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/date_format_picker.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/date_format_picker.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:autojidelna/src/ui/widgets/theme_mode_picker.dart';
