@@ -16,13 +16,6 @@ class NotificationIds {
   static String get onlyObjednatButton => 'objednat_';
 }
 
-class AnalyticsEventIds {
-  static String get updateButtonClicked => 'updateButtonClicked';
-  static String get oldVer => 'oldVersion';
-  static String get newVer => 'newVersion';
-  static String get updateDownloaded => 'updateDownloaded';
-}
-
 // Strings shown to the user
 class NotificationsTexts {
   /// initAwesome and notifications in general have a problem with the localization package so we just force czech
@@ -57,8 +50,4 @@ class Links {
 
   static String get latestRelease => '$repo/releases/latest';
   static String get email => 'info@appelevate.cz';
-}
-
-class Assets {
-  static String get logo => 'assets/logo.svg';
 }
