@@ -2,8 +2,8 @@ import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/types/all.dart';
-import 'package:autojidelna/src/ui/widgets/configured_alert_dialog.dart';
-import 'package:autojidelna/src/ui/widgets/configured_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/configured_alert_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
