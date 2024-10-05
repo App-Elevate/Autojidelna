@@ -247,6 +247,12 @@ abstract class Texts {
   /// **'List UI'**
   String get listUi;
 
+  /// No description provided for @location.
+  ///
+  /// In cs, this message translates to:
+  /// **'Výdejna'**
+  String get location;
+
   /// No description provided for @login.
   ///
   /// In cs, this message translates to:
@@ -306,6 +312,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'patch'**
   String get patch;
+
+  /// No description provided for @pickLocation.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vyberte výdejnu:'**
+  String get pickLocation;
 
   /// No description provided for @privacyPolicy.
   ///

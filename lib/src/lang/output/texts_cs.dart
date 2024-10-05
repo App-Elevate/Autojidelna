@@ -101,6 +101,9 @@ class TextsCs extends Texts {
   String get listUi => 'List UI';
 
   @override
+  String get location => 'Výdejna';
+
+  @override
   String get login => 'Přihlásit se';
 
   @override
@@ -129,6 +132,9 @@ class TextsCs extends Texts {
 
   @override
   String get patch => 'patch';
+
+  @override
+  String get pickLocation => 'Vyberte výdejnu:';
 
   @override
   String get privacyPolicy => 'Zásady ochrany osobních údajů';

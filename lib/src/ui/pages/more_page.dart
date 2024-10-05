@@ -3,6 +3,7 @@ import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/more/location_picker_card.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -18,6 +19,8 @@ class MorePage extends StatelessWidget {
 
     return ScrollViewColumn(
       children: [
+        const CustomDivider(),
+        const LocationPickerCard(),
         const CustomDivider(height: 38),
         const CustomDivider(isTransparent: false),
         ListTile(
