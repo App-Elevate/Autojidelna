@@ -9,6 +9,7 @@ import 'dart:math';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
+import 'package:autojidelna/src/_conf/secure_storage.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -403,14 +404,14 @@ class LoggedInCanteen {
   }
 
   /// save data to secure storage used for storing username and password
-  Future<void> saveStringToSharedPreferencesToSecureStorage(String key, String value) async {
+  Future<void> saveStringToSecureStorage(String key, String value) async {
     const storage = FlutterSecureStorage();
     await storage.write(key: key, value: value);
   }
 
   /// saves the loginData class to secure storage
   Future<void> saveLoginToSecureStorage(LoggedAccounts loginData) async {
-    await saveStringToSharedPreferencesToSecureStorage('loginData', jsonEncode(loginData));
+    await saveStringToSecureStorage(SecureStorage.loginData, jsonEncode(loginData));
     initAwesome();
   }
 
@@ -490,7 +491,7 @@ class LoggedInCanteen {
 
   Future<LoggedAccounts> getLoginDataFromSecureStorage() async {
     try {
-      String? value = await getDataFromSecureStorage('loginData');
+      String? value = await getDataFromSecureStorage(SecureStorage.loginData);
       if (value == null || value.trim().isEmpty) {
         return LoggedAccounts();
       }
