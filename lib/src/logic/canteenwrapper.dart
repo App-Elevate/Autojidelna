@@ -129,8 +129,8 @@ class LoggedInCanteen {
   /// If there is an error it's probably because of the internet connection or change of password. The popup is the best solution.
   Future<int> loginFromStorage() async {
     try {
-      LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
-      if (loginData.currentlyLoggedIn) {
+      LoggedAccounts loginData = await getLoginDataFromSecureStorage();
+      if (loginData.currentlyLoggedInId != null) {
         _canteenInstance = await _login(
           loginData.users[loginData.currentlyLoggedInId!].url,
           loginData.users[loginData.currentlyLoggedInId!].username,
@@ -366,14 +366,14 @@ class LoggedInCanteen {
 
   // just switches the account - YOU NEED TO CALL [loginFromStorage] AFTER THIS
   Future<void> switchAccount(int id) async {
-    LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
+    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
     loginData.currentlyLoggedInId = id;
     await saveLoginToSecureStorage(loginData);
   }
 
   // switches the account and logs in as the new account
   Future<bool> changeAccount(int id, {bool indexLunches = false, bool saveToStorage = true}) async {
-    LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
+    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
     String url = loginData.users[id].url;
     String username = loginData.users[id].username;
     String password = loginData.users[id].password;
@@ -392,10 +392,9 @@ class LoggedInCanteen {
   Future<bool> addAccount(String url, String username, String password) async {
     try {
       await _login(url, username, password, safetyId: (_canteenData?.id ?? 0) + 1);
-      LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
-      loginData.users.add(LoggedInUser(username: username, password: password, url: url));
+      LoggedAccounts loginData = await getLoginDataFromSecureStorage();
+      loginData.users.add(Account(username: username, password: password, url: url));
       loginData.currentlyLoggedInId = loginData.users.length - 1;
-      loginData.currentlyLoggedIn = true;
       saveLoginToSecureStorage(loginData);
       return true;
     } catch (e) {
@@ -410,7 +409,7 @@ class LoggedInCanteen {
   }
 
   /// saves the loginData class to secure storage
-  Future<void> saveLoginToSecureStorage(LoginDataAutojidelna loginData) async {
+  Future<void> saveLoginToSecureStorage(LoggedAccounts loginData) async {
     await saveStringToSharedPreferencesToSecureStorage('loginData', jsonEncode(loginData));
     initAwesome();
   }
@@ -439,7 +438,7 @@ class LoggedInCanteen {
     if (analyticsEnabledGlobally && analytics != null) {
       analytics!.logEvent(name: 'logout');
     }
-    LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
+    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
     bool isDuplicate = false;
     for (int i = 0; i < loginData.users.length; i++) {
       if (loginData.users[i].username == loginData.users[id].username && i != id) {
@@ -464,7 +463,6 @@ class LoggedInCanteen {
     loginData.users.removeAt(id);
     // if it's empty make sure to throw user on login screen
     if (loginData.users.isEmpty) {
-      loginData.currentlyLoggedIn = false;
       loginData.currentlyLoggedInId = null;
     }
     await saveLoginToSecureStorage(loginData);
@@ -476,10 +474,9 @@ class LoggedInCanteen {
 
   ///logs out everyone
   Future<void> logoutEveryone() async {
-    LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
-    loginData.currentlyLoggedIn = false;
-    loginData.users.clear();
+    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
     loginData.currentlyLoggedInId = null;
+    loginData.users.clear();
     for (int id = 0; id < loginData.users.length; id++) {
       AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(loginData.users[id].username, loginData.users[id].url));
       AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(loginData.users[id].username, loginData.users[id].url));
@@ -491,15 +488,15 @@ class LoggedInCanteen {
     return;
   }
 
-  Future<LoginDataAutojidelna> getLoginDataFromSecureStorage() async {
+  Future<LoggedAccounts> getLoginDataFromSecureStorage() async {
     try {
       String? value = await getDataFromSecureStorage('loginData');
       if (value == null || value.trim().isEmpty) {
-        return LoginDataAutojidelna(currentlyLoggedIn: false);
+        return LoggedAccounts();
       }
-      return LoginDataAutojidelna.fromJson(jsonDecode(value));
+      return LoggedAccounts.fromJson(jsonDecode(value));
     } catch (e) {
-      return LoginDataAutojidelna(currentlyLoggedIn: false);
+      return LoggedAccounts();
     }
   }
 
@@ -544,8 +541,8 @@ class LoggedInCanteen {
   }
 
   Future<bool> loginAsUsername(String username, {bool saveToStorage = false}) async {
-    LoginDataAutojidelna loginData = await getLoginDataFromSecureStorage();
-    for (LoggedInUser uzivatel in loginData.users) {
+    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
+    for (Account uzivatel in loginData.users) {
       try {
         if (uzivatel.username == username) {
           await _login(uzivatel.url, uzivatel.username, uzivatel.password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);

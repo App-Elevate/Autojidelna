@@ -24,16 +24,18 @@ enum ConnectionErrors {
 //classy pro přihlašování
 
 ///samotný uživatel
-class LoggedInUser {
+class Account {
   String username;
   String password;
   String url;
-  LoggedInUser({
+
+  Account({
     required this.username,
     required this.password,
     required this.url,
   });
-  LoggedInUser.fromJson(Map<String, dynamic> json)
+
+  Account.fromJson(Map<String, dynamic> json)
       : username = json['username'],
         password = json['password'],
         url = json['url'];
@@ -44,32 +46,29 @@ class LoggedInUser {
       };
 }
 
-///všichni přihlášení uživatelé
-class LoginDataAutojidelna {
-  LoginDataAutojidelna({
-    required this.currentlyLoggedIn,
-  });
-  bool currentlyLoggedIn;
+/// Všichni přihlášení uživatelé
+class LoggedAccounts {
   int? currentlyLoggedInId;
-  List<LoggedInUser> users = [];
+  List<Account> users = [];
 
-  LoginDataAutojidelna.fromJson(Map<String, dynamic> json)
-      : currentlyLoggedIn = json['currentlyLoggedIn'],
-        currentlyLoggedInId = json['currentlyLoggedInId'],
-        users = json['users'].map<LoggedInUser>((e) => LoggedInUser.fromJson(e)).toList();
+  LoggedAccounts({this.currentlyLoggedInId});
+
+  LoggedAccounts.fromJson(Map<String, dynamic> json)
+      : currentlyLoggedInId = json['currentlyLoggedInId'],
+        users = (json['users'] as List).map((e) => Account.fromJson(e)).toList();
 
   Map<String, dynamic> toJson() => {
-        'currentlyLoggedIn': currentlyLoggedIn,
         'currentlyLoggedInId': currentlyLoggedInId,
         'users': users.map((e) => e.toJson()).toList(),
       };
 }
 
-///omezená data pro zobrazení ve výběru účtů
-class LoggedAccountsInAccountPanel {
+/// Omezená data pro zobrazení ve výběru účtů
+class LoggedAccountsLimited {
   List<String> usernames;
   int? loggedInID;
-  LoggedAccountsInAccountPanel({required this.usernames, required this.loggedInID});
+
+  LoggedAccountsLimited({required this.usernames, required this.loggedInID});
 }
 
 ///informace o nejnovější verzi aplikace (podpora jen pro android)
@@ -151,8 +150,9 @@ class CanteenData {
 
 ///class pro general access o stavu snackbaru
 class SnackBarShown {
-  SnackBarShown({required this.shown});
   bool shown = false;
+
+  SnackBarShown({required this.shown});
 }
 
 ///Popisuje všechny možné stavy jídla

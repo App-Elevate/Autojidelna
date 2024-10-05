@@ -72,9 +72,9 @@ class App {
       Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
 
       try {
-        LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+        LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
 
-        for (LoggedInUser uzivatel in loginData.users) {
+        for (Account uzivatel in loginData.users) {
           AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
           await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
         }
