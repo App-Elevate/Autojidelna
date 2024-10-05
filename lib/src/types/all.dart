@@ -35,15 +35,17 @@ class Account {
     required this.url,
   });
 
-  Account.fromJson(Map<String, dynamic> json)
-      : username = json['username'],
-        password = json['password'],
-        url = json['url'];
   Map<String, dynamic> toJson() => {
         'username': username,
         'password': password,
         'url': url,
       };
+
+  factory Account.fromJson(Map<String, dynamic> json) => Account(
+        username: json['username'],
+        password: json['password'],
+        url: json['url'],
+      );
 }
 
 /// Všichni přihlášení uživatelé
@@ -51,16 +53,20 @@ class LoggedAccounts {
   int? currentlyLoggedInId;
   List<Account> users = [];
 
-  LoggedAccounts({this.currentlyLoggedInId});
-
-  LoggedAccounts.fromJson(Map<String, dynamic> json)
-      : currentlyLoggedInId = json['currentlyLoggedInId'],
-        users = (json['users'] as List).map((e) => Account.fromJson(e)).toList();
+  LoggedAccounts({
+    this.currentlyLoggedInId,
+    this.users = const [],
+  });
 
   Map<String, dynamic> toJson() => {
         'currentlyLoggedInId': currentlyLoggedInId,
         'users': users.map((e) => e.toJson()).toList(),
       };
+
+  factory LoggedAccounts.fromJson(Map<String, dynamic> json) => LoggedAccounts(
+        currentlyLoggedInId: json['currentlyLoggedInId'],
+        users: (json['users'] as List).map((e) => Account.fromJson(e)).toList(),
+      );
 }
 
 /// Omezená data pro zobrazení ve výběru účtů
