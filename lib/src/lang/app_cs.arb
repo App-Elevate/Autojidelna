@@ -24,7 +24,17 @@
   },
   "calendarBigMarkers": "Velké ukazatele v kalendáři",
   "cancel": "Zrušit",
+  "changeAccount": "Změnit účet",
   "convenience": "Pohodlí",
+  "credit": "Kredit: {ammount} Kč",
+  "@credit": {
+    "placeholders": {
+      "ammount": {
+        "type": "double",
+        "format": "decimalPattern"
+      }
+    }
+  },
   "dateFormat": "Formát dat",
   "debug": "Debug",
   "experimental": "Experimentální",

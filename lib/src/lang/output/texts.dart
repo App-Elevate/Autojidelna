@@ -181,11 +181,23 @@ abstract class Texts {
   /// **'Zrušit'**
   String get cancel;
 
+  /// No description provided for @changeAccount.
+  ///
+  /// In cs, this message translates to:
+  /// **'Změnit účet'**
+  String get changeAccount;
+
   /// No description provided for @convenience.
   ///
   /// In cs, this message translates to:
   /// **'Pohodlí'**
   String get convenience;
+
+  /// No description provided for @credit.
+  ///
+  /// In cs, this message translates to:
+  /// **'Kredit: {ammount} Kč'**
+  String credit(double ammount);
 
   /// No description provided for @dateFormat.
   ///

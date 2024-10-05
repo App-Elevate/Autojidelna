@@ -59,7 +59,19 @@ class TextsCs extends Texts {
   String get cancel => 'Zrušit';
 
   @override
+  String get changeAccount => 'Změnit účet';
+
+  @override
   String get convenience => 'Pohodlí';
+
+  @override
+  String credit(double ammount) {
+    final intl.NumberFormat ammountNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String ammountString = ammountNumberFormat.format(ammount);
+
+    return 'Kredit: $ammountString Kč';
+  }
 
   @override
   String get dateFormat => 'Formát dat';
