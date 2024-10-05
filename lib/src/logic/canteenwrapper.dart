@@ -10,6 +10,7 @@ import 'dart:math';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_conf/secure_storage.dart';
+import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -19,7 +20,6 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive_flutter/adapters.dart';
 
 import 'package:http/http.dart' as http;
@@ -405,8 +405,7 @@ class LoggedInCanteen {
 
   /// save data to secure storage used for storing username and password
   Future<void> saveStringToSecureStorage(String key, String value) async {
-    const storage = FlutterSecureStorage();
-    await storage.write(key: key, value: value);
+    await App.secureStorage.write(key: key, value: value);
   }
 
   /// saves the loginData class to secure storage
@@ -420,9 +419,8 @@ class LoggedInCanteen {
   /// get data from secure storage
   /// can return null if there is no data
   Future<String?> getDataFromSecureStorage(String key) async {
-    const storage = FlutterSecureStorage();
     try {
-      String? value = await storage.read(key: key);
+      String? value = await App.secureStorage.read(key: key);
       return value;
     } catch (e) {
       return null;
