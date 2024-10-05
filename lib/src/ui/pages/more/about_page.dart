@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_conf/assets.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';

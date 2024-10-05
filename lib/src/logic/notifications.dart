@@ -232,7 +232,7 @@ Future<void> doNotifications({bool force = false}) async {
                   payload: {
                     NotificationIds.payloadUser: loginData.users[i].username,
                     NotificationIds.payloadIndex: k.toString(),
-                    NotificationIds.payloadIndexDne: jidelnicek.den.difference(minimalDate).inDays.toString(),
+                    NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
                   body: jidelnicek.jidla[0].nazev,
                 ),
@@ -249,7 +249,7 @@ Future<void> doNotifications({bool force = false}) async {
                 payload: {
                   NotificationIds.payloadUser: loginData.users[i].username,
                   NotificationIds.payloadIndex: k.toString(),
-                  NotificationIds.payloadIndexDne: jidelnicek.den.difference(minimalDate).inDays.toString(),
+                  NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
                 body: jidelnicek.jidla[k].kategorizovano?.hlavniJidlo ?? jidelnicek.jidla[k].nazev,
               ),
