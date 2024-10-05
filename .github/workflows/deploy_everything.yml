@@ -78,7 +78,7 @@ jobs:
       name: app-store
     if: ${{ github.event.pull_request.merged == true || (github.event_name == 'workflow_dispatch' && github.event.inputs.skip != 'true') }}
     # Works only on ubuntu
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     outputs:
       build_number: ${{ steps.version.outputs.build_number }}
       full_version: ${{ steps.version.outputs.full_version }}
@@ -277,7 +277,7 @@ jobs:
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' || github.event.inputs.github_pages == 'true' || github.event.inputs.firebase_hosting == 'true' }}
     needs: version
     # Works on ubuntu and macOS. Should propably work on windows as well
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     steps:
       - uses: actions/checkout@v4
       - name: Get pubspec
@@ -310,7 +310,7 @@ jobs:
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.cloudflare == 'true' }}
     needs: build_web
     # Works on ubuntu and macOS. Should propably work on windows as well
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     environment:
       name: cloudflare-pages
       url: ${{ vars.CLOUDFLARE_PAGES_URL }}
@@ -354,7 +354,7 @@ jobs:
 
   deploy_firebase:
     name: "[Web] Deploy to Firebase Hosting"
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     if: false #${{ github.event.pull_request.merged == true || github.event.inputs.firebase_hosting == 'true' }}
     environment:
       name: firebase-hosting
@@ -390,7 +390,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     steps:
       - name: Get build artifact
         uses: actions/download-artifact@v4
@@ -435,7 +435,7 @@ jobs:
     needs: version
     if: ${{ github.event.pull_request.merged == true || github.event.inputs.android == 'true' }}
     # Works on ubuntu and macOS.
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2204
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -460,7 +460,7 @@ jobs:
           echo "keyAlias=${{ secrets.ANDROID_KEY_ALIAS }}" >> android/key.properties
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: useblacksmith/setup-java@v5
         with:
           distribution: "zulu"
           java-version: "17.x"
