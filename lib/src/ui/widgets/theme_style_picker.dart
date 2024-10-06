@@ -20,7 +20,10 @@ class ThemeStylePicker extends StatelessWidget {
             ThemeStyle themeStyle = ThemeStyle.values[index];
             final bool isBright = MediaQuery.platformBrightnessOf(context) == Brightness.light || prov.themeMode == ThemeMode.light;
 
-            ThemeData theme = AppThemes.theme(isBright ? prov.colorSchemeLight(themeStyle) : prov.colorSchemeDark(themeStyle), prov.amoledMode);
+            ThemeData theme = AppThemes.theme(
+              isBright ? prov.colorSchemeLight(themeStyle) : prov.colorSchemeDark(themeStyle),
+              amoledMode: prov.amoledMode,
+            );
 
             ButtonStyle style = OutlinedButton.styleFrom(
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),

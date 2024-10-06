@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
@@ -59,8 +60,8 @@ class _MyAppState extends State<MyApp> {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           themeMode: theme.themeMode,
-          theme: AppThemes.theme(theme.colorSchemeLight(theme.themeStyle), theme.amoledMode),
-          darkTheme: AppThemes.theme(theme.colorSchemeDark(theme.themeStyle), theme.amoledMode),
+          theme: AppThemes.theme(theme.colorSchemeLight(theme.themeStyle)),
+          darkTheme: AppThemes.theme(theme.colorSchemeDark(theme.themeStyle), amoledMode: theme.amoledMode),
           locale: _locale,
           supportedLocales: Texts.supportedLocales,
           localizationsDelegates: Texts.localizationsDelegates,
@@ -83,8 +84,9 @@ class MyAppWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
+        ChangeNotifierProvider(create: (_) => AccountProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        ChangeNotifierProvider(create: (_) => Settings())
+        ChangeNotifierProvider(create: (_) => Settings()),
       ],
       child: const MyApp(),
     );
