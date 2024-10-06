@@ -1,10 +1,12 @@
 import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_alert_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/lined_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
 // TODO: IMPLEMENT
 class LocationPickerCard extends StatefulWidget {
@@ -15,8 +17,8 @@ class LocationPickerCard extends StatefulWidget {
 }
 
 class _LocationPickerCardState extends State<LocationPickerCard> {
-  final bool hasMoreLocations = true;
   int selectedLocation = 1;
+
   void updatePicked(int i) => setState(() {
         selectedLocation = i;
       });
@@ -24,24 +26,28 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-    final Map<int, String> locations = /*loggedInCanteen.canteenDataUnsafe?.vydejny ?? */ {};
-    return Stack(
-      alignment: AlignmentDirectional.center,
-      children: [
-        LinedCard(
-          smallButton: false,
-          title: lang.location,
-          footer: locations.length > 1 ? lang.pickLocation : null,
-          footerTextAlign: TextAlign.end,
-          onPressed: locations.length < 2 ? null : () => pickerDialog(context, locations),
-          child: ListTile(
-            contentPadding: EdgeInsets.zero,
-            visualDensity: const VisualDensity(vertical: -4),
-            title: Text(locations[selectedLocation + 1] ?? locations[1] ?? ''),
-          ),
-        ),
-        if (locations.isEmpty) lockedCover(context),
-      ],
+    return Selector<AccountProvider, Map<int, String>>(
+      selector: (_, p1) => p1.locations,
+      builder: (context, locations, ___) {
+        return Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            LinedCard(
+              smallButton: false,
+              title: lang.location,
+              footer: locations.length > 1 ? lang.pickLocation : null,
+              footerTextAlign: TextAlign.end,
+              onPressed: locations.length < 2 ? null : () => pickerDialog(context, locations),
+              child: ListTile(
+                contentPadding: EdgeInsets.zero,
+                visualDensity: const VisualDensity(vertical: -4),
+                title: Text(locations[selectedLocation + 1] ?? locations[1] ?? ''),
+              ),
+            ),
+            if (locations.isEmpty) lockedCover(context),
+          ],
+        );
+      },
     );
   }
 
@@ -67,8 +73,8 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
                 updatePicked(i);
                 // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);
-                Hive.box(Boxes.appState)
-                    .put(HiveKeys.location(/*loggedInCanteen.uzivatel?.uzivatelskeJmeno ?? '', loggedInCanteen.canteenDataUnsafe!.url*/ '', ''), i);
+                AccountProvider account = context.read<AccountProvider>();
+                Hive.box(Boxes.appState).put(HiveKeys.location(account.uzivatel.uzivatelskeJmeno ?? '', account.url ?? ''), i);
               },
             ),
           ),
