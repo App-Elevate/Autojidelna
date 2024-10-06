@@ -5,10 +5,12 @@ class AccountProvider extends ChangeNotifier {
   int? _loggedInID;
   Uzivatel? _uzivatel;
   List<String> _usernames = [];
+  Map<int, String> _locations = {};
 
   int? get loggedInID => _loggedInID;
   Uzivatel? get uzivatel => _uzivatel;
   List<String> get usernames => _usernames;
+  Map<int, String> get locations => _locations;
 
   void setLoggedInID(int? id) {
     _loggedInID = id;
@@ -22,6 +24,11 @@ class AccountProvider extends ChangeNotifier {
 
   void addUsername(String username) {
     _usernames = List.from([..._usernames, username]);
+    notifyListeners();
+  }
+
+  void setLocations(Map<int, String> locations) {
+    _locations = Map.from(locations);
     notifyListeners();
   }
 }
