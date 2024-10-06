@@ -103,6 +103,18 @@ abstract class Texts {
   /// **'Účet'**
   String get account;
 
+  /// No description provided for @accounts.
+  ///
+  /// In cs, this message translates to:
+  /// **'Účty'**
+  String get accounts;
+
+  /// No description provided for @addAccount.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidat účet'**
+  String get addAccount;
+
   /// No description provided for @amoledMode.
   ///
   /// In cs, this message translates to:

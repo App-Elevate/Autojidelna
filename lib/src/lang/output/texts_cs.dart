@@ -13,6 +13,12 @@ class TextsCs extends Texts {
   String get account => 'Účet';
 
   @override
+  String get accounts => 'Účty';
+
+  @override
+  String get addAccount => 'Přidat účet';
+
+  @override
   String get amoledMode => 'AMOLED mód';
 
   @override

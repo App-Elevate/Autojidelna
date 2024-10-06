@@ -2,6 +2,8 @@
   "@@locale": "cs",
   "about": "O aplikaci",
   "account": "Účet",
+  "accounts": "Účty",
+  "addAccount": "Přidat účet",
   "amoledMode": "AMOLED mód",
   "amoledModeSubtitle": "Přidej se k temné straně síly!",
   "analytics": "Shromažďování údajů",
