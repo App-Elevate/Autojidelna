@@ -193,6 +193,12 @@ abstract class Texts {
   /// **'Zrušit'**
   String get cancel;
 
+  /// No description provided for @category.
+  ///
+  /// In cs, this message translates to:
+  /// **'Kategorie'**
+  String get category;
+
   /// No description provided for @changeAccount.
   ///
   /// In cs, this message translates to:
@@ -301,6 +307,12 @@ abstract class Texts {
   /// **'Více'**
   String get more;
 
+  /// No description provided for @name.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jméno'**
+  String get name;
+
   /// No description provided for @noFood.
   ///
   /// In cs, this message translates to:
@@ -336,6 +348,24 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'patch'**
   String get patch;
+
+  /// No description provided for @paymentInfo.
+  ///
+  /// In cs, this message translates to:
+  /// **'Platební Údaje'**
+  String get paymentInfo;
+
+  /// No description provided for @paymentAccountNumber.
+  ///
+  /// In cs, this message translates to:
+  /// **'Číslo účtu'**
+  String get paymentAccountNumber;
+
+  /// No description provided for @personalInfo.
+  ///
+  /// In cs, this message translates to:
+  /// **'Osobní Údaje'**
+  String get personalInfo;
 
   /// No description provided for @pickLocation.
   ///
@@ -379,6 +409,12 @@ abstract class Texts {
   /// **'Přeskakovat víkendy'**
   String get skipWeekends;
 
+  /// No description provided for @specificSymbol.
+  ///
+  /// In cs, this message translates to:
+  /// **'Specifický symbol'**
+  String get specificSymbol;
+
   /// No description provided for @stopAnalytics.
   ///
   /// In cs, this message translates to:
@@ -414,6 +450,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Napište \"crash\" pro pád aplikace'**
   String get typeCrash;
+
+  /// No description provided for @variableSymbol.
+  ///
+  /// In cs, this message translates to:
+  /// **'Variabilní symbol'**
+  String get variableSymbol;
 
   /// No description provided for @version.
   ///

@@ -65,6 +65,9 @@ class TextsCs extends Texts {
   String get cancel => 'Zrušit';
 
   @override
+  String get category => 'Kategorie';
+
+  @override
   String get changeAccount => 'Změnit účet';
 
   @override
@@ -134,6 +137,9 @@ class TextsCs extends Texts {
   String get more => 'Více';
 
   @override
+  String get name => 'Jméno';
+
+  @override
   String get noFood => 'Žádná jídla pro tento den.';
 
   @override
@@ -150,6 +156,15 @@ class TextsCs extends Texts {
 
   @override
   String get patch => 'patch';
+
+  @override
+  String get paymentInfo => 'Platební Údaje';
+
+  @override
+  String get paymentAccountNumber => 'Číslo účtu';
+
+  @override
+  String get personalInfo => 'Osobní Údaje';
 
   @override
   String get pickLocation => 'Vyberte výdejnu:';
@@ -173,6 +188,9 @@ class TextsCs extends Texts {
   String get skipWeekends => 'Přeskakovat víkendy';
 
   @override
+  String get specificSymbol => 'Specifický symbol';
+
+  @override
   String get stopAnalytics => 'Zastavit sledování analytických služeb';
 
   @override
@@ -189,6 +207,9 @@ class TextsCs extends Texts {
 
   @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
+
+  @override
+  String get variableSymbol => 'Variabilní symbol';
 
   @override
   String get version => 'Verze';

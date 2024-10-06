@@ -3,6 +3,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/configured_bottom_sheet.dart';
 import 'package:autojidelna/src/ui/widgets/lined_card.dart';
+import 'package:autojidelna/src/ui/widgets/switch_account_panel.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,7 +21,7 @@ class AccountOverviewCard extends StatelessWidget {
         return LinedCard(
           title: user.uzivatelskeJmeno ?? '',
           footer: lang.changeAccount,
-          // onPressed: () => configuredBottomSheet(context, builder: (context) => const SwitchAccountPanel()),
+          onPressed: () => configuredBottomSheet(context, builder: (context) => const SwitchAccountPanel()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
