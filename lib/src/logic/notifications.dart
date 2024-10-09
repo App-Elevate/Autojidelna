@@ -78,11 +78,11 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
 }
 
 Future<bool> initAwesome() async {
-  LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
   List<NotificationChannelGroup> notificationChannelGroups = [];
   List<NotificationChannel> notificationChannels = [];
   for (int i = 0; i < loginData.users.length; i++) {
-    LoggedInUser user = loginData.users[i];
+    Account user = loginData.users[i];
     notificationChannelGroups.add(
       NotificationChannelGroup(
         channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
@@ -155,7 +155,7 @@ Future<void> doNotifications({bool force = false}) async {
   //TODO: add more langueages
   final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
-  LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
   AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: 588,
@@ -232,7 +232,7 @@ Future<void> doNotifications({bool force = false}) async {
                   payload: {
                     NotificationIds.payloadUser: loginData.users[i].username,
                     NotificationIds.payloadIndex: k.toString(),
-                    NotificationIds.payloadIndexDne: jidelnicek.den.difference(minimalDate).inDays.toString(),
+                    NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
                   body: jidelnicek.jidla[0].nazev,
                 ),
@@ -249,7 +249,7 @@ Future<void> doNotifications({bool force = false}) async {
                 payload: {
                   NotificationIds.payloadUser: loginData.users[i].username,
                   NotificationIds.payloadIndex: k.toString(),
-                  NotificationIds.payloadIndexDne: jidelnicek.den.difference(minimalDate).inDays.toString(),
+                  NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
                 body: jidelnicek.jidla[k].kategorizovano?.hlavniJidlo ?? jidelnicek.jidla[k].nazev,
               ),
@@ -435,8 +435,8 @@ class NotificationController {
     }
     //přepnutí účtu, když uživatel klikne na notifikaci
     if (receivedAction?.payload?[NotificationIds.payloadUser] != null) {
-      LoginDataAutojidelna loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
-      for (LoggedInUser uzivatel in loginData.users) {
+      LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+      for (Account uzivatel in loginData.users) {
         if (uzivatel.username == receivedAction?.payload?[NotificationIds.payloadUser]) {
           await loggedInCanteen.switchAccount(loginData.users.indexOf(uzivatel));
           break;

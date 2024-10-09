@@ -96,7 +96,7 @@ class AppThemes {
         onInverseSurface: Colors.black,
       );
 
-  static ThemeData theme(ColorScheme colorScheme, bool amoledMode) => ThemeData(
+  static ThemeData theme(ColorScheme colorScheme, {bool amoledMode = false}) => ThemeData(
         useMaterial3: true,
         applyElevationOverlayColor: true,
         materialTapTargetSize: MaterialTapTargetSize.padded,

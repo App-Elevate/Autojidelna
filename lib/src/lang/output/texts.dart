@@ -91,6 +91,72 @@ abstract class Texts {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('cs')];
 
+  /// No description provided for @about.
+  ///
+  /// In cs, this message translates to:
+  /// **'O aplikaci'**
+  String get about;
+
+  /// No description provided for @account.
+  ///
+  /// In cs, this message translates to:
+  /// **'Účet'**
+  String get account;
+
+  /// No description provided for @accounts.
+  ///
+  /// In cs, this message translates to:
+  /// **'Účty'**
+  String get accounts;
+
+  /// No description provided for @addAccount.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidat účet'**
+  String get addAccount;
+
+  /// No description provided for @amoledMode.
+  ///
+  /// In cs, this message translates to:
+  /// **'AMOLED mód'**
+  String get amoledMode;
+
+  /// No description provided for @amoledModeSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidej se k temné straně síly!'**
+  String get amoledModeSubtitle;
+
+  /// No description provided for @analytics.
+  ///
+  /// In cs, this message translates to:
+  /// **'Shromažďování údajů'**
+  String get analytics;
+
+  /// No description provided for @analyticsDescription_1.
+  ///
+  /// In cs, this message translates to:
+  /// **'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve '**
+  String get analyticsDescription_1;
+
+  /// No description provided for @analyticsDescription_2.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zdrojovém kódu'**
+  String get analyticsDescription_2;
+
+  /// No description provided for @analyticsDescription_3.
+  ///
+  /// In cs, this message translates to:
+  /// **' nebo v '**
+  String get analyticsDescription_3;
+
+  /// No description provided for @analyticsDescription_4.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zásadách ochrany osobních údajů.'**
+  String get analyticsDescription_4;
+
   /// No description provided for @appName.
   ///
   /// In cs, this message translates to:
@@ -103,6 +169,72 @@ abstract class Texts {
   /// **'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.'**
   String get appDescription;
 
+  /// No description provided for @appearance.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vzhled'**
+  String get appearance;
+
+  /// appLegalese
+  ///
+  /// In cs, this message translates to:
+  /// **'© 2023 - {year} Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3'**
+  String appLegalese(DateTime year);
+
+  /// No description provided for @calendarBigMarkers.
+  ///
+  /// In cs, this message translates to:
+  /// **'Velké ukazatele v kalendáři'**
+  String get calendarBigMarkers;
+
+  /// No description provided for @cancel.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zrušit'**
+  String get cancel;
+
+  /// No description provided for @category.
+  ///
+  /// In cs, this message translates to:
+  /// **'Kategorie'**
+  String get category;
+
+  /// No description provided for @changeAccount.
+  ///
+  /// In cs, this message translates to:
+  /// **'Změnit účet'**
+  String get changeAccount;
+
+  /// No description provided for @convenience.
+  ///
+  /// In cs, this message translates to:
+  /// **'Pohodlí'**
+  String get convenience;
+
+  /// No description provided for @credit.
+  ///
+  /// In cs, this message translates to:
+  /// **'Kredit: {ammount} Kč'**
+  String credit(double ammount);
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In cs, this message translates to:
+  /// **'Formát dat'**
+  String get dateFormat;
+
+  /// No description provided for @debug.
+  ///
+  /// In cs, this message translates to:
+  /// **'Debug'**
+  String get debug;
+
+  /// No description provided for @experimental.
+  ///
+  /// In cs, this message translates to:
+  /// **'Experimentální'**
+  String get experimental;
+
   /// No description provided for @gettingDataNotifications.
   ///
   /// In cs, this message translates to:
@@ -114,12 +246,6 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}'**
   String internetConnectionState(String arg);
-
-  /// No description provided for @debug.
-  ///
-  /// In cs, this message translates to:
-  /// **'Debug'**
-  String get debug;
 
   /// No description provided for @language.
   ///
@@ -139,11 +265,53 @@ abstract class Texts {
   /// **'Angličtina'**
   String get languageEnglish;
 
+  /// No description provided for @licenses.
+  ///
+  /// In cs, this message translates to:
+  /// **'Licence'**
+  String get licenses;
+
+  /// No description provided for @listUi.
+  ///
+  /// In cs, this message translates to:
+  /// **'List UI'**
+  String get listUi;
+
+  /// No description provided for @location.
+  ///
+  /// In cs, this message translates to:
+  /// **'Výdejna'**
+  String get location;
+
   /// No description provided for @login.
   ///
   /// In cs, this message translates to:
   /// **'Přihlásit se'**
   String get login;
+
+  /// No description provided for @menu.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jídelníček'**
+  String get menu;
+
+  /// No description provided for @navigationRailExpantionButtonTitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Menu'**
+  String get navigationRailExpantionButtonTitle;
+
+  /// No description provided for @more.
+  ///
+  /// In cs, this message translates to:
+  /// **'Více'**
+  String get more;
+
+  /// No description provided for @name.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jméno'**
+  String get name;
 
   /// No description provided for @noFood.
   ///
@@ -157,6 +325,18 @@ abstract class Texts {
   /// **'Ne, děkuji'**
   String get noThankYou;
 
+  /// No description provided for @notifications.
+  ///
+  /// In cs, this message translates to:
+  /// **'Oznámení'**
+  String get notifications;
+
+  /// No description provided for @orders.
+  ///
+  /// In cs, this message translates to:
+  /// **'Objednávky'**
+  String get orders;
+
   /// No description provided for @password.
   ///
   /// In cs, this message translates to:
@@ -168,6 +348,36 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'patch'**
   String get patch;
+
+  /// No description provided for @paymentInfo.
+  ///
+  /// In cs, this message translates to:
+  /// **'Platební Údaje'**
+  String get paymentInfo;
+
+  /// No description provided for @paymentAccountNumber.
+  ///
+  /// In cs, this message translates to:
+  /// **'Číslo účtu'**
+  String get paymentAccountNumber;
+
+  /// No description provided for @personalInfo.
+  ///
+  /// In cs, this message translates to:
+  /// **'Osobní Údaje'**
+  String get personalInfo;
+
+  /// No description provided for @pickLocation.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vyberte výdejnu:'**
+  String get pickLocation;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zásady ochrany osobních údajů'**
+  String get privacyPolicy;
 
   /// No description provided for @requestNotificationPermission.
   ///
@@ -181,11 +391,41 @@ abstract class Texts {
   /// **'Nastavení'**
   String get settings;
 
+  /// No description provided for @shareApp.
+  ///
+  /// In cs, this message translates to:
+  /// **'Sdílet aplikaci'**
+  String get shareApp;
+
   /// No description provided for @signOut.
   ///
   /// In cs, this message translates to:
   /// **'Odhlásit se'**
   String get signOut;
+
+  /// No description provided for @skipWeekends.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přeskakovat víkendy'**
+  String get skipWeekends;
+
+  /// No description provided for @specificSymbol.
+  ///
+  /// In cs, this message translates to:
+  /// **'Specifický symbol'**
+  String get specificSymbol;
+
+  /// No description provided for @stopAnalytics.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zastavit sledování analytických služeb'**
+  String get stopAnalytics;
+
+  /// No description provided for @theme.
+  ///
+  /// In cs, this message translates to:
+  /// **'Schéma'**
+  String get theme;
 
   /// No description provided for @themeModeSystem.
   ///
@@ -210,6 +450,30 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Napište \"crash\" pro pád aplikace'**
   String get typeCrash;
+
+  /// No description provided for @variableSymbol.
+  ///
+  /// In cs, this message translates to:
+  /// **'Variabilní symbol'**
+  String get variableSymbol;
+
+  /// No description provided for @version.
+  ///
+  /// In cs, this message translates to:
+  /// **'Verze'**
+  String get version;
+
+  /// versionSubtitle
+  ///
+  /// In cs, this message translates to:
+  /// **'{arg, select, true{Debug} other{Stable}} {version}'**
+  String versionSubtitle(String arg, String version);
+
+  /// No description provided for @view.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zobrazení'**
+  String get view;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {

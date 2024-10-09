@@ -20,10 +20,15 @@ class ThemeStylePicker extends StatelessWidget {
             ThemeStyle themeStyle = ThemeStyle.values[index];
             final bool isBright = MediaQuery.platformBrightnessOf(context) == Brightness.light || prov.themeMode == ThemeMode.light;
 
-            ThemeData theme = AppThemes.theme(isBright ? prov.colorSchemeLight(themeStyle) : prov.colorSchemeDark(themeStyle), prov.amoledMode);
+            ThemeData theme = AppThemes.theme(
+              isBright ? prov.colorSchemeLight(themeStyle) : prov.colorSchemeDark(themeStyle),
+              amoledMode: prov.amoledMode,
+            );
+
+            BorderRadius radius = BorderRadius.circular(16);
 
             ButtonStyle style = OutlinedButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(borderRadius: radius),
               fixedSize: const Size.fromWidth(125),
               padding: EdgeInsets.zero,
               side: BorderSide(
@@ -37,16 +42,20 @@ class ThemeStylePicker extends StatelessWidget {
               data: theme,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: OutlinedButton(
-                  style: style,
-                  onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 35, child: AppBar(automaticallyImplyLeading: false)),
-                      const Divider(color: Colors.transparent),
-                      foodTileColorSchemePreview(context, theme.colorScheme.primary),
-                      foodTileColorSchemePreview(context, theme.colorScheme.secondary),
-                    ],
+                child: ClipRRect(
+                  borderRadius: radius,
+                  clipBehavior: Clip.hardEdge,
+                  child: OutlinedButton(
+                    style: style,
+                    onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
+                    child: Column(
+                      children: [
+                        SizedBox(height: 35, child: AppBar(automaticallyImplyLeading: false)),
+                        const Divider(color: Colors.transparent),
+                        foodTileColorSchemePreview(context, theme.colorScheme.primary),
+                        foodTileColorSchemePreview(context, theme.colorScheme.secondary),
+                      ],
+                    ),
                   ),
                 ),
               ),
