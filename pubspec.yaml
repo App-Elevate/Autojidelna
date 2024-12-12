@@ -63,7 +63,6 @@ dependencies:
   canteenlib: ^4.1.0
   internet_connection_checker: ^1.0.0+1
 
-  icons_flutter: ^0.0.4
   flutter_svg: ^2.0.10+1
 
 dev_dependencies:
