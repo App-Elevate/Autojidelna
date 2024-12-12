@@ -2,9 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
-import 'package:autojidelna/src/_messaging/messaging.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
@@ -35,18 +33,6 @@ class RequestPermissionPage extends StatelessWidget {
                 onPressed: () async {
                   onResult!(true);
                   if (kIsWeb) unawaited(Hive.box(Boxes.settings).put(HiveKeys.shouldAskForNotificationPermission, false));
-                  await FirebaseMessaging.instance.requestPermission(
-                    alert: true,
-                    announcement: false,
-                    badge: true,
-                    carPlay: false,
-                    criticalAlert: false,
-                    provisional: false,
-                    sound: true,
-                  );
-                  Future.delayed(const Duration(seconds: 1), () {
-                    Messaging.onNotificationPermissionGranted();
-                  });
                 },
                 child: Text(lang.requestNotificationPermission),
               ),

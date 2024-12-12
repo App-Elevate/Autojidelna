@@ -7,86 +7,104 @@ class TextsCs extends Texts {
   TextsCs([String locale = 'cs']) : super(locale);
 
   @override
-  String get accountStatus => 'Stav účtu';
+  String get about => 'O aplikaci';
 
   @override
-  String accountcreationTime(DateTime date) {
-    final intl.DateFormat dateDateFormat =
-        intl.DateFormat.yMMMMEEEEd(localeName);
-    final String dateString = dateDateFormat.format(date);
+  String get account => 'Účet';
 
-    return 'Čas vytvoření účtu: $dateString';
-  }
+  @override
+  String get accounts => 'Účty';
+
+  @override
+  String get addAccount => 'Přidat účet';
+
+  @override
+  String get amoledMode => 'AMOLED mód';
+
+  @override
+  String get amoledModeSubtitle => 'Přidej se k temné straně síly!';
+
+  @override
+  String get analytics => 'Shromažďování údajů';
+
+  @override
+  String get analyticsDescription_1 =>
+      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
+
+  @override
+  String get analyticsDescription_2 => 'Zdrojovém kódu';
+
+  @override
+  String get analyticsDescription_3 => ' nebo v ';
+
+  @override
+  String get analyticsDescription_4 => 'Zásadách ochrany osobních údajů.';
+
+  @override
+  String get appName => 'Autojídelna';
 
   @override
   String get appDescription =>
       'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.';
 
   @override
-  String get appName => 'Autojídelna';
+  String get appearance => 'Vzhled';
 
   @override
-  String get buttonPushed => 'Tlačítko jste stiskli tolikrát:';
+  String appLegalese(DateTime year) {
+    final intl.DateFormat yearDateFormat = intl.DateFormat.y(localeName);
+    final String yearString = yearDateFormat.format(year);
+
+    return '© 2023 - $yearString Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3';
+  }
 
   @override
-  String get connectedToANetwork => 'Připojeno k síti';
+  String get calendarBigMarkers => 'Velké ukazatele v kalendáři';
 
   @override
-  String get connectedToTheInternet => 'Připojeno k internetu';
+  String get cancel => 'Zrušit';
 
   @override
-  String get counting => 'Počítání';
+  String get category => 'Kategorie';
 
   @override
-  String get crashlytics => 'Crashlytics';
+  String get changeAccount => 'Změnit účet';
 
   @override
-  String get crashlyticsPage => 'Stránka Crashlytics';
+  String get convenience => 'Pohodlí';
 
   @override
-  String get crashlyticsTestCrash => 'Testovací pád Crashlytics yohooo!';
+  String credit(double ammount) {
+    final intl.NumberFormat ammountNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String ammountString = ammountNumberFormat.format(ammount);
+
+    return 'Kredit: $ammountString Kč';
+  }
 
   @override
-  String get createAccount => 'Vytvořit účet s e-mailem a heslem';
+  String get dateFormat => 'Formát dat';
 
   @override
-  String get debug => ' - debug';
+  String get debug => 'Debug';
 
   @override
-  String get deleteAccount => 'Smazat účet';
+  String get experimental => 'Experimentální';
 
   @override
-  String get deleteAccountConfirm => 'Smazat účet';
+  String get gettingDataNotifications => 'Získávám data pro oznámení';
 
   @override
-  String get deleteAccountDialog => 'Opravdu chcete smazat svůj účet?';
-
-  @override
-  String get demoPageTitle => 'Demo stránka';
-
-  @override
-  String get disconnectedFromANetwork => 'Odpojeno od sítě';
-
-  @override
-  String get disconnectedFromTheInternet => 'Odpojeno od internetu';
-
-  @override
-  String get email => 'E-mail';
-
-  @override
-  String get enterAValidEmailAddress => 'Zadejte platnou e-mailovou adresu';
-
-  @override
-  String get enterYourEmail => 'Zadejte svůj e-mail';
-
-  @override
-  String get enterYourPassword => 'Zadejte své heslo';
-
-  @override
-  String get goBack => 'Jít zpět';
-
-  @override
-  String get goToSettings => 'Jít na nastavení';
+  String internetConnectionState(String arg) {
+    String _temp0 = intl.Intl.selectLogic(
+      arg,
+      {
+        'other': 'Odpojeno od internetu',
+        'true': 'Připojeno k internetu',
+      },
+    );
+    return '$_temp0';
+  }
 
   @override
   String get language => 'Jazyk';
@@ -98,165 +116,116 @@ class TextsCs extends Texts {
   String get languageEnglish => 'Angličtina';
 
   @override
-  String get languageName => 'Čeština';
+  String get licenses => 'Licence';
 
   @override
-  String lastSignInTime(DateTime date) {
-    final intl.DateFormat dateDateFormat =
-        intl.DateFormat.yMMMMEEEEd(localeName);
-    final String dateString = dateDateFormat.format(date);
-
-    return 'Čas posledního přihlášení: $dateString';
-  }
+  String get listUi => 'List UI';
 
   @override
-  String get localization => 'Lokalizace';
+  String get location => 'Výdejna';
 
   @override
-  String loggedIn(String bool) {
-    return 'Přihlášen: $bool';
-  }
+  String get login => 'Přihlásit se';
 
   @override
-  String get login => 'přihlásit se';
+  String get menu => 'Jídelníček';
+
+  @override
+  String get navigationRailExpantionButtonTitle => 'Menu';
+
+  @override
+  String get more => 'Více';
+
+  @override
+  String get name => 'Jméno';
+
+  @override
+  String get noFood => 'Žádná jídla pro tento den.';
 
   @override
   String get noThankYou => 'Ne, děkuji';
 
   @override
-  String get password => 'Heslo';
+  String get notifications => 'Oznámení';
 
   @override
-  String get passwordMustBeAtLeast6CharactersLong =>
-      'Heslo musí mít alespoň 6 znaků';
+  String get orders => 'Objednávky';
+
+  @override
+  String get password => 'Heslo';
 
   @override
   String get patch => 'patch';
 
   @override
-  String providerId(String id) {
-    return 'ID poskytovatele: $id';
-  }
+  String get paymentInfo => 'Platební Údaje';
 
   @override
-  String get remoteConfig => 'Vzdálená konfigurace';
+  String get paymentAccountNumber => 'Číslo účtu';
+
+  @override
+  String get personalInfo => 'Osobní Údaje';
+
+  @override
+  String get pickLocation => 'Vyberte výdejnu:';
+
+  @override
+  String get privacyPolicy => 'Zásady ochrany osobních údajů';
 
   @override
   String get requestNotificationPermission => 'Požádat o povolení notifikací';
 
   @override
-  String get resetPassword => 'Obnovit heslo';
-
-  @override
-  String get routingGoToDetailDetail => 'Jít na podrobnosti podrobností';
-
-  @override
-  String get routingGoToDetailPage => 'Jít na podrobnosti stránky';
-
-  @override
-  String get routingGoToParamDetailPage =>
-      'Jít na podrobnosti stránky s parametry';
-
-  @override
-  String get routingParamDetailPageDetail =>
-      'Stránka s podrobnostmi o parametrech směrování';
-
-  @override
-  String get routingParamDetailPageDetail1 =>
-      'Toto je stránka s podrobnostmi o parametrech směrování.';
-
-  @override
-  String get routingParamDetailPageDetail2 =>
-      'Slouží k testování směrování s parametry.';
-
-  @override
-  String routingParamDetailPageDetail3(String filmId) {
-    return 'Film ID: $filmId';
-  }
-
-  @override
-  String get routingParamFilmId => 'Cesta param Film ID';
-
-  @override
-  String get routingParamPage => 'Stránka s parametry směrování';
-
-  @override
-  String get routingParamPageDetail => 'Toto je stránka s parametry směrování.';
-
-  @override
-  String get routingParamPageDetail2 =>
-      'Slouží k testování směrování s parametry.';
-
-  @override
-  String get routingParamQueryFilmId => 'Dotaz param Film ID';
-
-  @override
-  String get routingTestDetailDetail => 'Podrobnosti o testování směrování';
-
-  @override
-  String get routingTestDetailDetailText =>
-      'Toto je podostránka s podrobnostmi o testování směrování.';
-
-  @override
-  String get routingTestPage => 'Nastavení';
-
-  @override
-  String get routingTestPageDetail => 'Toto je stránka s testováním směrování.';
-
-  @override
-  String get routingTestPageDetail1 => 'Slouží k testování směrování.';
-
-  @override
-  String get secret => 'tajemství';
-
-  @override
-  String get secretPage => 'Tajná stránka';
-
-  @override
   String get settings => 'Nastavení';
 
   @override
-  String get showLocale => 'Zobrazit lokalizaci';
-
-  @override
-  String get signInAnonymously => 'Přihlásit se anonymně';
-
-  @override
-  String get signInWithApple => 'Přihlásit se pomocí Apple';
-
-  @override
-  String get signInWithEmailAndPassword =>
-      'Přihlásit se pomocí e-mailu a hesla';
-
-  @override
-  String get signInWithGoogle => 'Přihlásit se pomocí Google';
+  String get shareApp => 'Sdílet aplikaci';
 
   @override
   String get signOut => 'Odhlásit se';
 
   @override
+  String get skipWeekends => 'Přeskakovat víkendy';
+
+  @override
+  String get specificSymbol => 'Specifický symbol';
+
+  @override
+  String get stopAnalytics => 'Zastavit sledování analytických služeb';
+
+  @override
+  String get theme => 'Schéma';
+
+  @override
+  String get themeModeSystem => 'Systém';
+
+  @override
+  String get themeModeLight => 'Světlý';
+
+  @override
+  String get themeModeDark => 'Tmavý';
+
+  @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
 
   @override
-  String userDisplayName(String name) {
-    return 'Zobrazované jméno uživatele: $name';
+  String get variableSymbol => 'Variabilní symbol';
+
+  @override
+  String get version => 'Verze';
+
+  @override
+  String versionSubtitle(String arg, String version) {
+    String _temp0 = intl.Intl.selectLogic(
+      arg,
+      {
+        'true': 'Debug',
+        'other': 'Stable',
+      },
+    );
+    return '$_temp0 $version';
   }
 
   @override
-  String userEmail(String email) {
-    return 'E-mail uživatele: $email';
-  }
-
-  @override
-  String userEmailVerified(String bool) {
-    return 'E-mail uživatele ověřen: $bool';
-  }
-
-  @override
-  String userId(String id) {
-    return 'ID uživatele: $id';
-  }
-
-  @override
-  String get verifyEmail => 'Ověřit e-mail';
+  String get view => 'Zobrazení';
 }

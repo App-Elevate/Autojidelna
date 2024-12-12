@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>BGTaskSchedulerPermittedIdentifiers</key>
+	<array>
+		<string>com.transistorsoft.customtask</string>
+	</array>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -12,26 +18,19 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>cs</string>
+	</array>
 	<key>CFBundleName</key>
 	<string>autojidelna</string>
-	<key>FlutterDeepLinkingEnabled</key>
-	<true/>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>ITSAppUsesNonExemptEncryption</key>
-	<false/>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
-	<key>CFBundleVersion</key>
-	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>GIDClientID</key>
-	<string>466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -43,6 +42,25 @@
 			</array>
 		</dict>
 	</array>
+	<key>CFBundleVersion</key>
+	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>GIDClientID</key>
+	<string>466976066624-lgcg7thjbakj66btd8og3ld0sntaqdjq.apps.googleusercontent.com</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>processing</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
@@ -58,99 +76,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>CFBundleLocalizations</key>
-	<array>
-		<string>en</string>
-		<string>cs</string>
-	</array>
-
-	<!-- Permissions for permission_handler -->
-
-	<!-- Permission options for the `location` group -->
-	<!--
-    <key>NSLocationWhenInUseUsageDescription</key>
-    <string>Autojídelna needs location to show coordinates</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Autojídelna needs location to show coordinates</string>
-	-->
-
-	<!-- Older devices need location -->
-	<!--
-    <key>NSLocationUsageDescription</key>
-    <string>Autojídelna needs location to show coordinates</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Can I have location always?</string>
-	-->
-
-    <!-- Permission options for the `mediaLibrary` group
-    <key>NSAppleMusicUsageDescription</key>
-    <string>Music!</string>
-    <key>kTCCServiceMediaLibrary</key>
-    <string>media</string>
-	-->
-
-    <!-- Permission options for the `calendar` group
-    <key>NSCalendarsUsageDescription</key>
-    <string>Calendars</string>
-    <key>NSCalendarsFullAccessUsageDescription</key>
-    <string>Calendar full access</string>
-	-->
-
-    <!-- Permission options for the `camera` group
-    <key>NSCameraUsageDescription</key>
-    <string>camera</string>
-	-->
-
-    <!-- Permission options for the `contacts` group
-    <key>NSContactsUsageDescription</key>
-    <string>contacts</string>
-	-->
-
-    <!-- Permission options for the `microphone` group
-    <key>NSMicrophoneUsageDescription</key>
-    <string>microphone</string>
-	-->
-
-    <!-- Permission options for the `speech` group
-    <key>NSSpeechRecognitionUsageDescription</key>
-    <string>speech</string>
-	-->
-
-    <!-- Permission options for the `sensors` group
-    <key>NSMotionUsageDescription</key>
-    <string>motion</string>
-	-->
-
-    <!-- Permission options for the `photos` group
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>photos</string>
-	-->
-
-    <!-- Permission options for the `reminder` group
-    <key>NSRemindersUsageDescription</key>
-    <string>reminders</string>
-	-->
-
-    <!-- Permission options for the `bluetooth`
-    <key>NSBluetoothAlwaysUsageDescription</key>
-    <string>bluetooth</string>
-    <key>NSBluetoothPeripheralUsageDescription</key>
-    <string>bluetooth</string>
-	-->
-
-    <!-- Permission options for the `appTrackingTransparency`
-    <key>NSUserTrackingUsageDescription</key>
-    <string>appTrackingTransparency</string>
-	-->
-
-    <!-- Permission options for the `assistant` group
-    <key>NSSiriUsageDescription</key>
-    <string>The example app would like access to Siri Kit to demonstrate requesting authorization.</string>
-	-->
-
 </dict>
 </plist>

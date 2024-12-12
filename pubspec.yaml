@@ -34,10 +34,6 @@ dependencies:
     sdk: flutter
   intl: any
 
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.6
-
   auto_route: ^9.2.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -49,10 +45,10 @@ dependencies:
   firebase_crashlytics: ^4.0.4
   firebase_analytics: ^11.0.1
   firebase_remote_config: ^5.0.2
-  firebase_messaging: ^15.0.3
   flutter_adaptive_scaffold: ^0.2.1
 
   package_info_plus: ^8.0.0 # Package info used in about page
+  share_plus: ^10.0.2
 
   url_launcher: ^6.3.0
 
@@ -61,6 +57,14 @@ dependencies:
   json_annotation: ^4.9.0
   http: ^1.2.1
   shorebird_code_push: ^1.1.4
+  awesome_notifications: ^0.9.3+1
+  awesome_notifications_core: ^0.9.3
+  background_fetch: ^1.3.7
+  canteenlib: ^4.1.0
+  internet_connection_checker: ^1.0.0+1
+
+  icons_flutter: ^0.0.4
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:
@@ -103,25 +107,15 @@ flutter:
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Lexend
+      fonts:
+        - asset: assets/fonts/Lexend-VariableFont_wght.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-VariableFont_slnt,wght.ttf
 
 sentry:
   upload_debug_symbols: true

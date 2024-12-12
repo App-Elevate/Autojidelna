@@ -1,9 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/ui/widgets/router_page_appbars/default_appbar.dart';
-import 'package:autojidelna/src/ui/widgets/router_page_appbars/demo_page_appbar.dart';
-import 'package:autojidelna/src/ui/widgets/router_page_appbars/login_page_appbar.dart';
+import 'package:autojidelna/src/ui/widgets/appbars/menu_page.dart';
+import 'package:autojidelna/src/ui/widgets/appbars/more_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
 
@@ -36,12 +35,6 @@ class _RouterPageState extends State<RouterPage> {
     });
   }
 
-  final List<PageRouteInfo> routes = [
-    const DemoPage(),
-    const CrashlyticsPage(),
-    const SettingsPage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final lang = context.l10n;
@@ -57,29 +50,34 @@ class _RouterPageState extends State<RouterPage> {
           )
         : null;
 
-    final defaultAppBar = DefaultAppbar(
-      leading: leading,
-      leadingWidth: leadingWidth,
-    );
-
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
     // note: using null will not show the appbar at all. This includes the navigation drawer button. Use with caution.
     final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
-      (context) => DemoPageAppBar(leading: leading, leadingWidth: leadingWidth),
-      (context) => defaultAppBar,
-      (context) => SettingsPageAppBar(leading: leading, leadingWidth: leadingWidth),
+      (_) => const MenuAppBar(),
+      (_) => const MoreAppBar(),
     ];
 
-    final List<NavigationDestination> destinations = [
-      NavigationDestination(label: lang.counting, icon: const Icon(Icons.numbers)),
-      NavigationDestination(label: lang.crashlytics, icon: const Icon(Icons.bug_report)),
-      NavigationDestination(label: lang.settings, icon: const Icon(Icons.settings)),
+    final List<PageRouteInfo> routes = [
+      const MenuPage(),
+      const MorePage(),
     ];
 
     final List<Widget?> secondaryBodies = [
       null,
-      Container(color: Colors.red),
-      Container(color: Colors.green),
+      null,
+    ];
+
+    final List<NavigationDestination> destinations = [
+      NavigationDestination(
+        icon: const Icon(Icons.menu_book),
+        selectedIcon: const Icon(Icons.menu_book_outlined),
+        label: lang.menu,
+      ),
+      NavigationDestination(
+        icon: const Icon(Icons.more_horiz),
+        selectedIcon: const Icon(Icons.more_horiz_outlined),
+        label: lang.more,
+      ),
     ];
 
     assert(
@@ -97,7 +95,7 @@ class _RouterPageState extends State<RouterPage> {
           contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(128)),
           leading: const Icon(Icons.menu),
-          title: const Text('Menu'),
+          title: Text(lang.navigationRailExpantionButtonTitle), // TODO: add to localizations
           onTap: () => changeExtention(context),
         ),
       ),

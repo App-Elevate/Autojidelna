@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'texts_cs.dart';
-import 'texts_en.dart';
 
 /// Callers can lookup localized strings with an instance of Texts
 /// returned by `Texts.of(context)`.
@@ -90,448 +89,391 @@ abstract class Texts {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('cs'),
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('cs')];
 
-  /// No description provided for @accountStatus.
+  /// No description provided for @about.
   ///
-  /// In en, this message translates to:
-  /// **'Account Status'**
-  String get accountStatus;
+  /// In cs, this message translates to:
+  /// **'O aplikaci'**
+  String get about;
 
-  /// No description provided for @accountcreationTime.
+  /// No description provided for @account.
   ///
-  /// In en, this message translates to:
-  /// **'Account Creation Time: {date}'**
-  String accountcreationTime(DateTime date);
+  /// In cs, this message translates to:
+  /// **'Účet'**
+  String get account;
 
-  /// No description provided for @appDescription.
+  /// No description provided for @accounts.
   ///
-  /// In en, this message translates to:
-  /// **'Application for ordering from the Icanteen system. The aim of this application is to simplify, speed up (or even automate) the ordering of lunches.'**
-  String get appDescription;
+  /// In cs, this message translates to:
+  /// **'Účty'**
+  String get accounts;
+
+  /// No description provided for @addAccount.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidat účet'**
+  String get addAccount;
+
+  /// No description provided for @amoledMode.
+  ///
+  /// In cs, this message translates to:
+  /// **'AMOLED mód'**
+  String get amoledMode;
+
+  /// No description provided for @amoledModeSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přidej se k temné straně síly!'**
+  String get amoledModeSubtitle;
+
+  /// No description provided for @analytics.
+  ///
+  /// In cs, this message translates to:
+  /// **'Shromažďování údajů'**
+  String get analytics;
+
+  /// No description provided for @analyticsDescription_1.
+  ///
+  /// In cs, this message translates to:
+  /// **'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve '**
+  String get analyticsDescription_1;
+
+  /// No description provided for @analyticsDescription_2.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zdrojovém kódu'**
+  String get analyticsDescription_2;
+
+  /// No description provided for @analyticsDescription_3.
+  ///
+  /// In cs, this message translates to:
+  /// **' nebo v '**
+  String get analyticsDescription_3;
+
+  /// No description provided for @analyticsDescription_4.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zásadách ochrany osobních údajů.'**
+  String get analyticsDescription_4;
 
   /// No description provided for @appName.
   ///
-  /// In en, this message translates to:
+  /// In cs, this message translates to:
   /// **'Autojídelna'**
   String get appName;
 
-  /// No description provided for @buttonPushed.
+  /// No description provided for @appDescription.
   ///
-  /// In en, this message translates to:
-  /// **'You have pushed the button this many times:'**
-  String get buttonPushed;
+  /// In cs, this message translates to:
+  /// **'Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.'**
+  String get appDescription;
 
-  /// No description provided for @connectedToANetwork.
+  /// No description provided for @appearance.
   ///
-  /// In en, this message translates to:
-  /// **'Connected to a network'**
-  String get connectedToANetwork;
+  /// In cs, this message translates to:
+  /// **'Vzhled'**
+  String get appearance;
 
-  /// No description provided for @connectedToTheInternet.
+  /// appLegalese
   ///
-  /// In en, this message translates to:
-  /// **'Connected to the internet'**
-  String get connectedToTheInternet;
+  /// In cs, this message translates to:
+  /// **'© 2023 - {year} Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3'**
+  String appLegalese(DateTime year);
 
-  /// No description provided for @counting.
+  /// No description provided for @calendarBigMarkers.
   ///
-  /// In en, this message translates to:
-  /// **'Counting'**
-  String get counting;
+  /// In cs, this message translates to:
+  /// **'Velké ukazatele v kalendáři'**
+  String get calendarBigMarkers;
 
-  /// No description provided for @crashlytics.
+  /// No description provided for @cancel.
   ///
-  /// In en, this message translates to:
-  /// **'Crashlytics'**
-  String get crashlytics;
+  /// In cs, this message translates to:
+  /// **'Zrušit'**
+  String get cancel;
 
-  /// No description provided for @crashlyticsPage.
+  /// No description provided for @category.
   ///
-  /// In en, this message translates to:
-  /// **'Crashlytics Page'**
-  String get crashlyticsPage;
+  /// In cs, this message translates to:
+  /// **'Kategorie'**
+  String get category;
 
-  /// No description provided for @crashlyticsTestCrash.
+  /// No description provided for @changeAccount.
   ///
-  /// In en, this message translates to:
-  /// **'Crashlytics test crash!'**
-  String get crashlyticsTestCrash;
+  /// In cs, this message translates to:
+  /// **'Změnit účet'**
+  String get changeAccount;
 
-  /// No description provided for @createAccount.
+  /// No description provided for @convenience.
   ///
-  /// In en, this message translates to:
-  /// **'Create account with email and password'**
-  String get createAccount;
+  /// In cs, this message translates to:
+  /// **'Pohodlí'**
+  String get convenience;
+
+  /// No description provided for @credit.
+  ///
+  /// In cs, this message translates to:
+  /// **'Kredit: {ammount} Kč'**
+  String credit(double ammount);
+
+  /// No description provided for @dateFormat.
+  ///
+  /// In cs, this message translates to:
+  /// **'Formát dat'**
+  String get dateFormat;
 
   /// No description provided for @debug.
   ///
-  /// In en, this message translates to:
-  /// **' - debug'**
+  /// In cs, this message translates to:
+  /// **'Debug'**
   String get debug;
 
-  /// No description provided for @deleteAccount.
+  /// No description provided for @experimental.
   ///
-  /// In en, this message translates to:
-  /// **'Delete account'**
-  String get deleteAccount;
+  /// In cs, this message translates to:
+  /// **'Experimentální'**
+  String get experimental;
 
-  /// No description provided for @deleteAccountConfirm.
+  /// No description provided for @gettingDataNotifications.
   ///
-  /// In en, this message translates to:
-  /// **'Delete account'**
-  String get deleteAccountConfirm;
+  /// In cs, this message translates to:
+  /// **'Získávám data pro oznámení'**
+  String get gettingDataNotifications;
 
-  /// No description provided for @deleteAccountDialog.
+  /// internetConnectionState
   ///
-  /// In en, this message translates to:
-  /// **'Are you sure you want to delete your account?'**
-  String get deleteAccountDialog;
-
-  /// No description provided for @demoPageTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Demo Page'**
-  String get demoPageTitle;
-
-  /// No description provided for @disconnectedFromANetwork.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnected from a network'**
-  String get disconnectedFromANetwork;
-
-  /// No description provided for @disconnectedFromTheInternet.
-  ///
-  /// In en, this message translates to:
-  /// **'Disconnected from the internet'**
-  String get disconnectedFromTheInternet;
-
-  /// No description provided for @email.
-  ///
-  /// In en, this message translates to:
-  /// **'Email'**
-  String get email;
-
-  /// No description provided for @enterAValidEmailAddress.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter a valid email address'**
-  String get enterAValidEmailAddress;
-
-  /// No description provided for @enterYourEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter your email'**
-  String get enterYourEmail;
-
-  /// No description provided for @enterYourPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Please enter your password'**
-  String get enterYourPassword;
-
-  /// No description provided for @goBack.
-  ///
-  /// In en, this message translates to:
-  /// **'Go back'**
-  String get goBack;
-
-  /// No description provided for @goToSettings.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to settings'**
-  String get goToSettings;
+  /// In cs, this message translates to:
+  /// **'{arg, select, other{Odpojeno od internetu} true{Připojeno k internetu}}'**
+  String internetConnectionState(String arg);
 
   /// No description provided for @language.
   ///
-  /// In en, this message translates to:
-  /// **'Language'**
+  /// In cs, this message translates to:
+  /// **'Jazyk'**
   String get language;
 
   /// No description provided for @languageCzech.
   ///
-  /// In en, this message translates to:
-  /// **'Czech'**
+  /// In cs, this message translates to:
+  /// **'Čeština'**
   String get languageCzech;
 
   /// No description provided for @languageEnglish.
   ///
-  /// In en, this message translates to:
-  /// **'English'**
+  /// In cs, this message translates to:
+  /// **'Angličtina'**
   String get languageEnglish;
 
-  /// No description provided for @languageName.
+  /// No description provided for @licenses.
   ///
-  /// In en, this message translates to:
-  /// **'English'**
-  String get languageName;
+  /// In cs, this message translates to:
+  /// **'Licence'**
+  String get licenses;
 
-  /// No description provided for @lastSignInTime.
+  /// No description provided for @listUi.
   ///
-  /// In en, this message translates to:
-  /// **'Last Sign In Time: {date}'**
-  String lastSignInTime(DateTime date);
+  /// In cs, this message translates to:
+  /// **'List UI'**
+  String get listUi;
 
-  /// No description provided for @localization.
+  /// No description provided for @location.
   ///
-  /// In en, this message translates to:
-  /// **'Localizations'**
-  String get localization;
-
-  /// No description provided for @loggedIn.
-  ///
-  /// In en, this message translates to:
-  /// **'Logged in: {bool}'**
-  String loggedIn(String bool);
+  /// In cs, this message translates to:
+  /// **'Výdejna'**
+  String get location;
 
   /// No description provided for @login.
   ///
-  /// In en, this message translates to:
-  /// **'Login'**
+  /// In cs, this message translates to:
+  /// **'Přihlásit se'**
   String get login;
+
+  /// No description provided for @menu.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jídelníček'**
+  String get menu;
+
+  /// No description provided for @navigationRailExpantionButtonTitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Menu'**
+  String get navigationRailExpantionButtonTitle;
+
+  /// No description provided for @more.
+  ///
+  /// In cs, this message translates to:
+  /// **'Více'**
+  String get more;
+
+  /// No description provided for @name.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jméno'**
+  String get name;
+
+  /// No description provided for @noFood.
+  ///
+  /// In cs, this message translates to:
+  /// **'Žádná jídla pro tento den.'**
+  String get noFood;
 
   /// No description provided for @noThankYou.
   ///
-  /// In en, this message translates to:
-  /// **'No, thank you'**
+  /// In cs, this message translates to:
+  /// **'Ne, děkuji'**
   String get noThankYou;
+
+  /// No description provided for @notifications.
+  ///
+  /// In cs, this message translates to:
+  /// **'Oznámení'**
+  String get notifications;
+
+  /// No description provided for @orders.
+  ///
+  /// In cs, this message translates to:
+  /// **'Objednávky'**
+  String get orders;
 
   /// No description provided for @password.
   ///
-  /// In en, this message translates to:
-  /// **'Password'**
+  /// In cs, this message translates to:
+  /// **'Heslo'**
   String get password;
-
-  /// No description provided for @passwordMustBeAtLeast6CharactersLong.
-  ///
-  /// In en, this message translates to:
-  /// **'Password must be at least 6 characters long'**
-  String get passwordMustBeAtLeast6CharactersLong;
 
   /// No description provided for @patch.
   ///
-  /// In en, this message translates to:
+  /// In cs, this message translates to:
   /// **'patch'**
   String get patch;
 
-  /// No description provided for @providerId.
+  /// No description provided for @paymentInfo.
   ///
-  /// In en, this message translates to:
-  /// **'Provider ID: {id}'**
-  String providerId(String id);
+  /// In cs, this message translates to:
+  /// **'Platební Údaje'**
+  String get paymentInfo;
 
-  /// No description provided for @remoteConfig.
+  /// No description provided for @paymentAccountNumber.
   ///
-  /// In en, this message translates to:
-  /// **'Remote Config'**
-  String get remoteConfig;
+  /// In cs, this message translates to:
+  /// **'Číslo účtu'**
+  String get paymentAccountNumber;
+
+  /// No description provided for @personalInfo.
+  ///
+  /// In cs, this message translates to:
+  /// **'Osobní Údaje'**
+  String get personalInfo;
+
+  /// No description provided for @pickLocation.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vyberte výdejnu:'**
+  String get pickLocation;
+
+  /// No description provided for @privacyPolicy.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zásady ochrany osobních údajů'**
+  String get privacyPolicy;
 
   /// No description provided for @requestNotificationPermission.
   ///
-  /// In en, this message translates to:
-  /// **'Request Notification Permission'**
+  /// In cs, this message translates to:
+  /// **'Požádat o povolení notifikací'**
   String get requestNotificationPermission;
-
-  /// No description provided for @resetPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Reset password'**
-  String get resetPassword;
-
-  /// No description provided for @routingGoToDetailDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Detail Detail'**
-  String get routingGoToDetailDetail;
-
-  /// No description provided for @routingGoToDetailPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Detail Page'**
-  String get routingGoToDetailPage;
-
-  /// No description provided for @routingGoToParamDetailPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Go to Param Detail Page'**
-  String get routingGoToParamDetailPage;
-
-  /// No description provided for @routingParamDetailPageDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Routing Param Detail Page'**
-  String get routingParamDetailPageDetail;
-
-  /// No description provided for @routingParamDetailPageDetail1.
-  ///
-  /// In en, this message translates to:
-  /// **'This is a routing param detail page.'**
-  String get routingParamDetailPageDetail1;
-
-  /// No description provided for @routingParamDetailPageDetail2.
-  ///
-  /// In en, this message translates to:
-  /// **'It is used to test routing with parameters.'**
-  String get routingParamDetailPageDetail2;
-
-  /// No description provided for @routingParamDetailPageDetail3.
-  ///
-  /// In en, this message translates to:
-  /// **'Film ID: {filmId}'**
-  String routingParamDetailPageDetail3(String filmId);
-
-  /// No description provided for @routingParamFilmId.
-  ///
-  /// In en, this message translates to:
-  /// **'Path param Film ID'**
-  String get routingParamFilmId;
-
-  /// No description provided for @routingParamPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Routing Param Page'**
-  String get routingParamPage;
-
-  /// No description provided for @routingParamPageDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'This is a routing param page.'**
-  String get routingParamPageDetail;
-
-  /// No description provided for @routingParamPageDetail2.
-  ///
-  /// In en, this message translates to:
-  /// **'It is used to test routing with parameters.'**
-  String get routingParamPageDetail2;
-
-  /// No description provided for @routingParamQueryFilmId.
-  ///
-  /// In en, this message translates to:
-  /// **'Query param Film ID'**
-  String get routingParamQueryFilmId;
-
-  /// No description provided for @routingTestDetailDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'Routing Test Detail Detail'**
-  String get routingTestDetailDetail;
-
-  /// No description provided for @routingTestDetailDetailText.
-  ///
-  /// In en, this message translates to:
-  /// **'This is a routing test detail detail page.'**
-  String get routingTestDetailDetailText;
-
-  /// No description provided for @routingTestPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Settings'**
-  String get routingTestPage;
-
-  /// No description provided for @routingTestPageDetail.
-  ///
-  /// In en, this message translates to:
-  /// **'This is a routing test page.'**
-  String get routingTestPageDetail;
-
-  /// No description provided for @routingTestPageDetail1.
-  ///
-  /// In en, this message translates to:
-  /// **'It is used to test routing.'**
-  String get routingTestPageDetail1;
-
-  /// No description provided for @secret.
-  ///
-  /// In en, this message translates to:
-  /// **'secret'**
-  String get secret;
-
-  /// No description provided for @secretPage.
-  ///
-  /// In en, this message translates to:
-  /// **'Secret Page'**
-  String get secretPage;
 
   /// No description provided for @settings.
   ///
-  /// In en, this message translates to:
-  /// **'Settings'**
+  /// In cs, this message translates to:
+  /// **'Nastavení'**
   String get settings;
 
-  /// No description provided for @showLocale.
+  /// No description provided for @shareApp.
   ///
-  /// In en, this message translates to:
-  /// **'Show locale'**
-  String get showLocale;
-
-  /// No description provided for @signInAnonymously.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in Anonymously'**
-  String get signInAnonymously;
-
-  /// No description provided for @signInWithApple.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Apple'**
-  String get signInWithApple;
-
-  /// No description provided for @signInWithEmailAndPassword.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with email and password'**
-  String get signInWithEmailAndPassword;
-
-  /// No description provided for @signInWithGoogle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with Google'**
-  String get signInWithGoogle;
+  /// In cs, this message translates to:
+  /// **'Sdílet aplikaci'**
+  String get shareApp;
 
   /// No description provided for @signOut.
   ///
-  /// In en, this message translates to:
-  /// **'Sign out'**
+  /// In cs, this message translates to:
+  /// **'Odhlásit se'**
   String get signOut;
+
+  /// No description provided for @skipWeekends.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přeskakovat víkendy'**
+  String get skipWeekends;
+
+  /// No description provided for @specificSymbol.
+  ///
+  /// In cs, this message translates to:
+  /// **'Specifický symbol'**
+  String get specificSymbol;
+
+  /// No description provided for @stopAnalytics.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zastavit sledování analytických služeb'**
+  String get stopAnalytics;
+
+  /// No description provided for @theme.
+  ///
+  /// In cs, this message translates to:
+  /// **'Schéma'**
+  String get theme;
+
+  /// No description provided for @themeModeSystem.
+  ///
+  /// In cs, this message translates to:
+  /// **'Systém'**
+  String get themeModeSystem;
+
+  /// No description provided for @themeModeLight.
+  ///
+  /// In cs, this message translates to:
+  /// **'Světlý'**
+  String get themeModeLight;
+
+  /// No description provided for @themeModeDark.
+  ///
+  /// In cs, this message translates to:
+  /// **'Tmavý'**
+  String get themeModeDark;
 
   /// No description provided for @typeCrash.
   ///
-  /// In en, this message translates to:
-  /// **'Type \"crash\" to crash the app'**
+  /// In cs, this message translates to:
+  /// **'Napište \"crash\" pro pád aplikace'**
   String get typeCrash;
 
-  /// No description provided for @userDisplayName.
+  /// No description provided for @variableSymbol.
   ///
-  /// In en, this message translates to:
-  /// **'User Display Name: {name}'**
-  String userDisplayName(String name);
+  /// In cs, this message translates to:
+  /// **'Variabilní symbol'**
+  String get variableSymbol;
 
-  /// No description provided for @userEmail.
+  /// No description provided for @version.
   ///
-  /// In en, this message translates to:
-  /// **'User Email: {email}'**
-  String userEmail(String email);
+  /// In cs, this message translates to:
+  /// **'Verze'**
+  String get version;
 
-  /// No description provided for @userEmailVerified.
+  /// versionSubtitle
   ///
-  /// In en, this message translates to:
-  /// **'User Email Verified: {bool}'**
-  String userEmailVerified(String bool);
+  /// In cs, this message translates to:
+  /// **'{arg, select, true{Debug} other{Stable}} {version}'**
+  String versionSubtitle(String arg, String version);
 
-  /// No description provided for @userId.
+  /// No description provided for @view.
   ///
-  /// In en, this message translates to:
-  /// **'User ID: {id}'**
-  String userId(String id);
-
-  /// No description provided for @verifyEmail.
-  ///
-  /// In en, this message translates to:
-  /// **'Verify email'**
-  String get verifyEmail;
+  /// In cs, this message translates to:
+  /// **'Zobrazení'**
+  String get view;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {
@@ -544,7 +486,7 @@ class _TextsDelegate extends LocalizationsDelegate<Texts> {
 
   @override
   bool isSupported(Locale locale) =>
-      <String>['cs', 'en'].contains(locale.languageCode);
+      <String>['cs'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_TextsDelegate old) => false;
@@ -555,8 +497,6 @@ Texts lookupTexts(Locale locale) {
   switch (locale.languageCode) {
     case 'cs':
       return TextsCs();
-    case 'en':
-      return TextsEn();
   }
 
   throw FlutterError(

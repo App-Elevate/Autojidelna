@@ -1,45 +1,17 @@
-# APPE Core
+# Autojidelna
 
-Core pro aplikace. Obsahuje template pro aplikace vytvořené v App Elevate.
+Aplikace pro objednávání ze systému Icanteen. Cíl této aplikace je zjednodušit, zrychlit, (případně i zautomatizovat) objednávání obědů.
 
-## Doporučený environment
+## Kód pro přistup do Icanteen
 
-- macOS má aktuálně implementované všechny skripty, ale pro windows uživatele nebude náročné si je upravit. Na linuxu by mělo vše fungovat bez problémů.
-- Doporučený editor je Visual Studio Code s rozšířeními [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter), [Arb-files](https://marketplace.visualstudio.com/items?itemName=Google.arb-editor), [Run on save](https://marketplace.visualstudio.com/items?itemName=emeraldwalk.RunOnSave) a [Build Runner](https://marketplace.visualstudio.com/items?itemName=GaetSchwartz.build-runner&ssr=false#review-details). Run on save je pro automatické formátování arb souborů (překlady) a build runner je pro automatické generování kódu.
-- tyto extensiony nepotřebují žádné další konfigurace.
-- macOS má zároveň podporu kompilace pro iOS a macOS.
+Aplikace používá package [canteenlib](https://github.com/App-Elevate/AUT.canteenlib), ve které se nachází všechen kód ohledně přihlašování, objednávání obědů apod. Pokud by vás zajímalo jak aplikace ukládá vaše údaje podívejte se do [canteenwrapper.dart](./lib/src/logic/canteenwrapper.dart)
 
-## Vývojářské nástroje
+## Podporované platformy
 
-- Tento projekt používá build_runner pro automatické generování kódu. Pro spuštění je potřeba spustit `dart run build_runner watch` nebo `dart run build_runner build` pro jednorázový build. Toto je potřeba spustit pokaždé, co upravíte freezed soubory, nebo router. (např `@RoutePage` nebo `@freezed`)
-- Doporučuji to mít zapnuté jako `watch` dole, když máte build runner extension ve Visual Studio Code. Pokud se vás to zeptá na složku, ve které to spusti, zvolte `lib`.
+Aktuálně je podporován pouze Android, ale je v plánu podporovat i IOS. Ostatní systémy není v plánu podporovat.
 
-# [Spouštění aplikace](docs/spousteni_aplikace.md)
+## Kompilování
 
-# [Distribuce](docs/automaticky_deployment.md)
+Odstraňte klíče originálního autora tím, že přepíšete ['signingConfig signingConfigs.release'](https://github.com/App-Elevate/AUT.aplikace/blob/28096713e958f0e1e4f3cf8e49aaefbeeedbb5f2/android/app/build.gradle#L71-L72) na `signingConfig signingConfigs.debug`, odstraněním [signing Keys](https://github.com/tpkowastaken/autojidelna/blob/5d0587befd74fd58315ccc131894feb8588b09fe/android/app/build.gradle#L27-L31) a odstraněním [signing Configs](https://github.com/tpkowastaken/autojidelna/blob/5d0587befd74fd58315ccc131894feb8588b09fe/android/app/build.gradle#L60-L67).
 
-# Omezení implementace CORU
-
-1. firebase_options.dart MUSÍ být v /lib/firebase_options.dart
-
-## iOS
-
-1. Je potřeba po každém přidání entitlementu zapnout automatické podepisování v Xcode a následně ho vypnout. Potom už stačí jen regenerovat certifikáty pomocí fastlane match:
-
-```bash
-cd ios && bundle install && bundle exec fastlane match appstore --force && bundle exec fastlane match development --force && cd ..
-```
-
-a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potřeba mít přístup k certifikátům.
-
-## macOS
-
-1. Je potřeba po každém přidání entitlementu zapnout automatické podepisování v Xcode a následně ho vypnout. Potom už stačí jen regenerovat certifikáty pomocí fastlane match:
-
-```bash
-cd macos && bundle install && bundle exec fastlane match appstore --additional-cert-types=mac_installer_distribution --force --platform=macos && bundle exec fastlane match development --force --platform=macos && cd ..
-```
-
-a následně znovu buildnout aplikaci. Toto musí udělat Tom, protože je potřeba mít přístup k certifikátům.
-
-# [Vytváření nové aplikace](docs/novy_projekt.md)
+Pro systém android stačí mít nainstalovaný [Flutter](https://docs.flutter.dev/get-started/install) a poté `flutter build apk` pro android na windows nebo `flutter build ipa` pro ios na macbooku. Aplikaci na IOS můžete nainstalovat pomocí [tohoto návodu](https://chrunos.com/install-ipa-on-iphone/)

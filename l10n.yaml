@@ -1,6 +1,6 @@
 arb-dir: lib/src/lang
 output-dir: lib/src/lang/output
-template-arb-file: app_en.arb
+template-arb-file: app_cs.arb
 output-localization-file: texts.dart
 untranslated-messages-file: untranslated_messages.json
 output-class: Texts

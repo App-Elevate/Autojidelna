@@ -1,8 +1,14 @@
+import 'package:autojidelna/src/_conf/adapters.hive.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
-import 'package:autojidelna/src/_messaging/messaging.dart';
+import 'package:autojidelna/src/lang/supported_locales.dart';
+import 'package:autojidelna/src/logic/canteenwrapper.dart';
+import 'package:autojidelna/src/logic/notifications.dart';
+import 'package:autojidelna/src/types/all.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +36,8 @@ class App {
   static bool _initRemoteConfigExecuted = false;
   static bool _initHiveExecuted = false;
   static bool _initRotationExecuted = false;
-  static bool _initFirebaseMessagingExecuted = false;
   static bool _initCodePushExecuted = false;
+  static bool _initNotificationsExecuted = false;
 
   static Future<void> initCodePush() async {
     assert(_initCodePushExecuted == false, 'App.initCodePush() must be called only once');
@@ -51,6 +57,51 @@ class App {
     }
 
     _initCodePushExecuted = true;
+  }
+
+  static Future<void> initNotifications() async {
+    assert(_initNotificationsExecuted == false, 'App.initNotifications() must be called only once');
+    if (_initNotificationsExecuted) return;
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    String version = packageInfo.version;
+    String? lastVersion = Hive.box(Boxes.appState).get(HiveKeys.lastVersion);
+
+    // Removing the already set notifications if we updated versions
+    if (lastVersion != version) {
+      // Set the new version
+      Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
+
+      try {
+        LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+
+        for (Account uzivatel in loginData.users) {
+          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
+          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
+        }
+      } catch (e) {
+        //do nothing
+      }
+      await AwesomeNotifications().dispose();
+    }
+
+    // Initialize the notifications
+    initAwesome();
+
+    // Setting listeners for when the app is running and notification button is clicked
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+      onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
+      onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod,
+    );
+
+    // Detecting if the app was opened from a notification and handling it if it was
+    ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
+    await NotificationController.handleNotificationAction(receivedAction);
+
+    // Initializing the background fetch
+    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    _initNotificationsExecuted = true;
   }
 
   static Future<void> initPlatform() async {
@@ -98,46 +149,21 @@ class App {
     if (_initHiveExecuted) return;
 
     await Hive.initFlutter();
+    Hive.registerAdapter(ThemeModeAdapter());
+    Hive.registerAdapter(ThemeStyleAdapter());
+    Hive.registerAdapter(DateFormatOptionsAdapter());
+    await Hive.openBox(Boxes.theme);
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
+    await Hive.openBox(Boxes.appState);
+    await Hive.openBox(Boxes.statistics);
+    await Hive.openBox(Boxes.notifications);
 
     _initHiveExecuted = true;
   }
 
   static Future<void> initSecureStorage() async {
     secureStorage = const FlutterSecureStorage();
-  }
-
-  static Future<void> initFirebaseMessaging() async {
-    assert(_initFirebaseMessagingExecuted == false, 'App.initFirebaseMessaging() must be called only once');
-    if (_initFirebaseMessagingExecuted) return;
-    if (!kIsWeb) {
-      NotificationSettings settings = await FirebaseMessaging.instance.getNotificationSettings();
-      await Messaging.setupInteractedMessage();
-      FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
-      FirebaseMessaging.onMessage.listen(Messaging.handleMessage);
-
-      if (settings.authorizationStatus == AuthorizationStatus.notDetermined &&
-          Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
-        App.shouldAskForNotification = true;
-      } else {
-        App.shouldAskForNotification = false;
-      }
-
-      if (settings.authorizationStatus == AuthorizationStatus.authorized || settings.authorizationStatus == AuthorizationStatus.provisional) {
-        await Messaging.onNotificationPermissionGranted();
-      }
-    } else if (Hive.box(Boxes.settings).get(HiveKeys.shouldAskForNotificationPermission, defaultValue: true)) {
-      App.shouldAskForNotification = true;
-    } else {
-      App.shouldAskForNotification = false;
-    }
-
-    if (kIsWeb && Hive.box(Boxes.settings).get(HiveKeys.webNotificationsAccepted, defaultValue: false)) {
-      await Messaging.onNotificationPermissionGranted();
-    }
-
-    _initFirebaseMessagingExecuted = true;
   }
 
   static late final FlutterSecureStorage secureStorage;
@@ -154,7 +180,7 @@ class App {
 
   static final remoteConfigProvider = Rmc();
 
-  static const defaultLocale = Locale('en');
+  static final defaultLocale = Locales.cs;
 
   static const defaultRotations = [
     DeviceOrientation.portraitUp,

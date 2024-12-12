@@ -15,11 +15,11 @@ class InitApp {
     await App.initRemoteConfig();
     await Future.wait([
       App.initLocalization(),
-      App.initFirebaseMessaging(),
       App.initSecureStorage(),
       App.initPlatform(),
       App.initRotation(),
       App.initCodePush(),
+      App.initNotifications(),
     ]);
     // Stop the stopwatch
     stopwatch.stop();
