@@ -113,14 +113,6 @@ body {
     <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
   </svg>
   <script src="redirect.js" type="application/javascript"></script>
-  <script src="flutter_bootstrap.js" async>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('firebase-messaging-sw.js', {
-          scope: '/firebase-cloud-messaging-push-scope',
-        });
-      });
-    }
-  </script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
