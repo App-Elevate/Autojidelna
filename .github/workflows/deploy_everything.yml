@@ -490,7 +490,7 @@ jobs:
           zip -r symbols.zip .
           cd $CURRENT_EXECUTION_PATH
           mv $PATH_TO_NATIVE_SYMBOLS/symbols.zip build/symbols.zip
-      - uses: vacxe/google-play-cli-kt@0.4.9
+      - uses: vacxe/google-play-cli-kt@0.4.8
         if: ${{ github.event.inputs.patch != 'true' }}
         env:
           JAVA_HOME: ""
