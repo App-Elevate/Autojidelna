@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/more/account_overview_card.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:canteenlib/canteenlib.dart';

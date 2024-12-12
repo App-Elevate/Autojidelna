@@ -9,8 +9,8 @@ import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_octicons/flutter_octicons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:icons_flutter/icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
@@ -73,7 +73,7 @@ class AboutPage extends StatelessWidget {
               ),
               IconButton(
                 onPressed: () => unawaited(launchUrl(Uri.parse(Links.repo))),
-                icon: const Icon(Octicons.mark_github),
+                icon: const Icon(OctIcons.mark_github_24),
               ),
               IconButton(
                 onPressed: () => unawaited(launchUrl(Uri(scheme: 'mailto', path: Links.email))),
