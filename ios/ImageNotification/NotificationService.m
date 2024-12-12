@@ -12,6 +12,7 @@
 
 @implementation NotificationService
 
+/*
 - (BOOL)application:(UIApplication *)app
             openURL:(NSURL *)url
             options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
@@ -26,7 +27,7 @@
     [FIRAuth.auth canHandleURL:urlContext.URL];
   }
 }
-
+*/
 - (void)didReceiveNotificationRequest:(UNNotificationRequest *)request withContentHandler:(void (^)(UNNotificationContent * _Nonnull))contentHandler {
     self.contentHandler = contentHandler;
     self.bestAttemptContent = [request.content mutableCopy];
