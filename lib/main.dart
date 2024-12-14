@@ -11,7 +11,8 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 void main() async {
   // Get the current patch number. This will be null if no patch is installed.
-  if (!kDebugMode) {
+  if (!kDebugMode && !kReleaseMode) {
+    //TODO: Enable Sentry if data collection is allowed
     await SentryFlutter.init(
       (options) {
         options.dsn = Tokens.sentryDsn;
@@ -55,7 +56,8 @@ void runMyApp() async {
   );
 
   // We don't want to send crash reports while in development. Web is not supported yet by Crashlytics.
-  if (!kDebugMode && !kProfileMode && !kIsWeb) {
+  if (!kDebugMode && !kProfileMode && !kIsWeb && !kReleaseMode) {
+    // TODO: Enable Crashlytics if data collection is allowed
     // Flutter error handling
 
     Function(FlutterErrorDetails)? originalOnError = FlutterError.onError;

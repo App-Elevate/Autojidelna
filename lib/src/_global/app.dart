@@ -14,6 +14,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
@@ -179,6 +180,7 @@ class App {
   static late final int? currentPatchNumber;
 
   static final remoteConfigProvider = Rmc();
+  static final GetIt getIt = GetIt.instance;
 
   static final defaultLocale = Locales.cs;
 

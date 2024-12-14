@@ -8,13 +8,14 @@ class AppRouter extends RootStackRouter {
   static final List<AutoRoute> staticRoutes = [
     AutoRoute(
       page: RouterPage.page,
-      initial: true,
-      path: '/',
+      path: '/home',
+      initial: false,
       children: <AutoRoute>[
         AutoRoute(page: MenuPage.page, path: 'menu', initial: true),
         AutoRoute(page: MorePage.page, path: 'more'),
       ],
     ),
+    AutoRoute(page: LoginLoading.page, path: '/', initial: true),
     AutoRoute(page: DishDetailPage.page, path: '/detail'),
     AutoRoute(page: LoginPage.page, path: '/login'),
     AutoRoute(page: AccountPage.page, path: '/account'),

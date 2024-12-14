@@ -41,15 +41,6 @@ class _RouterPageState extends State<RouterPage> {
 
     bool isSmallMobile = Breakpoints.smallMobile.isActive(context);
 
-    final double? leadingWidth = !isSmallMobile ? 64 : null;
-    final Widget? leading = !isSmallMobile
-        ? Container(
-            alignment: Alignment.center,
-            margin: const EdgeInsets.only(left: 16),
-            child: DrawerButton(onPressed: () => changeExtention(context)),
-          )
-        : null;
-
     // use null to not show an appbar for a specific page. Use the defaultAppBar for a default appbar
     // note: using null will not show the appbar at all. This includes the navigation drawer button. Use with caution.
     final List<PreferredSizeWidget Function(BuildContext context)?> appBars = [
@@ -58,7 +49,7 @@ class _RouterPageState extends State<RouterPage> {
     ];
 
     final List<PageRouteInfo> routes = [
-      const MenuPage(),
+      MenuPage(),
       const MorePage(),
     ];
 

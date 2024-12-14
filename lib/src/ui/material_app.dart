@@ -23,7 +23,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final _appRouter = AppRouter();
   Locale? _locale;
 
   @override
@@ -55,7 +54,10 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final appRouter = App.getIt<AppRouter>();
     return Consumer<ThemeProvider>(
+      // TODO: Wrap the pages not the whole material app for better performance.
+      // https://pub.dev/packages/auto_route#wrapping-routes
       builder: (context, theme, ___) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
@@ -65,7 +67,7 @@ class _MyAppState extends State<MyApp> {
           locale: _locale,
           supportedLocales: Texts.supportedLocales,
           localizationsDelegates: Texts.localizationsDelegates,
-          routerConfig: _appRouter.config(
+          routerConfig: appRouter.config(
             includePrefixMatches: true,
             navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
             deepLinkTransformer: (uri) async => deepLinkTransformer(uri),

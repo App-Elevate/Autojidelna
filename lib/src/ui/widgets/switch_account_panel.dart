@@ -1,8 +1,6 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -63,19 +61,20 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         ],
       ),
       trailing: IconButton(
-          padding: EdgeInsets.zero,
-          icon: Icon(Icons.logout, size: 30, color: Theme.of(context).colorScheme.onSurface),
-          onPressed: () async {
-            if (currentAccount && context.mounted) {
-              /*configuredDialog(
+        padding: EdgeInsets.zero,
+        icon: Icon(Icons.logout, size: 30, color: Theme.of(context).colorScheme.onSurface),
+        onPressed: () async {
+          if (currentAccount && context.mounted) {
+            /*configuredDialog(
                 context,
                 builder: (BuildContext context) => logoutDialog(context, currentAccount: currentAccount, id: id),
               );*/
-            } else if (context.mounted) {
-              // TODO: await loggedInCanteen.logout(id: id);
-              setState(() {});
-            }
-          }),
+          } else if (context.mounted) {
+            // TODO: await loggedInCanteen.logout(id: id);
+            setState(() {});
+          }
+        },
+      ),
       onTap: () async {
         if (!currentAccount) {
           // TODO: await loggedInCanteen.switchAccount(id);
