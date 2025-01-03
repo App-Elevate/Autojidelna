@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
@@ -89,6 +91,8 @@ class MyAppWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AccountProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => Settings()),
+        ChangeNotifierProvider(create: (_) => DishesOfTheDay()),
+        ChangeNotifierProvider(create: (_) => Ordering()),
       ],
       child: const MyApp(),
     );
