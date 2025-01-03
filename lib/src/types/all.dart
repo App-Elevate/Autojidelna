@@ -51,12 +51,12 @@ class Account {
 /// Všichni přihlášení uživatelé
 class LoggedAccounts {
   int? currentlyLoggedInId;
-  List<Account> users = [];
+  List<Account> users;
 
   LoggedAccounts({
     this.currentlyLoggedInId,
-    this.users = const [],
-  });
+    List<Account>? users,
+  }) : users = users ?? [];
 
   Map<String, dynamic> toJson() => {
         'currentlyLoggedInId': currentlyLoggedInId,

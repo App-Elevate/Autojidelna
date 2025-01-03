@@ -44,11 +44,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return formScaffold(context);
+    final lang = context.l10n;
+    return formScaffold(context, lang);
   }
 
-  Scaffold formScaffold(BuildContext context) {
-    final lang = context.l10n;
+  Scaffold formScaffold(BuildContext context, Texts lang) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
@@ -173,7 +173,7 @@ class _LoginPageState extends State<LoginPage> {
                 ],
               ),
             ),
-            loginSubmitButton(context),
+            loginSubmitButton(context, lang),
             RichText(
               text: TextSpan(
                 text: lang.dataCollectionAgreement,
@@ -199,8 +199,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Container loginSubmitButton(context) {
-    final lang = context.l10n;
+  Container loginSubmitButton(context, Texts lang) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
       height: 60,
@@ -209,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
         valueListenable: loggingIn,
         builder: (context, value, child) {
           return ElevatedButton(
-            onPressed: value ? null : () => loginFieldCheck(context),
+            onPressed: value ? null : () => loginFieldCheck(context, lang),
             style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
             child: value ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary) : Text(lang.loginButton),
           );
@@ -218,8 +217,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void loginFieldCheck(BuildContext context) async {
-    final lang = context.l10n;
+  void loginFieldCheck(BuildContext context, Texts lang) async {
     if (LoginPage._formKey.currentState!.validate()) {
       // If the form is valid, save the form fields.
       LoginPage._formKey.currentState!.save();
