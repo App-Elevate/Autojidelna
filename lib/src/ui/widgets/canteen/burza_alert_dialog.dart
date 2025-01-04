@@ -12,9 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
-  if (kReleaseMode || kDebugMode) {
-    return;
-  }
   final lang = context.l10n;
   if (stav == StavJidla.objednanoNelzeOdebrat) {
     ValueNotifier<bool> checkbox = ValueNotifier<bool>(false);
