@@ -16,10 +16,10 @@ class _LoginLoadingState extends State<LoginLoading> {
     try {
       await loggedInCanteen.loginFromStorage();
     } catch (e) {
-      if (mounted) context.router.navigate(const LoginPage());
+      if (mounted) context.router.replaceAll([const LoginPage()]);
       return;
     }
-    if (mounted) context.router.navigate(const RouterPage());
+    if (mounted) context.router.replaceAll([const RouterPage()]);
   }
 
   @override
@@ -30,9 +30,6 @@ class _LoginLoadingState extends State<LoginLoading> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(color: Theme.of(context).colorScheme.surface),
-      child: const Center(child: CircularProgressIndicator()),
-    );
+    return const Center(child: CircularProgressIndicator());
   }
 }
