@@ -86,7 +86,7 @@ class _RouterPageState extends State<RouterPage> {
           contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(128)),
           leading: const Icon(Icons.menu),
-          title: Text(lang.navigationRailExpantionButtonTitle), // TODO: add to localizations
+          title: Text(lang.navigationRailExpantionButtonTitle),
           onTap: () => changeExtention(context),
         ),
       ),
