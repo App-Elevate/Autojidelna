@@ -80,21 +80,21 @@ class AppThemes {
     onInverseSurface: Colors.white,
   );
 
-  static const ColorScheme colorSchemeDark = ColorScheme(
+  static ColorScheme colorSchemeDark = ColorScheme(
     brightness: Brightness.dark,
-    primary: Color(0xffbb86fc),
-    onPrimary: Colors.white,
-    secondary: Color(0xff018786),
-    onSecondary: Colors.white,
-    error: Color(0xFFCF6679),
-    onError: Colors.white,
-    surface: Color(0xff121212),
-    onSurface: Colors.white,
+    primary: const Color(0xffbb86fc),
+    onPrimary: Colors.white.withOpacity(.8),
+    secondary: const Color(0xff018786),
+    onSecondary: Colors.white.withOpacity(.8),
+    error: const Color(0xFFCF6679),
+    onError: Colors.white.withOpacity(.8),
+    surface: const Color(0xff121212),
+    onSurface: Colors.white.withOpacity(.8),
     surfaceContainerHighest: Colors.white12,
     onSurfaceVariant: Colors.white54,
     scrim: Colors.black54,
     surfaceTint: Colors.white,
-    inverseSurface: Color(0xFFdddddd),
+    inverseSurface: const Color(0xFFdddddd),
     onInverseSurface: Colors.black,
   );
 
@@ -133,9 +133,14 @@ class AppThemes {
         cardTheme: CardTheme(
           elevation: amoledMode ? .5 : 2,
           clipBehavior: Clip.hardEdge,
+          color: amoledMode ? colorScheme.onInverseSurface : null,
           surfaceTintColor: colorScheme.surfaceTint,
           shadowColor: Colors.transparent,
           margin: horizontalMargin,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
+          ),
         ),
         dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
         drawerTheme: DrawerThemeData(
@@ -147,6 +152,7 @@ class AppThemes {
         ),
         navigationBarTheme: NavigationBarThemeData(
           indicatorColor: colorScheme.secondary,
+          backgroundColor: amoledMode ? Colors.transparent : null,
           surfaceTintColor: colorScheme.surfaceTint,
           elevation: amoledMode ? 0 : null,
         ),
@@ -156,9 +162,7 @@ class AppThemes {
           backgroundColor: colorScheme.inverseSurface,
           elevation: amoledMode ? 0 : 2,
           contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onInverseSurface),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16)),
-          ),
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
           behavior: SnackBarBehavior.floating,
           insetPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           showCloseIcon: true,
@@ -218,18 +222,20 @@ class AppThemes {
           style: ButtonStyle(
             textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-              if (states.contains(WidgetState.disabled)) return colorScheme.surfaceContainerHighest; // Disabled color
+              if (states.contains(WidgetState.disabled)) {
+                return amoledMode ? colorScheme.surfaceContainerHighest.withAlpha(16) : colorScheme.surfaceContainerHighest;
+              } // Disabled color
               return colorScheme.surface; // Regular color
             }),
             foregroundColor: WidgetStateProperty.resolveWith((states) {
               if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
               return colorScheme.onSurface;
             }),
-            fixedSize: const WidgetStatePropertyAll(Size.fromHeight(50)),
+            fixedSize: const WidgetStatePropertyAll(Size.fromHeight(45)),
+            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
             splashFactory: InkRipple.splashFactory,
             alignment: Alignment.center,
-            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-            elevation: const WidgetStatePropertyAll(4),
+            side: WidgetStatePropertyAll(BorderSide(color: amoledMode ? colorScheme.surfaceContainerHighest : Colors.transparent, strokeAlign: 1)),
           ),
         ),
         iconButtonTheme: const IconButtonThemeData(
