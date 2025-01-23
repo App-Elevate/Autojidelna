@@ -1,3 +1,4 @@
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -90,7 +91,7 @@ class LinedCard extends StatelessWidget {
           Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Theme.of(context).listTileTheme.subtitleTextStyle!.color),
           const SizedBox(width: 5),
         ],
-        Text(text, style: Theme.of(context).textTheme.labelLarge),
+        Text(text, style: AppThemes.textTheme.labelLarge!.copyWith(color: Theme.of(context).dividerColor)),
         if (textAlign != TextAlign.end && textAlign != TextAlign.right)
           Flexible(child: CustomDivider(isTransparent: transparentDivider, hasEndIndent: false)),
       ],
