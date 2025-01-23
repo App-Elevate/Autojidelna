@@ -1,4 +1,4 @@
-import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
@@ -13,6 +13,8 @@ class CalendarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final int dayIndex = context.select<DishesOfTheDay, int>((prov) => prov.dayIndex);
+
     return SizedBox(
       height: 37.5,
       child: MaterialButton(
@@ -22,7 +24,7 @@ class CalendarButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 1.75),
         ),
-        onPressed: () => showCustomDatePicker(context, convertIndexToDatetime(App.pageController.page!.toInt())),
+        onPressed: () => showCustomDatePicker(context, convertIndexToDatetime(dayIndex)),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -31,9 +33,9 @@ class CalendarButton extends StatelessWidget {
             Selector<Settings, DateFormatOptions>(
               selector: (_, p1) => p1.dateFormat,
               builder: (context, dateFormat, _) {
-                String day = DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag())
-                    .format(convertIndexToDatetime(App.pageController.page!.toInt()));
-                String date = getCorrectDateString(dateFormat, date: convertIndexToDatetime(App.pageController.page!.toInt()));
+                String day =
+                    DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag()).format(convertIndexToDatetime(dayIndex));
+                String date = getCorrectDateString(dateFormat, date: convertIndexToDatetime(dayIndex));
                 return Text('$day - $date');
               },
             ),

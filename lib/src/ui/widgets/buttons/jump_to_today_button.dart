@@ -16,7 +16,7 @@ class JumpToTodayButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 1.75),
         ),
-        onPressed: () => changeDate(DateTime.now(), animate: true),
+        onPressed: () => changeDate(context, DateTime.now(), animate: true),
         child: Text(DateTime.now().day.toString()),
       ),
     );

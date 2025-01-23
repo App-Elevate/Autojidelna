@@ -156,7 +156,7 @@ Row _actionButtons(BuildContext context, ValueNotifier<DateTime> focusedDateNoti
       TextButton(
         onPressed: () {
           Navigator.of(context).pop();
-          changeDate(focusedDateNotifier.value);
+          changeDate(context, focusedDateNotifier.value);
         },
         child: Text(lang.ok),
       ),
