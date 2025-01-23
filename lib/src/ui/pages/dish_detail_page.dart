@@ -17,17 +17,15 @@ class DishDetailPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(title: Text(dish.varianta)),
-      body: Card(
-        child: ListView(
-          children: [
-            if (courses.polevka != null && courses.polevka!.trim().isNotEmpty) categoryDetail(lang.soup, content: courses.polevka!),
-            if (courses.hlavniJidlo != null && courses.hlavniJidlo!.trim().isNotEmpty) categoryDetail(lang.mainCourse, content: courses.hlavniJidlo!),
-            if (courses.salatovyBar != null && courses.salatovyBar!.trim().isNotEmpty) categoryDetail(lang.sideDish, content: courses.salatovyBar!),
-            if (courses.piti != null && courses.piti!.trim().isNotEmpty) categoryDetail(lang.drinks, content: courses.piti!),
-            if (courses.ostatni != null && courses.ostatni!.trim().isNotEmpty) categoryDetail(lang.other, content: courses.ostatni!),
-            if (dish.alergeny.isNotEmpty) categoryDetail(lang.allergens, allergens: dish.alergeny),
-          ],
-        ),
+      body: ListView(
+        children: [
+          if (courses.polevka != null && courses.polevka!.trim().isNotEmpty) categoryDetail(lang.soup, content: courses.polevka!),
+          if (courses.hlavniJidlo != null && courses.hlavniJidlo!.trim().isNotEmpty) categoryDetail(lang.mainCourse, content: courses.hlavniJidlo!),
+          if (courses.salatovyBar != null && courses.salatovyBar!.trim().isNotEmpty) categoryDetail(lang.sideDish, content: courses.salatovyBar!),
+          if (courses.piti != null && courses.piti!.trim().isNotEmpty) categoryDetail(lang.drinks, content: courses.piti!),
+          if (courses.ostatni != null && courses.ostatni!.trim().isNotEmpty) categoryDetail(lang.other, content: courses.ostatni!),
+          if (dish.alergeny.isNotEmpty) categoryDetail(lang.allergens, allergens: dish.alergeny),
+        ],
       ),
       bottomNavigationBar: BottomAppBar(
         elevation: 0,
