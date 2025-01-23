@@ -25,7 +25,7 @@ class CalendarButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 1.75),
         ),
-        onPressed: () => showCustomDatePicker(context, currentDate),
+        onPressed: () => showCustomDatePicker(context),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
