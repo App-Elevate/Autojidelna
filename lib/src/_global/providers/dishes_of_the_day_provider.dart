@@ -2,6 +2,7 @@ import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 
 final DateTime minimalDate = DateTime(DateTime.now().year, DateTime.now().month - 1, 1);
+final DateTime maximalDate = DateTime(DateTime.now().year, DateTime.now().month + 2, 0);
 
 class DishesOfTheDay with ChangeNotifier {
   Map<int, Jidelnicek> _menus = {}; // Store menus by day index
