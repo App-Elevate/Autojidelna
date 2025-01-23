@@ -207,9 +207,9 @@ class _LoginPageState extends State<LoginPage> {
       child: ValueListenableBuilder(
         valueListenable: loggingIn,
         builder: (context, value, child) {
-          return ElevatedButton(
+          return FilledButton(
             onPressed: value ? null : () => loginFieldCheck(context, lang),
-            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
+            style: FilledButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
             child: value ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary) : Text(lang.loginButton),
           );
         },

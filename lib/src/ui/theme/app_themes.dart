@@ -5,22 +5,22 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static const EdgeInsets horizontalMargin = EdgeInsets.symmetric(horizontal: 16);
 
-  static const TextTheme textTheme = TextTheme(
-    bodySmall: TextStyle(fontFamily: Fonts.body),
-    bodyMedium: TextStyle(fontFamily: Fonts.body),
-    bodyLarge: TextStyle(fontFamily: Fonts.body),
-    labelSmall: TextStyle(fontFamily: Fonts.headings),
-    labelMedium: TextStyle(fontFamily: Fonts.headings),
-    labelLarge: TextStyle(fontFamily: Fonts.headings),
-    titleSmall: TextStyle(fontFamily: Fonts.headings),
-    titleMedium: TextStyle(fontFamily: Fonts.headings),
-    titleLarge: TextStyle(fontFamily: Fonts.headings),
-    headlineSmall: TextStyle(fontFamily: Fonts.headings),
-    headlineMedium: TextStyle(fontFamily: Fonts.headings),
-    headlineLarge: TextStyle(fontFamily: Fonts.headings),
-    displaySmall: TextStyle(fontFamily: Fonts.headings),
-    displayMedium: TextStyle(fontFamily: Fonts.headings),
-    displayLarge: TextStyle(fontFamily: Fonts.headings),
+  static const TextTheme textTheme = const TextTheme(
+    bodySmall: /*--------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 12, letterSpacing: 0.4),
+    bodyMedium: /*-------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 14, letterSpacing: 0.25),
+    bodyLarge: /*--------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.15),
+    labelSmall: /*----*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w500, fontSize: 11, letterSpacing: 0.5),
+    labelMedium: /*---*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w500, fontSize: 12, letterSpacing: 0.5),
+    labelLarge: /*----*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w500, fontSize: 14, letterSpacing: 0.1),
+    titleSmall: /*----*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w500, fontSize: 14, letterSpacing: 0.1),
+    titleMedium: /*---*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w500, fontSize: 16, letterSpacing: 0.15),
+    titleLarge: /*----*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 22, letterSpacing: 0),
+    headlineSmall: /*-*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 24, letterSpacing: 0),
+    headlineMedium: /**/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 28, letterSpacing: 0),
+    headlineLarge: /*-*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 32, letterSpacing: 0),
+    displaySmall: /*--*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 36, letterSpacing: 0),
+    displayMedium: /*-*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 45, letterSpacing: 0),
+    displayLarge: /*--*/ TextStyle(fontFamily: Fonts.heading, fontWeight: FontWeight.w400, fontSize: 57, letterSpacing: 0),
   );
 
   static const Map<ThemeStyle, ColorStyle> colorStyles = {
@@ -168,11 +168,8 @@ class AppThemes {
           surfaceTintColor: colorScheme.surfaceTint,
           alignment: Alignment.center,
           iconColor: colorScheme.onSurface,
-          titleTextStyle: TextStyle(
-            fontFamily: Fonts.headings,
+          titleTextStyle: textTheme.titleLarge!.copyWith(
             color: colorScheme.onSurface,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
           ),
           contentTextStyle: const TextStyle(fontFamily: Fonts.body, fontSize: 15),
           actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
@@ -226,16 +223,9 @@ class AppThemes {
 
         // Buttons
         switchTheme: const SwitchThemeData(splashRadius: 0),
-        elevatedButtonTheme: ElevatedButtonThemeData(
+        filledButtonTheme: FilledButtonThemeData(
           style: ButtonStyle(
-            textStyle: const WidgetStatePropertyAll(
-              TextStyle(
-                fontFamily: Fonts.headings,
-                fontSize: 18,
-                fontWeight: FontWeight.w500,
-                height: 1.25,
-              ),
-            ),
+            textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
             backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
               if (states.contains(WidgetState.disabled)) return colorScheme.surfaceContainerHighest; // Disabled color
               return colorScheme.surface; // Regular color

@@ -27,8 +27,8 @@ class OrderDishButton extends StatelessWidget {
               StavJidla stavJidla = getStavJidla(updatedDish);
               bool isPrimary = getPrimaryState(stavJidla);
 
-              return ElevatedButton(
-                style: ElevatedButton.styleFrom(
+              return FilledButton(
+                style: FilledButton.styleFrom(
                   backgroundColor: isPrimary ? colorScheme.primary : colorScheme.secondary,
                   foregroundColor: isPrimary ? colorScheme.onPrimary : colorScheme.onSecondary,
                 ),

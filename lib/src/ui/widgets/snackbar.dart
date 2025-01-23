@@ -67,7 +67,7 @@ Row failedUpdate(BuildContext context) {
       Flexible(
         child: Builder(
           builder: (context) {
-            return ElevatedButton(
+            return FilledButton(
               onPressed: () {
                 ScaffoldMessenger.of(context).hideCurrentSnackBar();
               },
@@ -78,7 +78,7 @@ Row failedUpdate(BuildContext context) {
       ),
       Builder(
         builder: (context) {
-          return ElevatedButton(
+          return FilledButton(
             onPressed: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             },
@@ -104,7 +104,7 @@ Row updateFinished(BuildContext context) {
       ),
       Builder(
         builder: (context) {
-          return ElevatedButton(
+          return FilledButton(
             onPressed: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
             },

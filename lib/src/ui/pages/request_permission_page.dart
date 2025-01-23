@@ -29,14 +29,14 @@ class RequestPermissionPage extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              ElevatedButton(
+              FilledButton(
                 onPressed: () async {
                   onResult!(true);
                   if (kIsWeb) unawaited(Hive.box(Boxes.settings).put(HiveKeys.shouldAskForNotificationPermission, false));
                 },
                 child: Text(lang.requestNotificationPermission),
               ),
-              ElevatedButton(
+              FilledButton(
                 onPressed: onResult != null
                     ? () {
                         unawaited(Hive.box(Boxes.settings).put(HiveKeys.shouldAskForNotificationPermission, false));
