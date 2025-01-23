@@ -134,6 +134,7 @@ class AppThemes {
           elevation: amoledMode ? .5 : 2,
           clipBehavior: Clip.hardEdge,
           surfaceTintColor: colorScheme.surfaceTint,
+          shadowColor: Colors.transparent,
           margin: horizontalMargin,
         ),
         dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
