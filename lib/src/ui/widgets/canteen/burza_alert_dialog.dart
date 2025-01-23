@@ -17,8 +17,8 @@ void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
   }
 
   final Texts lang = context.l10n;
-
   ValueNotifier<bool> checkbox = ValueNotifier<bool>(false);
+
   return configuredDialog(
     context,
     builder: (context) => ConfiguredAlertDialog(
@@ -31,23 +31,16 @@ void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
             child: Text(lang.burzaAlertDialogContent),
           ),
           const SizedBox(height: 2),
-          ListTile(
-            titleTextStyle: Theme.of(context).listTileTheme.subtitleTextStyle,
-            title: Row(
-              children: [
-                ValueListenableBuilder(
-                  valueListenable: checkbox,
-                  builder: (_, value, ___) => Checkbox(
-                    value: value,
-                    onChanged: (data) async {
-                      checkbox.value = data!; // Checkbox isn't tristate so it's save
-                      Hive.box(Boxes.appState).put(HiveKeys.hideBurzaAlertDialog, data);
-                    },
-                  ),
-                ),
-                const SizedBox(width: 8),
-                Text(lang.dontShowAgain),
-              ],
+          ValueListenableBuilder(
+            valueListenable: checkbox,
+            builder: (_, value, ___) => CheckboxListTile(
+              value: value,
+              onChanged: (data) async {
+                checkbox.value = data!; // Checkbox isn't tristate so it's save
+                Hive.box(Boxes.appState).put(HiveKeys.hideBurzaAlertDialog, data);
+              },
+              controlAffinity: ListTileControlAffinity.leading,
+              title: Text(lang.dontShowAgain, style: Theme.of(context).listTileTheme.subtitleTextStyle),
             ),
           ),
         ],
@@ -61,7 +54,7 @@ void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
           ),
           onPressed: () {
             BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext;
-            if (ctx != null) pressed(ctx, updatedDish, stav);
+            if (ctx != null) pressed(context, updatedDish, stav);
             Navigator.pop(context);
           },
           child: Text(getObedText(context, updatedDish, stav)),
