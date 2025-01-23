@@ -118,14 +118,20 @@ class AppThemes {
         // COMPONENT THEMES
         iconTheme: IconThemeData(size: 30, color: colorScheme.onSurface),
         appBarTheme: AppBarTheme(
+          backgroundColor: amoledMode ? Colors.transparent : null,
           scrolledUnderElevation: amoledMode ? 0 : 2,
           elevation: amoledMode ? 0 : 2,
           actionsIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
         ),
+        bottomAppBarTheme: BottomAppBarTheme(
+          color: amoledMode ? Colors.transparent : null,
+          elevation: amoledMode ? 0 : 2,
+        ),
         cardTheme: CardTheme(
-          elevation: 2,
+          elevation: amoledMode ? .5 : 2,
           clipBehavior: Clip.hardEdge,
           surfaceTintColor: colorScheme.surfaceTint,
+          margin: const EdgeInsets.symmetric(horizontal: 16),
         ),
         dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
         drawerTheme: DrawerThemeData(
