@@ -197,4 +197,6 @@ class App {
   ///
   /// Do not call this before MaterialApp is built.
   static late Function(Locale? language) translate;
+
+  static late PageController pageController;
 }
