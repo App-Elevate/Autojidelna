@@ -1,6 +1,7 @@
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_alert_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/lined_card.dart';
@@ -86,7 +87,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
   Positioned lockedCover(BuildContext context) {
     return Positioned.fill(
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
+        margin: AppThemes.horizontalMargin,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(12),
           color: Theme.of(context).colorScheme.onInverseSurface.withOpacity(.9),

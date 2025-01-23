@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ColorStyle {
-  Color primaryLight;
-  Color secondaryLight;
-  Color primaryDark;
-  Color secondaryDark;
+  final Color primaryLight;
+  final Color secondaryLight;
+  final Color primaryDark;
+  final Color secondaryDark;
 
-  ColorStyle({
+  const ColorStyle({
     required this.primaryLight,
     required this.secondaryLight,
     required this.primaryDark,
