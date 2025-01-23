@@ -98,163 +98,167 @@ class AppThemes {
     onInverseSurface: Colors.black,
   );
 
-  static ThemeData theme(ColorScheme colorScheme, {bool amoledMode = false}) => ThemeData(
-        useMaterial3: true,
-        applyElevationOverlayColor: true,
-        materialTapTargetSize: MaterialTapTargetSize.padded,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+  static ThemeData theme(ColorScheme colorScheme, {bool amoledMode = false}) {
+    if (colorScheme.brightness == Brightness.light) amoledMode = false;
 
-        // COLOR
-        colorScheme: colorScheme,
-        canvasColor: colorScheme.surface,
-        dividerColor: colorScheme.onSurfaceVariant,
-        disabledColor: colorScheme.surfaceContainerHighest,
-        scaffoldBackgroundColor: colorScheme.surface,
+    return ThemeData(
+      useMaterial3: true,
+      applyElevationOverlayColor: true,
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
+
+      // COLOR
+      colorScheme: colorScheme,
+      canvasColor: colorScheme.surface,
+      dividerColor: colorScheme.onSurfaceVariant,
+      disabledColor: colorScheme.surfaceContainerHighest,
+      scaffoldBackgroundColor: colorScheme.surface,
+      shadowColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      splashFactory: NoSplash.splashFactory,
+
+      // TYPOGRAPHY & ICONOGRAPHY
+      textTheme: textTheme,
+      typography: Typography.material2021(),
+
+      // COMPONENT THEMES
+      iconTheme: IconThemeData(size: 30, color: colorScheme.onSurface),
+      appBarTheme: AppBarTheme(
+        backgroundColor: amoledMode ? Colors.transparent : null,
+        scrolledUnderElevation: amoledMode ? 0 : 2,
+        elevation: amoledMode ? 0 : 2,
+        actionsIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
+      ),
+      bottomAppBarTheme: BottomAppBarTheme(
+        color: amoledMode ? Colors.transparent : null,
+        elevation: amoledMode ? 0 : 2,
+      ),
+      cardTheme: CardTheme(
+        elevation: amoledMode ? .5 : 2,
+        clipBehavior: Clip.hardEdge,
+        color: amoledMode ? colorScheme.onInverseSurface : null,
+        surfaceTintColor: colorScheme.surfaceTint,
         shadowColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        splashFactory: NoSplash.splashFactory,
+        margin: horizontalMargin,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
+        ),
+      ),
+      dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
+      drawerTheme: DrawerThemeData(
+        surfaceTintColor: colorScheme.surfaceTint,
+        backgroundColor: colorScheme.surface,
+        scrimColor: colorScheme.scrim,
+        elevation: 2,
+        width: 275,
+      ),
+      navigationBarTheme: NavigationBarThemeData(
+        indicatorColor: colorScheme.secondary,
+        backgroundColor: amoledMode ? Colors.transparent : null,
+        surfaceTintColor: colorScheme.surfaceTint,
+        elevation: amoledMode ? 0 : null,
+      ),
 
-        // TYPOGRAPHY & ICONOGRAPHY
-        textTheme: textTheme,
-        typography: Typography.material2021(),
+      // Popups
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: colorScheme.inverseSurface,
+        elevation: amoledMode ? 0 : 2,
+        contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onInverseSurface),
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+        behavior: SnackBarBehavior.floating,
+        insetPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        showCloseIcon: true,
+        closeIconColor: colorScheme.onInverseSurface,
+      ),
+      dialogTheme: DialogTheme(
+        backgroundColor: colorScheme.surface,
+        elevation: 3,
+        surfaceTintColor: colorScheme.surfaceTint,
+        alignment: Alignment.center,
+        iconColor: colorScheme.onSurface,
+        titleTextStyle: textTheme.titleLarge!.copyWith(color: colorScheme.onSurface),
+        contentTextStyle: textTheme.bodyMedium,
+        actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
+      ),
 
-        // COMPONENT THEMES
-        iconTheme: IconThemeData(size: 30, color: colorScheme.onSurface),
-        appBarTheme: AppBarTheme(
-          backgroundColor: amoledMode ? Colors.transparent : null,
-          scrolledUnderElevation: amoledMode ? 0 : 2,
-          elevation: amoledMode ? 0 : 2,
-          actionsIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
-        ),
-        bottomAppBarTheme: BottomAppBarTheme(
-          color: amoledMode ? Colors.transparent : null,
-          elevation: amoledMode ? 0 : 2,
-        ),
-        cardTheme: CardTheme(
-          elevation: amoledMode ? .5 : 2,
-          clipBehavior: Clip.hardEdge,
-          color: amoledMode ? colorScheme.onInverseSurface : null,
-          surfaceTintColor: colorScheme.surfaceTint,
-          shadowColor: Colors.transparent,
-          margin: horizontalMargin,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-            side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
-          ),
-        ),
-        dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
-        drawerTheme: DrawerThemeData(
-          surfaceTintColor: colorScheme.surfaceTint,
-          backgroundColor: colorScheme.surface,
-          scrimColor: colorScheme.scrim,
-          elevation: 2,
-          width: 275,
-        ),
-        navigationBarTheme: NavigationBarThemeData(
-          indicatorColor: colorScheme.secondary,
-          backgroundColor: amoledMode ? Colors.transparent : null,
-          surfaceTintColor: colorScheme.surfaceTint,
-          elevation: amoledMode ? 0 : null,
-        ),
+      // Inputs
+      inputDecorationTheme: InputDecorationTheme(
+        alignLabelWithHint: true,
+        isDense: true,
+        errorMaxLines: 1,
+        labelStyle: textTheme.bodyMedium,
+        floatingLabelAlignment: FloatingLabelAlignment.start,
+        hintStyle: textTheme.bodyMedium,
+        helperStyle: textTheme.bodyMedium,
+        border: const OutlineInputBorder(),
+      ),
 
-        // Popups
-        snackBarTheme: SnackBarThemeData(
-          backgroundColor: colorScheme.inverseSurface,
-          elevation: amoledMode ? 0 : 2,
-          contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onInverseSurface),
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
-          behavior: SnackBarBehavior.floating,
-          insetPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-          showCloseIcon: true,
-          closeIconColor: colorScheme.onInverseSurface,
-        ),
-        dialogTheme: DialogTheme(
-          backgroundColor: colorScheme.surface,
-          elevation: 3,
-          surfaceTintColor: colorScheme.surfaceTint,
+      // List tiles
+      listTileTheme: ListTileThemeData(
+        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        dense: false,
+        selectedColor: colorScheme.primary,
+        iconColor: colorScheme.primary.withOpacity(.75),
+        titleTextStyle: textTheme.titleMedium!.copyWith(color: colorScheme.onSurface),
+        subtitleTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onSurfaceVariant),
+        visualDensity: VisualDensity.comfortable,
+      ),
+      expansionTileTheme: ExpansionTileThemeData(
+        collapsedTextColor: colorScheme.primary,
+        textColor: colorScheme.onSurface,
+        childrenPadding: const EdgeInsets.only(bottom: 8),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        modalElevation: amoledMode ? 0 : 1,
+        clipBehavior: Clip.hardEdge,
+        surfaceTintColor: colorScheme.surfaceTint,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      ),
+
+      // Buttons
+      switchTheme: const SwitchThemeData(splashRadius: 0),
+      filledButtonTheme: FilledButtonThemeData(
+        style: ButtonStyle(
+          textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
+          backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
+            if (states.contains(WidgetState.disabled)) {
+              return amoledMode ? colorScheme.surfaceContainerHighest.withAlpha(16) : colorScheme.surfaceContainerHighest;
+            } // Disabled color
+            return colorScheme.surface; // Regular color
+          }),
+          foregroundColor: WidgetStateProperty.resolveWith((states) {
+            if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
+            return colorScheme.onSurface;
+          }),
+          fixedSize: const WidgetStatePropertyAll(Size.fromHeight(45)),
+          shadowColor: const WidgetStatePropertyAll(Colors.transparent),
+          splashFactory: InkRipple.splashFactory,
           alignment: Alignment.center,
-          iconColor: colorScheme.onSurface,
-          titleTextStyle: textTheme.titleLarge!.copyWith(color: colorScheme.onSurface),
-          contentTextStyle: textTheme.bodyMedium,
-          actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
+          side: WidgetStatePropertyAll(BorderSide(color: amoledMode ? colorScheme.surfaceContainerHighest : Colors.transparent, strokeAlign: 1)),
         ),
-
-        // Inputs
-        inputDecorationTheme: InputDecorationTheme(
-          alignLabelWithHint: true,
-          isDense: true,
-          errorMaxLines: 1,
-          labelStyle: textTheme.bodyMedium,
-          floatingLabelAlignment: FloatingLabelAlignment.start,
-          hintStyle: textTheme.bodyMedium,
-          helperStyle: textTheme.bodyMedium,
-          border: const OutlineInputBorder(),
+      ),
+      iconButtonTheme: const IconButtonThemeData(
+        style: ButtonStyle(splashFactory: NoSplash.splashFactory),
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: ButtonStyle(
+          foregroundColor: WidgetStatePropertyAll(colorScheme.onSurface),
+          textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
+          splashFactory: NoSplash.splashFactory,
+          overlayColor: const WidgetStatePropertyAll(Colors.transparent),
         ),
-
-        // List tiles
-        listTileTheme: ListTileThemeData(
-          //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-          dense: false,
-          selectedColor: colorScheme.primary,
-          iconColor: colorScheme.primary.withOpacity(.75),
-          titleTextStyle: textTheme.titleMedium!.copyWith(color: colorScheme.onSurface),
-          subtitleTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onSurfaceVariant),
-          visualDensity: VisualDensity.comfortable,
-        ),
-        expansionTileTheme: ExpansionTileThemeData(
-          collapsedTextColor: colorScheme.primary,
-          textColor: colorScheme.onSurface,
-          childrenPadding: const EdgeInsets.only(bottom: 8),
-        ),
-        bottomSheetTheme: BottomSheetThemeData(
-          modalElevation: amoledMode ? 0 : 1,
-          clipBehavior: Clip.hardEdge,
-          surfaceTintColor: colorScheme.surfaceTint,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-        ),
-
-        // Buttons
-        switchTheme: const SwitchThemeData(splashRadius: 0),
-        filledButtonTheme: FilledButtonThemeData(
-          style: ButtonStyle(
-            textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
-            backgroundColor: WidgetStateProperty.resolveWith<Color>((states) {
-              if (states.contains(WidgetState.disabled)) {
-                return amoledMode ? colorScheme.surfaceContainerHighest.withAlpha(16) : colorScheme.surfaceContainerHighest;
-              } // Disabled color
-              return colorScheme.surface; // Regular color
-            }),
-            foregroundColor: WidgetStateProperty.resolveWith((states) {
-              if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
-              return colorScheme.onSurface;
-            }),
-            fixedSize: const WidgetStatePropertyAll(Size.fromHeight(45)),
-            shadowColor: const WidgetStatePropertyAll(Colors.transparent),
-            splashFactory: InkRipple.splashFactory,
-            alignment: Alignment.center,
-            side: WidgetStatePropertyAll(BorderSide(color: amoledMode ? colorScheme.surfaceContainerHighest : Colors.transparent, strokeAlign: 1)),
+      ),
+      segmentedButtonTheme: SegmentedButtonThemeData(
+        style: ButtonStyle(
+          backgroundColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) return colorScheme.primary;
+              return Colors.transparent;
+            },
           ),
         ),
-        iconButtonTheme: const IconButtonThemeData(
-          style: ButtonStyle(splashFactory: NoSplash.splashFactory),
-        ),
-        textButtonTheme: TextButtonThemeData(
-          style: ButtonStyle(
-            foregroundColor: WidgetStatePropertyAll(colorScheme.onSurface),
-            textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
-            splashFactory: NoSplash.splashFactory,
-            overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-          ),
-        ),
-        segmentedButtonTheme: SegmentedButtonThemeData(
-          style: ButtonStyle(
-            backgroundColor: WidgetStateProperty.resolveWith<Color>(
-              (Set<WidgetState> states) {
-                if (states.contains(WidgetState.selected)) return colorScheme.primary;
-                return Colors.transparent;
-              },
-            ),
-          ),
-        ),
-      );
+      ),
+    );
+  }
 }
