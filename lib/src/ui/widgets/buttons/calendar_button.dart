@@ -14,6 +14,7 @@ class CalendarButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final int dayIndex = context.select<DishesOfTheDay, int>((prov) => prov.dayIndex);
+    final DateTime currentDate = convertIndexToDatetime(dayIndex);
 
     return SizedBox(
       height: 37.5,
@@ -24,7 +25,7 @@ class CalendarButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: Theme.of(context).colorScheme.onSurfaceVariant, width: 1.75),
         ),
-        onPressed: () => showCustomDatePicker(context, convertIndexToDatetime(dayIndex)),
+        onPressed: () => showCustomDatePicker(context, currentDate),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -33,9 +34,8 @@ class CalendarButton extends StatelessWidget {
             Selector<Settings, DateFormatOptions>(
               selector: (_, p1) => p1.dateFormat,
               builder: (context, dateFormat, _) {
-                String day =
-                    DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag()).format(convertIndexToDatetime(dayIndex));
-                String date = getCorrectDateString(dateFormat, date: convertIndexToDatetime(dayIndex));
+                String day = DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag()).format(currentDate);
+                String date = getCorrectDateString(dateFormat, date: currentDate);
                 return Text('$day - $date');
               },
             ),
