@@ -52,10 +52,12 @@ class ThemeStylePicker extends StatelessWidget {
                   onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
                   child: Column(
                     children: [
-                      SizedBox(height: 35, child: fakeAppbar(context, theme)),
+                      SizedBox(height: 35, child: AppBar(automaticallyImplyLeading: false)),
                       const CustomDivider(height: 6),
-                      foodTileColorSchemePreview(context, theme, theme.colorScheme.primary),
-                      foodTileColorSchemePreview(context, theme, theme.colorScheme.secondary),
+                      foodTileColorSchemePreview(theme, theme.colorScheme.primary),
+                      foodTileColorSchemePreview(theme, theme.colorScheme.secondary),
+                      const Expanded(child: SizedBox()),
+                      fakeNavigationBar(theme),
                     ],
                   ),
                 ),
@@ -67,31 +69,37 @@ class ThemeStylePicker extends StatelessWidget {
     );
   }
 
-  AppBar fakeAppbar(BuildContext context, ThemeData theme) => AppBar(
-        automaticallyImplyLeading: false,
-        titleSpacing: 8,
-        title: Container(
-          width: 36,
-          height: 18,
-          decoration: BoxDecoration(
-            border: Border.all(color: theme.colorScheme.onSurfaceVariant, width: 1),
-            borderRadius: BorderRadius.circular(20),
-          ),
-        ),
-        actions: [
+  SizedBox fakeNavigationBar(ThemeData theme) {
+    final Icon icon = Icon(
+      Icons.circle,
+      size: 4,
+      color: theme.colorScheme.onPrimary,
+    );
+    return SizedBox(
+      height: 35,
+      child: NavigationBar(
+        destinations: [
+          const SizedBox(),
           Container(
-            width: 18,
-            height: 18,
+            height: 10,
+            margin: const EdgeInsets.only(bottom: 4),
             decoration: BoxDecoration(
-              border: Border.all(color: theme.colorScheme.onSurfaceVariant, width: 1),
-              borderRadius: BorderRadius.circular(3.5),
+              color: theme.navigationBarTheme.indicatorColor,
+              borderRadius: BorderRadius.circular(6),
             ),
+            child: icon,
           ),
-          const SizedBox(width: 8),
+          ...List.generate(
+            4,
+            (int i) => SizedBox(child: i == 2 ? Padding(padding: EdgeInsets.only(bottom: 4), child: icon) : const SizedBox()),
+          ),
         ],
-      );
+        onDestinationSelected: null,
+      ),
+    );
+  }
 
-  Widget foodTileColorSchemePreview(BuildContext context, ThemeData theme, Color color) {
+  Widget foodTileColorSchemePreview(ThemeData theme, Color buttonColor) {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       shape: (theme.cardTheme.shape as RoundedRectangleBorder).copyWith(
@@ -105,7 +113,7 @@ class ThemeStylePicker extends StatelessWidget {
             width: 100,
             margin: const EdgeInsets.fromLTRB(8, 20, 8, 8),
             decoration: BoxDecoration(
-              color: color,
+              color: buttonColor,
               borderRadius: BorderRadius.circular(12.5),
             ),
           ),
