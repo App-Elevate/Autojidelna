@@ -34,7 +34,7 @@ class ThemeStylePicker extends StatelessWidget {
               side: BorderSide(
                 width: 3,
                 strokeAlign: BorderSide.strokeAlignInside,
-                color: ThemeStyle.values[index] == prov.themeStyle ? theme.colorScheme.primary : Colors.grey,
+                color: ThemeStyle.values[index] == prov.themeStyle ? theme.colorScheme.primary : theme.colorScheme.onSurfaceVariant,
               ),
             );
 

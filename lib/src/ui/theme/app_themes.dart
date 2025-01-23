@@ -207,13 +207,10 @@ class AppThemes {
           childrenPadding: const EdgeInsets.only(bottom: 8),
         ),
         bottomSheetTheme: BottomSheetThemeData(
-          modalElevation: 1,
+          modalElevation: amoledMode ? 0 : 1,
           clipBehavior: Clip.hardEdge,
           surfaceTintColor: colorScheme.surfaceTint,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24),
-            side: BorderSide(color: amoledMode ? colorScheme.surfaceContainerHighest : Colors.transparent, strokeAlign: 1),
-          ),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
 
         // Buttons
@@ -247,11 +244,6 @@ class AppThemes {
             textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
             splashFactory: NoSplash.splashFactory,
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
-          ),
-        ),
-        outlinedButtonTheme: OutlinedButtonThemeData(
-          style: ButtonStyle(
-            side: WidgetStatePropertyAll(BorderSide(width: 1.75, color: colorScheme.onSurfaceVariant)),
           ),
         ),
         segmentedButtonTheme: SegmentedButtonThemeData(
