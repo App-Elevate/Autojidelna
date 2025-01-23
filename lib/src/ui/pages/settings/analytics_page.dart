@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
@@ -19,7 +20,7 @@ class AnalyticsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-    const TextStyle style = TextStyle(color: Colors.blue, decoration: TextDecoration.underline);
+    TextStyle style = AppThemes.textTheme.bodySmall!.copyWith(color: Colors.blue, decoration: TextDecoration.underline);
 
     return Scaffold(
       appBar: AppBar(title: Text(lang.analytics)),
@@ -42,7 +43,7 @@ class AnalyticsPage extends StatelessWidget {
             child: RichText(
               text: TextSpan(
                 text: lang.analyticsDescription_1,
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurfaceVariant),
+                style: AppThemes.textTheme.bodySmall!.copyWith(color: Theme.of(context).dividerColor),
                 children: [
                   TextSpan(
                     text: lang.analyticsDescription_2,

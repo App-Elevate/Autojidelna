@@ -8,6 +8,7 @@ import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -177,11 +178,11 @@ class _LoginPageState extends State<LoginPage> {
             RichText(
               text: TextSpan(
                 text: lang.dataCollectionAgreement,
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                style: AppThemes.textTheme.bodySmall!.copyWith(color: Theme.of(context).dividerColor),
                 children: [
                   TextSpan(
                     text: lang.moreInfo,
-                    style: const TextStyle(
+                    style: AppThemes.textTheme.bodySmall!.copyWith(
                       color: Colors.blue,
                       decoration: TextDecoration.underline,
                     ),

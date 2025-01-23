@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class AppThemes {
   static const EdgeInsets horizontalMargin = EdgeInsets.symmetric(horizontal: 16);
 
-  static const TextTheme textTheme = const TextTheme(
+  static const TextTheme textTheme = TextTheme(
     bodySmall: /*--------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 12, letterSpacing: 0.4),
     bodyMedium: /*-------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 14, letterSpacing: 0.25),
     bodyLarge: /*--------*/ TextStyle(fontFamily: Fonts.body, fontWeight: FontWeight.w400, fontSize: 16, letterSpacing: 0.15),
@@ -107,6 +107,7 @@ class AppThemes {
         // COLOR
         colorScheme: colorScheme,
         canvasColor: colorScheme.surface,
+        dividerColor: colorScheme.onSurfaceVariant,
         disabledColor: colorScheme.surfaceContainerHighest,
         scaffoldBackgroundColor: colorScheme.surface,
         shadowColor: Colors.transparent,
@@ -153,7 +154,7 @@ class AppThemes {
         snackBarTheme: SnackBarThemeData(
           backgroundColor: colorScheme.inverseSurface,
           elevation: amoledMode ? 0 : 2,
-          contentTextStyle: TextStyle(fontFamily: Fonts.body, color: colorScheme.onInverseSurface),
+          contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onInverseSurface),
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(16)),
           ),
@@ -168,23 +169,21 @@ class AppThemes {
           surfaceTintColor: colorScheme.surfaceTint,
           alignment: Alignment.center,
           iconColor: colorScheme.onSurface,
-          titleTextStyle: textTheme.titleLarge!.copyWith(
-            color: colorScheme.onSurface,
-          ),
-          contentTextStyle: const TextStyle(fontFamily: Fonts.body, fontSize: 15),
+          titleTextStyle: textTheme.titleLarge!.copyWith(color: colorScheme.onSurface),
+          contentTextStyle: textTheme.bodyMedium,
           actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
         ),
 
         // Inputs
-        inputDecorationTheme: const InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
           alignLabelWithHint: true,
           isDense: true,
           errorMaxLines: 1,
-          labelStyle: TextStyle(fontFamily: Fonts.body),
+          labelStyle: textTheme.bodyMedium,
           floatingLabelAlignment: FloatingLabelAlignment.start,
-          hintStyle: TextStyle(fontFamily: Fonts.body),
-          helperStyle: TextStyle(fontFamily: Fonts.body),
-          border: OutlineInputBorder(),
+          hintStyle: textTheme.bodyMedium,
+          helperStyle: textTheme.bodyMedium,
+          border: const OutlineInputBorder(),
         ),
 
         // List tiles
@@ -193,17 +192,8 @@ class AppThemes {
           dense: false,
           selectedColor: colorScheme.primary,
           iconColor: colorScheme.primary.withOpacity(.75),
-          titleTextStyle: TextStyle(
-            fontSize: 19,
-            fontFamily: Fonts.body,
-            fontWeight: FontWeight.w400,
-            color: colorScheme.onSurface,
-          ),
-          subtitleTextStyle: TextStyle(
-            fontSize: 13,
-            fontFamily: Fonts.body,
-            color: colorScheme.onSurfaceVariant,
-          ),
+          titleTextStyle: textTheme.titleMedium!.copyWith(color: colorScheme.onSurface),
+          subtitleTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onSurfaceVariant),
           visualDensity: VisualDensity.comfortable,
         ),
         expansionTileTheme: ExpansionTileThemeData(
@@ -247,13 +237,7 @@ class AppThemes {
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             foregroundColor: WidgetStatePropertyAll(colorScheme.onSurface),
-            textStyle: const WidgetStatePropertyAll(
-              TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                height: 1.25,
-              ),
-            ),
+            textStyle: WidgetStatePropertyAll(textTheme.titleMedium),
             splashFactory: NoSplash.splashFactory,
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
           ),
@@ -267,9 +251,7 @@ class AppThemes {
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.resolveWith<Color>(
               (Set<WidgetState> states) {
-                if (states.contains(WidgetState.selected)) {
-                  return colorScheme.primary;
-                }
+                if (states.contains(WidgetState.selected)) return colorScheme.primary;
                 return Colors.transparent;
               },
             ),

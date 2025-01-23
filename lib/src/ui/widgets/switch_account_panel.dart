@@ -1,5 +1,6 @@
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
@@ -56,7 +57,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(username, style: currentAccount ? const TextStyle(fontWeight: FontWeight.w600) : null),
+          Text(username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
           if (currentAccount) const Icon(Icons.check, size: 30),
         ],
       ),
