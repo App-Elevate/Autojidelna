@@ -48,7 +48,6 @@ class LinedCard extends StatelessWidget {
     return GestureDetector(
       onTap: smallButton ? null : onPressed,
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Column(
@@ -82,7 +81,7 @@ class LinedCard extends StatelessWidget {
   }
 
   Widget dividerWithText(BuildContext context, {String? text, TextAlign? textAlign, bool transparentDivider = false}) {
-    if (text == null) return CustomDivider(isTransparent: transparentDivider, hasIndent: false, hasEndIndent: false);
+    if (text == null || text.trim().isEmpty) return CustomDivider(isTransparent: transparentDivider, hasIndent: false, hasEndIndent: false);
     return Row(
       children: [
         if (textAlign != TextAlign.start && textAlign != TextAlign.left && textAlign != TextAlign.justify)
