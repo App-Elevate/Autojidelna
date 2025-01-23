@@ -1,11 +1,12 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/ordering.dart';
 import 'package:autojidelna/src/types/all.dart';
-import 'package:autojidelna/src/ui/dish_detail.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/burza_alert_dialog.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +83,7 @@ class _DishListTile extends StatelessWidget {
 
   IconButton _detailButton(BuildContext context) {
     return IconButton(
-      onPressed: () => unawaited(Navigator.push(context, MaterialPageRoute(builder: (context) => DishDetail(dish: dish)))),
+      onPressed: () => unawaited(context.router.navigate(DishDetailPage(dish: dish))),
       icon: Icon(
         Icons.info_outline,
         color: Theme.of(context).listTileTheme.subtitleTextStyle!.color,
