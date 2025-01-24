@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+/// Used by the app for different color combinations
 class ColorStyle {
   final Color primaryLight;
   final Color secondaryLight;
@@ -22,4 +23,12 @@ enum ThemeStyle {
   rustOlive,
   evergreenSlate,
   crimsonEarth,
+}
+
+/// Used by custom date picker to decide how to render a cell
+enum CellState {
+  today,
+  selected,
+  ordered,
+  available,
 }

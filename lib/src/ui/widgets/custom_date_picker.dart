@@ -7,6 +7,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/change_date.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
+import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:canteenlib/canteenlib.dart';
@@ -181,11 +182,4 @@ Row _actionButtons(BuildContext context, ValueNotifier<DateTime> focusedDateNoti
       const SizedBox(width: 10),
     ],
   );
-}
-
-enum CellState {
-  today,
-  selected,
-  ordered,
-  available,
 }

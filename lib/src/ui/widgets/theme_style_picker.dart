@@ -91,7 +91,7 @@ class ThemeStylePicker extends StatelessWidget {
           ),
           ...List.generate(
             4,
-            (int i) => SizedBox(child: i == 2 ? Padding(padding: EdgeInsets.only(bottom: 4), child: icon) : const SizedBox()),
+            (int i) => SizedBox(child: i == 2 ? Padding(padding: const EdgeInsets.only(bottom: 4), child: icon) : const SizedBox()),
           ),
         ],
         onDestinationSelected: null,

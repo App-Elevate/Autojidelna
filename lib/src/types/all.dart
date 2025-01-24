@@ -21,9 +21,9 @@ enum ConnectionErrors {
   noInternet,
 }
 
-//classy pro přihlašování
+// Classy pro přihlašování
 
-///samotný uživatel
+/// Csamotný uživatel
 class Account {
   String username;
   String password;
@@ -77,7 +77,7 @@ class LoggedAccountsLimited {
   LoggedAccountsLimited({required this.usernames, required this.loggedInID});
 }
 
-///informace o nejnovější verzi aplikace (podpora jen pro android)
+/// Informace o nejnovější verzi aplikace (podpora jen pro android)
 class ReleaseInfo {
   ReleaseInfo({
     required this.isAndroid,
@@ -101,7 +101,7 @@ class ReleaseInfo {
   bool isAndroid;
 }
 
-///Třída pro kešování dat Canteeny
+/// Třída pro kešování dat Canteeny
 class CanteenData {
   /// id, aby se nám neindexovaly špatně jídelníčky
   int id;
@@ -154,14 +154,14 @@ class CanteenData {
   }
 }
 
-///class pro general access o stavu snackbaru
+/// Class pro general access o stavu snackbaru
 class SnackBarShown {
   bool shown = false;
 
   SnackBarShown({required this.shown});
 }
 
-///Popisuje všechny možné stavy jídla
+/// Popisuje všechny možné stavy jídla
 enum StavJidla {
   /// je objednano a lze odebrat
   objednano,
@@ -185,23 +185,23 @@ enum StavJidla {
   nedostupne
 }
 
-///Popisuje možnosti kdy se login nepovedl
+/// Popisuje možnosti kdy se login nepovedl
 enum LoginFormErrorField {
-  ///heslo nebo uživatelské jméno je neplatné
+  /// heslo nebo uživatelské jméno je neplatné
   password,
 
-  ///url je neplatná
+  /// url je neplatná
   url,
 }
 
 enum TypStatistiky {
-  ///normální objednávky
+  /// normální objednávky
   objednavka,
 
-  ///automatické objednávky
+  /// automatické objednávky
   auto,
 
-  ///objednávky chycené burzaCatherem
+  /// objednávky chycené burzaCatherem
   burzaCatcher
 }
 
