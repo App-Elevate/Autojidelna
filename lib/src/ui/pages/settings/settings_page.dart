@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/widgets/buttons/about_app_button_widget.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -17,7 +18,10 @@ class SettingsPage extends StatelessWidget {
     final StackRouter router = context.router;
 
     return Scaffold(
-      appBar: AppBar(title: Text(lang.settings)),
+      appBar: AppBar(
+        title: Text(lang.settings),
+        actions: kDebugMode ? const [AboutAppButton()] : null,
+      ),
       body: ScrollViewColumn(
         children: [
           const CustomDivider(height: 4),
@@ -46,12 +50,6 @@ class SettingsPage extends StatelessWidget {
             title: Text(lang.about),
             onTap: () async => router.navigate(const AboutPage()),
           ),
-          if (kDebugMode)
-            ListTile(
-              leading: const Icon(Icons.bug_report_outlined),
-              title: Text(lang.debug),
-              onTap: () async => router.navigate(const DebugPage()),
-            ),
         ],
       ),
     );

@@ -12,9 +12,7 @@ class DebugPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Debug'),
-      ),
+      appBar: AppBar(title: const Text('Debug')),
       body: ListView(
         children: <Widget>[
           TextField(
