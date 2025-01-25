@@ -25,11 +25,11 @@ class DebugPage extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: const Text('Show error snackbar'),
-            onTap: () => showErrorSnackBar(Icons.wifi_off_rounded, 'Error', lang.errorsNoInternet),
+            title: const Text('Show error Snack Bar'),
+            onTap: () => showErrorSnackBar(Icons.wifi_off_rounded, lang.error, lang.errorsNoInternet),
           ),
           ListTile(
-            title: const Text('Show info snackbar'),
+            title: const Text('Show info Snack Bar'),
             onTap: () => showInfoSnackBar(Icons.wifi_off_rounded, lang.appName, lang.appDescription),
           ),
         ],

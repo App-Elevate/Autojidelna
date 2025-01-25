@@ -343,5 +343,7 @@
     }
   },
   "view": "Zobrazení",
-  "vlozitNaBurzu": "Vložit na burzu"
+  "vlozitNaBurzu": "Vložit na burzu",
+  "error": "Chyba",
+  "@error": {}
 }

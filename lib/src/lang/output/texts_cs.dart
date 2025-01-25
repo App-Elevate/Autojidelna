@@ -657,4 +657,7 @@ class TextsCs extends Texts {
 
   @override
   String get vlozitNaBurzu => 'Vložit na burzu';
+
+  @override
+  String get error => 'Chyba';
 }

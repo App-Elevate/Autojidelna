@@ -1196,6 +1196,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Vložit na burzu'**
   String get vlozitNaBurzu;
+
+  /// No description provided for @error.
+  ///
+  /// In cs, this message translates to:
+  /// **'Chyba'**
+  String get error;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {
