@@ -9,6 +9,11 @@ allprojects {
     }
 }
 
+ext {
+    compileSdkVersion   = 34             // or higher / as desired
+    targetSdkVersion    = 34             // or higher / as desired
+}
+
 rootProject.buildDir = "../build"
 subprojects {
     project.buildDir = "${rootProject.buildDir}/${project.name}"

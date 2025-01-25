@@ -40,6 +40,7 @@ if (keystorePropertiesFileDebug.exists()) {
 android {
     namespace = "cz.appelevate.autojidelna"
     compileSdk = flutter.compileSdkVersion
+    compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -55,6 +56,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        targetSdkVersion rootProject.ext.targetSdkVersion
     }
 
     signingConfigs {
