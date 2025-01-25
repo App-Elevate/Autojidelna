@@ -42,24 +42,22 @@ class ThemeStylePicker extends StatelessWidget {
 
           return Theme(
             data: theme,
-            child: Padding(
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: ClipRRect(
-                borderRadius: radius,
-                clipBehavior: Clip.hardEdge,
-                child: OutlinedButton(
-                  style: style,
-                  onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 35, child: AppBar(automaticallyImplyLeading: false)),
-                      const CustomDivider(height: 6),
-                      foodTileColorSchemePreview(theme, theme.colorScheme.primary),
-                      foodTileColorSchemePreview(theme, theme.colorScheme.secondary),
-                      const Expanded(child: SizedBox()),
-                      fakeNavigationBar(theme),
-                    ],
-                  ),
+              decoration: BoxDecoration(borderRadius: radius),
+              clipBehavior: Clip.hardEdge,
+              child: OutlinedButton(
+                style: style,
+                onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
+                child: Column(
+                  children: [
+                    SizedBox(height: 35, child: AppBar(automaticallyImplyLeading: false)),
+                    const CustomDivider(height: 6),
+                    foodTileColorSchemePreview(theme, theme.colorScheme.primary),
+                    foodTileColorSchemePreview(theme, theme.colorScheme.secondary),
+                    const Expanded(child: SizedBox()),
+                    fakeNavigationBar(theme),
+                  ],
                 ),
               ),
             ),
