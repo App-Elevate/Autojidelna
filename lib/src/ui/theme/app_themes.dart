@@ -1,4 +1,5 @@
 import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/custom_bottom_sheet_shape.dart';
 import 'package:autojidelna/src/types/theme.dart';
 import 'package:flutter/material.dart';
 
@@ -173,7 +174,7 @@ class AppThemes {
       ),
       dialogTheme: DialogTheme(
         backgroundColor: colorScheme.surface,
-        elevation: amoledMode ? .5 : 3,
+        elevation: amoledMode ? .5 : 2,
         surfaceTintColor: colorScheme.surfaceTint,
         alignment: Alignment.center,
         iconColor: colorScheme.onSurface,
@@ -215,10 +216,14 @@ class AppThemes {
         childrenPadding: const EdgeInsets.only(bottom: 8),
       ),
       bottomSheetTheme: BottomSheetThemeData(
-        modalElevation: amoledMode ? 0 : 1,
+        modalElevation: amoledMode ? .5 : 2,
         clipBehavior: Clip.hardEdge,
+        backgroundColor: colorScheme.surface,
         surfaceTintColor: colorScheme.surfaceTint,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        shape: CustomBottomSheetShape(
+          borderRadius: BorderRadius.circular(16),
+          side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
+        ),
       ),
 
       // Buttons
