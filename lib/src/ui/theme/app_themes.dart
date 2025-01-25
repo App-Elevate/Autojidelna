@@ -235,7 +235,7 @@ class AppThemes {
             if (states.contains(WidgetState.disabled)) {
               return amoledMode ? colorScheme.surfaceContainerHighest.withAlpha(16) : colorScheme.surfaceContainerHighest;
             } // Disabled color
-            return colorScheme.surface; // Regular color
+            return colorScheme.primary; // Regular color
           }),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;

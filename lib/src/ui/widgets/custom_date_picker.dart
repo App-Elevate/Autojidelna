@@ -11,6 +11,7 @@ import 'package:autojidelna/src/logic/string_extension.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
+import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
 import 'package:canteenlib/canteenlib.dart';
 
@@ -119,7 +120,7 @@ showCustomDatePicker(BuildContext context) {
               );
             },
           ),
-          const Divider(height: 0, indent: 1, endIndent: 1),
+          const CustomDivider(height: 0, isTransparent: false),
           _actionButtons(context, focusedDateNotifier),
         ],
       ),
