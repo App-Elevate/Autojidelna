@@ -4,6 +4,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/scroll_view_column.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -23,12 +24,12 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.palette_outlined),
             title: Text(lang.appearance),
-            onTap: () async => router.push(const AppearancePage()),
+            onTap: () async => router.navigate(const AppearancePage()),
           ),
           ListTile(
             leading: const Icon(Icons.tune_outlined),
             title: Text(lang.convenience),
-            onTap: () async => router.push(const ConveniencePage()),
+            onTap: () async => router.navigate(const ConveniencePage()),
           ),
           ListTile(
             leading: const Icon(Icons.edit_notifications_outlined),
@@ -38,13 +39,19 @@ class SettingsPage extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.cookie_outlined),
             title: Text(lang.analytics),
-            onTap: () async => router.push(const AnalyticsPage()),
+            onTap: () async => router.navigate(const AnalyticsPage()),
           ),
           ListTile(
             leading: const Icon(Icons.info_outline),
             title: Text(lang.about),
-            onTap: () async => router.push(const AboutPage()),
+            onTap: () async => router.navigate(const AboutPage()),
           ),
+          if (kDebugMode)
+            ListTile(
+              leading: const Icon(Icons.bug_report_outlined),
+              title: Text(lang.debug),
+              onTap: () async => router.navigate(const DebugPage()),
+            ),
         ],
       ),
     );

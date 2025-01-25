@@ -150,28 +150,30 @@ class AppThemes {
       drawerTheme: DrawerThemeData(
         surfaceTintColor: colorScheme.surfaceTint,
         backgroundColor: colorScheme.surface,
-        scrimColor: colorScheme.scrim,
-        elevation: 2,
+        elevation: amoledMode ? 0 : 2,
         width: 275,
       ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: colorScheme.secondary,
         backgroundColor: amoledMode ? Colors.transparent : null,
         surfaceTintColor: colorScheme.surfaceTint,
-        elevation: amoledMode ? 0 : null,
+        elevation: amoledMode ? 0 : 2,
       ),
 
       // Popups
       snackBarTheme: SnackBarThemeData(
+        showCloseIcon: false,
         backgroundColor: colorScheme.inverseSurface,
-        elevation: amoledMode ? 0 : 2,
-        contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onInverseSurface),
-        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
         behavior: SnackBarBehavior.floating,
-        insetPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-        showCloseIcon: true,
-        closeIconColor: colorScheme.onInverseSurface,
+        dismissDirection: DismissDirection.horizontal,
+        insetPadding: const EdgeInsets.all(12),
+        elevation: amoledMode ? 0 : 2,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
+        ),
       ),
+
       dialogTheme: DialogTheme(
         backgroundColor: colorScheme.surface,
         elevation: amoledMode ? .5 : 2,
