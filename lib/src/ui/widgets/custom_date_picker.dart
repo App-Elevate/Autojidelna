@@ -112,7 +112,7 @@ showCustomDatePicker(BuildContext context) {
                 lastDay: maximalDate,
                 selectedDayPredicate: (day) => isSameDay(focusedDay, day),
                 onDaySelected: onDaySelected,
-                //onPageChanged: onPageChanged, TODO: think about it more
+                onPageChanged: onPageChanged,
                 eventLoader: eventLoader,
                 calendarBuilders: CalendarBuilders(
                   headerTitleBuilder: (context, day) => _headerTitle(locale, day, context),
