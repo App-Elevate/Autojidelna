@@ -173,13 +173,18 @@ class AppThemes {
       ),
       dialogTheme: DialogTheme(
         backgroundColor: colorScheme.surface,
-        elevation: 3,
+        elevation: amoledMode ? .5 : 3,
         surfaceTintColor: colorScheme.surfaceTint,
         alignment: Alignment.center,
         iconColor: colorScheme.onSurface,
         titleTextStyle: textTheme.titleLarge!.copyWith(color: colorScheme.onSurface),
         contentTextStyle: textTheme.bodyMedium,
         actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: amoledMode ? BorderSide(color: colorScheme.surfaceContainerHighest) : BorderSide.none,
+        ),
       ),
 
       // Inputs

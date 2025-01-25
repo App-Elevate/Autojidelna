@@ -26,90 +26,100 @@ showCustomDatePicker(BuildContext context) {
   ValueNotifier<DateTime> focusedDateNotifier = ValueNotifier<DateTime>(currentDate);
   bool bigMarkersEnabled = context.read<Settings>().bigCalendarMarkers;
   ColorScheme colorScheme = Theme.of(context).colorScheme;
+  final TextStyle defaultTextStyle = AppThemes.textTheme.titleMedium!;
+  const BoxDecoration defaultDecoration = BoxDecoration(shape: BoxShape.circle);
+
   List<DateTime> orderedFoodDays = [];
   List<DateTime> availableFoodDays = [];
+
+  void onPageChanged(DateTime focusedDay) {
+    focusedDateNotifier.value = focusedDay;
+  }
+
+  void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    focusedDateNotifier.value = selectedDay;
+  }
+
+  List<dynamic> eventLoader(DateTime day) {
+    Jidelnicek? menu = context.read<DishesOfTheDay>().getMenu(convertDateTimeToIndex(day));
+
+    if (menu == null) return [];
+    if (!bigMarkersEnabled) return menu.jidla;
+
+    /// This for loop is used for [defaultBuilder]
+    for (Jidlo dish in menu.jidla) {
+      if (orderedFoodDays.contains(day) || availableFoodDays.contains(day)) break;
+      if (dish.objednano) {
+        orderedFoodDays.add(day);
+        break;
+      }
+      if (dish.lzeObjednat || dish.naBurze) {
+        availableFoodDays.add(day);
+        break;
+      }
+    }
+
+    return [];
+  }
 
   configuredDialog(
     context,
     builder: (context) => Dialog(
-      clipBehavior: Clip.hardEdge,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ValueListenableBuilder(
             valueListenable: focusedDateNotifier,
-            builder: (context, value, ___) {
+            builder: (context, focusedDay, ___) {
               return TableCalendar(
                 locale: locale,
                 sixWeekMonthsEnforced: true,
                 headerStyle: HeaderStyle(
-                  formatButtonVisible: false,
                   titleCentered: true,
+                  formatButtonVisible: false,
+                  leftChevronVisible: focusedDay.month != minimalDate.month,
+                  rightChevronVisible: focusedDay.month != maximalDate.month,
                   titleTextStyle: AppThemes.textTheme.headlineSmall!,
-                  decoration: BoxDecoration(color: colorScheme.onSurface.withOpacity(0.1)),
+                  decoration: BoxDecoration(color: colorScheme.surfaceContainerHighest.withAlpha(16)),
                 ),
                 calendarStyle: CalendarStyle(
                   outsideDaysVisible: false,
                   markersMaxCount: 3,
-                  todayTextStyle: AppThemes.textTheme.titleMedium!.copyWith(color: colorScheme.primary),
-                  todayDecoration: BoxDecoration(border: Border.all(color: colorScheme.primary), shape: BoxShape.circle),
-                  markerSizeScale: bigMarkersEnabled ? 0 : 0.3,
-                  markerDecoration: BoxDecoration(color: colorScheme.secondary, shape: BoxShape.circle),
-                  selectedTextStyle: AppThemes.textTheme.titleMedium!.copyWith(color: colorScheme.onInverseSurface),
-                  selectedDecoration: BoxDecoration(color: colorScheme.primary, shape: BoxShape.circle),
-                  defaultTextStyle: AppThemes.textTheme.titleMedium!,
-                  defaultDecoration: const BoxDecoration(shape: BoxShape.circle),
+                  markerSizeScale: 0.3,
+                  markerDecoration: defaultDecoration.copyWith(color: colorScheme.secondary),
+                  todayTextStyle: defaultTextStyle.copyWith(color: colorScheme.primary),
+                  todayDecoration: defaultDecoration.copyWith(border: Border.all(color: colorScheme.primary)),
+                  selectedTextStyle: defaultTextStyle.copyWith(color: colorScheme.onInverseSurface),
+                  selectedDecoration: defaultDecoration.copyWith(color: colorScheme.primary),
+                  defaultTextStyle: defaultTextStyle,
+                  defaultDecoration: defaultDecoration,
                 ),
                 rowHeight: 45,
                 daysOfWeekHeight: 25,
-                focusedDay: value,
+                focusedDay: focusedDay,
                 currentDay: DateTime.now(),
                 firstDay: minimalDate,
                 lastDay: maximalDate,
-                selectedDayPredicate: (day) => isSameDay(value, day),
-                onDaySelected: (selectedDay, __) {
-                  focusedDateNotifier.value = selectedDay;
-                },
-                eventLoader: (day) {
-                  DateTime date = DateTime(day.year, day.month, day.day);
-                  Jidelnicek? menu = context.read<DishesOfTheDay>().getMenu(convertDateTimeToIndex(date));
-
-                  if (menu == null) return [];
-                  if (!bigMarkersEnabled) return menu.jidla;
-
-                  /// This for loop is used for [defaultBuilder]
-                  for (Jidlo dish in menu.jidla) {
-                    if (orderedFoodDays.contains(date) || availableFoodDays.contains(date)) break;
-                    if (dish.objednano) {
-                      orderedFoodDays.add(date);
-                      break;
-                    }
-                    if (dish.lzeObjednat || dish.naBurze) {
-                      availableFoodDays.add(date);
-                      break;
-                    }
-                  }
-
-                  return menu.jidla;
-                },
+                selectedDayPredicate: (day) => isSameDay(focusedDay, day),
+                onDaySelected: onDaySelected,
+                //onPageChanged: onPageChanged, TODO: think about it more
+                eventLoader: eventLoader,
                 calendarBuilders: CalendarBuilders(
                   headerTitleBuilder: (context, day) => _headerTitle(locale, day, context),
-                  selectedBuilder: (context, date, ___) => _cellTemplate(context, date, state: CellState.selected),
-                  todayBuilder: (context, date, ___) => _cellTemplate(context, date, state: CellState.today),
-                  singleMarkerBuilder: !bigMarkersEnabled ? (context, date, dish) => _markerTemplate(context, dish as Jidlo) : null,
-                  defaultBuilder: bigMarkersEnabled
-                      ? (context, date, selectedDate) {
-                          DateTime day = DateTime(date.year, date.month, date.day);
-                          if (orderedFoodDays.contains(day)) return _cellTemplate(context, date, state: CellState.ordered);
-                          if (availableFoodDays.contains(day)) return _cellTemplate(context, date, state: CellState.available);
-                          return null;
-                        }
-                      : null,
+                  selectedBuilder: (context, day, ___) => _cellTemplate(context, day, state: CellState.selected),
+                  todayBuilder: (context, day, ___) => _cellTemplate(context, day, state: CellState.today),
+                  singleMarkerBuilder: !bigMarkersEnabled ? (context, __, dish) => _markerTemplate(context, dish as Jidlo) : null,
+                  defaultBuilder: (context, day, ___) {
+                    if (!bigMarkersEnabled) return null;
+                    if (orderedFoodDays.contains(day)) return _cellTemplate(context, day, state: CellState.ordered);
+                    if (availableFoodDays.contains(day)) return _cellTemplate(context, day, state: CellState.available);
+                    return null;
+                  },
                 ),
               );
             },
           ),
-          const Divider(height: 0),
+          const Divider(height: 0, indent: 1, endIndent: 1),
           _actionButtons(context, focusedDateNotifier),
         ],
       ),
