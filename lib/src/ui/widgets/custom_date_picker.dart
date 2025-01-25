@@ -6,7 +6,9 @@ import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/change_date.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
+import 'package:autojidelna/src/logic/ordering.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
+import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
@@ -73,25 +75,30 @@ showCustomDatePicker(BuildContext context) {
                   Jidelnicek? menu = context.read<DishesOfTheDay>().getMenu(convertDateTimeToIndex(date));
 
                   if (menu == null) return [];
+                  if (!bigMarkersEnabled) return menu.jidla;
 
+                  /// This for loop is used for [defaultBuilder]
                   for (Jidlo dish in menu.jidla) {
+                    if (orderedFoodDays.contains(date) || availableFoodDays.contains(date)) break;
                     if (dish.objednano) {
                       orderedFoodDays.add(date);
-                      return orderedFoodDays;
-                    } else if (dish.lzeObjednat || dish.naBurze) {
+                      break;
+                    }
+                    if (dish.lzeObjednat || dish.naBurze) {
                       availableFoodDays.add(date);
-                      return availableFoodDays;
+                      break;
                     }
                   }
 
-                  return [];
+                  return menu.jidla;
                 },
                 calendarBuilders: CalendarBuilders(
                   headerTitleBuilder: (context, day) => _headerTitle(locale, day, context),
                   selectedBuilder: (context, date, ___) => _cellTemplate(context, date, state: CellState.selected),
                   todayBuilder: (context, date, ___) => _cellTemplate(context, date, state: CellState.today),
+                  singleMarkerBuilder: !bigMarkersEnabled ? (context, date, dish) => _markerTemplate(context, dish as Jidlo) : null,
                   defaultBuilder: bigMarkersEnabled
-                      ? (context, date, ___) {
+                      ? (context, date, selectedDate) {
                           DateTime day = DateTime(date.year, date.month, date.day);
                           if (orderedFoodDays.contains(day)) return _cellTemplate(context, date, state: CellState.ordered);
                           if (availableFoodDays.contains(day)) return _cellTemplate(context, date, state: CellState.available);
@@ -159,6 +166,24 @@ Center _cellTemplate(BuildContext context, DateTime date, {CellState? state}) {
         ),
       ),
     ),
+  );
+}
+
+Widget? _markerTemplate(BuildContext context, Jidlo dish) {
+  final ColorScheme colorScheme = Theme.of(context).colorScheme;
+  double size = 10;
+  final StavJidla stavJidla = getStavJidla(dish);
+  final bool ordered = getPrimaryState(stavJidla);
+
+  if (!isButtonEnabled(stavJidla) && !ordered) return const SizedBox();
+
+  Color color = ordered ? colorScheme.primary : colorScheme.secondary;
+
+  return Container(
+    height: size,
+    width: size,
+    margin: const EdgeInsets.symmetric(horizontal: 1),
+    decoration: BoxDecoration(color: color, shape: BoxShape.circle),
   );
 }
 
