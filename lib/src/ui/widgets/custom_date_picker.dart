@@ -37,7 +37,16 @@ showCustomDatePicker(BuildContext context) {
     focusedDateNotifier.value = focusedDay;
   }
 
+  void onConfirm() {
+    Navigator.of(context).pop();
+    changeDate(context, focusedDateNotifier.value);
+  }
+
   void onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    if (isSameDay(selectedDay, focusedDateNotifier.value)) {
+      onConfirm();
+      return;
+    }
     focusedDateNotifier.value = selectedDay;
   }
 
@@ -121,7 +130,7 @@ showCustomDatePicker(BuildContext context) {
             },
           ),
           const CustomDivider(height: 0, isTransparent: false),
-          _actionButtons(context, focusedDateNotifier),
+          _actionButtons(context, onConfirm),
         ],
       ),
     ),
@@ -198,7 +207,7 @@ Widget? _markerTemplate(BuildContext context, Jidlo dish) {
   );
 }
 
-Row _actionButtons(BuildContext context, ValueNotifier<DateTime> focusedDateNotifier) {
+Row _actionButtons(BuildContext context, void Function() onConfirm) {
   final Texts lang = context.l10n;
 
   return Row(
@@ -209,10 +218,7 @@ Row _actionButtons(BuildContext context, ValueNotifier<DateTime> focusedDateNoti
         child: Text(lang.cancel),
       ),
       TextButton(
-        onPressed: () {
-          Navigator.of(context).pop();
-          changeDate(context, focusedDateNotifier.value);
-        },
+        onPressed: onConfirm,
         child: Text(lang.ok),
       ),
       const SizedBox(width: 10),
