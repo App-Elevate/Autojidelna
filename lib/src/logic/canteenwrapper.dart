@@ -13,6 +13,7 @@ import 'package:autojidelna/src/_conf/secure_storage.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/errors.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 import 'package:canteenlib/canteenlib.dart';
