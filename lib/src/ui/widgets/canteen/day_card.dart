@@ -61,16 +61,14 @@ class _DayCard extends StatelessWidget {
   final int dayIndex;
   @override
   Widget build(BuildContext context) {
-    return Consumer<DishesOfTheDay>(
-      builder: (context, data, ___) {
-        Jidelnicek? menu = data.getMenu(dayIndex);
+    return Selector<DishesOfTheDay, Jidelnicek? Function(int)>(
+      selector: (_, p1) => p1.getMenu,
+      builder: (_, getMenu, ___) {
+        Jidelnicek? menu = getMenu(dayIndex);
         if (menu == null) return const Center(child: CircularProgressIndicator());
 
         Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
-        return Card.outlined(
-          elevation: 0.6,
-          color: Theme.of(context).colorScheme.onInverseSurface,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: Theme.of(context).dividerTheme.color!)),
+        return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             children: [

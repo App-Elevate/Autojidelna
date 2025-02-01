@@ -126,13 +126,13 @@ class AppThemes {
       iconTheme: IconThemeData(size: 30, color: colorScheme.onSurface),
       appBarTheme: AppBarTheme(
         backgroundColor: amoledMode ? Colors.transparent : null,
-        scrolledUnderElevation: amoledMode ? 0 : 2,
-        elevation: amoledMode ? 0 : 2,
+        scrolledUnderElevation: amoledMode ? 0 : 4,
+        elevation: amoledMode ? 0 : 4,
         actionsIconTheme: IconThemeData(color: colorScheme.onSurfaceVariant),
       ),
       bottomAppBarTheme: BottomAppBarTheme(
         color: amoledMode ? Colors.transparent : null,
-        elevation: amoledMode ? 0 : 2,
+        elevation: amoledMode ? 0 : 4,
       ),
       cardTheme: CardTheme(
         elevation: amoledMode ? .5 : 2,
@@ -147,17 +147,11 @@ class AppThemes {
         ),
       ),
       dividerTheme: DividerThemeData(color: colorScheme.surfaceContainerHighest),
-      drawerTheme: DrawerThemeData(
-        surfaceTintColor: colorScheme.surfaceTint,
-        backgroundColor: colorScheme.surface,
-        elevation: amoledMode ? 0 : 2,
-        width: 275,
-      ),
       navigationBarTheme: NavigationBarThemeData(
         indicatorColor: colorScheme.secondary,
         backgroundColor: amoledMode ? Colors.transparent : null,
         surfaceTintColor: colorScheme.surfaceTint,
-        elevation: amoledMode ? 0 : 2,
+        elevation: amoledMode ? 0 : 4,
       ),
 
       // Popups
@@ -204,7 +198,6 @@ class AppThemes {
 
       // List tiles
       listTileTheme: ListTileThemeData(
-        //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         dense: false,
         selectedColor: colorScheme.primary,
         iconColor: colorScheme.primary.withOpacity(.75),

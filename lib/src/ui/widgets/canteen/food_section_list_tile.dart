@@ -57,28 +57,31 @@ class _DishListTile extends StatelessWidget {
 
         return Consumer<Ordering>(
           builder: (context, prov, ___) => ListTile(
-            selectedColor: theme.colorScheme.primary,
             enabled: !prov.ordering && isButtonEnabled(stav),
             selected: getPrimaryState(stav),
-            visualDensity: VisualDensity.compact,
             contentPadding: EdgeInsets.zero,
+            selectedColor: theme.colorScheme.primary,
             titleTextStyle: theme.textTheme.bodyMedium,
+            onTap: prov.ordering || !isButtonEnabled(stav) ? null : () => burzaAlertDialog(context, updatedDish, stav),
             leading: Radio<bool>(
               toggleable: true,
-              value: getPrimaryState(stav),
               groupValue: true,
+              value: getPrimaryState(stav),
               onChanged: prov.ordering || !isButtonEnabled(stav) ? null : (_) => burzaAlertDialog(context, updatedDish, stav),
               activeColor: theme.colorScheme.primary,
             ),
             title: Text(title),
-            subtitle: updatedDish.cena == null
-                ? null
-                : Text(NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toLanguageTag()).format(updatedDish.cena)),
+            subtitle: _subtitle(context, updatedDish.cena),
             trailing: _detailButton(context),
           ),
         );
       },
     );
+  }
+
+  Text? _subtitle(BuildContext context, double? price) {
+    if (price == null) return null;
+    return Text(NumberFormat.simpleCurrency(locale: Localizations.localeOf(context).toLanguageTag()).format(price));
   }
 
   IconButton _detailButton(BuildContext context) {

@@ -28,7 +28,6 @@ class DishDetailPage extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: BottomAppBar(
-        elevation: 0,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         child: OrderDishButton(dish),
       ),
