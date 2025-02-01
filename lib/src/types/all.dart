@@ -4,23 +4,6 @@ import 'dart:async';
 
 import 'package:canteenlib/canteenlib.dart';
 
-enum ConnectionErrors {
-  /// user is not logged in (no username and password in secure storage)
-  noLogin,
-
-  /// user has entered the wrong password/username
-  badLogin,
-
-  /// user has entered the wrong url
-  wrongUrl,
-
-  /// connection to the canteen server failed
-  connectionFailed,
-
-  /// user is not connected to the internet
-  noInternet,
-}
-
 // Classy pro přihlašování
 
 /// Csamotný uživatel
@@ -152,15 +135,6 @@ enum StavJidla {
 
   /// jídlo nemáme objednané a není dostupné na burze, vypršela platnost nebo nemá uživatel dostatečný kredit
   nedostupne
-}
-
-/// Popisuje možnosti kdy se login nepovedl
-enum LoginFormErrorField {
-  /// heslo nebo uživatelské jméno je neplatné
-  password,
-
-  /// url je neplatná
-  url,
 }
 
 enum TypStatistiky {
