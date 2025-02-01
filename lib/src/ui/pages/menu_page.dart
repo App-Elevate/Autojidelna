@@ -8,8 +8,7 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class MenuPage extends StatefulWidget {
-  const MenuPage({super.key, this.dayIndex});
-  final int? dayIndex;
+  const MenuPage({super.key});
 
   @override
   State<MenuPage> createState() => _MenuPageState();

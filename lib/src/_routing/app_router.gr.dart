@@ -228,17 +228,10 @@ class LoginPage extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.MenuPage]
-class MenuPage extends _i16.PageRouteInfo<MenuPageArgs> {
-  MenuPage({
-    _i17.Key? key,
-    int? dayIndex,
-    List<_i16.PageRouteInfo>? children,
-  }) : super(
+class MenuPage extends _i16.PageRouteInfo<void> {
+  const MenuPage({List<_i16.PageRouteInfo>? children})
+      : super(
           MenuPage.name,
-          args: MenuPageArgs(
-            key: key,
-            dayIndex: dayIndex,
-          ),
           initialChildren: children,
         );
 
@@ -247,30 +240,9 @@ class MenuPage extends _i16.PageRouteInfo<MenuPageArgs> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<MenuPageArgs>(orElse: () => const MenuPageArgs());
-      return _i10.MenuPage(
-        key: args.key,
-        dayIndex: args.dayIndex,
-      );
+      return const _i10.MenuPage();
     },
   );
-}
-
-class MenuPageArgs {
-  const MenuPageArgs({
-    this.key,
-    this.dayIndex,
-  });
-
-  final _i17.Key? key;
-
-  final int? dayIndex;
-
-  @override
-  String toString() {
-    return 'MenuPageArgs{key: $key, dayIndex: $dayIndex}';
-  }
 }
 
 /// generated route for

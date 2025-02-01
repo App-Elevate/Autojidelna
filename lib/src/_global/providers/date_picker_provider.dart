@@ -5,7 +5,7 @@ class DatePickerProvider extends ChangeNotifier {
   DateTime _userFocusedDate = DateTime.now();
   int _visibleMonth = DateTime.now().month;
 
-  /// Used by the app for UI changes
+  /// Used by the app for UI changes, isn't highlighted
   DateTime get appFocusedDate => _appFocusedDate;
 
   /// This is the date that the user actually selects

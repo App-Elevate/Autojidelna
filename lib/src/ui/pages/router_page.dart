@@ -49,7 +49,7 @@ class _RouterPageState extends State<RouterPage> {
     ];
 
     final List<PageRouteInfo> routes = [
-      MenuPage(),
+      const MenuPage(),
       const MorePage(),
     ];
 
