@@ -2,7 +2,7 @@ import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dar
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
-import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/widgets/custom_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';

@@ -32,3 +32,19 @@ enum CellState {
   ordered,
   available,
 }
+
+/// Describes what time format will be used by the app
+enum DateFormatOptions {
+  dMy,
+  mmddyy,
+  ddmmyy,
+  yyyymmdd,
+  ddmmmyyyy,
+  mmmddyyyy,
+}
+
+/// Class containing all fonts used by the apps
+class Fonts {
+  static const String body = 'Inter';
+  static const String heading = 'Lexend';
+}

@@ -6,7 +6,7 @@ import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
-import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/error_loading_data.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/list_view/food_section_list_tile.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
