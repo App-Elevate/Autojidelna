@@ -30,6 +30,6 @@ class _LoginLoadingState extends State<LoginLoading> {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: CircularProgressIndicator());
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
