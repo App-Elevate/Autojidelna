@@ -4,62 +4,6 @@ import 'dart:async';
 
 import 'package:canteenlib/canteenlib.dart';
 
-// Classy pro přihlašování
-
-/// Csamotný uživatel
-class Account {
-  String username;
-  String password;
-  String url;
-
-  Account({
-    required this.username,
-    required this.password,
-    required this.url,
-  });
-
-  Map<String, dynamic> toJson() => {
-        'username': username,
-        'password': password,
-        'url': url,
-      };
-
-  factory Account.fromJson(Map<String, dynamic> json) => Account(
-        username: json['username'],
-        password: json['password'],
-        url: json['url'],
-      );
-}
-
-/// Všichni přihlášení uživatelé
-class LoggedAccounts {
-  int? currentlyLoggedInId;
-  List<Account> users;
-
-  LoggedAccounts({
-    this.currentlyLoggedInId,
-    List<Account>? users,
-  }) : users = users ?? [];
-
-  Map<String, dynamic> toJson() => {
-        'currentlyLoggedInId': currentlyLoggedInId,
-        'users': users.map((e) => e.toJson()).toList(),
-      };
-
-  factory LoggedAccounts.fromJson(Map<String, dynamic> json) => LoggedAccounts(
-        currentlyLoggedInId: json['currentlyLoggedInId'],
-        users: (json['users'] as List).map((e) => Account.fromJson(e)).toList(),
-      );
-}
-
-/// Omezená data pro zobrazení ve výběru účtů
-class LoggedAccountsLimited {
-  List<String> usernames;
-  int? loggedInID;
-
-  LoggedAccountsLimited({required this.usernames, required this.loggedInID});
-}
-
 /// Třída pro kešování dat Canteeny
 class CanteenData {
   /// id, aby se nám neindexovaly špatně jídelníčky
