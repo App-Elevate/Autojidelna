@@ -1,6 +1,7 @@
 // This is the custom date picker used in the main app screen (jidelna.dart)
 
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_global/providers/date_picker_provider.dart';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
@@ -94,8 +95,8 @@ showCustomDatePicker(BuildContext context) {
                   headerStyle: HeaderStyle(
                     titleCentered: true,
                     formatButtonVisible: false,
-                    leftChevronVisible: prov.visibleMonth != minimalDate.month,
-                    rightChevronVisible: prov.visibleMonth != maximalDate.month,
+                    leftChevronVisible: prov.visibleMonth != Dates.minimalDate.month,
+                    rightChevronVisible: prov.visibleMonth != Dates.maximalDate.month,
                     titleTextStyle: AppThemes.textTheme.headlineSmall!,
                     decoration: BoxDecoration(color: colorScheme.surfaceContainerHighest.withAlpha(16)),
                   ),
@@ -115,8 +116,8 @@ showCustomDatePicker(BuildContext context) {
                   daysOfWeekHeight: 25,
                   focusedDay: prov.appFocusedDate,
                   currentDay: DateTime.now(),
-                  firstDay: minimalDate,
-                  lastDay: maximalDate,
+                  firstDay: Dates.minimalDate,
+                  lastDay: Dates.maximalDate,
                   selectedDayPredicate: (day) => isSameDay(prov.userFocusedDate, day),
                   onDaySelected: onDaySelected,
                   onPageChanged: onPageChanged,
