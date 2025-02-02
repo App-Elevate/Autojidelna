@@ -42,12 +42,11 @@ class ThemeStylePicker extends StatelessWidget {
 
           return Theme(
             data: theme,
-            child: Container(
+            child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              decoration: BoxDecoration(borderRadius: radius),
-              clipBehavior: Clip.hardEdge,
               child: OutlinedButton(
                 style: style,
+                clipBehavior: Clip.hardEdge,
                 onPressed: () => prov.setThemeStyle(ThemeStyle.values[index]),
                 child: Column(
                   children: [
