@@ -128,7 +128,7 @@ class __$$LoggedAccountsImplCopyWithImpl<$Res>
 class _$LoggedAccountsImpl
     with DiagnosticableTreeMixin
     implements _LoggedAccounts {
-  const _$LoggedAccountsImpl(
+  _$LoggedAccountsImpl(
       {@JsonKey(name: 'currently_logged_in_id') this.currentlyLoggedInId,
       @JsonKey(name: 'users') this.users = const []});
 
@@ -174,7 +174,7 @@ class _$LoggedAccountsImpl
 }
 
 abstract class _LoggedAccounts implements LoggedAccounts {
-  const factory _LoggedAccounts(
+  factory _LoggedAccounts(
       {@JsonKey(name: 'currently_logged_in_id') int? currentlyLoggedInId,
       @JsonKey(name: 'users') List<Account> users}) = _$LoggedAccountsImpl;
 

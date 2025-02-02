@@ -11,7 +11,7 @@ part 'logged_accounts.g.dart';
 
 @unfreezed
 class LoggedAccounts with _$LoggedAccounts {
-  const factory LoggedAccounts({
+  factory LoggedAccounts({
     @JsonKey(name: 'currently_logged_in_id') int? currentlyLoggedInId,
     @JsonKey(name: 'users') @Default([]) List<Account> users,
   }) = _LoggedAccounts;
