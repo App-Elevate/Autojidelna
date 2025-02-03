@@ -65,31 +65,6 @@ class LoggedInCanteen {
   /// DO NOT CALL BEFORE LOGGIN IN
   Uzivatel? get uzivatel => _canteenData?.uzivatel;
 
-  CanteenData? get canteenDataUnsafe => _canteenData;
-
-  Future<dynamic> runWithSafety(Future f) async {
-    try {
-      return await f;
-    } catch (e) {
-      handleError(e);
-      return Future.error(e);
-    }
-  }
-
-  void handleError(dynamic e) {
-    //TODO: add error handling
-    /*
-    if (e == ConnectionErrors.badLogin) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadLogin));
-    } else if (e == ConnectionErrors.wrongUrl) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadUrl));
-    } else if (e == ConnectionErrors.noInternet) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsNoInternet));
-    } else if (e == ConnectionErrors.connectionFailed) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadConnection));
-    }*/
-  }
-
   /// Returns a [Canteen] instance with a logged in user.
   ///
   /// Main logic about logging in is in this function
