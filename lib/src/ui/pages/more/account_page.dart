@@ -8,6 +8,7 @@ import 'package:autojidelna/src/ui/widgets/more/account_overview_card.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
@@ -52,16 +53,19 @@ class AccountPage extends StatelessWidget {
             ListTile(
               title: Text(user.ucetProPlatby!),
               subtitle: Text(lang.paymentAccountNumber),
+              onLongPress: () => _copyToClipboard(user.ucetProPlatby!),
             ),
           if (varSymbol)
             ListTile(
               title: Text(user.varSymbol!),
               subtitle: Text(lang.variableSymbol),
+              onLongPress: () => _copyToClipboard(user.varSymbol!),
             ),
           if (specSymbol)
             ListTile(
               title: Text(user.specSymbol!),
               subtitle: Text(lang.specificSymbol),
+              onLongPress: () => _copyToClipboard(user.specSymbol!),
             ),
         ],
       ),
@@ -76,5 +80,9 @@ class AccountPage extends StatelessWidget {
         icon: const Icon(Icons.logout),
       ),
     );
+  }
+
+  void _copyToClipboard(String text) async {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }
