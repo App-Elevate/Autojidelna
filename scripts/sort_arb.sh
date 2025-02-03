@@ -1,3 +1,5 @@
-dart run arb_utils sort lib/src/lang/app_cs.arb
-dart run arb_utils sort lib/src/lang/app_en.arb
+for file in lib/src/lang/arb/*.arb; do
+  dart run arb_utils sort "$file"
+done
+
 flutter gen-l10n
