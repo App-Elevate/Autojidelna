@@ -12,22 +12,12 @@ class TextsCs extends Texts {
   String get about => 'O aplikaci';
 
   @override
-  String get aboutCheckForUpdates => 'Zkontrolovat aktualizace';
-
-  @override
   String aboutCopyRight(DateTime time) {
     final intl.DateFormat timeDateFormat = intl.DateFormat.y(localeName);
     final String timeString = timeDateFormat.format(time);
 
     return '© 2023 - $timeString Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3';
   }
-
-  @override
-  String get aboutLatestVersion =>
-      'Aktuálně jste na nejnovější verzi aplikace 👍';
-
-  @override
-  String get aboutSourceCode => 'Zdrojový kód';
 
   @override
   String aboutVersionSubtitle(String arg, String version) {
@@ -61,6 +51,9 @@ class TextsCs extends Texts {
 
   @override
   String get amoledModeSubtitle => 'Přidej se k temné straně síly!';
+
+  @override
+  String get amoledSubtitle => 'Přidej se k temné straně síly!';
 
   @override
   String get analytics => 'Shromažďování údajů';
@@ -97,6 +90,9 @@ class TextsCs extends Texts {
   String get appearance => 'Vzhled';
 
   @override
+  String get appearence => 'Vzhled';
+
+  @override
   String get burzaAlertDialogContent =>
       'Přidáváte jídlo na burzu. Peníze se Vám vrátí pouze v případě, že si jídlo objedná někdo jiný.';
 
@@ -131,14 +127,33 @@ class TextsCs extends Texts {
   String get darkThemeMode => 'Tmavý';
 
   @override
+  String get dataCollection => 'Shromažďování údajů';
+
+  @override
   String get dataCollectionAgreement =>
       'Používáním aplikace souhlasíte se zasíláním anonymních dat. ';
+
+  @override
+  String get dataCollectionDescription_1 =>
+      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
+
+  @override
+  String get dataCollectionDescription_2 => 'Zdrojovém kódu';
+
+  @override
+  String get dataCollectionDescription_3 => ' nebo v ';
+
+  @override
+  String get dataCollectionDescription_4 => 'Zásadách ochrany osobních údajů.';
 
   @override
   String get dateFormat => 'Formát dat';
 
   @override
   String get debug => 'Debug';
+
+  @override
+  String get display => 'Zobrazení';
 
   @override
   String dochazejiciKreditChannelDescription(String username) {
@@ -153,6 +168,9 @@ class TextsCs extends Texts {
 
   @override
   String get drinks => 'Pití';
+
+  @override
+  String get error => 'Chyba';
 
   @override
   String get errorsBadConnection =>
@@ -231,18 +249,6 @@ class TextsCs extends Texts {
   String get gettingDataNotifications => 'Získávám data pro oznámení';
 
   @override
-  String internetConnectionState(String arg) {
-    String _temp0 = intl.Intl.selectLogic(
-      arg,
-      {
-        'other': 'Odpojeno od internetu',
-        'true': 'Připojeno k internetu',
-      },
-    );
-    return '$_temp0';
-  }
-
-  @override
   String jidloChannelDescription(String username) {
     return 'Oznámení každý den o tom jaké je dnes jídlo pro $username';
   }
@@ -276,9 +282,6 @@ class TextsCs extends Texts {
 
   @override
   String get login => 'Přihlásit se';
-
-  @override
-  String get loginButton => 'Přihlásit se';
 
   @override
   String get loginPasswordFieldHint => 'Zadejte prosím své heslo';
@@ -328,20 +331,6 @@ class TextsCs extends Texts {
   String get nedostatekKreditu => 'Nedostatek kreditu';
 
   @override
-  String get neededPermission => 'Potřebné oprávnění';
-
-  @override
-  String get neededPermissionDescription_1 =>
-      'Pro automatickou instalaci aktualizace je potřeba povolit oprávnění pro instalaci aplikací z neznámých zdrojů.';
-
-  @override
-  String get neededPermissionDescription_2 => 'Ta může vypadat takto:';
-
-  @override
-  String get neededPermissionDescription_3 =>
-      'Toto oprávnění používáme pouze k aktualizaci aplikace. Pokud si nepřejete oprávnění povolit můžete stále stáhnout apk z githubu.';
-
-  @override
   String get nelzeObjednat => 'Nelze objednat';
 
   @override
@@ -365,8 +354,8 @@ class TextsCs extends Texts {
   String get notificationObjednejteSi => 'Objednejte si na příští týden';
 
   @override
-  String notificationObjednejteSiDetail(String first, String last) {
-    return 'Uživatel $first $last si stále ještě neobjenal na příští týden';
+  String notificationObjednejteSiDetail(String username) {
+    return 'Uživatel $username si stále ještě neobjenal na příští týden';
   }
 
   @override
@@ -404,14 +393,6 @@ class TextsCs extends Texts {
   String get ok => 'OK';
 
   @override
-  String get orders => 'Objednávky';
-
-  @override
-  String ordersWithAutojidelna(int ammount) {
-    return 'Objednávky s Autojídelnou: $ammount';
-  }
-
-  @override
   String get other => 'Ostatní';
 
   @override
@@ -436,26 +417,6 @@ class TextsCs extends Texts {
   String get pickLocation => 'Vyberte výdejnu:';
 
   @override
-  String get popupChangelogNotAvailable => 'Changelog není k dispozici';
-
-  @override
-  String get popupNewUpdateInfo => 'Nová verze přináší: ';
-
-  @override
-  String popupNewVersionAvailable(String version) {
-    return 'Nová verze aplikace - $version';
-  }
-
-  @override
-  String get popupNotNow => 'Teď ne';
-
-  @override
-  String get popupShowOnGithub => 'Zobrazit na Githubu';
-
-  @override
-  String get popupUpdate => 'Aktualizovat';
-
-  @override
   String get privacyPolicy => 'Zásady ochrany osobních údajů';
 
   @override
@@ -465,59 +426,12 @@ class TextsCs extends Texts {
   String get settings => 'Nastavení';
 
   @override
-  String get settingsAmoled => 'AMOLED mód';
-
-  @override
-  String get settingsAmoledSub => 'Přidej se k temné straně síly!';
-
-  @override
-  String get settingsAnotherOptions => 'Další možnosti v nastavení systému...';
-
-  @override
-  String get settingsAppearence => 'Vzhled';
-
-  @override
-  String get settingsCalendarBigMarkers => 'Velké ukazatele v kalendáři';
-
-  @override
-  String get settingsDataCollection => 'Shromažďování údajů';
-
-  @override
-  String get settingsDataCollectionDescription_1 =>
-      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
-
-  @override
-  String get settingsDataCollectionDescription_2 => 'Zdrojovém kódu';
-
-  @override
-  String get settingsDataCollectionDescription_3 => ' nebo v ';
-
-  @override
-  String get settingsDataCollectionDescription_4 =>
-      'Zásadách ochrany osobních údajů.';
-
-  @override
-  String get settingsDebugForceNotifications => 'Force send notifications';
-
-  @override
-  String get settingsDebugNotifications => 'Send Notifications';
-
-  @override
-  String get settingsDebugOptions => 'Debug Options';
-
-  @override
-  String get settingsDisplay => 'Zobrazení';
-
-  @override
   String get settingsNemateObjednano => 'Nemáte objednáno na příští týden';
 
   @override
   String settingsNotificationFor(String username) {
     return 'Oznámení pro $username';
   }
-
-  @override
-  String get settingsNotificationTime => 'Čas oznámení: ';
 
   @override
   String get settingsRelativeTimestamps => 'Relativní časové značky';
@@ -574,9 +488,6 @@ class TextsCs extends Texts {
   String get stopAnalytics => 'Zastavit sledování analytických služeb';
 
   @override
-  String get switchAccountPanelTitle => 'Účty';
-
-  @override
   String get systemThemeMode => 'Systém';
 
   @override
@@ -610,29 +521,10 @@ class TextsCs extends Texts {
   String get themeModeSystem => 'Systém';
 
   @override
-  String get toastExit => 'Zmáčkněte tlačítko zpět pro ukončení aplikace';
-
-  @override
   String get tryAgain => 'Zkusit znovu';
 
   @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
-
-  @override
-  String get updateSnackbarDownloaded =>
-      'Aktualizace byla stažena, instalování';
-
-  @override
-  String updateSnackbarDownloading(int value) {
-    return 'Nová Aktualizace se stahuje - $value%';
-  }
-
-  @override
-  String get updateSnackbarError =>
-      'Došlo k chybě při stahování. Ověřte připojení a zkuste to znovu';
-
-  @override
-  String get updateSnackbarWaiting => 'Aktualizace - Čeká se na oprávnění';
 
   @override
   String get variableSymbol => 'Variabilní symbol';
@@ -657,7 +549,4 @@ class TextsCs extends Texts {
 
   @override
   String get vlozitNaBurzu => 'Vložit na burzu';
-
-  @override
-  String get error => 'Chyba';
 }
