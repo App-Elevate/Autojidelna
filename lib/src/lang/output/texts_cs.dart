@@ -215,7 +215,10 @@ class TextsCs extends Texts {
       'Oběd nelze objednat - Nedostatečný kredit.';
 
   @override
-  String get errorsNoInternet => 'Nemáte připojení k internetu';
+  String get errorsNoInternet => 'Jste offline.';
+
+  @override
+  String get errorsNoInternetResolved => 'Zpět online!';
 
   @override
   String get errorsObedNelzeZrusit =>

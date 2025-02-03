@@ -5,10 +5,12 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/password_state.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -207,6 +209,13 @@ class _LoginPageState extends State<LoginPage> {
       Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
       if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
     } catch (e) {
+      switch (e) {
+        case AuthErrors.noInternetConnection:
+          bool value = await showInternetConnectionSnackBar();
+          if (value && context.mounted) loginFieldCheck(context, lang);
+          break;
+        default:
+      }
       switch (e) {
         case ConnectionErrors.noInternet:
           _setErrorText(lang.errorsNoInternet, LoginFormErrorField.url);

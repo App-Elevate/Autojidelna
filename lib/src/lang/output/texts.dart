@@ -450,8 +450,14 @@ abstract class Texts {
   /// No description provided for @errorsNoInternet.
   ///
   /// In cs, this message translates to:
-  /// **'Nemáte připojení k internetu'**
+  /// **'Jste offline.'**
   String get errorsNoInternet;
+
+  /// No description provided for @errorsNoInternetResolved.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zpět online!'**
+  String get errorsNoInternetResolved;
 
   /// No description provided for @errorsObedNelzeZrusit.
   ///

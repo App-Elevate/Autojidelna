@@ -1,6 +1,8 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +19,14 @@ class _LoginLoadingState extends State<LoginLoading> {
     try {
       await context.read<UserProvider>().loadUser();
     } catch (e) {
-      if (mounted) context.router.replaceAll([const LoginPage()]);
+      switch (e) {
+        case AuthErrors.noInternetConnection:
+          bool value = await showInternetConnectionSnackBar();
+          if (value) login();
+          break;
+        default:
+          if (mounted) context.router.replaceAll([const LoginPage()]);
+      }
       return;
     }
     if (mounted) context.router.replaceAll([const RouterPage()]);
