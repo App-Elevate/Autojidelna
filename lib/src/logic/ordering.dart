@@ -188,7 +188,7 @@ void cannotBeOrderedFix(BuildContext context, int dayIndex) async {
       }
     }
   } catch (e) {
-    showErrorSnackBar(Icons.abc, lang.error, lang.errorsBadConnection);
+    showErrorSnackBar(Icons.abc, lang.error, lang.errorsConnectionFailed);
   }
 }
 

@@ -27,7 +27,8 @@ Future<bool> showInternetConnectionSnackBar() async {
           Color backgroundColor = isOnline ? Colors.green : colorScheme.error;
           Color foregroundColor = isOnline ? Colors.white : colorScheme.onError;
           IconData icon = isOnline ? Icons.wifi_rounded : Icons.wifi_off_rounded;
-          String title = isOnline ? context.l10n.errorsNoInternetResolved : context.l10n.errorsNoInternet;
+          String title = isOnline ? context.l10n.errorsGotInternetConnection : context.l10n.errorsNoInternetConnection;
+          String subtitle = isOnline ? context.l10n.errorsGotInternetConnectionSubtitle : context.l10n.errorsNoInternetConnectionSubtitle;
 
           return Container(
             color: backgroundColor,
@@ -39,6 +40,7 @@ Future<bool> showInternetConnectionSnackBar() async {
               subtitleTextStyle: tileTheme.subtitleTextStyle?.copyWith(color: foregroundColor),
               leading: Icon(icon, size: 40),
               title: Text(title),
+              subtitle: Text(subtitle),
             ),
           );
         },
@@ -57,7 +59,7 @@ Future<bool> showInternetConnectionSnackBar() async {
         notifier.value = true;
 
         // Wait 3 seconds before dismissing snackbar
-        await Future.delayed(const Duration(seconds: 2));
+        await Future.delayed(const Duration(seconds: 3));
         scaffoldMessenger.hideCurrentSnackBar();
 
         _internetCheckTimer?.cancel(); // Stop checking after reconnecting

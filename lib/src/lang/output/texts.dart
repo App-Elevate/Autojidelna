@@ -351,35 +351,17 @@ abstract class Texts {
   /// **'Chyba'**
   String get error;
 
-  /// No description provided for @errorsBadConnection.
+  /// No description provided for @errorsAccountNotFound.
   ///
   /// In cs, this message translates to:
-  /// **'Nepodařilo se připojit k serveru icanteen. Zkuste to znovu později'**
-  String get errorsBadConnection;
+  /// **'Účet nenalezen'**
+  String get errorsAccountNotFound;
 
-  /// No description provided for @errorsBadLogin.
+  /// No description provided for @errorsAccountNotFoundSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Nesprávné přihlašovací údaje'**
-  String get errorsBadLogin;
-
-  /// No description provided for @errorsBadPassword.
-  ///
-  /// In cs, this message translates to:
-  /// **'Špatné heslo nebo uživatelské jméno'**
-  String get errorsBadPassword;
-
-  /// No description provided for @errorsBadUrl.
-  ///
-  /// In cs, this message translates to:
-  /// **'Nesprávné Url'**
-  String get errorsBadUrl;
-
-  /// No description provided for @errorsChangelog.
-  ///
-  /// In cs, this message translates to:
-  /// **'Nepodařilo se získat změny :/'**
-  String get errorsChangelog;
+  /// **'Jste si jistí, že existujete? Přihlaste se ručně.'**
+  String get errorsAccountNotFoundSubtitle;
 
   /// No description provided for @errorsChybaPriDavaniNaBurzu.
   ///
@@ -393,17 +375,29 @@ abstract class Texts {
   /// **'Nastala chyba při rušení objednávky'**
   String get errorsChybaPriRuseni;
 
-  /// No description provided for @errorsDownloadingApp.
+  /// No description provided for @errorsConnectionFailed.
   ///
   /// In cs, this message translates to:
-  /// **'Aktualizace aplikace selhala'**
-  String get errorsDownloadingApp;
+  /// **'Server si dal pauzu'**
+  String get errorsConnectionFailed;
 
-  /// No description provided for @errorsDownloadingAppDetail.
+  /// No description provided for @errorsConnectionFailedSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Při Stahování aplikace došlo k chybě. Ověřte vaše připojení a zkuste znovu.'**
-  String get errorsDownloadingAppDetail;
+  /// **'Zkuste to později, možná si jen dává kafe.'**
+  String get errorsConnectionFailedSubtitle;
+
+  /// No description provided for @errorsGotInternetConnection.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jste zpět online!'**
+  String get errorsGotInternetConnection;
+
+  /// No description provided for @errorsGotInternetConnectionSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Síť je v pořádku. Pokračujeme!'**
+  String get errorsGotInternetConnectionSubtitle;
 
   /// No description provided for @errorsJidloNeniNaBurze.
   ///
@@ -423,18 +417,6 @@ abstract class Texts {
   /// **'Nastala chyba při načítání dat'**
   String get errorsLoadingData;
 
-  /// No description provided for @errorsLoginFailed.
-  ///
-  /// In cs, this message translates to:
-  /// **'Přihlašování selhalo'**
-  String get errorsLoginFailed;
-
-  /// No description provided for @errorsLoginFailedDetail.
-  ///
-  /// In cs, this message translates to:
-  /// **'Při přihlašování došlo k chybě: {error}'**
-  String errorsLoginFailedDetail(String error);
-
   /// No description provided for @errorsNelzeObjednat.
   ///
   /// In cs, this message translates to:
@@ -447,17 +429,17 @@ abstract class Texts {
   /// **'Oběd nelze objednat - Nedostatečný kredit.'**
   String get errorsNelzeObjednatKredit;
 
-  /// No description provided for @errorsNoInternet.
+  /// No description provided for @errorsNoInternetConnection.
   ///
   /// In cs, this message translates to:
-  /// **'Jste offline.'**
-  String get errorsNoInternet;
+  /// **'Žádné připojení k internetu'**
+  String get errorsNoInternetConnection;
 
-  /// No description provided for @errorsNoInternetResolved.
+  /// No description provided for @errorsNoInternetConnectionSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Zpět online!'**
-  String get errorsNoInternetResolved;
+  /// **'Kontrolujeme síť... ujistěte se, že jste online.'**
+  String get errorsNoInternetConnectionSubtitle;
 
   /// No description provided for @errorsObedNelzeZrusit.
   ///
@@ -471,17 +453,35 @@ abstract class Texts {
   /// **'Nastala chyba při objednávání jídla'**
   String get errorsObjednavaniJidla;
 
-  /// No description provided for @errorsUndefined.
+  /// No description provided for @errorsWrongCredentials.
   ///
   /// In cs, this message translates to:
-  /// **'Nastala Chyba'**
-  String get errorsUndefined;
+  /// **'Špatné údaje, špatný den?'**
+  String get errorsWrongCredentials;
 
-  /// No description provided for @errorsUpdatingData.
+  /// No description provided for @errorsWrongCredentialsSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Nastala chyba při aktualizaci dat'**
-  String get errorsUpdatingData;
+  /// **'Zkuste to znovu – nebo si je změňte.'**
+  String get errorsWrongCredentialsSubtitle;
+
+  /// No description provided for @errorsWrongCredentialsTextField.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přihlašovací údaje jsou nesprávné.'**
+  String get errorsWrongCredentialsTextField;
+
+  /// No description provided for @errorsWrongUrl.
+  ///
+  /// In cs, this message translates to:
+  /// **'Špatná adresa'**
+  String get errorsWrongUrl;
+
+  /// No description provided for @errorsWrongUrlSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Tahle cesta nikam nevede. Zkontrolujte adresu.'**
+  String get errorsWrongUrlSubtitle;
 
   /// No description provided for @experimental.
   ///
@@ -564,7 +564,7 @@ abstract class Texts {
   /// No description provided for @loginPasswordFieldHint.
   ///
   /// In cs, this message translates to:
-  /// **'Zadejte prosím své heslo'**
+  /// **'Zadejte heslo'**
   String get loginPasswordFieldHint;
 
   /// No description provided for @loginPasswordFieldLabel.
@@ -573,22 +573,34 @@ abstract class Texts {
   /// **'Heslo'**
   String get loginPasswordFieldLabel;
 
+  /// No description provided for @loginSuccess.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přihlášení úspěšné!'**
+  String get loginSuccess;
+
+  /// No description provided for @loginSuccessSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vítejte zpět, {username}!'**
+  String loginSuccessSubtitle(String username);
+
   /// No description provided for @loginUrlFieldHint.
   ///
   /// In cs, this message translates to:
-  /// **'Zadejte prosím url stránky icanteen - např. jidelna.trebesin.cz'**
+  /// **'Zadejte adresu stránky icanteen'**
   String get loginUrlFieldHint;
 
   /// No description provided for @loginUrlFieldLabel.
   ///
   /// In cs, this message translates to:
-  /// **'Url stránky icanteen - např. jidelna.trebesin.cz'**
+  /// **'Adresa stránky icanteen - např. jidelna.trebesin.cz'**
   String get loginUrlFieldLabel;
 
   /// No description provided for @loginUserFieldHint.
   ///
   /// In cs, this message translates to:
-  /// **'Zadejte prosím své uživatelské jméno'**
+  /// **'Zadejte uživatelské jméno'**
   String get loginUserFieldHint;
 
   /// No description provided for @loginUserFieldLabel.

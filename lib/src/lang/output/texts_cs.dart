@@ -161,20 +161,11 @@ class TextsCs extends Texts {
   String get error => 'Chyba';
 
   @override
-  String get errorsBadConnection =>
-      'Nepodařilo se připojit k serveru icanteen. Zkuste to znovu později';
+  String get errorsAccountNotFound => 'Účet nenalezen';
 
   @override
-  String get errorsBadLogin => 'Nesprávné přihlašovací údaje';
-
-  @override
-  String get errorsBadPassword => 'Špatné heslo nebo uživatelské jméno';
-
-  @override
-  String get errorsBadUrl => 'Nesprávné Url';
-
-  @override
-  String get errorsChangelog => 'Nepodařilo se získat změny :/';
+  String get errorsAccountNotFoundSubtitle =>
+      'Jste si jistí, že existujete? Přihlaste se ručně.';
 
   @override
   String get errorsChybaPriDavaniNaBurzu =>
@@ -184,11 +175,18 @@ class TextsCs extends Texts {
   String get errorsChybaPriRuseni => 'Nastala chyba při rušení objednávky';
 
   @override
-  String get errorsDownloadingApp => 'Aktualizace aplikace selhala';
+  String get errorsConnectionFailed => 'Server si dal pauzu';
 
   @override
-  String get errorsDownloadingAppDetail =>
-      'Při Stahování aplikace došlo k chybě. Ověřte vaše připojení a zkuste znovu.';
+  String get errorsConnectionFailedSubtitle =>
+      'Zkuste to později, možná si jen dává kafe.';
+
+  @override
+  String get errorsGotInternetConnection => 'Jste zpět online!';
+
+  @override
+  String get errorsGotInternetConnectionSubtitle =>
+      'Síť je v pořádku. Pokračujeme!';
 
   @override
   String get errorsJidloNeniNaBurze => 'Jídlo není na burze';
@@ -200,14 +198,6 @@ class TextsCs extends Texts {
   String get errorsLoadingData => 'Nastala chyba při načítání dat';
 
   @override
-  String get errorsLoginFailed => 'Přihlašování selhalo';
-
-  @override
-  String errorsLoginFailedDetail(String error) {
-    return 'Při přihlašování došlo k chybě: $error';
-  }
-
-  @override
   String get errorsNelzeObjednat => 'Oběd nelze objednat';
 
   @override
@@ -215,10 +205,11 @@ class TextsCs extends Texts {
       'Oběd nelze objednat - Nedostatečný kredit.';
 
   @override
-  String get errorsNoInternet => 'Jste offline.';
+  String get errorsNoInternetConnection => 'Žádné připojení k internetu';
 
   @override
-  String get errorsNoInternetResolved => 'Zpět online!';
+  String get errorsNoInternetConnectionSubtitle =>
+      'Kontrolujeme síť... ujistěte se, že jste online.';
 
   @override
   String get errorsObedNelzeZrusit =>
@@ -228,10 +219,22 @@ class TextsCs extends Texts {
   String get errorsObjednavaniJidla => 'Nastala chyba při objednávání jídla';
 
   @override
-  String get errorsUndefined => 'Nastala Chyba';
+  String get errorsWrongCredentials => 'Špatné údaje, špatný den?';
 
   @override
-  String get errorsUpdatingData => 'Nastala chyba při aktualizaci dat';
+  String get errorsWrongCredentialsSubtitle =>
+      'Zkuste to znovu – nebo si je změňte.';
+
+  @override
+  String get errorsWrongCredentialsTextField =>
+      'Přihlašovací údaje jsou nesprávné.';
+
+  @override
+  String get errorsWrongUrl => 'Špatná adresa';
+
+  @override
+  String get errorsWrongUrlSubtitle =>
+      'Tahle cesta nikam nevede. Zkontrolujte adresu.';
 
   @override
   String get experimental => 'Experimentální';
@@ -275,21 +278,28 @@ class TextsCs extends Texts {
   String get login => 'Přihlásit se';
 
   @override
-  String get loginPasswordFieldHint => 'Zadejte prosím své heslo';
+  String get loginPasswordFieldHint => 'Zadejte heslo';
 
   @override
   String get loginPasswordFieldLabel => 'Heslo';
 
   @override
-  String get loginUrlFieldHint =>
-      'Zadejte prosím url stránky icanteen - např. jidelna.trebesin.cz';
+  String get loginSuccess => 'Přihlášení úspěšné!';
+
+  @override
+  String loginSuccessSubtitle(String username) {
+    return 'Vítejte zpět, $username!';
+  }
+
+  @override
+  String get loginUrlFieldHint => 'Zadejte adresu stránky icanteen';
 
   @override
   String get loginUrlFieldLabel =>
-      'Url stránky icanteen - např. jidelna.trebesin.cz';
+      'Adresa stránky icanteen - např. jidelna.trebesin.cz';
 
   @override
-  String get loginUserFieldHint => 'Zadejte prosím své uživatelské jméno';
+  String get loginUserFieldHint => 'Zadejte uživatelské jméno';
 
   @override
   String get loginUserFieldLabel => 'Uživatelské jméno';

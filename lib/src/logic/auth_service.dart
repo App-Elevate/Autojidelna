@@ -121,7 +121,6 @@ class AuthService {
   }
 
   Future<void> _saveDataToStorage(LoggedAccounts loginData) async {
-    print(jsonEncode(loginData.toJson()));
     await App.secureStorage.write(key: SecureStorage.loginData, value: jsonEncode(loginData.toJson()));
     // TODO
     initAwesome();
@@ -130,7 +129,6 @@ class AuthService {
   Future<LoggedAccounts> _getDataFromStorage() async {
     String? value = await App.secureStorage.read(key: SecureStorage.loginData);
     if (value == null || value.trim().isEmpty) return LoggedAccounts();
-    print(jsonEncode(jsonDecode(value)));
     return LoggedAccounts.fromJson(jsonDecode(value));
   }
 
@@ -148,14 +146,13 @@ class AuthService {
   }
 
   /// Removes a logged account from storage, returns true if current user has been removed
-  Future<bool> _removeAccountFromStorage(Account account) async {
+  Future<void> _removeAccountFromStorage(Account account) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     LoggedAccounts updatedData = LoggedAccounts(
       loggedInUsername: account.username == loginData.loggedInUsername ? null : loginData.loggedInUsername,
       accounts: List.from(loginData.accounts)..remove(account),
     );
     await _saveDataToStorage(updatedData);
-    return updatedData.loggedInUsername == null;
   }
 
   Future<void> removeAccount(String username) async {
@@ -168,10 +165,7 @@ class AuthService {
   Future<User?> loginFromStorage() async {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
-    throwIf(
-      loginData.loggedInUsername == null,
-      AuthErrors.accountNotFound,
-    ); // TODO: throw error, show a list of other logged accounts, else login screen
+    throwIf(loginData.loggedInUsername == null, AuthErrors.accountNotFound); // TODO: show a list of other logged accounts, else login screen
     return await loginByUsername(loginData.loggedInUsername!);
   }
 
@@ -179,18 +173,22 @@ class AuthService {
     LoggedAccounts loginData = await _getDataFromStorage();
     LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
     await _saveDataToStorage(updatedData);
-
-    Account? account = await _findByUsername(username);
-    throwIf(account == null, AuthErrors.accountNotFound);
   }
 }
 
 enum AuthErrors {
-  failedLogin,
-  wrongCredentials,
-  missingCredentials,
+  /// Account wasn't found in secure storage
   accountNotFound,
-  noInternetConnection,
+
+  /// Connection to the canteen server failed
   connectionFailed,
+
+  ///User is not connected to the internet
+  noInternetConnection,
+
+  /// User has entered the wrong password/username
+  wrongCredentials,
+
+  /// User has entered wrong url
   wrongUrl,
 }

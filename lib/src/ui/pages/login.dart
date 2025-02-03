@@ -6,6 +6,7 @@ import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/show_snack_bar.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/password_state.dart';
@@ -34,6 +35,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   /// First value is error text, second is if it the password is visible
   final ValueNotifier<PasswordState> passwordNotifier = ValueNotifier(const PasswordState(errorText: null, isVisible: false));
+  final ValueNotifier<bool> usernameErrorState = ValueNotifier(false);
   final ValueNotifier<String?> urlErrorText = ValueNotifier(null);
   final ValueNotifier<bool> loggingIn = ValueNotifier(false);
 
@@ -68,20 +70,23 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _setErrorText(String text, LoginFormErrorField? field) {
+  void _setErrorText(String? text, LoginFormErrorField? field) {
     PasswordState state = passwordNotifier.value;
     switch (field) {
-      case LoginFormErrorField.password:
-        passwordNotifier.value = state.copyWith(errorText: text);
+      case LoginFormErrorField.credentials:
         urlErrorText.value = null;
+        usernameErrorState.value = true;
+        passwordNotifier.value = state.copyWith(errorText: text);
         break;
       case LoginFormErrorField.url:
         urlErrorText.value = text;
+        usernameErrorState.value = false;
         passwordNotifier.value = state.copyWith(errorText: text);
         break;
       default:
         urlErrorText.value = null;
-        passwordNotifier.value = state.copyWith(errorText: text);
+        usernameErrorState.value = false;
+        passwordNotifier.value = state.copyWith(errorText: null);
     }
   }
 
@@ -117,13 +122,23 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TextFormField(
-                      controller: LoginPage._usernameController,
-                      autocorrect: false,
-                      textInputAction: TextInputAction.next,
-                      autofillHints: const [AutofillHints.username],
-                      decoration: InputDecoration(labelText: lang.loginUserFieldLabel),
-                      validator: (value) => value == null || value.isEmpty ? lang.loginUserFieldHint : null,
+                    child: ValueListenableBuilder(
+                      valueListenable: usernameErrorState,
+                      builder: (context, errorState, _) {
+                        return TextFormField(
+                          controller: LoginPage._usernameController,
+                          autocorrect: false,
+                          textInputAction: TextInputAction.next,
+                          autofillHints: const [AutofillHints.username],
+                          decoration: InputDecoration(labelText: lang.loginUserFieldLabel, error: errorState ? const SizedBox() : null),
+                          validator: (value) {
+                            String? validator;
+                            if (value != null && value.isNotEmpty) return validator;
+                            if (!errorState) return lang.loginUserFieldHint;
+                            return validator;
+                          },
+                        );
+                      },
                     ),
                   ),
                   Padding(
@@ -197,7 +212,7 @@ class _LoginPageState extends State<LoginPage> {
 
     // If the form is valid, save the form fields.
     LoginPage._formKey.currentState!.save();
-    _setErrorText('', null);
+    _setErrorText(null, null);
     loggingIn.value = true;
     final Account account = Account(
       username: LoginPage._usernameController.text,
@@ -214,21 +229,14 @@ class _LoginPageState extends State<LoginPage> {
           bool value = await showInternetConnectionSnackBar();
           if (value && context.mounted) loginFieldCheck(context, lang);
           break;
-        default:
-      }
-      switch (e) {
-        case ConnectionErrors.noInternet:
-          _setErrorText(lang.errorsNoInternet, LoginFormErrorField.url);
+        case AuthErrors.wrongCredentials:
+          _setErrorText(lang.errorsWrongCredentialsTextField, LoginFormErrorField.credentials);
           break;
-        case ConnectionErrors.wrongUrl:
-          _setErrorText(lang.errorsBadUrl, LoginFormErrorField.url);
-          break;
-        case ConnectionErrors.badLogin:
-          _setErrorText(lang.errorsBadLogin, LoginFormErrorField.password);
+        case AuthErrors.wrongUrl:
+          _setErrorText(lang.errorsWrongUrl, LoginFormErrorField.url);
           break;
         default:
-          _setErrorText(lang.errorsBadConnection, LoginFormErrorField.url);
-          break;
+          showErrorSnackBar(Icons.cloud_off_rounded, lang.errorsConnectionFailed, lang.errorsConnectionFailedSubtitle);
       }
     }
     loggingIn.value = false;

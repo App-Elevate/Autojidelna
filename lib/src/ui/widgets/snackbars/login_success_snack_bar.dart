@@ -6,7 +6,7 @@ SnackBar loginSuccessSnackBar(BuildContext context, String username) {
   return infoSnackBar(
     context,
     icon: Icons.check_circle_outline,
-    title: context.l10n.login,
-    subtitle: username,
+    title: context.l10n.loginSuccess,
+    subtitle: context.l10n.loginSuccessSubtitle(username),
   );
 }

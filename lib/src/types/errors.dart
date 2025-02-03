@@ -18,7 +18,7 @@ enum ConnectionErrors {
 /// Popisuje možnosti kdy se login nepovedl
 enum LoginFormErrorField {
   /// Heslo nebo uživatelské jméno je neplatné
-  password,
+  credentials,
 
   /// Url je neplatná
   url,
