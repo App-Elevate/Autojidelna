@@ -200,7 +200,7 @@ class _LoginPageState extends State<LoginPage> {
         builder: (context, loggingIn, __) {
           return FilledButton(
             onPressed: loggingIn ? null : () => loginFieldCheck(context, lang),
-            child: loggingIn ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary) : Text(lang.login),
+            child: Text(lang.login),
           );
         },
       ),
