@@ -105,12 +105,6 @@ abstract class Texts {
   /// **'© 2023 - {time} Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3'**
   String aboutCopyRight(DateTime time);
 
-  /// aboutVersionSubtitle
-  ///
-  /// In cs, this message translates to:
-  /// **'{arg, select, true{Debug} other{Stable}} {version}'**
-  String aboutVersionSubtitle(String arg, String version);
-
   /// No description provided for @account.
   ///
   /// In cs, this message translates to:
@@ -684,8 +678,8 @@ abstract class Texts {
   /// No description provided for @notificationKreditPro.
   ///
   /// In cs, this message translates to:
-  /// **'Kredit pro {first} {last}: {ammount} Kč'**
-  String notificationKreditPro(String first, String last, String ammount);
+  /// **'Kredit pro {username}: {ammount} Kč'**
+  String notificationKreditPro(String username, String ammount);
 
   /// No description provided for @notificationObjednejteSi.
   ///

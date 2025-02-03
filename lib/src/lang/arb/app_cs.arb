@@ -11,19 +11,6 @@
       }
     }
   },
-  "aboutVersionSubtitle": "{arg, select, true{Debug} other{Stable}} {version}",
-  "@aboutVersionSubtitle": {
-    "description": "aboutVersionSubtitle",
-    "placeholders": {
-      "arg": {
-        "type": "String",
-        "example": "true"
-      },
-      "version": {
-        "type": "String"
-      }
-    }
-  },
   "account": "Účet",
   "@account": {},
   "accounts": "Účty",
@@ -247,13 +234,10 @@
   "@noThankYou": {},
   "notificationDochaziVamKredit": "Dochází vám kredit!",
   "@notificationDochaziVamKredit": {},
-  "notificationKreditPro": "Kredit pro {first} {last}: {ammount} Kč",
+  "notificationKreditPro": "Kredit pro {username}: {ammount} Kč",
   "@notificationKreditPro": {
     "placeholders": {
-      "first": {
-        "type": "String"
-      },
-      "last": {
+      "username": {
         "type": "String"
       },
       "ammount": {

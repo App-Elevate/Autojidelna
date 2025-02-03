@@ -20,18 +20,6 @@ class TextsCs extends Texts {
   }
 
   @override
-  String aboutVersionSubtitle(String arg, String version) {
-    String _temp0 = intl.Intl.selectLogic(
-      arg,
-      {
-        'true': 'Debug',
-        'other': 'Stable',
-      },
-    );
-    return '$_temp0 $version';
-  }
-
-  @override
   String get account => 'Účet';
 
   @override
@@ -346,8 +334,8 @@ class TextsCs extends Texts {
   String get notificationDochaziVamKredit => 'Dochází vám kredit!';
 
   @override
-  String notificationKreditPro(String first, String last, String ammount) {
-    return 'Kredit pro $first $last: $ammount Kč';
+  String notificationKreditPro(String username, String ammount) {
+    return 'Kredit pro $username: $ammount Kč';
   }
 
   @override
