@@ -76,7 +76,7 @@ class App {
       try {
         LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
 
-        for (Account uzivatel in loginData.users) {
+        for (Account uzivatel in loginData.accounts) {
           AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
           await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
         }

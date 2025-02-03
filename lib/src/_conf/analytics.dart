@@ -1,6 +1,8 @@
 /// Names of analytics events
 class AnalyticsNames {
   static const String appElevateClicked = 'app_elevate';
+  static const String logout = 'logout';
+  static const String logoutEveryone = 'logout_everyone';
 }
 
 /// Parameters used across analytics events
