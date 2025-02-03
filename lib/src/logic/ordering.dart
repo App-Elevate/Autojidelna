@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
@@ -14,14 +16,13 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-// TODO: replace all [Icons.abc] with actual icons
-
 late Canteen canteen;
 
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
   final prov = context.read<DishesOfTheDay>();
   Ordering ordering = context.read<Ordering>();
+  Uzivatel uzivatel = context.read<UserProvider>().user!.data;
 
   DateTime day = dish.den;
   int dayIndex = convertDateTimeToIndex(day);
@@ -39,7 +40,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   try {
     canteen = App.getIt<Canteen>();
   } catch (e) {
-    showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
     return;
   }
 
@@ -47,7 +48,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   try {
     jidloSafe = (await loggedInCanteen.getLunchesForDay(day, requireNew: true)).jidla[dishIndex];
   } catch (e) {
-    showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
     if (context.mounted) ordering.ordering = false;
 
     return;
@@ -65,7 +66,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           updateJidelnicek(jidelnicek);
           StatisticsService().addStatistic(StatisticType.order);
         } catch (e) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
@@ -92,21 +93,21 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
                 updateJidelnicek(jidelnicek);
                 StatisticsService().addStatistic(StatisticType.order);
               } catch (e) {
-                showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+                showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
               }
             }
           }
           if (nalezenoJidloNaBurze == false) {
-            showErrorSnackBar(Icons.abc, lang.error, lang.errorsJidloNeniNaBurze);
+            showErrorSnackBar(SnackBarOrderingErrors.dishNotInMarketplace(lang));
           }
         } catch (e) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
     case StavJidla.objednanoVyprsenaPlatnost:
       {
-        showErrorSnackBar(Icons.abc, lang.error, lang.errorsObedNelzeZrusit);
+        showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
       }
       break;
     case StavJidla.objednanoNelzeOdebrat:
@@ -119,25 +120,25 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
     case StavJidla.nedostupne:
       {
         if (day.isBefore(DateTime.now())) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsNelzeObjednat);
+          showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
           break;
         }
         try {
-          if (loggedInCanteen.uzivatel!.kredit < jidloSafe.cena!) {
-            showErrorSnackBar(Icons.abc, lang.error, lang.errorsNelzeObjednatKredit);
+          if (uzivatel.kredit < jidloSafe.cena!) {
+            showErrorSnackBar(SnackBarOrderingErrors.insufficientCredit(lang));
             break;
           }
         } catch (e) {
           //pokud se nepodaří načíst kredit, tak to necháme být
         }
-        showErrorSnackBar(Icons.abc, lang.error, lang.errorsNelzeObjednat);
+        showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
       }
       break;
     case StavJidla.objednano:
@@ -150,7 +151,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsChybaPriRuseni);
+          showErrorSnackBar(SnackBarOrderingErrors.cancelingOrder(lang));
         }
       }
       break;
@@ -164,7 +165,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          showErrorSnackBar(Icons.abc, lang.error, lang.errorsChybaPriDavaniNaBurzu);
+          showErrorSnackBar(SnackBarOrderingErrors.addingToMarketplace(lang));
         }
       }
       break;
@@ -188,7 +189,7 @@ void cannotBeOrderedFix(BuildContext context, int dayIndex) async {
       }
     }
   } catch (e) {
-    showErrorSnackBar(Icons.abc, lang.error, lang.errorsConnectionFailed);
+    showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
   }
 }
 
@@ -264,7 +265,8 @@ String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
 
         //hope it's not important
       }
-      if (loggedInCanteen.uzivatel!.kredit < dish.cena! && !day.isBefore(DateTime.now())) {
+      Uzivatel uzivatel = context.read<UserProvider>().user!.data;
+      if (uzivatel.kredit < dish.cena! && !day.isBefore(DateTime.now())) {
         return lang.nedostatekKreditu;
       } else {
         return lang.nelzeObjednat;

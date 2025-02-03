@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
@@ -27,20 +28,20 @@ class _LoginLoadingState extends State<LoginLoading> {
     } catch (e) {
       switch (e) {
         case AuthErrors.accountNotFound:
-          showErrorSnackBar(Icons.person_off_outlined, lang.errorsAccountNotFound, lang.errorsAccountNotFoundSubtitle);
+          showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
           break;
         case AuthErrors.connectionFailed:
-          showErrorSnackBar(Icons.cloud_off_rounded, lang.errorsConnectionFailed, lang.errorsConnectionFailedSubtitle);
+          showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
         case AuthErrors.noInternetConnection:
           bool value = await showInternetConnectionSnackBar();
           if (value) login();
           break;
         case AuthErrors.wrongCredentials:
-          showErrorSnackBar(Icons.lock_outline_rounded, lang.errorsWrongCredentials, lang.errorsWrongCredentialsSubtitle);
+          showErrorSnackBar(SnackBarAuthErrors.wrongCredentials(lang));
           break;
         case AuthErrors.wrongUrl:
-          showErrorSnackBar(Icons.link_off_rounded, lang.errorsWrongUrl, lang.errorsWrongUrlSubtitle);
+          showErrorSnackBar(SnackBarAuthErrors.wrongUrl(lang));
           break;
         default:
           if (mounted) context.router.replaceAll([const LoginPage()]);

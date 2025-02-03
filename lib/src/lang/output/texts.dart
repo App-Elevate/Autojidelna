@@ -363,17 +363,29 @@ abstract class Texts {
   /// **'Jste si jistí, že existujete? Přihlaste se ručně.'**
   String get errorsAccountNotFoundSubtitle;
 
-  /// No description provided for @errorsChybaPriDavaniNaBurzu.
+  /// No description provided for @errorsAddingToMarketplace.
   ///
   /// In cs, this message translates to:
-  /// **'Nastala chyba při dávání jídla na burzu'**
-  String get errorsChybaPriDavaniNaBurzu;
+  /// **'Chyba při dávání jídla na burzu'**
+  String get errorsAddingToMarketplace;
 
-  /// No description provided for @errorsChybaPriRuseni.
+  /// No description provided for @errorsAddingToMarketplaceSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Nastala chyba při rušení objednávky'**
-  String get errorsChybaPriRuseni;
+  /// **'Něco se pokazilo, zkuste to znovu.'**
+  String get errorsAddingToMarketplaceSubtitle;
+
+  /// No description provided for @errorsCancelingOrder.
+  ///
+  /// In cs, this message translates to:
+  /// **'Chyba při rušení objednávky'**
+  String get errorsCancelingOrder;
+
+  /// No description provided for @errorsCancelingOrderSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Objednávku se nepodařilo zrušit.'**
+  String get errorsCancelingOrderSubtitle;
 
   /// No description provided for @errorsConnectionFailed.
   ///
@@ -387,6 +399,54 @@ abstract class Texts {
   /// **'Zkuste to později, možná si jen dává kafe.'**
   String get errorsConnectionFailedSubtitle;
 
+  /// No description provided for @errorsDishCancellationExpired.
+  ///
+  /// In cs, this message translates to:
+  /// **'Objednávku nelze zrušit'**
+  String get errorsDishCancellationExpired;
+
+  /// No description provided for @errorsDishCancellationExpiredSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Platnost objednávky vypršela, není už možné ji zrušit.'**
+  String get errorsDishCancellationExpiredSubtitle;
+
+  /// No description provided for @errorsDishCannotBeOrdered.
+  ///
+  /// In cs, this message translates to:
+  /// **'Oběd nelze objednat'**
+  String get errorsDishCannotBeOrdered;
+
+  /// No description provided for @errorsDishCannotBeOrderedSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Momentálně to není možné. Zkuste to za chvíli.'**
+  String get errorsDishCannotBeOrderedSubtitle;
+
+  /// No description provided for @errorsDishNotInMarketplace.
+  ///
+  /// In cs, this message translates to:
+  /// **'Jídlo není na burze'**
+  String get errorsDishNotInMarketplace;
+
+  /// No description provided for @errorsDishNotInMarketplaceSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Možná jste si vybrali něco, co tam už není. Zkuste jinou možnost.'**
+  String get errorsDishNotInMarketplaceSubtitle;
+
+  /// No description provided for @errorsDishOrdering.
+  ///
+  /// In cs, this message translates to:
+  /// **'Chyba při objednávání jídla'**
+  String get errorsDishOrdering;
+
+  /// No description provided for @errorsDishOrderingSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Něco se pokazilo při odesílání vaší objednávky. Zkuste to znovu.'**
+  String get errorsDishOrderingSubtitle;
+
   /// No description provided for @errorsGotInternetConnection.
   ///
   /// In cs, this message translates to:
@@ -399,17 +459,17 @@ abstract class Texts {
   /// **'Síť je v pořádku. Pokračujeme!'**
   String get errorsGotInternetConnectionSubtitle;
 
-  /// No description provided for @errorsJidloNeniNaBurze.
+  /// No description provided for @errorsInsufficientCredit.
   ///
   /// In cs, this message translates to:
-  /// **'Jídlo není na burze'**
-  String get errorsJidloNeniNaBurze;
+  /// **'Nedostatečný kredit'**
+  String get errorsInsufficientCredit;
 
-  /// No description provided for @errorsLoad.
+  /// No description provided for @errorsInsufficientCreditSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Selhalo načítání jídelníčku'**
-  String get errorsLoad;
+  /// **'Chcete-li objednat, přidejte kredit. Bez něj to nepůjde.'**
+  String get errorsInsufficientCreditSubtitle;
 
   /// No description provided for @errorsLoadingData.
   ///
@@ -417,17 +477,17 @@ abstract class Texts {
   /// **'Nastala chyba při načítání dat'**
   String get errorsLoadingData;
 
-  /// No description provided for @errorsNelzeObjednat.
+  /// No description provided for @errorsMenuLoadingFailed.
   ///
   /// In cs, this message translates to:
-  /// **'Oběd nelze objednat'**
-  String get errorsNelzeObjednat;
+  /// **'Chyba při načítání jídelníčku'**
+  String get errorsMenuLoadingFailed;
 
-  /// No description provided for @errorsNelzeObjednatKredit.
+  /// No description provided for @errorsMenuLoadingFailedSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Oběd nelze objednat - Nedostatečný kredit.'**
-  String get errorsNelzeObjednatKredit;
+  /// **'Něco se zadrhlo při načítání nabídky. Zkuste to později.'**
+  String get errorsMenuLoadingFailedSubtitle;
 
   /// No description provided for @errorsNoInternetConnection.
   ///
@@ -440,18 +500,6 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Kontrolujeme síť... ujistěte se, že jste online.'**
   String get errorsNoInternetConnectionSubtitle;
-
-  /// No description provided for @errorsObedNelzeZrusit.
-  ///
-  /// In cs, this message translates to:
-  /// **'Oběd nelze zrušit. Platnost objednávky vypršela.'**
-  String get errorsObedNelzeZrusit;
-
-  /// No description provided for @errorsObjednavaniJidla.
-  ///
-  /// In cs, this message translates to:
-  /// **'Nastala chyba při objednávání jídla'**
-  String get errorsObjednavaniJidla;
 
   /// No description provided for @errorsWrongCredentials.
   ///

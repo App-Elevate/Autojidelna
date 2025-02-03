@@ -1,6 +1,7 @@
 // Purpose: Login screen for the app
 
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
@@ -237,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
           _setErrorText(lang.errorsWrongUrl, LoginFormErrorField.url);
           break;
         default:
-          showErrorSnackBar(Icons.cloud_off_rounded, lang.errorsConnectionFailed, lang.errorsConnectionFailedSubtitle);
+          showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
       }
     }
     loggingIn.value = false;

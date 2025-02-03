@@ -168,11 +168,17 @@ class TextsCs extends Texts {
       'Jste si jistí, že existujete? Přihlaste se ručně.';
 
   @override
-  String get errorsChybaPriDavaniNaBurzu =>
-      'Nastala chyba při dávání jídla na burzu';
+  String get errorsAddingToMarketplace => 'Chyba při dávání jídla na burzu';
 
   @override
-  String get errorsChybaPriRuseni => 'Nastala chyba při rušení objednávky';
+  String get errorsAddingToMarketplaceSubtitle =>
+      'Něco se pokazilo, zkuste to znovu.';
+
+  @override
+  String get errorsCancelingOrder => 'Chyba při rušení objednávky';
+
+  @override
+  String get errorsCancelingOrderSubtitle => 'Objednávku se nepodařilo zrušit.';
 
   @override
   String get errorsConnectionFailed => 'Server si dal pauzu';
@@ -182,6 +188,34 @@ class TextsCs extends Texts {
       'Zkuste to později, možná si jen dává kafe.';
 
   @override
+  String get errorsDishCancellationExpired => 'Objednávku nelze zrušit';
+
+  @override
+  String get errorsDishCancellationExpiredSubtitle =>
+      'Platnost objednávky vypršela, není už možné ji zrušit.';
+
+  @override
+  String get errorsDishCannotBeOrdered => 'Oběd nelze objednat';
+
+  @override
+  String get errorsDishCannotBeOrderedSubtitle =>
+      'Momentálně to není možné. Zkuste to za chvíli.';
+
+  @override
+  String get errorsDishNotInMarketplace => 'Jídlo není na burze';
+
+  @override
+  String get errorsDishNotInMarketplaceSubtitle =>
+      'Možná jste si vybrali něco, co tam už není. Zkuste jinou možnost.';
+
+  @override
+  String get errorsDishOrdering => 'Chyba při objednávání jídla';
+
+  @override
+  String get errorsDishOrderingSubtitle =>
+      'Něco se pokazilo při odesílání vaší objednávky. Zkuste to znovu.';
+
+  @override
   String get errorsGotInternetConnection => 'Jste zpět online!';
 
   @override
@@ -189,20 +223,21 @@ class TextsCs extends Texts {
       'Síť je v pořádku. Pokračujeme!';
 
   @override
-  String get errorsJidloNeniNaBurze => 'Jídlo není na burze';
+  String get errorsInsufficientCredit => 'Nedostatečný kredit';
 
   @override
-  String get errorsLoad => 'Selhalo načítání jídelníčku';
+  String get errorsInsufficientCreditSubtitle =>
+      'Chcete-li objednat, přidejte kredit. Bez něj to nepůjde.';
 
   @override
   String get errorsLoadingData => 'Nastala chyba při načítání dat';
 
   @override
-  String get errorsNelzeObjednat => 'Oběd nelze objednat';
+  String get errorsMenuLoadingFailed => 'Chyba při načítání jídelníčku';
 
   @override
-  String get errorsNelzeObjednatKredit =>
-      'Oběd nelze objednat - Nedostatečný kredit.';
+  String get errorsMenuLoadingFailedSubtitle =>
+      'Něco se zadrhlo při načítání nabídky. Zkuste to později.';
 
   @override
   String get errorsNoInternetConnection => 'Žádné připojení k internetu';
@@ -210,13 +245,6 @@ class TextsCs extends Texts {
   @override
   String get errorsNoInternetConnectionSubtitle =>
       'Kontrolujeme síť... ujistěte se, že jste online.';
-
-  @override
-  String get errorsObedNelzeZrusit =>
-      'Oběd nelze zrušit. Platnost objednávky vypršela.';
-
-  @override
-  String get errorsObjednavaniJidla => 'Nastala chyba při objednávání jídla';
 
   @override
   String get errorsWrongCredentials => 'Špatné údaje, špatný den?';
