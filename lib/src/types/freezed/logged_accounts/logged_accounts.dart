@@ -12,8 +12,8 @@ part 'logged_accounts.g.dart';
 @unfreezed
 class LoggedAccounts with _$LoggedAccounts {
   factory LoggedAccounts({
-    @JsonKey(name: 'currently_logged_in_id') int? currentlyLoggedInId,
-    @JsonKey(name: 'users') @Default([]) List<Account> users,
+    @JsonKey(name: 'logged_in_username') String? loggedInUsername,
+    @JsonKey(name: 'accounts') @Default([]) List<Account> accounts,
   }) = _LoggedAccounts;
 
   factory LoggedAccounts.fromJson(Map<String, Object?> json) => _$LoggedAccountsFromJson(json);
