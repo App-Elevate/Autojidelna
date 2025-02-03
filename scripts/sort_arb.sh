@@ -1,4 +1,5 @@
 for file in lib/src/lang/arb/*.arb; do
+  dart run arb_utils generate-meta "$file"
   dart run arb_utils sort "$file"
 done
 
