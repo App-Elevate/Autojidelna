@@ -25,8 +25,8 @@ Future<bool> showInternetConnectionSnackBar() async {
         builder: (context, isOnline, _) {
           ColorScheme colorScheme = Theme.of(context).colorScheme;
           ListTileThemeData tileTheme = Theme.of(context).listTileTheme;
-          Color backgroundColor = isOnline ? Colors.green : colorScheme.error;
-          Color foregroundColor = isOnline ? Colors.white : colorScheme.onError;
+          Color backgroundColor = isOnline ? colorScheme.primary : colorScheme.error;
+          Color foregroundColor = isOnline ? colorScheme.onPrimary : colorScheme.onError;
           IconData icon = isOnline ? Icons.wifi_rounded : Icons.wifi_off_rounded;
           String title = isOnline ? context.l10n.errorsGotInternetConnection : context.l10n.errorsNoInternetConnection;
           String subtitle = isOnline ? context.l10n.errorsGotInternetConnectionSubtitle : context.l10n.errorsNoInternetConnectionSubtitle;
