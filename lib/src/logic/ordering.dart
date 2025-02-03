@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
+import 'package:autojidelna/src/logic/statistics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -35,7 +37,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
 
   ordering.ordering = true;
   try {
-    canteen = await loggedInCanteen.canteenInstance;
+    canteen = App.getIt<Canteen>();
   } catch (e) {
     showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
     return;
@@ -61,7 +63,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
             jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
-          loggedInCanteen.pridatStatistiku(TypStatistiky.objednavka);
+          StatisticsService().addStatistic(StatisticType.order);
         } catch (e) {
           showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
         }
@@ -88,7 +90,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
                   }
                 }
                 updateJidelnicek(jidelnicek);
-                loggedInCanteen.pridatStatistiku(TypStatistiky.objednavka);
+                StatisticsService().addStatistic(StatisticType.order);
               } catch (e) {
                 showErrorSnackBar(Icons.abc, lang.error, lang.errorsObjednavaniJidla);
               }
