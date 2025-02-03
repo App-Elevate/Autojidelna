@@ -4,6 +4,8 @@ import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,12 +25,13 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     return Column(
       children: [
         SectionTitle(lang.accounts),
-        Selector<AccountProvider, ({int? id, List<String> usernames})>(
-          selector: (_, p1) => (id: p1.loggedInID, usernames: p1.usernames),
+        Consumer<UserProvider>(
           builder: (context, prov, ___) {
+            if (prov.user == null) return const Flexible(child: SizedBox());
+
             List<Widget> accounts = [];
             for (int i = 0; i < prov.usernames.length; i++) {
-              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: i == prov.id));
+              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
             }
 
             return Flexible(
@@ -67,24 +70,22 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         padding: EdgeInsets.zero,
         icon: Icon(Icons.logout, size: 30, color: Theme.of(context).colorScheme.onSurface),
         onPressed: () async {
-          if (currentAccount && context.mounted) {
-            /*configuredDialog(
-                context,
-                builder: (BuildContext context) => logoutDialog(context, currentAccount: currentAccount, id: id),
-              );*/
-          } else if (context.mounted) {
-            // TODO: await loggedInCanteen.logout(id: id);
-            setState(() {});
+          if (!context.mounted) return;
+          if (!currentAccount) {
+            context.read<UserProvider>().removeUsernameFromUsernames(username);
+          } else {
+            configuredDialog(
+              context,
+              builder: (BuildContext context) => logoutDialog(context, username),
+            );
           }
+          setState(() {});
         },
       ),
       onTap: () async {
-        if (!currentAccount) {
-          // TODO: await loggedInCanteen.switchAccount(id);
-          if (context.mounted) {
-            // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoggingInWidget()), (route) => false);
-          }
-        }
+        if (currentAccount) return;
+        await context.read<UserProvider>().changeUser(username);
+        if (context.mounted) context.router.replaceAll([const LoginLoading()]);
       },
     );
   }
