@@ -22,7 +22,6 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // TODO: support for other user than currently logged in
   Future<void> logout(String username) async {
     if (user == null) return;
     await _authService.logout(_user!.username);
