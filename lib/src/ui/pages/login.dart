@@ -226,6 +226,7 @@ class _LoginPageState extends State<LoginPage> {
     } catch (e) {
       switch (e) {
         case AuthErrors.noInternetConnection:
+          _setErrorText(null, null);
           bool value = await showInternetConnectionSnackBar();
           if (value && context.mounted) loginFieldCheck(context, lang);
           break;

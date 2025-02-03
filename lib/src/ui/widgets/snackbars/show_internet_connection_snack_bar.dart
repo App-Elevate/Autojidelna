@@ -17,6 +17,7 @@ Future<bool> showInternetConnectionSnackBar() async {
 
   scaffoldMessenger.showSnackBar(
     SnackBar(
+      dismissDirection: DismissDirection.none,
       padding: EdgeInsets.zero,
       duration: const Duration(days: 1),
       content: ValueListenableBuilder<bool>(
