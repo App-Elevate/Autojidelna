@@ -23,12 +23,6 @@ class _PageViewCanteenState extends State<PageViewCanteen> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-    App.pageController.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async {
