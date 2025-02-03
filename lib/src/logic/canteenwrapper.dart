@@ -11,9 +11,9 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/secure_storage.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
-import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
+import 'package:autojidelna/src/types/freezed/canteen_data/canteen_data.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 
 import 'package:canteenlib/canteenlib.dart';
