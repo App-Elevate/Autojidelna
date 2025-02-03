@@ -1,10 +1,14 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/logic/show_snack_bar.dart';
 import 'package:autojidelna/src/ui/widgets/appbars/menu_appbar.dart';
 import 'package:autojidelna/src/ui/widgets/appbars/more_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_adaptive_scaffold/flutter_adaptive_scaffold.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class RouterPage extends StatefulWidget {
@@ -33,6 +37,12 @@ class _RouterPageState extends State<RouterPage> {
     setState(() {
       isExtended = !isExtended;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) => showLoginSuccessSnackBar(context.read<UserProvider>().user!.username));
   }
 
   @override
