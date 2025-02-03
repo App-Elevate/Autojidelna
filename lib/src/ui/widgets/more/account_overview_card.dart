@@ -15,11 +15,11 @@ class AccountOverviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
 
-    return Selector<AccountProvider, Uzivatel>(
-      selector: (_, p1) => p1.uzivatel,
+    return Selector<UserProvider, Uzivatel?>(
+      selector: (_, p1) => p1.user?.data,
       builder: (context, user, ___) {
         return LinedCard(
-          title: user.uzivatelskeJmeno ?? '',
+          title: user?.uzivatelskeJmeno ?? '',
           footer: lang.changeAccount,
           onPressed: () => configuredBottomSheet(context, builder: (context) => const SwitchAccountPanel()),
           child: Row(
@@ -31,8 +31,8 @@ class AccountOverviewCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(lang.credit(user.kredit), style: AppThemes.textTheme.titleMedium),
-                  if (user.kategorie != null) Text(user.kategorie!),
+                  Text(lang.credit(user?.kredit ?? 0), style: AppThemes.textTheme.titleMedium),
+                  if (user != null && user.kategorie != null) Text(user.kategorie!),
                 ],
               ),
             ],

@@ -1,7 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class LoginLoading extends StatefulWidget {
@@ -14,7 +15,7 @@ class LoginLoading extends StatefulWidget {
 class _LoginLoadingState extends State<LoginLoading> {
   void login() async {
     try {
-      await loggedInCanteen.loginFromStorage();
+      await context.read<UserProvider>().loadUser();
     } catch (e) {
       if (mounted) context.router.replaceAll([const LoginPage()]);
       return;

@@ -2,16 +2,18 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/types/errors.dart';
+import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/password_state.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -195,9 +197,15 @@ class _LoginPageState extends State<LoginPage> {
     LoginPage._formKey.currentState!.save();
     _setErrorText('', null);
     loggingIn.value = true;
+    final Account account = Account(
+      username: LoginPage._usernameController.text,
+      password: LoginPage._passwordController.text,
+      url: LoginPage._urlController.text,
+    );
     try {
-      await loggedInCanteen.addAccount(LoginPage._urlController.text, LoginPage._usernameController.text, LoginPage._passwordController.text);
+      await context.read<UserProvider>().login(account);
       Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
+      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
     } catch (e) {
       switch (e) {
         case ConnectionErrors.noInternet:
