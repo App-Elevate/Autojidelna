@@ -8,6 +8,7 @@ import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notification_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
+import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
@@ -176,24 +177,4 @@ class AuthService {
     LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
     await _saveDataToStorage(updatedData);
   }
-}
-
-enum AuthErrors {
-  /// Account wasn't found in secure storage
-  accountNotFound,
-
-  /// Connection to the canteen server failed
-  connectionFailed,
-
-  ///User is not connected to the internet
-  noInternetConnection,
-
-  /// User has entered the wrong password/username
-  wrongCredentials,
-
-  /// There is 0 saved credentials
-  missingCredentials,
-
-  /// User has entered wrong url
-  wrongUrl,
 }
