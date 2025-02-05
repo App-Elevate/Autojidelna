@@ -7,6 +7,7 @@ import 'package:autojidelna/src/_global/init_app.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notification_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
+import 'package:autojidelna/src/logic/string_extension.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
@@ -75,7 +76,7 @@ class AuthService {
     List<Account> duplicates = [];
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account loggedAccount in loginData.accounts) {
-      if (loggedAccount.username == account.username && loggedAccount.url == account.url) duplicates.add(loggedAccount);
+      if (loggedAccount.username == account.username && loggedAccount.url.isSameUrl(account.url)) duplicates.add(loggedAccount);
     }
     return duplicates;
   }
