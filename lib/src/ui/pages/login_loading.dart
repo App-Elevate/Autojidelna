@@ -44,8 +44,8 @@ class _LoginLoadingState extends State<LoginLoading> {
           showErrorSnackBar(SnackBarAuthErrors.wrongUrl(lang));
           break;
         default:
-          if (mounted) context.router.replaceAll([const LoginPage()]);
       }
+      if (mounted) context.router.replaceAll([const LoginPage()]);
       return;
     }
     if (mounted) context.router.replaceAll([const RouterPage()]);
