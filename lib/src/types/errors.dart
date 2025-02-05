@@ -1,3 +1,4 @@
+@Deprecated('Will be replaced with AuthErrors in a future version')
 enum ConnectionErrors {
   /// User is not logged in (no username and password in secure storage)
   noLogin,
