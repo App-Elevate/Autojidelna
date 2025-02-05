@@ -7,7 +7,7 @@ import 'package:autojidelna/src/_global/init_app.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notification_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
-import 'package:autojidelna/src/logic/string_extension.dart';
+import 'package:autojidelna/src/logic/url.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
@@ -21,10 +21,10 @@ import 'package:http/http.dart' as http;
 class AuthService {
   Future<User?> login(Account account) async {
     List<Account> duplicates = await _checkForDuplicates(account);
-    InitApp().registerCanteen(account.url);
-
+    String url = Url.clean(account.url);
     User? user;
 
+    InitApp().registerCanteen(url);
     Canteen instance = App.getIt<Canteen>();
 
     try {
@@ -33,9 +33,15 @@ class AuthService {
         return Future.error(AuthErrors.wrongCredentials);
       }
     } catch (_) {
-      // Second login attempt in case of failure
+      // Second login attempt (with cleaned URL)
+      url = account.url;
+      InitApp().registerCanteen(url);
+      instance = App.getIt<Canteen>();
+
       try {
-        await instance.login(account.username, account.password);
+        if (!await instance.login(account.username, account.password)) {
+          return Future.error(AuthErrors.wrongCredentials);
+        }
       } catch (_) {
         // Check for internet connectivity
         if (!await InternetConnectionChecker().hasConnection) {
@@ -44,7 +50,7 @@ class AuthService {
 
         // Check if the URL is valid by making a request
         try {
-          await http.get(Uri.parse(account.url));
+          await http.get(Uri.parse(url));
         } catch (_) {
           return Future.error(AuthErrors.wrongUrl);
         }
@@ -54,12 +60,12 @@ class AuthService {
     }
 
     if (duplicates.isEmpty) await _saveAccountToStorage(account);
-    await loggedInCanteen.login(account.url, account.username, account.password); // TODO:temporary
+    await loggedInCanteen.login(url, account.username, account.password); // TODO:temporary
 
     try {
       user = User(
         username: account.username,
-        canteenUrl: account.url,
+        canteenUrl: url,
         canteenLocations: (await instance.jidelnicekDen()).vydejny,
         data: instance.missingFeatures.contains(Features.ziskatUzivatele)
             ? Uzivatel(uzivatelskeJmeno: account.username)
@@ -77,7 +83,7 @@ class AuthService {
     List<Account> duplicates = [];
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account loggedAccount in loginData.accounts) {
-      if (loggedAccount.username == account.username && loggedAccount.url.isSameUrl(account.url)) duplicates.add(loggedAccount);
+      if (loggedAccount.username == account.username && Url.isSame(account.url, loggedAccount.url)) duplicates.add(loggedAccount);
     }
     return duplicates;
   }

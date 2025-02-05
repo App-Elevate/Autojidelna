@@ -186,10 +186,10 @@ packages:
     dependency: "direct main"
     description:
       name: canteenlib
-      sha256: b4ae244c18fbc9bffbccf1b421a738a148b06ae5086f82f03a443235d1c0b4f2
+      sha256: "5053b826e272ec58b6d818aa819ef74ac022db701868a69f1418894df1900961"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.0"
+    version: "4.1.1"
   characters:
     dependency: transitive
     description:
