@@ -166,6 +166,7 @@ class AuthService {
   Future<User?> loginFromStorage() async {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
+    throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
     throwIf(loginData.loggedInUsername == null, AuthErrors.accountNotFound); // TODO: show a list of other logged accounts, else login screen
     return await loginByUsername(loginData.loggedInUsername!);
   }
@@ -189,6 +190,9 @@ enum AuthErrors {
 
   /// User has entered the wrong password/username
   wrongCredentials,
+
+  /// There is 0 saved credentials
+  missingCredentials,
 
   /// User has entered wrong url
   wrongUrl,
