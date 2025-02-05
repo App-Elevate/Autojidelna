@@ -168,7 +168,7 @@ class AuthService {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
     throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
-    throwIf(loginData.loggedInUsername == null, AuthErrors.accountNotFound); // TODO: show a list of other logged accounts, else login screen
+    throwIf(loginData.loggedInUsername == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
     return await loginByUsername(loginData.loggedInUsername!);
   }
 

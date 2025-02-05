@@ -28,7 +28,9 @@ class _LoginLoadingState extends State<LoginLoading> {
     } catch (e) {
       switch (e) {
         case AuthErrors.accountNotFound:
-          showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
+          // showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
+          // TODO: show a list of other logged accounts
+          print('test');
           break;
         case AuthErrors.connectionFailed:
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
