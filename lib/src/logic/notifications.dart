@@ -22,44 +22,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
-// Platform messages are asynchronous, so we initialize in an async method.
-Future<void> initPlatformState() async {
-  // Configure BackgroundFetch.
-  await BackgroundFetch.configure(
-      BackgroundFetchConfig(
-        minimumFetchInterval: 120,
-        stopOnTerminate: false,
-        enableHeadless: true,
-        requiresBatteryNotLow: false,
-        requiresCharging: false,
-        requiresStorageNotLow: false,
-        requiresDeviceIdle: false,
-        startOnBoot: true,
-        requiredNetworkType: NetworkType.ANY,
-      ), (String taskId) async {
-    // <-- Event handler
-    // This is the fetch-event callback.
-    if (kDebugMode) {
-      print('[BackgroundFetch] Event received $taskId');
-    }
-    // IMPORTANT:  You must signal completion of your task or the OS can punish your app
-    // for taking too long in the background.
-    await doNotifications();
-    BackgroundFetch.finish(taskId);
-  }, (String taskId) async {
-    // <-- Task timeout handler.
-    // This task has exceeded its allowed running-time.  You must stop what you're doing and immediately .finish(taskId)
-    if (kDebugMode) {
-      print('[BackgroundFetch] TASK TIMEOUT taskId: $taskId');
-    }
-    BackgroundFetch.finish(taskId);
-  });
-
-  // If the widget was removed from the tree while the asynchronous platform
-  // message was in flight, we want to discard the reply rather than calling
-  // setState to update our non-existent appearance.
-}
-
 // [Android-only] This "Headless Task" is run when the Android app is terminated with `enableHeadless: true`
 // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
 @pragma('vm:entry-point')

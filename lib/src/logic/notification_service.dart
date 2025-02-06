@@ -1,7 +1,10 @@
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:background_fetch/background_fetch.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class NotificationService {
@@ -9,6 +12,41 @@ class NotificationService {
     AwesomeNotifications().removeChannel(NotificationIds.dnesniJidloChannel(account));
     AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(account));
     AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(account));
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    // Configure BackgroundFetch.
+    await BackgroundFetch.configure(
+        BackgroundFetchConfig(
+          minimumFetchInterval: 120,
+          stopOnTerminate: false,
+          enableHeadless: true,
+          requiresBatteryNotLow: false,
+          requiresCharging: false,
+          requiresStorageNotLow: false,
+          requiresDeviceIdle: false,
+          startOnBoot: true,
+          requiredNetworkType: NetworkType.ANY,
+        ), (String taskId) async {
+      // <-- Event handler
+      // This is the fetch-event callback.
+      if (kDebugMode) print('[BackgroundFetch] Event received $taskId');
+
+      // IMPORTANT:  You must signal completion of your task or the OS can punish your app
+      // for taking too long in the background.
+      await doNotifications();
+      BackgroundFetch.finish(taskId);
+    }, (String taskId) async {
+      // <-- Task timeout handler.
+      // This task has exceeded its allowed running-time.  You must stop what you're doing and immediately .finish(taskId)
+      if (kDebugMode) print('[BackgroundFetch] TASK TIMEOUT taskId: $taskId');
+      BackgroundFetch.finish(taskId);
+    });
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
   }
 
   Future<bool> initAwesome() async {
