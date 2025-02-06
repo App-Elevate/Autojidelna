@@ -79,16 +79,6 @@ class AuthService {
     return user;
   }
 
-  /// Checks for duplicates in logged accounts, compares [Account.url] and [Account.username]
-  Future<List<Account>> _checkForDuplicates(Account account) async {
-    List<Account> duplicates = [];
-    LoggedAccounts loginData = await _getDataFromStorage();
-    for (Account loggedAccount in loginData.accounts) {
-      if (loggedAccount.username == account.username && Url.isSame(account.url, loggedAccount.url)) duplicates.add(loggedAccount);
-    }
-    return duplicates;
-  }
-
   Future<User?> loginByUsername(String username) async {
     Account? account = await _findByUsername(username);
     throwIf(account == null, AuthErrors.accountNotFound);
@@ -96,7 +86,33 @@ class AuthService {
     return login(account!);
   }
 
-  Future<bool> logout(String username) async {
+  Future<User?> loginFromStorage() async {
+    final LoggedAccounts loginData = await _getDataFromStorage();
+
+    throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
+    throwIf(loginData.loggedInUsername == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
+    return await loginByUsername(loginData.loggedInUsername!);
+  }
+
+  Future<List<Account>> getLimitedAccounts() async {
+    return (await _getDataFromStorage()).accounts.map((account) => account.copyWith(password: '')).toList();
+  }
+
+  Future<void> changeAccount(String username) async {
+    LoggedAccounts loginData = await _getDataFromStorage();
+    throwIf(!loginData.accounts.any((account) => account.username == username), AuthErrors.accountNotFound);
+    LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
+    await _saveDataToStorage(updatedData);
+  }
+
+  Future<void> removeAccount(String username) async {
+    final Account? account = await _findByUsername(username);
+    throwIf(account == null, AuthErrors.accountNotFound);
+
+    await _removeAccountFromStorage(account!);
+  }
+
+  Future<void> logout(String username) async {
     Account? account = await _findByUsername(username);
     throwIf(account == null, AuthErrors.accountNotFound);
 
@@ -105,8 +121,6 @@ class AuthService {
 
     // TODO: move to analytics service or something
     if (analyticsEnabledGlobally && analytics != null) analytics!.logEvent(name: AnalyticsNames.logout);
-
-    return true;
   }
 
   Future<void> logoutEveryone() async {
@@ -121,6 +135,16 @@ class AuthService {
     if (analyticsEnabledGlobally && analytics != null) analytics!.logEvent(name: AnalyticsNames.logoutEveryone);
   }
 
+  /// Checks for duplicates in logged accounts, compares [Account.url] and [Account.username]
+  Future<List<Account>> _checkForDuplicates(Account account) async {
+    List<Account> duplicates = [];
+    LoggedAccounts loginData = await _getDataFromStorage();
+    for (Account loggedAccount in loginData.accounts) {
+      if (loggedAccount.username == account.username && Url.isSame(account.url, loggedAccount.url)) duplicates.add(loggedAccount);
+    }
+    return duplicates;
+  }
+
   Future<Account?> _findByUsername(String username) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account account in loginData.accounts) {
@@ -129,20 +153,16 @@ class AuthService {
     return null;
   }
 
-  Future<void> _saveDataToStorage(LoggedAccounts loginData) async {
-    await App.secureStorage.write(key: SecureStorage.loginData, value: jsonEncode(loginData.toJson()));
-    // TODO
-    initAwesome();
-  }
-
   Future<LoggedAccounts> _getDataFromStorage() async {
     String? value = await App.secureStorage.read(key: SecureStorage.loginData);
     if (value == null || value.trim().isEmpty) return LoggedAccounts();
     return LoggedAccounts.fromJson(jsonDecode(value));
   }
 
-  Future<List<Account>> getLimitedAccounts() async {
-    return (await _getDataFromStorage()).accounts.map((account) => account.copyWith(password: '')).toList();
+  Future<void> _saveDataToStorage(LoggedAccounts loginData) async {
+    await App.secureStorage.write(key: SecureStorage.loginData, value: jsonEncode(loginData.toJson()));
+    // TODO
+    initAwesome();
   }
 
   Future<void> _saveAccountToStorage(Account account) async {
@@ -161,28 +181,6 @@ class AuthService {
       loggedInUsername: account.username == loginData.loggedInUsername ? null : loginData.loggedInUsername,
       accounts: List.from(loginData.accounts)..remove(account),
     );
-    await _saveDataToStorage(updatedData);
-  }
-
-  Future<void> removeAccount(String username) async {
-    final Account? account = await _findByUsername(username);
-    throwIf(account == null, AuthErrors.accountNotFound);
-
-    await _removeAccountFromStorage(account!);
-  }
-
-  Future<User?> loginFromStorage() async {
-    final LoggedAccounts loginData = await _getDataFromStorage();
-
-    throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
-    throwIf(loginData.loggedInUsername == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
-    return await loginByUsername(loginData.loggedInUsername!);
-  }
-
-  Future<void> changeAccount(String username) async {
-    LoggedAccounts loginData = await _getDataFromStorage();
-    throwIf(!loginData.accounts.any((account) => account.username == username), AuthErrors.accountNotFound);
-    LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
     await _saveDataToStorage(updatedData);
   }
 }
