@@ -4,17 +4,14 @@
 import 'dart:async';
 
 // json encoding and decoding
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:autojidelna/src/_conf/hive.dart';
-import 'package:autojidelna/src/_conf/secure_storage.dart';
 import 'package:autojidelna/src/_global/app.dart';
-import 'package:autojidelna/src/logic/notifications.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/types/errors.dart';
-import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/canteen_data/canteen_data.dart';
-import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
+import 'package:autojidelna/src/types/freezed/user/user.dart';
 
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -38,7 +35,7 @@ class LoggedInCanteen {
   LoggedInCanteen();
   Map<DateTime, Completer<Jidelnicek>> _currentlyLoading = {};
   Map<DateTime, bool> checked = {};
-  Completer<Canteen>? _loginCompleter;
+  Completer<void>? _loginCompleter;
 
   Completer<void> _indexingCompleter = Completer<void>();
 
@@ -65,29 +62,16 @@ class LoggedInCanteen {
   /// DO NOT CALL BEFORE LOGGIN IN
   Uzivatel? get uzivatel => _canteenData?.uzivatel;
 
-  /// Returns a [Canteen] instance with a logged in user.
-  ///
   /// Main logic about logging in is in this function
   ///
   /// Has to be called before using [canteenInstance].
   ///
-  /// If [url], [username] or [password] is null, it will try to get it from storage.
-  /// If user is logging in all [url], [username] and [password] has to be provided.
-  /// If user has already logged in nothing has to be provided
   /// Can throw errors:
   ///
-  /// [ConnectionErrors.noLogin] - user is not logged in (no username and password in secure storage)
-  ///
-  /// [ConnectionErrors.badLogin] - user has entered the wrong password/username
-  ///
-  /// [ConnectionErrors.wrongUrl] - user has entered the wrong url
-  ///
-  /// [ConnectionErrors.connectionFailed] - connection to the canteen server failed
-  ///
-  /// [ConnectionErrors.noInternet] - user is not connected to the internet
-  Future<Canteen> login(String url, String username, String password, {int? safetyId, bool indexLunches = true}) async {
+  /// [AuthErrors.connectionFailed] - connection to the canteen server failed
+  Future<void> login(User user, {int? safetyId, bool indexLunches = true}) async {
     if (_loginCompleter == null || _loginCompleter!.isCompleted) {
-      _loginCompleter = Completer<Canteen>();
+      _loginCompleter = Completer();
     } else {
       return _loginCompleter!.future;
     }
@@ -99,28 +83,25 @@ class LoggedInCanteen {
       _canteenData = CanteenData(
         id: (safetyId ?? 0) + 1,
         pocetJidel: {},
-        username: username,
-        url: url,
-        uzivatel: _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele)
-            ? Uzivatel(uzivatelskeJmeno: username)
-            : await _canteenInstance!.ziskejUzivatele(),
+        username: user.username,
+        url: user.canteenUrl,
+        uzivatel: _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: user.username) : user.data,
         jidlaNaBurze: _canteenInstance!.missingFeatures.contains(Features.burza) ? const [] : await _canteenInstance!.ziskatBurzu(),
         currentlyLoading: {},
         jidelnicky: {},
         vydejny: (await _canteenInstance!.jidelnicekDen()).vydejny,
       );
     } catch (e) {
-      _loginCompleter!.completeError(ConnectionErrors.connectionFailed);
-      return Future.error(ConnectionErrors.connectionFailed);
+      _loginCompleter!.completeError(AuthErrors.connectionFailed);
+      return Future.error(AuthErrors.connectionFailed);
     }
     if (indexLunches) {
-      int vydejna = (Hive.box(Boxes.appState).get(HiveKeys.location(username, url), defaultValue: 0)) + 1;
+      int vydejna = (Hive.box(Boxes.appState).get(HiveKeys.location(user.username, user.canteenUrl), defaultValue: 0)) + 1;
       (await canteenInstance).vydejna = vydejna;
       await _indexLunchesMonth();
       smartPreIndexing(DateTime.now());
     }
-    _loginCompleter!.complete(_canteenInstance!);
-    return canteenInstance;
+    _loginCompleter!.complete();
   }
 
   Future<void> _indexLunchesMonth() async {
@@ -209,7 +190,7 @@ class LoggedInCanteen {
       return _canteenData!.currentlyLoading[date]!.future;
     }
     if (!await InternetConnectionChecker().hasConnection) {
-      return Future.error(ConnectionErrors.connectionFailed);
+      return Future.error(AuthErrors.connectionFailed);
     }
     Jidelnicek jidelnicek = await _ziskatJidelnicekDen(date);
 
@@ -256,64 +237,6 @@ class LoggedInCanteen {
     return;
   }
 
-  // just switches the account - YOU NEED TO CALL [loginFromStorage] AFTER THIS
-  Future<void> switchAccount(String username) async {
-    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    loginData.loggedInUsername = username;
-    await saveLoginToSecureStorage(loginData);
-  }
-
-  // switches the account and logs in as the new account
-  Future<bool> changeAccount(String username) async {
-    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    String url = loginData.accounts.first.url;
-    String username = loginData.accounts.first.username;
-    String password = loginData.accounts.first.password;
-    loginData.loggedInUsername = username;
-    try {
-      _canteenInstance = await login(url, username, password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  /// save data to secure storage used for storing username and password
-  Future<void> saveStringToSecureStorage(String key, String value) async {
-    await App.secureStorage.write(key: key, value: value);
-  }
-
-  /// saves the loginData class to secure storage
-  Future<void> saveLoginToSecureStorage(LoggedAccounts loginData) async {
-    await saveStringToSecureStorage(SecureStorage.loginData, jsonEncode(loginData));
-    initAwesome();
-  }
-
-  /// gets an instance of loginData.
-
-  /// get data from secure storage
-  /// can return null if there is no data
-  Future<String?> getDataFromSecureStorage(String key) async {
-    try {
-      String? value = await App.secureStorage.read(key: key);
-      return value;
-    } catch (e) {
-      return null;
-    }
-  }
-
-  Future<LoggedAccounts> getLoginDataFromSecureStorage() async {
-    try {
-      String? value = await getDataFromSecureStorage(SecureStorage.loginData);
-      if (value == null || value.trim().isEmpty) {
-        return LoggedAccounts();
-      }
-      return LoggedAccounts.fromJson(jsonDecode(value));
-    } catch (e) {
-      return LoggedAccounts();
-    }
-  }
-
   ///Kontroluje jestli je jídlo na burze a vrátí true/false
   bool jeJidloNaBurze(Jidlo jidlo) {
     try {
@@ -334,7 +257,7 @@ class LoggedInCanteen {
   /// objedná první jídlo v každém dni, pokud už v tom dni nemáme objednáno.
   Future<void> quickOrder(String username) async {
     if (_canteenInstance?.prihlasen != true) {
-      if (!await loginAsUsername(username)) return;
+      if (await AuthService().loginByUsername(username) == null) return;
     }
     await _indexLunchesMonth();
     for (int i = 0; i < 10; i++) {
@@ -352,20 +275,5 @@ class LoggedInCanteen {
       }
     }
     return;
-  }
-
-  Future<bool> loginAsUsername(String username) async {
-    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    for (Account uzivatel in loginData.accounts) {
-      try {
-        if (uzivatel.username == username) {
-          await login(uzivatel.url, uzivatel.username, uzivatel.password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);
-          return true;
-        }
-      } catch (e) {
-        return false;
-      }
-    }
-    return false;
   }
 }
