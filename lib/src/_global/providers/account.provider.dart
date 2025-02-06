@@ -26,7 +26,7 @@ class UserProvider extends ChangeNotifier {
     if (user == null) return;
     await _authService.logout(_user!.username);
     _usernames = List.from(_usernames)..remove(_user!.username);
-    _user = null;
+    if (_user!.username == username) _user = null;
     notifyListeners();
   }
 
@@ -34,13 +34,6 @@ class UserProvider extends ChangeNotifier {
     await _authService.logoutEveryone();
     _user = null;
     _usernames = [];
-    notifyListeners();
-  }
-
-  Future<void> removeUsernameFromUsernames(String username) async {
-    if (!_usernames.contains(username)) return;
-    await _authService.removeAccount(username);
-    _usernames = (await _authService.getLimitedAccounts()).map((a) => a.username).toList();
     notifyListeners();
   }
 

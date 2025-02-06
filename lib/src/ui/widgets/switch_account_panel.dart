@@ -72,7 +72,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         onPressed: () async {
           if (!context.mounted) return;
           if (!currentAccount) {
-            context.read<UserProvider>().removeUsernameFromUsernames(username);
+            context.read<UserProvider>().logout(username);
           } else {
             configuredDialog(
               context,
