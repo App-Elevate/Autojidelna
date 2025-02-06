@@ -1,6 +1,8 @@
 // File containing all code for notifications. This includes background fetch and awesome notifications.
 //TODO: fix
 
+import 'dart:convert';
+
 import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
@@ -218,8 +220,8 @@ Future<void> doNotifications({bool force = false}) async {
     box.put(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url), nowString);
 
     try {
-      await authService.changeAccount(limitedAccounts[i].username);
-      final User? user = await authService.loginByUsername(limitedAccounts[i].username);
+      await authService.changeAccount(limitedAccounts[i]);
+      final User? user = await authService.loginBySafeAccount(limitedAccounts[i]);
       if (jidloDne || force) {
         Jidelnicek jidelnicek = await loggedInCanteen.getLunchesForDay(now);
         if (jidelnicek.jidla.isNotEmpty) {
@@ -235,7 +237,7 @@ Future<void> doNotifications({bool force = false}) async {
                   actionType: ActionType.Default,
                   title: NotificationsTexts.jidloChannelName,
                   payload: {
-                    NotificationIds.payloadUser: user.username,
+                    NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
                     NotificationIds.payloadIndex: k.toString(),
                     NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
@@ -252,7 +254,7 @@ Future<void> doNotifications({bool force = false}) async {
                 actionType: ActionType.Default,
                 title: NotificationsTexts.jidloChannelName,
                 payload: {
-                  NotificationIds.payloadUser: user.username,
+                  NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
                   NotificationIds.payloadIndex: k.toString(),
                   NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
@@ -269,7 +271,7 @@ Future<void> doNotifications({bool force = false}) async {
               actionType: ActionType.Default,
               title: NotificationsTexts.jidloChannelName,
               payload: {
-                NotificationIds.payloadUser: user.username,
+                NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
               },
               body: lang.noFood,
             ),
@@ -328,7 +330,7 @@ Future<void> doNotifications({bool force = false}) async {
             channelKey: NotificationIds.kreditChannel(user.username, user.canteenUrl),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationDochaziVamKredit,
-            payload: {NotificationIds.payloadUser: user.username},
+            payload: {NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson())},
             body: NotificationsTexts.notificationKreditPro(
               uzivatel.jmeno ?? '',
               uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? '',
@@ -371,7 +373,7 @@ Future<void> doNotifications({bool force = false}) async {
             channelKey: NotificationIds.objednanoChannel(user.username, user.canteenUrl),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationObjednejteSi,
-            payload: {NotificationIds.payloadUser: user.username},
+            payload: {NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson())},
             body: NotificationsTexts.notificationObjednejteSiDetail(uzivatel.jmeno ?? '', uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? ''),
           ),
           actionButtons: [
@@ -435,12 +437,12 @@ class NotificationController {
         if (loggedInCanteen.uzivatel != null && loggedInCanteen.uzivatel?.uzivatelskeJmeno == username) {
           tempLoggedInCanteen = loggedInCanteen;
         }
-        await tempLoggedInCanteen.quickOrder(receivedAction.buttonKeyPressed.substring(9).split('_')[0]);
+        await tempLoggedInCanteen.quickOrder((SafeAccount.fromJson(jsonDecode(receivedAction.buttonKeyPressed.substring(9).split('_')[0]))));
       }
     }
     //přepnutí účtu, když uživatel klikne na notifikaci
     if (receivedAction != null && receivedAction.payload != null && receivedAction.payload![NotificationIds.payloadUser] != null) {
-      AuthService().changeAccount(receivedAction.payload![NotificationIds.payloadUser]!);
+      AuthService().changeAccount(SafeAccount.fromJson(jsonDecode(receivedAction.payload![NotificationIds.payloadUser]!)));
     }
     /*
     if (receivedAction?.payload?[NotificationIds.payloadIndex] != null) {

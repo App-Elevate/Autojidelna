@@ -11,6 +11,7 @@ import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/canteen_data/canteen_data.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
 
 import 'package:canteenlib/canteenlib.dart';
@@ -255,9 +256,9 @@ class LoggedInCanteen {
 
   /// don't call from main thread
   /// objedná první jídlo v každém dni, pokud už v tom dni nemáme objednáno.
-  Future<void> quickOrder(String username) async {
+  Future<void> quickOrder(SafeAccount safeAccount) async {
     if (_canteenInstance?.prihlasen != true) {
-      if (await AuthService().loginByUsername(username) == null) return;
+      if (await AuthService().loginBySafeAccount(safeAccount) == null) return;
     }
     await _indexLunchesMonth();
     for (int i = 0; i < 10; i++) {

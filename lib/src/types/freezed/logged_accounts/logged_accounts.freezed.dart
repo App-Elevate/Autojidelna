@@ -20,10 +20,10 @@ LoggedAccounts _$LoggedAccountsFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$LoggedAccounts {
-  @JsonKey(name: 'logged_in_username')
-  String? get loggedInUsername => throw _privateConstructorUsedError;
-  @JsonKey(name: 'logged_in_username')
-  set loggedInUsername(String? value) => throw _privateConstructorUsedError;
+  @JsonKey(name: 'logged_in_account')
+  SafeAccount? get loggedInAccount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'logged_in_account')
+  set loggedInAccount(SafeAccount? value) => throw _privateConstructorUsedError;
   @JsonKey(name: 'accounts')
   List<Account> get accounts => throw _privateConstructorUsedError;
   @JsonKey(name: 'accounts')
@@ -46,8 +46,10 @@ abstract class $LoggedAccountsCopyWith<$Res> {
       _$LoggedAccountsCopyWithImpl<$Res, LoggedAccounts>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'logged_in_username') String? loggedInUsername,
+      {@JsonKey(name: 'logged_in_account') SafeAccount? loggedInAccount,
       @JsonKey(name: 'accounts') List<Account> accounts});
+
+  $SafeAccountCopyWith<$Res>? get loggedInAccount;
 }
 
 /// @nodoc
@@ -65,19 +67,33 @@ class _$LoggedAccountsCopyWithImpl<$Res, $Val extends LoggedAccounts>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loggedInUsername = freezed,
+    Object? loggedInAccount = freezed,
     Object? accounts = null,
   }) {
     return _then(_value.copyWith(
-      loggedInUsername: freezed == loggedInUsername
-          ? _value.loggedInUsername
-          : loggedInUsername // ignore: cast_nullable_to_non_nullable
-              as String?,
+      loggedInAccount: freezed == loggedInAccount
+          ? _value.loggedInAccount
+          : loggedInAccount // ignore: cast_nullable_to_non_nullable
+              as SafeAccount?,
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
               as List<Account>,
     ) as $Val);
+  }
+
+  /// Create a copy of LoggedAccounts
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SafeAccountCopyWith<$Res>? get loggedInAccount {
+    if (_value.loggedInAccount == null) {
+      return null;
+    }
+
+    return $SafeAccountCopyWith<$Res>(_value.loggedInAccount!, (value) {
+      return _then(_value.copyWith(loggedInAccount: value) as $Val);
+    });
   }
 }
 
@@ -90,8 +106,11 @@ abstract class _$$LoggedAccountsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'logged_in_username') String? loggedInUsername,
+      {@JsonKey(name: 'logged_in_account') SafeAccount? loggedInAccount,
       @JsonKey(name: 'accounts') List<Account> accounts});
+
+  @override
+  $SafeAccountCopyWith<$Res>? get loggedInAccount;
 }
 
 /// @nodoc
@@ -107,14 +126,14 @@ class __$$LoggedAccountsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loggedInUsername = freezed,
+    Object? loggedInAccount = freezed,
     Object? accounts = null,
   }) {
     return _then(_$LoggedAccountsImpl(
-      loggedInUsername: freezed == loggedInUsername
-          ? _value.loggedInUsername
-          : loggedInUsername // ignore: cast_nullable_to_non_nullable
-              as String?,
+      loggedInAccount: freezed == loggedInAccount
+          ? _value.loggedInAccount
+          : loggedInAccount // ignore: cast_nullable_to_non_nullable
+              as SafeAccount?,
       accounts: null == accounts
           ? _value.accounts
           : accounts // ignore: cast_nullable_to_non_nullable
@@ -129,22 +148,22 @@ class _$LoggedAccountsImpl
     with DiagnosticableTreeMixin
     implements _LoggedAccounts {
   _$LoggedAccountsImpl(
-      {@JsonKey(name: 'logged_in_username') this.loggedInUsername,
+      {@JsonKey(name: 'logged_in_account') this.loggedInAccount,
       @JsonKey(name: 'accounts') this.accounts = const []});
 
   factory _$LoggedAccountsImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoggedAccountsImplFromJson(json);
 
   @override
-  @JsonKey(name: 'logged_in_username')
-  String? loggedInUsername;
+  @JsonKey(name: 'logged_in_account')
+  SafeAccount? loggedInAccount;
   @override
   @JsonKey(name: 'accounts')
   List<Account> accounts;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LoggedAccounts(loggedInUsername: $loggedInUsername, accounts: $accounts)';
+    return 'LoggedAccounts(loggedInAccount: $loggedInAccount, accounts: $accounts)';
   }
 
   @override
@@ -152,7 +171,7 @@ class _$LoggedAccountsImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'LoggedAccounts'))
-      ..add(DiagnosticsProperty('loggedInUsername', loggedInUsername))
+      ..add(DiagnosticsProperty('loggedInAccount', loggedInAccount))
       ..add(DiagnosticsProperty('accounts', accounts));
   }
 
@@ -175,7 +194,7 @@ class _$LoggedAccountsImpl
 
 abstract class _LoggedAccounts implements LoggedAccounts {
   factory _LoggedAccounts(
-          {@JsonKey(name: 'logged_in_username') String? loggedInUsername,
+          {@JsonKey(name: 'logged_in_account') SafeAccount? loggedInAccount,
           @JsonKey(name: 'accounts') List<Account> accounts}) =
       _$LoggedAccountsImpl;
 
@@ -183,10 +202,10 @@ abstract class _LoggedAccounts implements LoggedAccounts {
       _$LoggedAccountsImpl.fromJson;
 
   @override
-  @JsonKey(name: 'logged_in_username')
-  String? get loggedInUsername;
-  @JsonKey(name: 'logged_in_username')
-  set loggedInUsername(String? value);
+  @JsonKey(name: 'logged_in_account')
+  SafeAccount? get loggedInAccount;
+  @JsonKey(name: 'logged_in_account')
+  set loggedInAccount(SafeAccount? value);
   @override
   @JsonKey(name: 'accounts')
   List<Account> get accounts;

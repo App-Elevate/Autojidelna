@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
@@ -31,7 +32,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
 
             List<Widget> accounts = [];
             for (int i = 0; i < prov.usernames.length; i++) {
-              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
+              accounts.add(accountRow(context, prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
             }
 
             return Flexible(
@@ -57,12 +58,12 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     );
   }
 
-  Widget accountRow(BuildContext context, int id, {String username = '', bool currentAccount = false}) {
+  Widget accountRow(BuildContext context, SafeAccount safeAccount, {bool currentAccount = false}) {
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
+          Text(safeAccount.username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
           if (currentAccount) const Icon(Icons.check, size: 30),
         ],
       ),
@@ -72,11 +73,11 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         onPressed: () async {
           if (!context.mounted) return;
           if (!currentAccount) {
-            context.read<UserProvider>().logout(username);
+            context.read<UserProvider>().logout(safeAccount);
           } else {
             configuredDialog(
               context,
-              builder: (BuildContext context) => logoutDialog(context, username),
+              builder: (BuildContext context) => logoutDialog(context, safeAccount),
             );
           }
           setState(() {});
@@ -84,7 +85,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
       ),
       onTap: () async {
         if (currentAccount) return;
-        await context.read<UserProvider>().changeUser(username);
+        await context.read<UserProvider>().changeUser(safeAccount);
         if (context.mounted) context.router.replaceAll([const LoginLoading()]);
       },
     );

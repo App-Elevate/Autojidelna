@@ -16,7 +16,6 @@ class SafeAccount with _$SafeAccount {
 
   factory SafeAccount.fromJson(Map<String, Object?> json) => _$SafeAccountFromJson(json);
 
-  static SafeAccount fromAccount(Account account) {
-    return SafeAccount(username: account.username, url: account.url);
-  }
+  static SafeAccount fromAccount(Account account) => SafeAccount(username: account.username, url: account.url);
+  bool matches(Account account) => fromAccount(account) == this;
 }

@@ -8,7 +8,10 @@ part of 'logged_accounts.dart';
 
 _$LoggedAccountsImpl _$$LoggedAccountsImplFromJson(Map<String, dynamic> json) =>
     _$LoggedAccountsImpl(
-      loggedInUsername: json['logged_in_username'] as String?,
+      loggedInAccount: json['logged_in_account'] == null
+          ? null
+          : SafeAccount.fromJson(
+              json['logged_in_account'] as Map<String, dynamic>),
       accounts: (json['accounts'] as List<dynamic>?)
               ?.map((e) => Account.fromJson(e as Map<String, dynamic>))
               .toList() ??
@@ -18,6 +21,6 @@ _$LoggedAccountsImpl _$$LoggedAccountsImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$LoggedAccountsImplToJson(
         _$LoggedAccountsImpl instance) =>
     <String, dynamic>{
-      'logged_in_username': instance.loggedInUsername,
+      'logged_in_account': instance.loggedInAccount,
       'accounts': instance.accounts,
     };

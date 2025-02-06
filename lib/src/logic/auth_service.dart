@@ -32,7 +32,6 @@ class AuthService {
   /// [AuthErrors.connectionFailed] - connection to the canteen server failed
   ///
   Future<User?> login(Account account) async {
-    List<Account> duplicates = await _checkForDuplicates(account);
     String url = Url.clean(account.url);
     User? user;
 
@@ -71,7 +70,7 @@ class AuthService {
       }
     }
 
-    if (duplicates.isEmpty) await _saveAccountToStorage(account);
+    if (await _checkForDuplicates(account)) await _saveAccountToStorage(account);
 
     try {
       user = User(
@@ -91,12 +90,12 @@ class AuthService {
     return user;
   }
 
-  /// Logs in by provided [username]
+  /// Logs in by provided [safeAccount]
   /// /// Can throw:
   ///
   /// [AuthErrors.accountNotFound] if a matching [Account] is not found
-  Future<User?> loginByUsername(String username) async {
-    Account? account = await _findByUsername(username);
+  Future<User?> loginBySafeAccount(SafeAccount safeAccount) async {
+    Account? account = await _findBySafeAccount(safeAccount);
     throwIf(account == null, AuthErrors.accountNotFound);
 
     return login(account!);
@@ -113,8 +112,8 @@ class AuthService {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
     throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
-    throwIf(loginData.loggedInUsername == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
-    return await loginByUsername(loginData.loggedInUsername!);
+    throwIf(loginData.loggedInAccount == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
+    return await loginBySafeAccount(loginData.loggedInAccount!);
   }
 
   /// Returns a list of logged in accounts stripped of their passwords
@@ -122,21 +121,21 @@ class AuthService {
     return (await _getDataFromStorage()).accounts.map(SafeAccount.fromAccount).toList();
   }
 
-  /// Changes [LoggedAccounts.loggedInUsername] to the provided [username]
+  /// Changes [LoggedAccounts.loggedInAccount] to the provided [saveAccount]
   ///
   /// [AuthService.loginFromStorage] NEEDS TO BE CALLED AFTER THIS
-  Future<void> changeAccount(String username) async {
+  Future<void> changeAccount(SafeAccount saveAccount) async {
     LoggedAccounts loginData = await _getDataFromStorage();
-    throwIf(!loginData.accounts.any((account) => account.username == username), AuthErrors.accountNotFound);
-    LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
+    throwIf(!loginData.accounts.any((account) => SafeAccount.fromAccount(account) == saveAccount), AuthErrors.accountNotFound);
+    LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInAccount: saveAccount);
     await _saveDataToStorage(updatedData);
   }
 
   /// Logs out a specific user
   ///
   /// Can throw [AuthErrors.accountNotFound] if a matching [Account] is not found
-  Future<void> logout(String username) async {
-    Account? account = await _findByUsername(username);
+  Future<void> logout(SafeAccount safeAccount) async {
+    Account? account = await _findBySafeAccount(safeAccount);
     throwIf(account == null, AuthErrors.accountNotFound);
 
     await _removeAccountFromStorage(account!);
@@ -163,20 +162,19 @@ class AuthService {
   /// Checks for duplicates in logged accounts.
   ///
   /// Compares [Account.url] and [Account.username]
-  Future<List<Account>> _checkForDuplicates(Account account) async {
-    List<Account> duplicates = [];
+  Future<bool> _checkForDuplicates(Account account) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account loggedAccount in loginData.accounts) {
-      if (loggedAccount.username == account.username && Url.isSame(account.url, loggedAccount.url)) duplicates.add(loggedAccount);
+      if (loggedAccount.isSame(account)) return true;
     }
-    return duplicates;
+    return false;
   }
 
   /// Finds user in [LoggedAccounts], returns null if a matching account isn't found.
-  Future<Account?> _findByUsername(String username) async {
+  Future<Account?> _findBySafeAccount(SafeAccount safeAccount) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account account in loginData.accounts) {
-      if (account.username == username) return account;
+      if (safeAccount.matches(account)) return account;
     }
     return null;
   }
@@ -199,7 +197,7 @@ class AuthService {
   Future<void> _saveAccountToStorage(Account account) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     LoggedAccounts updatedData = LoggedAccounts(
-      loggedInUsername: account.username,
+      loggedInAccount: SafeAccount.fromAccount(account),
       accounts: [...loginData.accounts, account],
     );
     await _saveDataToStorage(updatedData);
@@ -209,7 +207,7 @@ class AuthService {
   Future<void> _removeAccountFromStorage(Account account) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     LoggedAccounts updatedData = LoggedAccounts(
-      loggedInUsername: account.username == loginData.loggedInUsername ? null : loginData.loggedInUsername,
+      loggedInAccount: loginData.loggedInAccount!.matches(account) ? null : loginData.loggedInAccount,
       accounts: List.from(loginData.accounts)..remove(account),
     );
     await _saveDataToStorage(updatedData);
