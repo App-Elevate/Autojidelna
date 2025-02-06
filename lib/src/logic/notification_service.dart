@@ -9,9 +9,10 @@ import 'package:flutter/material.dart';
 
 class NotificationService {
   void removeNotifications(SafeAccount account) async {
-    AwesomeNotifications().removeChannel(NotificationIds.dnesniJidloChannel(account));
-    AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(account));
-    AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(account));
+    final AwesomeNotifications notifs = AwesomeNotifications();
+    notifs.removeChannel(NotificationIds.dnesniJidloChannel(account));
+    notifs.removeChannel(NotificationIds.objednanoChannel(account));
+    notifs.removeChannel(NotificationIds.kreditChannel(account));
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
