@@ -8,7 +8,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
-import 'package:autojidelna/src/types/freezed/account/account.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
@@ -81,11 +81,11 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
 }
 
 Future<bool> initAwesome() async {
-  List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
+  List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
   List<NotificationChannelGroup> notificationChannelGroups = [];
   List<NotificationChannel> notificationChannels = [];
   for (int i = 0; i < limitedAccounts.length; i++) {
-    Account user = limitedAccounts[i];
+    SafeAccount user = limitedAccounts[i];
     notificationChannelGroups.add(
       NotificationChannelGroup(
         channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
@@ -159,7 +159,7 @@ Future<void> doNotifications({bool force = false}) async {
   final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
   AuthService authService = AuthService();
-  List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
+  List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
   AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: 588,

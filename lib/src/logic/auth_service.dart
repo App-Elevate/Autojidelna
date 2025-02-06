@@ -11,6 +11,7 @@ import 'package:autojidelna/src/logic/url.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:get_it/get_it.dart';
@@ -117,8 +118,8 @@ class AuthService {
   }
 
   /// Returns a list of logged in accounts stripped of their passwords
-  Future<List<Account>> getLimitedAccounts() async {
-    return (await _getDataFromStorage()).accounts.map((account) => account.copyWith(password: '')).toList();
+  Future<List<SafeAccount>> getLimitedAccounts() async {
+    return (await _getDataFromStorage()).accounts.map(SafeAccount.fromAccount).toList();
   }
 
   /// Changes [LoggedAccounts.loggedInUsername] to the provided [username]

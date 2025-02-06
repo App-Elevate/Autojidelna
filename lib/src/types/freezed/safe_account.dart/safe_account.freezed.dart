@@ -114,10 +114,11 @@ class __$$SafeAccountImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SafeAccountImpl with DiagnosticableTreeMixin implements _SafeAccount {
+class _$SafeAccountImpl extends _SafeAccount with DiagnosticableTreeMixin {
   const _$SafeAccountImpl(
       {@JsonKey(name: 'username') required this.username,
-      @JsonKey(name: 'url') required this.url});
+      @JsonKey(name: 'url') required this.url})
+      : super._();
 
   @override
   @JsonKey(name: 'username')
@@ -162,10 +163,11 @@ class _$SafeAccountImpl with DiagnosticableTreeMixin implements _SafeAccount {
       __$$SafeAccountImplCopyWithImpl<_$SafeAccountImpl>(this, _$identity);
 }
 
-abstract class _SafeAccount implements SafeAccount {
+abstract class _SafeAccount extends SafeAccount {
   const factory _SafeAccount(
       {@JsonKey(name: 'username') required final String username,
       @JsonKey(name: 'url') required final String url}) = _$SafeAccountImpl;
+  const _SafeAccount._() : super._();
 
   @override
   @JsonKey(name: 'username')
