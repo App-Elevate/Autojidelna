@@ -6,7 +6,6 @@ import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/init_app.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notification_service.dart';
-import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/logic/url.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
@@ -70,7 +69,10 @@ class AuthService {
       }
     }
 
-    if (!await _hasDuplicates(account)) await _saveAccountToStorage(account);
+    if (!await _hasDuplicates(account)) {
+      await _saveAccountToStorage(account);
+      await NotificationService().initAwesome();
+    }
 
     try {
       user = User(
@@ -189,8 +191,6 @@ class AuthService {
   /// Saves [LoggedAccounts] to Secure storage.
   Future<void> _saveDataToStorage(LoggedAccounts loginData) async {
     await App.secureStorage.write(key: SecureStorage.loginData, value: jsonEncode(loginData.toJson()));
-    // TODO : move somewhere else
-    initAwesome();
   }
 
   /// Saves an [Account] to Secure storage.

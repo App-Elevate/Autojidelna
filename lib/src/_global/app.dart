@@ -4,6 +4,7 @@ import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/notification_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -86,7 +87,7 @@ class App {
     }
 
     // Initialize the notifications
-    initAwesome();
+    NotificationService().initAwesome();
 
     // Setting listeners for when the app is running and notification button is clicked
     AwesomeNotifications().setListeners(
