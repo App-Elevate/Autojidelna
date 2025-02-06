@@ -6,6 +6,7 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
@@ -80,11 +81,11 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
 }
 
 Future<bool> initAwesome() async {
-  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+  List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
   List<NotificationChannelGroup> notificationChannelGroups = [];
   List<NotificationChannel> notificationChannels = [];
-  for (int i = 0; i < loginData.accounts.length; i++) {
-    Account user = loginData.accounts[i];
+  for (int i = 0; i < limitedAccounts.length; i++) {
+    Account user = limitedAccounts[i];
     notificationChannelGroups.add(
       NotificationChannelGroup(
         channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
@@ -157,7 +158,7 @@ Future<void> doNotifications({bool force = false}) async {
   //TODO: add more langueages
   final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
-  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+  List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
   AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: 588,
@@ -168,7 +169,7 @@ Future<void> doNotifications({bool force = false}) async {
     ),
   );
   // Don't send notifications before 9 and after 22
-  for (int i = 0; i < loginData.accounts.length && !((DateTime.now().hour < 9 || DateTime.now().hour > 22) && !force); i++) {
+  for (int i = 0; i < limitedAccounts.length && !((DateTime.now().hour < 9 || DateTime.now().hour > 22) && !force); i++) {
     //ensuring we only send the notifications once a day
     bool jidloDne = true;
     bool kredit = true;
@@ -182,18 +183,18 @@ Future<void> doNotifications({bool force = false}) async {
 
     Box box = Hive.box(Boxes.notifications);
     //difference from time of day to now
-    box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url));
-    if ((box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url)) == nowString ||
-            box.get(HiveKeys.dailyFoodInfo(loginData.accounts[i].username, loginData.accounts[i].url)) != '1' ||
+    box.get(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url));
+    if ((box.get(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url)) == nowString ||
+            box.get(HiveKeys.dailyFoodInfo(limitedAccounts[i].username, limitedAccounts[i].url)) != '1' ||
             difference > 120 ||
             difference < -120) &&
         !force) {
       jidloDne = false;
     } else {
-      box.put(HiveKeys.lastJidloDneCheck(loginData.accounts[i].username, loginData.accounts[i].url), nowString);
+      box.put(HiveKeys.lastJidloDneCheck(limitedAccounts[i].username, limitedAccounts[i].url), nowString);
     }
 
-    if (box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url)) == nowString && !force) {
+    if (box.get(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url)) == nowString && !force) {
       kredit = false;
       objednavka = false;
     }
@@ -213,7 +214,7 @@ Future<void> doNotifications({bool force = false}) async {
       continue;
     }
 
-    box.put(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url), nowString);
+    box.put(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url), nowString);
 
     try {
       await loggedInCanteen.changeAccount(''); // Fix
@@ -228,11 +229,11 @@ Future<void> doNotifications({bool force = false}) async {
               AwesomeNotifications().createNotification(
                 content: NotificationContent(
                   id: 1024 - i,
-                  channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+                  channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
                   actionType: ActionType.Default,
                   title: NotificationsTexts.jidloChannelName,
                   payload: {
-                    NotificationIds.payloadUser: loginData.accounts[i].username,
+                    NotificationIds.payloadUser: limitedAccounts[i].username,
                     NotificationIds.payloadIndex: k.toString(),
                     NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
@@ -245,11 +246,11 @@ Future<void> doNotifications({bool force = false}) async {
             AwesomeNotifications().createNotification(
               content: NotificationContent(
                 id: 1024 - i,
-                channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+                channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
                 actionType: ActionType.Default,
                 title: NotificationsTexts.jidloChannelName,
                 payload: {
-                  NotificationIds.payloadUser: loginData.accounts[i].username,
+                  NotificationIds.payloadUser: limitedAccounts[i].username,
                   NotificationIds.payloadIndex: k.toString(),
                   NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
@@ -262,11 +263,11 @@ Future<void> doNotifications({bool force = false}) async {
           AwesomeNotifications().createNotification(
             content: NotificationContent(
               id: 1024,
-              channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
               actionType: ActionType.Default,
               title: NotificationsTexts.jidloChannelName,
               payload: {
-                NotificationIds.payloadUser: loginData.accounts[i].username,
+                NotificationIds.payloadUser: limitedAccounts[i].username,
               },
               body: lang.noFood,
             ),
@@ -301,7 +302,7 @@ Future<void> doNotifications({bool force = false}) async {
         }
       }
       //parse ignore date to DateTime
-      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(loginData.accounts[i].username, loginData.accounts[i].url));
+      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(limitedAccounts[i].username, limitedAccounts[i].url));
       DateTime ignoreDate;
       switch (ignoreDateStr) {
         //not ignored
@@ -322,10 +323,10 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: 512 - i,
-            channelKey: NotificationIds.kreditChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+            channelKey: NotificationIds.kreditChannel(limitedAccounts[i].username, limitedAccounts[i].url),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationDochaziVamKredit,
-            payload: {NotificationIds.payloadUser: loginData.accounts[i].username},
+            payload: {NotificationIds.payloadUser: limitedAccounts[i].username},
             body: NotificationsTexts.notificationKreditPro(
               uzivatel.jmeno ?? '',
               uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? '',
@@ -334,7 +335,7 @@ Future<void> doNotifications({bool force = false}) async {
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.kreditChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.kreditChannel(limitedAccounts[i].username, limitedAccounts[i].url),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,
@@ -344,7 +345,7 @@ Future<void> doNotifications({bool force = false}) async {
       }
       //pokud chybí aspoň 3 obědy z příštích 10 dní
       //parse ignore date to DateTime
-      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(loginData.accounts[i].username, loginData.accounts[i].url));
+      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(limitedAccounts[i].username, limitedAccounts[i].url));
       DateTime ignoreDateObjednano;
       switch (ignoreDateStrObjednano) {
         //not ignored
@@ -365,22 +366,22 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: i,
-            channelKey: NotificationIds.objednanoChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+            channelKey: NotificationIds.objednanoChannel(limitedAccounts[i].username, limitedAccounts[i].url),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationObjednejteSi,
-            payload: {NotificationIds.payloadUser: loginData.accounts[i].username},
+            payload: {NotificationIds.payloadUser: limitedAccounts[i].username},
             body: NotificationsTexts.notificationObjednejteSiDetail(uzivatel.jmeno ?? '', uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? ''),
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.objednatButton(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.objednatButton(limitedAccounts[i].username, limitedAccounts[i].url),
               label: NotificationsTexts.objednatAction,
               isDangerousOption: false,
               actionType: ActionType.Default,
               enabled: true,
             ),
             NotificationActionButton(
-              key: NotificationIds.objednanoChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.objednanoChannel(limitedAccounts[i].username, limitedAccounts[i].url),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,

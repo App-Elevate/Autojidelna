@@ -140,8 +140,8 @@ class AuthService {
     return LoggedAccounts.fromJson(jsonDecode(value));
   }
 
-  Future<List<String>> getLoggedUsernames() async {
-    return (await _getDataFromStorage()).accounts.map((a) => a.username).toList();
+  Future<List<Account>> getLimitedAccounts() async {
+    return (await _getDataFromStorage()).accounts.map((account) => account.copyWith(password: '')).toList();
   }
 
   Future<void> _saveAccountToStorage(Account account) async {
@@ -180,6 +180,7 @@ class AuthService {
 
   Future<void> changeAccount(String username) async {
     LoggedAccounts loginData = await _getDataFromStorage();
+    throwIf(!loginData.accounts.any((account) => account.username == username), AuthErrors.accountNotFound);
     LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInUsername: username);
     await _saveDataToStorage(updatedData);
   }

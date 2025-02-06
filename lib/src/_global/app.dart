@@ -3,10 +3,9 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -74,9 +73,9 @@ class App {
       Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
 
       try {
-        LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+        List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
 
-        for (Account uzivatel in loginData.accounts) {
+        for (Account uzivatel in limitedAccounts) {
           AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
           await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
         }

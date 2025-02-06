@@ -18,7 +18,7 @@ class UserProvider extends ChangeNotifier {
     final user = await _authService.login(account);
     if (user == null) return; // error
     _user = user;
-    _usernames = await _authService.getLoggedUsernames();
+    _usernames = (await _authService.getLimitedAccounts()).map((a) => a.username).toList();
     notifyListeners();
   }
 
@@ -40,7 +40,7 @@ class UserProvider extends ChangeNotifier {
   Future<void> removeUsernameFromUsernames(String username) async {
     if (!_usernames.contains(username)) return;
     await _authService.removeAccount(username);
-    _usernames = await _authService.getLoggedUsernames();
+    _usernames = (await _authService.getLimitedAccounts()).map((a) => a.username).toList();
     notifyListeners();
   }
 
@@ -48,7 +48,7 @@ class UserProvider extends ChangeNotifier {
     final user = await _authService.loginFromStorage();
     if (user == null) return;
     _user = user;
-    _usernames = await _authService.getLoggedUsernames();
+    _usernames = (await _authService.getLimitedAccounts()).map((a) => a.username).toList();
     notifyListeners();
   }
 
