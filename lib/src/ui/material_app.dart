@@ -10,6 +10,7 @@ import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
+import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
@@ -88,7 +89,7 @@ class MyAppWrapper extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
-        ChangeNotifierProvider(create: (_) => AccountProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider(AuthService())),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => Settings()),
         ChangeNotifierProvider(create: (_) => DishesOfTheDay()),

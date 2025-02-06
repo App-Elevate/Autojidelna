@@ -1,12 +1,11 @@
+import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
-
-final DateTime minimalDate = DateTime(DateTime.now().year, DateTime.now().month - 1, 1);
 
 class DishesOfTheDay with ChangeNotifier {
   Map<int, Jidelnicek> _menus = {}; // Store menus by day index
   Map<int, int> _numberOfDishes = {};
-  int _dayIndex = DateTime.now().difference(minimalDate).inDays; // Store day index separately if needed
+  int _dayIndex = DateTime.now().difference(Dates.minimalDate).inDays; // Store day index separately if needed
 
   Map<int, Jidelnicek> get allMenus => _menus;
 

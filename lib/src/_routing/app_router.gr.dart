@@ -24,7 +24,8 @@ import 'package:autojidelna/src/ui/pages/settings/analytics_page.dart' as _i3;
 import 'package:autojidelna/src/ui/pages/settings/appearance_page.dart' as _i4;
 import 'package:autojidelna/src/ui/pages/settings/convenience_page.dart' as _i5;
 import 'package:autojidelna/src/ui/pages/settings/settings_page.dart' as _i14;
-import 'package:flutter/foundation.dart' as _i18;
+import 'package:canteenlib/canteenlib.dart' as _i18;
+import 'package:flutter/foundation.dart' as _i19;
 import 'package:flutter/material.dart' as _i17;
 
 /// generated route for
@@ -143,10 +144,17 @@ class DebugPage extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.DishDetailPage]
-class DishDetailPage extends _i16.PageRouteInfo<void> {
-  const DishDetailPage({List<_i16.PageRouteInfo>? children})
-      : super(
+class DishDetailPage extends _i16.PageRouteInfo<DishDetailPageArgs> {
+  DishDetailPage({
+    _i17.Key? key,
+    required _i18.Jidlo dish,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
           DishDetailPage.name,
+          args: DishDetailPageArgs(
+            key: key,
+            dish: dish,
+          ),
           initialChildren: children,
         );
 
@@ -155,9 +163,29 @@ class DishDetailPage extends _i16.PageRouteInfo<void> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i7.DishDetailPage();
+      final args = data.argsAs<DishDetailPageArgs>();
+      return _i7.DishDetailPage(
+        key: args.key,
+        dish: args.dish,
+      );
     },
   );
+}
+
+class DishDetailPageArgs {
+  const DishDetailPageArgs({
+    this.key,
+    required this.dish,
+  });
+
+  final _i17.Key? key;
+
+  final _i18.Jidlo dish;
+
+  @override
+  String toString() {
+    return 'DishDetailPageArgs{key: $key, dish: $dish}';
+  }
 }
 
 /// generated route for
@@ -200,17 +228,10 @@ class LoginPage extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.MenuPage]
-class MenuPage extends _i16.PageRouteInfo<MenuPageArgs> {
-  MenuPage({
-    _i17.Key? key,
-    int? dayIndex,
-    List<_i16.PageRouteInfo>? children,
-  }) : super(
+class MenuPage extends _i16.PageRouteInfo<void> {
+  const MenuPage({List<_i16.PageRouteInfo>? children})
+      : super(
           MenuPage.name,
-          args: MenuPageArgs(
-            key: key,
-            dayIndex: dayIndex,
-          ),
           initialChildren: children,
         );
 
@@ -219,30 +240,9 @@ class MenuPage extends _i16.PageRouteInfo<MenuPageArgs> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      final args =
-          data.argsAs<MenuPageArgs>(orElse: () => const MenuPageArgs());
-      return _i10.MenuPage(
-        key: args.key,
-        dayIndex: args.dayIndex,
-      );
+      return const _i10.MenuPage();
     },
   );
-}
-
-class MenuPageArgs {
-  const MenuPageArgs({
-    this.key,
-    this.dayIndex,
-  });
-
-  final _i17.Key? key;
-
-  final int? dayIndex;
-
-  @override
-  String toString() {
-    return 'MenuPageArgs{key: $key, dayIndex: $dayIndex}';
-  }
 }
 
 /// generated route for
@@ -269,7 +269,7 @@ class MorePage extends _i16.PageRouteInfo<void> {
 class RequestPermissionPage
     extends _i16.PageRouteInfo<RequestPermissionPageArgs> {
   RequestPermissionPage({
-    _i18.Key? key,
+    _i19.Key? key,
     void Function(bool)? onResult,
     List<_i16.PageRouteInfo>? children,
   }) : super(
@@ -302,7 +302,7 @@ class RequestPermissionPageArgs {
     this.onResult,
   });
 
-  final _i18.Key? key;
+  final _i19.Key? key;
 
   final void Function(bool)? onResult;
 

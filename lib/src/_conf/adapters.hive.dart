@@ -1,4 +1,3 @@
-import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/types/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';

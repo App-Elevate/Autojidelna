@@ -5,7 +5,8 @@ import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
-import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/freezed/account/account.dart';
+import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -75,7 +76,7 @@ class App {
       try {
         LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
 
-        for (Account uzivatel in loginData.users) {
+        for (Account uzivatel in loginData.accounts) {
           AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
           await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
         }
@@ -197,4 +198,6 @@ class App {
   ///
   /// Do not call this before MaterialApp is built.
   static late Function(Locale? language) translate;
+
+  static late PageController pageController;
 }

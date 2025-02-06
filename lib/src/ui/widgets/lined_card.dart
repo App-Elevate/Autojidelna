@@ -1,3 +1,4 @@
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,6 @@ class LinedCard extends StatelessWidget {
     return GestureDetector(
       onTap: smallButton ? null : onPressed,
       child: Card(
-        margin: const EdgeInsets.symmetric(horizontal: 16),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
           child: Column(
@@ -82,7 +82,7 @@ class LinedCard extends StatelessWidget {
   }
 
   Widget dividerWithText(BuildContext context, {String? text, TextAlign? textAlign, bool transparentDivider = false}) {
-    if (text == null) return CustomDivider(isTransparent: transparentDivider, hasIndent: false, hasEndIndent: false);
+    if (text == null || text.trim().isEmpty) return CustomDivider(isTransparent: transparentDivider, hasIndent: false, hasEndIndent: false);
     return Row(
       children: [
         if (textAlign != TextAlign.start && textAlign != TextAlign.left && textAlign != TextAlign.justify)
@@ -91,7 +91,7 @@ class LinedCard extends StatelessWidget {
           Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Theme.of(context).listTileTheme.subtitleTextStyle!.color),
           const SizedBox(width: 5),
         ],
-        Text(text, style: Theme.of(context).textTheme.labelLarge),
+        Text(text, style: AppThemes.textTheme.labelLarge!.copyWith(color: Theme.of(context).dividerColor)),
         if (textAlign != TextAlign.end && textAlign != TextAlign.right)
           Flexible(child: CustomDivider(isTransparent: transparentDivider, hasEndIndent: false)),
       ],

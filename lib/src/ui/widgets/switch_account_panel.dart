@@ -1,6 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,18 +25,19 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     return Column(
       children: [
         SectionTitle(lang.accounts),
-        Selector<AccountProvider, ({int? id, List<String> usernames})>(
-          selector: (_, p1) => (id: p1.loggedInID, usernames: p1.usernames),
+        Consumer<UserProvider>(
           builder: (context, prov, ___) {
+            if (prov.user == null) return const Flexible(child: SizedBox());
+
             List<Widget> accounts = [];
             for (int i = 0; i < prov.usernames.length; i++) {
-              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: i == prov.id));
+              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
             }
 
             return Flexible(
               child: ListView.builder(
                 itemCount: accounts.length,
-                itemBuilder: (context, index) => accounts[index],
+                itemBuilder: (_, index) => accounts[index],
               ),
             );
           },
@@ -46,8 +52,8 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     final Texts lang = context.l10n;
     return ListTile(
       leading: const Icon(Icons.add),
-      title: Text(lang.addAccount, style: Theme.of(context).textTheme.bodyLarge),
-      //onTap: () async => context.router.push(const LoginPage),
+      title: Text(lang.addAccount),
+      onTap: () async => context.router.navigate(const LoginPage()),
     );
   }
 
@@ -56,7 +62,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(username, style: currentAccount ? const TextStyle(fontWeight: FontWeight.w600) : null),
+          Text(username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
           if (currentAccount) const Icon(Icons.check, size: 30),
         ],
       ),
@@ -64,24 +70,22 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         padding: EdgeInsets.zero,
         icon: Icon(Icons.logout, size: 30, color: Theme.of(context).colorScheme.onSurface),
         onPressed: () async {
-          if (currentAccount && context.mounted) {
-            /*configuredDialog(
-                context,
-                builder: (BuildContext context) => logoutDialog(context, currentAccount: currentAccount, id: id),
-              );*/
-          } else if (context.mounted) {
-            // TODO: await loggedInCanteen.logout(id: id);
-            setState(() {});
+          if (!context.mounted) return;
+          if (!currentAccount) {
+            context.read<UserProvider>().removeUsernameFromUsernames(username);
+          } else {
+            configuredDialog(
+              context,
+              builder: (BuildContext context) => logoutDialog(context, username),
+            );
           }
+          setState(() {});
         },
       ),
       onTap: () async {
-        if (!currentAccount) {
-          // TODO: await loggedInCanteen.switchAccount(id);
-          if (context.mounted) {
-            // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoggingInWidget()), (route) => false);
-          }
-        }
+        if (currentAccount) return;
+        await context.read<UserProvider>().changeUser(username);
+        if (context.mounted) context.router.replaceAll([const LoginLoading()]);
       },
     );
   }

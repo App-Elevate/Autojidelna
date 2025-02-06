@@ -1,17 +1,22 @@
 // Purpose: Login screen for the app
 
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
-import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/logic/show_snack_bar.dart';
+import 'package:autojidelna/src/types/errors.dart';
+import 'package:autojidelna/src/types/freezed/account/account.dart';
+import 'package:autojidelna/src/types/password_state.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hive_flutter/adapters.dart';
+import 'package:provider/provider.dart';
 
 @RoutePage()
 class LoginPage extends StatefulWidget {
@@ -29,11 +34,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   /// First value is error text, second is if it the password is visible
-  final ValueNotifier<List<dynamic>> passwordNotifier = ValueNotifier([null, false]);
-
+  final ValueNotifier<PasswordState> passwordNotifier = ValueNotifier(const PasswordState(errorText: null, isVisible: false));
+  final ValueNotifier<bool> usernameErrorState = ValueNotifier(false);
   final ValueNotifier<String?> urlErrorText = ValueNotifier(null);
-
   final ValueNotifier<bool> loggingIn = ValueNotifier(false);
+
   @override
   void initState() {
     setLastUrl();
@@ -44,54 +49,44 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final lang = context.l10n;
-    return formScaffold(context, lang);
-  }
+    final Texts lang = context.l10n;
 
-  Scaffold formScaffold(BuildContext context, Texts lang) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: Theme.of(context).appBarTheme.iconTheme?.copyWith(color: Theme.of(context).colorScheme.onSurface),
-      ),
-      body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height - MediaQuery.of(context).viewInsets.bottom),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: AppBar().preferredSize.height),
-                child: Text(
-                  lang.appName,
-                  style: Theme.of(context).textTheme.displayLarge,
-                ),
-              ),
-              loginForm(context, lang),
-            ],
-          ),
+      appBar: AppBar(forceMaterialTransparency: true),
+      body: ConstrainedBox(
+        constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height - MediaQuery.viewInsetsOf(context).bottom),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: kToolbarHeight),
+              child: Text(lang.appName, style: AppThemes.textTheme.displayLarge),
+            ),
+            loginForm(context, lang),
+          ],
         ),
       ),
     );
   }
 
-  void _setErrorText(String text, LoginFormErrorField? field) {
+  void _setErrorText(String? text, LoginFormErrorField? field) {
+    PasswordState state = passwordNotifier.value;
     switch (field) {
-      case LoginFormErrorField.password:
-        passwordNotifier.value = [text, passwordNotifier.value[1]];
+      case LoginFormErrorField.credentials:
         urlErrorText.value = null;
+        usernameErrorState.value = true;
+        passwordNotifier.value = state.copyWith(errorText: text);
         break;
       case LoginFormErrorField.url:
         urlErrorText.value = text;
-        passwordNotifier.value = [null, passwordNotifier.value[1]];
+        usernameErrorState.value = false;
+        passwordNotifier.value = state.copyWith(errorText: text);
         break;
       default:
         urlErrorText.value = null;
-        passwordNotifier.value = [null, passwordNotifier.value[1]];
+        usernameErrorState.value = false;
+        passwordNotifier.value = state.copyWith(errorText: null);
     }
   }
 
@@ -110,18 +105,14 @@ class _LoginPageState extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: ValueListenableBuilder(
                 valueListenable: urlErrorText,
-                builder: (ctx, value, child) {
+                builder: (_, errorText, ___) {
                   return TextFormField(
                     controller: LoginPage._urlController,
                     autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: lang.loginUrlFieldLabel,
-                      errorText: value,
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) return lang.loginUrlFieldHint;
-                      return null;
-                    },
+                    textInputAction: TextInputAction.next,
+                    autofillHints: const [AutofillHints.url],
+                    decoration: InputDecoration(labelText: lang.loginUrlFieldLabel, errorText: errorText),
+                    validator: (value) => value == null || value.isEmpty ? lang.loginUrlFieldHint : null,
                   );
                 },
               ),
@@ -131,15 +122,22 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: TextFormField(
-                      autofillHints: const [AutofillHints.username],
-                      controller: LoginPage._usernameController,
-                      textInputAction: TextInputAction.next,
-                      autocorrect: false,
-                      decoration: InputDecoration(labelText: lang.loginUserFieldLabel),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) return lang.loginUserFieldHint;
-                        return null;
+                    child: ValueListenableBuilder(
+                      valueListenable: usernameErrorState,
+                      builder: (context, errorState, _) {
+                        return TextFormField(
+                          controller: LoginPage._usernameController,
+                          autocorrect: false,
+                          textInputAction: TextInputAction.next,
+                          autofillHints: const [AutofillHints.username],
+                          decoration: InputDecoration(labelText: lang.loginUserFieldLabel, error: errorState ? const SizedBox() : null),
+                          validator: (value) {
+                            String? validator;
+                            if (value != null && value.isNotEmpty) return validator;
+                            if (!errorState) return lang.loginUserFieldHint;
+                            return validator;
+                          },
+                        );
                       },
                     ),
                   ),
@@ -150,22 +148,19 @@ class _LoginPageState extends State<LoginPage> {
                       builder: (context, value, child) {
                         return TextFormField(
                           controller: LoginPage._passwordController,
+                          autocorrect: false,
+                          obscureText: !value.isVisible,
                           textInputAction: TextInputAction.done,
                           autofillHints: const [AutofillHints.password],
-                          obscureText: value[1] ? false : true,
-                          autocorrect: false,
                           decoration: InputDecoration(
                             labelText: lang.loginPasswordFieldLabel,
-                            errorText: value[0],
+                            errorText: value.errorText,
                             suffixIcon: IconButton(
-                              onPressed: () => passwordNotifier.value = [passwordNotifier.value[0], !passwordNotifier.value[1]],
-                              icon: Icon(value[1] ? Icons.visibility : Icons.visibility_off),
+                              onPressed: () => passwordNotifier.value = value.copyWith(isVisible: !value.isVisible),
+                              icon: Icon(value.isVisible ? Icons.visibility : Icons.visibility_off),
                             ),
                           ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) return lang.loginPasswordFieldHint;
-                            return null;
-                          },
+                          validator: (value) => value == null || value.isEmpty ? lang.loginPasswordFieldHint : null,
                         );
                       },
                     ),
@@ -177,18 +172,15 @@ class _LoginPageState extends State<LoginPage> {
             RichText(
               text: TextSpan(
                 text: lang.dataCollectionAgreement,
-                style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
+                style: AppThemes.textTheme.bodySmall!.copyWith(color: Theme.of(context).dividerColor),
                 children: [
                   TextSpan(
                     text: lang.moreInfo,
-                    style: const TextStyle(
+                    style: AppThemes.textTheme.bodySmall!.copyWith(
                       color: Colors.blue,
                       decoration: TextDecoration.underline,
                     ),
-                    recognizer: TapGestureRecognizer()
-                      ..onTap = () {
-                        unawaited(context.router.push(const AnalyticsPage()));
-                      },
+                    recognizer: TapGestureRecognizer()..onTap = () async => context.router.navigate(const AnalyticsPage()),
                   ),
                 ],
               ),
@@ -202,15 +194,13 @@ class _LoginPageState extends State<LoginPage> {
   Container loginSubmitButton(context, Texts lang) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10),
-      height: 60,
       width: 400,
       child: ValueListenableBuilder(
         valueListenable: loggingIn,
-        builder: (context, value, child) {
-          return ElevatedButton(
-            onPressed: value ? null : () => loginFieldCheck(context, lang),
-            style: ElevatedButton.styleFrom(backgroundColor: Theme.of(context).colorScheme.primary),
-            child: value ? CircularProgressIndicator(color: Theme.of(context).colorScheme.onPrimary) : Text(lang.loginButton),
+        builder: (context, loggingIn, __) {
+          return FilledButton(
+            onPressed: loggingIn ? null : () => loginFieldCheck(context, lang),
+            child: Text(lang.login),
           );
         },
       ),
@@ -218,32 +208,38 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void loginFieldCheck(BuildContext context, Texts lang) async {
-    if (LoginPage._formKey.currentState!.validate()) {
-      // If the form is valid, save the form fields.
-      LoginPage._formKey.currentState!.save();
-      _setErrorText('', null);
-      loggingIn.value = true;
-      String url = LoginPage._urlController.text;
-      try {
-        await loggedInCanteen.addAccount(LoginPage._urlController.text, LoginPage._usernameController.text, LoginPage._passwordController.text);
-        Hive.box(Boxes.appState).put(HiveKeys.url, url);
-      } catch (e) {
-        switch (e) {
-          case ConnectionErrors.noInternet:
-            _setErrorText(lang.errorsNoInternet, LoginFormErrorField.url);
-            break;
-          case ConnectionErrors.wrongUrl:
-            _setErrorText(lang.errorsBadUrl, LoginFormErrorField.url);
-            break;
-          case ConnectionErrors.badLogin:
-            _setErrorText(lang.errorsBadLogin, LoginFormErrorField.password);
-            break;
-          default:
-            _setErrorText(lang.errorsBadConnection, LoginFormErrorField.url);
-            break;
-        }
+    if (!LoginPage._formKey.currentState!.validate()) return;
+
+    // If the form is valid, save the form fields.
+    LoginPage._formKey.currentState!.save();
+    _setErrorText(null, null);
+    loggingIn.value = true;
+    final Account account = Account(
+      username: LoginPage._usernameController.text,
+      password: LoginPage._passwordController.text,
+      url: LoginPage._urlController.text,
+    );
+    try {
+      await context.read<UserProvider>().login(account);
+      Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
+      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+    } catch (e) {
+      switch (e) {
+        case AuthErrors.noInternetConnection:
+          _setErrorText(null, null);
+          bool value = await showInternetConnectionSnackBar();
+          if (value && context.mounted) loginFieldCheck(context, lang);
+          break;
+        case AuthErrors.wrongCredentials:
+          _setErrorText(lang.errorsWrongCredentialsTextField, LoginFormErrorField.credentials);
+          break;
+        case AuthErrors.wrongUrl:
+          _setErrorText(lang.errorsWrongUrl, LoginFormErrorField.url);
+          break;
+        default:
+          showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
       }
-      loggingIn.value = false;
     }
+    loggingIn.value = false;
   }
 }

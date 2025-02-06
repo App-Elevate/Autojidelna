@@ -2,10 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/more/account_overview_card.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
@@ -15,7 +18,7 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-    final Uzivatel user = context.read<AccountProvider>().uzivatel;
+    final Uzivatel user = context.read<UserProvider>().user!.data;
 
     bool firstName = user.jmeno != null && user.jmeno!.trim().isNotEmpty;
     bool lastName = user.prijmeni != null && user.prijmeni!.trim().isNotEmpty;
@@ -27,7 +30,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(lang.account),
-        actions: [_appBarLogoutButton(context)],
+        actions: [_appBarLogoutButton(context, user.uzivatelskeJmeno!)],
       ),
       body: ListView(
         children: [
@@ -50,29 +53,36 @@ class AccountPage extends StatelessWidget {
             ListTile(
               title: Text(user.ucetProPlatby!),
               subtitle: Text(lang.paymentAccountNumber),
+              onLongPress: () => _copyToClipboard(user.ucetProPlatby!),
             ),
           if (varSymbol)
             ListTile(
               title: Text(user.varSymbol!),
               subtitle: Text(lang.variableSymbol),
+              onLongPress: () => _copyToClipboard(user.varSymbol!),
             ),
           if (specSymbol)
             ListTile(
               title: Text(user.specSymbol!),
               subtitle: Text(lang.specificSymbol),
+              onLongPress: () => _copyToClipboard(user.specSymbol!),
             ),
         ],
       ),
     );
   }
 
-  Padding _appBarLogoutButton(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(right: 8.0),
+  Padding _appBarLogoutButton(BuildContext context, String username) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
       child: IconButton(
-        onPressed: null /* TODO: () => configuredDialog(context, builder: (BuildContext context) => logoutDialog(context))*/,
-        icon: Icon(Icons.logout),
+        onPressed: () => configuredDialog(context, builder: (BuildContext context) => logoutDialog(context, username)),
+        icon: const Icon(Icons.logout),
       ),
     );
+  }
+
+  void _copyToClipboard(String text) async {
+    Clipboard.setData(ClipboardData(text: text));
   }
 }

@@ -8,12 +8,13 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:autojidelna/src/_conf/hive.dart';
-import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_conf/secure_storage.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
-import 'package:autojidelna/src/types/all.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:autojidelna/src/types/errors.dart';
+import 'package:autojidelna/src/types/freezed/account/account.dart';
+import 'package:autojidelna/src/types/freezed/canteen_data/canteen_data.dart';
+import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
 
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -22,7 +23,6 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 import 'package:hive_flutter/adapters.dart';
 
-import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 //TODO: add functionality for analytics
@@ -50,11 +50,6 @@ class LoggedInCanteen {
     if (_canteenInstance != null && _canteenInstance!.prihlasen) {
       return _canteenInstance!;
     }
-    try {
-      await loginFromStorage();
-    } catch (e) {
-      return Future.error(e);
-    }
     return _canteenInstance!;
   }
 
@@ -63,89 +58,12 @@ class LoggedInCanteen {
     if (_canteenData != null && _canteenInstance!.prihlasen) {
       return _canteenData!;
     }
-    try {
-      await loginFromStorage();
-    } catch (e) {
-      return Future.error(e);
-    }
     return _canteenData!;
   }
 
   /// this should be safe to get since we are always logged in and the data is created with the login.
   /// DO NOT CALL BEFORE LOGGIN IN
   Uzivatel? get uzivatel => _canteenData?.uzivatel;
-
-  CanteenData? get canteenDataUnsafe => _canteenData;
-
-  ///přidá +1 pro counter statistiky a pokud je zapnutý analytics tak ji pošle do firebase
-  void pridatStatistiku(TypStatistiky statistika) async {
-    Box box = Hive.box(Boxes.statistics);
-    switch (statistika) {
-      //default case
-      case TypStatistiky.objednavka:
-        int pocetStatistiky = box.get(HiveKeys.statistikaObjednavka, defaultValue: 0);
-        pocetStatistiky++;
-        if (analyticsEnabledGlobally && analytics != null) analytics!.logEvent(name: 'objednavka', parameters: {'pocet': pocetStatistiky});
-
-        box.put(HiveKeys.statistikaObjednavka, pocetStatistiky);
-        break;
-      case TypStatistiky.auto:
-        int pocetStatistiky = box.get(HiveKeys.statistikaAuto, defaultValue: 0);
-        pocetStatistiky++;
-        box.put(HiveKeys.statistikaAuto, pocetStatistiky);
-        break;
-      case TypStatistiky.burzaCatcher:
-        int pocetStatistiky = box.get(HiveKeys.statistikaBurzaCatcher, defaultValue: 0);
-        pocetStatistiky++;
-        box.put(HiveKeys.statistikaBurzaCatcher, pocetStatistiky);
-        break;
-    }
-  }
-
-  Future<dynamic> runWithSafety(Future f) async {
-    try {
-      return await f;
-    } catch (e) {
-      handleError(e);
-      return Future.error(e);
-    }
-  }
-
-  void handleError(dynamic e) {
-    //TODO: add error handling
-    /*
-    if (e == ConnectionErrors.badLogin) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadLogin));
-    } else if (e == ConnectionErrors.wrongUrl) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadUrl));
-    } else if (e == ConnectionErrors.noInternet) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsNoInternet));
-    } else if (e == ConnectionErrors.connectionFailed) {
-      Future.delayed(Duration.zero, () => failedLoginDialog(MyApp.navigatorKey.currentState!.context, lang.errorsBadConnection));
-    }*/
-  }
-
-  /// logs you in if you are already logged in or gets the already existing instance
-  /// We don't have to do much of error handling here because we already know that the user has been logged in.
-  /// If there is an error it's probably because of the internet connection or change of password. The popup is the best solution.
-  Future<int> loginFromStorage() async {
-    try {
-      LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-      if (loginData.currentlyLoggedInId != null) {
-        _canteenInstance = await _login(
-          loginData.users[loginData.currentlyLoggedInId!].url,
-          loginData.users[loginData.currentlyLoggedInId!].username,
-          loginData.users[loginData.currentlyLoggedInId!].password,
-          safetyId: (_canteenData?.id ?? 0) + 1,
-        );
-        return loginData.currentlyLoggedInId!;
-      } else {
-        return Future.error(ConnectionErrors.noLogin);
-      }
-    } catch (e) {
-      return Future.error(e);
-    }
-  }
 
   /// Returns a [Canteen] instance with a logged in user.
   ///
@@ -167,34 +85,14 @@ class LoggedInCanteen {
   /// [ConnectionErrors.connectionFailed] - connection to the canteen server failed
   ///
   /// [ConnectionErrors.noInternet] - user is not connected to the internet
-  Future<Canteen> _login(String url, String username, String password, {int? safetyId, bool indexLunches = true}) async {
+  Future<Canteen> login(String url, String username, String password, {int? safetyId, bool indexLunches = true}) async {
     if (_loginCompleter == null || _loginCompleter!.isCompleted) {
       _loginCompleter = Completer<Canteen>();
     } else {
       return _loginCompleter!.future;
     }
-    _canteenInstance = Canteen(url);
-    try {
-      if (!await _canteenInstance!.login(username, password)) {
-        _loginCompleter!.completeError(ConnectionErrors.badLogin);
-        return Future.error(ConnectionErrors.badLogin);
-      }
-    } catch (e) {
-      try {
-        await _canteenInstance!.login(username, password); //second try's the charm
-      } catch (e) {
-        bool connected = await InternetConnectionChecker().hasConnection;
-        _loginCompleter!.completeError(ConnectionErrors.noInternet);
-        if (!connected) return Future.error(ConnectionErrors.noInternet);
-        try {
-          await http.get(Uri.parse(url));
-        } catch (e) {
-          return Future.error(ConnectionErrors.wrongUrl);
-        }
-        _loginCompleter!.completeError(ConnectionErrors.connectionFailed);
-        return Future.error(ConnectionErrors.connectionFailed);
-      }
-    }
+    _canteenInstance = App.getIt<Canteen>();
+
     try {
       checked = {};
       _currentlyLoading = {};
@@ -291,7 +189,6 @@ class LoggedInCanteen {
       } else if (analyticsEnabledGlobally && analytics != null) {
         FirebaseCrashlytics.instance.log(e.toString());
       }
-      await loginFromStorage();
       return _ziskatJidelnicekDen(den, tries: tries + 1);
     }
   }
@@ -301,14 +198,8 @@ class LoggedInCanteen {
   /// in both cases it throws 'no internet'
   Future<Jidelnicek> getLunchesForDay(DateTime date, {bool? requireNew}) async {
     date = DateTime(date.year, date.month, date.day);
-    if ((_canteenData == null || _canteenInstance == null || !_canteenInstance!.prihlasen)) {
-      try {
-        await loginFromStorage();
-      } catch (e) {
-        return Future.error(e);
-      }
-    }
-    int id = _canteenData!.id;
+
+    int id = 1;
     requireNew ??= false;
 
     if (_canteenData!.jidelnicky.containsKey(DateTime(date.year, date.month, date.day)) && !requireNew) {
@@ -366,40 +257,24 @@ class LoggedInCanteen {
   }
 
   // just switches the account - YOU NEED TO CALL [loginFromStorage] AFTER THIS
-  Future<void> switchAccount(int id) async {
+  Future<void> switchAccount(String username) async {
     LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    loginData.currentlyLoggedInId = id;
+    loginData.loggedInUsername = username;
     await saveLoginToSecureStorage(loginData);
   }
 
   // switches the account and logs in as the new account
-  Future<bool> changeAccount(int id, {bool indexLunches = false, bool saveToStorage = true}) async {
+  Future<bool> changeAccount(String username) async {
     LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    String url = loginData.users[id].url;
-    String username = loginData.users[id].username;
-    String password = loginData.users[id].password;
-    loginData.currentlyLoggedInId = id;
-    if (saveToStorage) {
-      saveLoginToSecureStorage(loginData);
-    }
+    String url = loginData.accounts.first.url;
+    String username = loginData.accounts.first.username;
+    String password = loginData.accounts.first.password;
+    loginData.loggedInUsername = username;
     try {
-      _canteenInstance = await _login(url, username, password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: indexLunches);
+      _canteenInstance = await login(url, username, password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);
       return true;
     } catch (e) {
       return false;
-    }
-  }
-
-  Future<bool> addAccount(String url, String username, String password) async {
-    try {
-      await _login(url, username, password, safetyId: (_canteenData?.id ?? 0) + 1);
-      LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-      loginData.users.add(Account(username: username, password: password, url: url));
-      loginData.currentlyLoggedInId = loginData.users.length - 1;
-      saveLoginToSecureStorage(loginData);
-      return true;
-    } catch (e) {
-      return Future.error(e);
     }
   }
 
@@ -425,66 +300,6 @@ class LoggedInCanteen {
     } catch (e) {
       return null;
     }
-  }
-
-  ///logs out a user with [id].
-  ///if [id] is null it will log out currently logged in user
-  Future<void> logout({int? id}) async {
-    id ??= (await getLoginDataFromSecureStorage()).currentlyLoggedInId;
-    if (id == null) {
-      return logoutEveryone();
-    }
-    if (analyticsEnabledGlobally && analytics != null) {
-      analytics!.logEvent(name: 'logout');
-    }
-    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    bool isDuplicate = false;
-    for (int i = 0; i < loginData.users.length; i++) {
-      if (loginData.users[i].username == loginData.users[id].username && i != id) {
-        isDuplicate = true;
-        break;
-      }
-    }
-    if (!isDuplicate) {
-      AwesomeNotifications().removeChannel(NotificationIds.dnesniJidloChannel(loginData.users[id].username, loginData.users[id].url));
-      AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(loginData.users[id].username, loginData.users[id].url));
-      AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(loginData.users[id].username, loginData.users[id].url));
-    }
-    //removing just the one item from the array
-
-    //ensuring correct loginData.currentlyloggedInId
-    if (id == loginData.currentlyLoggedInId) {
-      loginData.currentlyLoggedInId = loginData.users.length - 2;
-    } else if (loginData.currentlyLoggedInId != null && loginData.currentlyLoggedInId! > id) {
-      loginData.currentlyLoggedInId = loginData.currentlyLoggedInId! - 1;
-    }
-
-    loginData.users.removeAt(id);
-    // if it's empty make sure to throw user on login screen
-    if (loginData.users.isEmpty) {
-      loginData.currentlyLoggedInId = null;
-    }
-    await saveLoginToSecureStorage(loginData);
-    if (loginData.currentlyLoggedInId == null) {
-      await logoutEveryone();
-    }
-    return;
-  }
-
-  ///logs out everyone
-  Future<void> logoutEveryone() async {
-    LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    loginData.currentlyLoggedInId = null;
-    loginData.users.clear();
-    for (int id = 0; id < loginData.users.length; id++) {
-      AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(loginData.users[id].username, loginData.users[id].url));
-      AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(loginData.users[id].username, loginData.users[id].url));
-    }
-    //even though I don't like this it is safe because this is called rarely
-    _canteenInstance = null;
-    _canteenData = null;
-    saveLoginToSecureStorage(loginData);
-    return;
   }
 
   Future<LoggedAccounts> getLoginDataFromSecureStorage() async {
@@ -539,12 +354,12 @@ class LoggedInCanteen {
     return;
   }
 
-  Future<bool> loginAsUsername(String username, {bool saveToStorage = false}) async {
+  Future<bool> loginAsUsername(String username) async {
     LoggedAccounts loginData = await getLoginDataFromSecureStorage();
-    for (Account uzivatel in loginData.users) {
+    for (Account uzivatel in loginData.accounts) {
       try {
         if (uzivatel.username == username) {
-          await _login(uzivatel.url, uzivatel.username, uzivatel.password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);
+          await login(uzivatel.url, uzivatel.username, uzivatel.password, safetyId: (_canteenData?.id ?? 0) + 1, indexLunches: false);
           return true;
         }
       } catch (e) {

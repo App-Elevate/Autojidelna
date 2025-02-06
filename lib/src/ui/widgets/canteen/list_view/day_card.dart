@@ -6,9 +6,9 @@ import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
-import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/types/theme.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/error_loading_data.dart';
-import 'package:autojidelna/src/ui/widgets/canteen/food_section_list_tile.dart';
+import 'package:autojidelna/src/ui/widgets/canteen/list_view/food_section_list_tile.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
@@ -61,16 +61,14 @@ class _DayCard extends StatelessWidget {
   final int dayIndex;
   @override
   Widget build(BuildContext context) {
-    return Consumer<DishesOfTheDay>(
-      builder: (context, data, ___) {
-        Jidelnicek? menu = data.getMenu(dayIndex);
+    return Selector<DishesOfTheDay, Jidelnicek? Function(int)>(
+      selector: (_, p1) => p1.getMenu,
+      builder: (_, getMenu, ___) {
+        Jidelnicek? menu = getMenu(dayIndex);
         if (menu == null) return const Center(child: CircularProgressIndicator());
 
         Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
-        return Card.outlined(
-          elevation: 0.6,
-          color: Theme.of(context).colorScheme.onInverseSurface,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16), side: BorderSide(color: Theme.of(context).dividerTheme.color!)),
+        return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             children: [

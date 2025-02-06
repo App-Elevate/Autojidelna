@@ -1,39 +1,28 @@
 import 'dart:async';
 
+import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
-import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
+import 'package:autojidelna/src/logic/show_snack_bar.dart';
+import 'package:autojidelna/src/logic/statistics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
-import 'package:autojidelna/src/ui/widgets/snackbar.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 late Canteen canteen;
-void snackBarMessage(String message) {
-  // Find the ScaffoldMessenger in the widget tree
-  // and use it to show a SnackBar.
-  // toto je upozornění dole (Snackbar)
-  // snackbarshown je aby se snackbar nezobrazil vícekrát
-  BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext;
-  if (ctx != null) {
-    unawaited(
-      ScaffoldMessenger.of(ctx).showSnackBar(snackbarFunction(message)).closed.then(
-            (SnackBarClosedReason reason) {},
-          ),
-    );
-  }
-}
 
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
   final prov = context.read<DishesOfTheDay>();
   Ordering ordering = context.read<Ordering>();
+  Uzivatel uzivatel = context.read<UserProvider>().user!.data;
 
   DateTime day = dish.den;
   int dayIndex = convertDateTimeToIndex(day);
@@ -49,9 +38,9 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
 
   ordering.ordering = true;
   try {
-    canteen = await loggedInCanteen.canteenInstance;
+    canteen = App.getIt<Canteen>();
   } catch (e) {
-    snackBarMessage(lang.errorsObjednavaniJidla);
+    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
     return;
   }
 
@@ -59,7 +48,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   try {
     jidloSafe = (await loggedInCanteen.getLunchesForDay(day, requireNew: true)).jidla[dishIndex];
   } catch (e) {
-    snackBarMessage(lang.errorsObjednavaniJidla);
+    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
     if (context.mounted) ordering.ordering = false;
 
     return;
@@ -75,9 +64,9 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
             jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
-          loggedInCanteen.pridatStatistiku(TypStatistiky.objednavka);
+          StatisticsService().addStatistic(StatisticType.order);
         } catch (e) {
-          snackBarMessage(lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
@@ -102,23 +91,23 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
                   }
                 }
                 updateJidelnicek(jidelnicek);
-                loggedInCanteen.pridatStatistiku(TypStatistiky.objednavka);
+                StatisticsService().addStatistic(StatisticType.order);
               } catch (e) {
-                snackBarMessage(lang.errorsObjednavaniJidla);
+                showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
               }
             }
           }
           if (nalezenoJidloNaBurze == false) {
-            snackBarMessage(lang.errorsJidloNeniNaBurze);
+            showErrorSnackBar(SnackBarOrderingErrors.dishNotInMarketplace(lang));
           }
         } catch (e) {
-          snackBarMessage(lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
     case StavJidla.objednanoVyprsenaPlatnost:
       {
-        snackBarMessage(lang.errorsObedNelzeZrusit);
+        showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
       }
       break;
     case StavJidla.objednanoNelzeOdebrat:
@@ -131,25 +120,25 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          snackBarMessage(lang.errorsObjednavaniJidla);
+          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
         }
       }
       break;
     case StavJidla.nedostupne:
       {
         if (day.isBefore(DateTime.now())) {
-          snackBarMessage(lang.errorsNelzeObjednat);
+          showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
           break;
         }
         try {
-          if (loggedInCanteen.uzivatel!.kredit < jidloSafe.cena!) {
-            snackBarMessage(lang.errorsNelzeObjednatKredit);
+          if (uzivatel.kredit < jidloSafe.cena!) {
+            showErrorSnackBar(SnackBarOrderingErrors.insufficientCredit(lang));
             break;
           }
         } catch (e) {
           //pokud se nepodaří načíst kredit, tak to necháme být
         }
-        snackBarMessage(lang.errorsNelzeObjednat);
+        showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
       }
       break;
     case StavJidla.objednano:
@@ -162,7 +151,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          snackBarMessage(lang.errorsChybaPriRuseni);
+          showErrorSnackBar(SnackBarOrderingErrors.cancelingOrder(lang));
         }
       }
       break;
@@ -176,7 +165,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
-          snackBarMessage(lang.errorsChybaPriDavaniNaBurzu);
+          showErrorSnackBar(SnackBarOrderingErrors.addingToMarketplace(lang));
         }
       }
       break;
@@ -200,7 +189,7 @@ void cannotBeOrderedFix(BuildContext context, int dayIndex) async {
       }
     }
   } catch (e) {
-    snackBarMessage(lang.errorsBadConnection);
+    showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
   }
 }
 
@@ -276,7 +265,8 @@ String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
 
         //hope it's not important
       }
-      if (loggedInCanteen.uzivatel!.kredit < dish.cena! && !day.isBefore(DateTime.now())) {
+      Uzivatel uzivatel = context.read<UserProvider>().user!.data;
+      if (uzivatel.kredit < dish.cena! && !day.isBefore(DateTime.now())) {
         return lang.nedostatekKreditu;
       } else {
         return lang.nelzeObjednat;

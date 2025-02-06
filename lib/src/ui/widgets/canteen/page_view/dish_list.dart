@@ -1,6 +1,6 @@
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/ui/widgets/canteen/page_view_food_card.dart';
+import 'package:autojidelna/src/ui/widgets/canteen/page_view/page_view_food_card.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 

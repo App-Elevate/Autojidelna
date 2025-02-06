@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
-import 'package:autojidelna/src/ui/widgets/canteen/dish_list.dart';
+import 'package:autojidelna/src/ui/widgets/canteen/page_view/dish_list.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/error_loading_data.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';

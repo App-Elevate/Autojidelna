@@ -1,5 +1,6 @@
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
+import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/foundation.dart';
 
 /// Initialize the app
@@ -29,5 +30,11 @@ class InitApp {
     // Get the elapsed time
     Duration elapsed = stopwatch.elapsed;
     debugPrint('Initialization took ${elapsed.inMilliseconds} ms');
+  }
+
+  /// Call this after retrieving the URL
+  void registerCanteen(String url) async {
+    if (App.getIt.isRegistered<Canteen>()) App.getIt.unregister<Canteen>();
+    App.getIt.registerLazySingleton<Canteen>(() => Canteen(url));
   }
 }

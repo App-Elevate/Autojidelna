@@ -12,33 +12,11 @@ class TextsCs extends Texts {
   String get about => 'O aplikaci';
 
   @override
-  String get aboutCheckForUpdates => 'Zkontrolovat aktualizace';
-
-  @override
   String aboutCopyRight(DateTime time) {
     final intl.DateFormat timeDateFormat = intl.DateFormat.y(localeName);
     final String timeString = timeDateFormat.format(time);
 
     return '© 2023 - $timeString Tomáš Protiva, Matěj Verhaegen a kolaborátoři\nZveřejněno pod licencí GNU GPLv3';
-  }
-
-  @override
-  String get aboutLatestVersion =>
-      'Aktuálně jste na nejnovější verzi aplikace 👍';
-
-  @override
-  String get aboutSourceCode => 'Zdrojový kód';
-
-  @override
-  String aboutVersionSubtitle(String arg, String version) {
-    String _temp0 = intl.Intl.selectLogic(
-      arg,
-      {
-        'true': 'Debug',
-        'other': 'Stable',
-      },
-    );
-    return '$_temp0 $version';
   }
 
   @override
@@ -61,6 +39,9 @@ class TextsCs extends Texts {
 
   @override
   String get amoledModeSubtitle => 'Přidej se k temné straně síly!';
+
+  @override
+  String get amoledSubtitle => 'Přidej se k temné straně síly!';
 
   @override
   String get analytics => 'Shromažďování údajů';
@@ -97,6 +78,9 @@ class TextsCs extends Texts {
   String get appearance => 'Vzhled';
 
   @override
+  String get appearence => 'Vzhled';
+
+  @override
   String get burzaAlertDialogContent =>
       'Přidáváte jídlo na burzu. Peníze se Vám vrátí pouze v případě, že si jídlo objedná někdo jiný.';
 
@@ -131,14 +115,33 @@ class TextsCs extends Texts {
   String get darkThemeMode => 'Tmavý';
 
   @override
+  String get dataCollection => 'Shromažďování údajů';
+
+  @override
   String get dataCollectionAgreement =>
       'Používáním aplikace souhlasíte se zasíláním anonymních dat. ';
+
+  @override
+  String get dataCollectionDescription_1 =>
+      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
+
+  @override
+  String get dataCollectionDescription_2 => 'Zdrojovém kódu';
+
+  @override
+  String get dataCollectionDescription_3 => ' nebo v ';
+
+  @override
+  String get dataCollectionDescription_4 => 'Zásadách ochrany osobních údajů.';
 
   @override
   String get dateFormat => 'Formát dat';
 
   @override
   String get debug => 'Debug';
+
+  @override
+  String get display => 'Zobrazení';
 
   @override
   String dochazejiciKreditChannelDescription(String username) {
@@ -155,92 +158,117 @@ class TextsCs extends Texts {
   String get drinks => 'Pití';
 
   @override
-  String get errorsBadConnection =>
-      'Nepodařilo se připojit k serveru icanteen. Zkuste to znovu později';
+  String get error => 'Chyba';
 
   @override
-  String get errorsBadLogin => 'Nesprávné přihlašovací údaje';
+  String get errorsAccountNotFound => 'Účet nenalezen';
 
   @override
-  String get errorsBadPassword => 'Špatné heslo nebo uživatelské jméno';
+  String get errorsAccountNotFoundSubtitle =>
+      'Jste si jistí, že existujete? Přihlaste se ručně.';
 
   @override
-  String get errorsBadUrl => 'Nesprávné Url';
+  String get errorsAddingToMarketplace => 'Chyba při dávání jídla na burzu';
 
   @override
-  String get errorsChangelog => 'Nepodařilo se získat změny :/';
+  String get errorsAddingToMarketplaceSubtitle =>
+      'Něco se pokazilo, zkuste to znovu.';
 
   @override
-  String get errorsChybaPriDavaniNaBurzu =>
-      'Nastala chyba při dávání jídla na burzu';
+  String get errorsCancelingOrder => 'Chyba při rušení objednávky';
 
   @override
-  String get errorsChybaPriRuseni => 'Nastala chyba při rušení objednávky';
+  String get errorsCancelingOrderSubtitle => 'Objednávku se nepodařilo zrušit.';
 
   @override
-  String get errorsDownloadingApp => 'Aktualizace aplikace selhala';
+  String get errorsConnectionFailed => 'Server si dal pauzu';
 
   @override
-  String get errorsDownloadingAppDetail =>
-      'Při Stahování aplikace došlo k chybě. Ověřte vaše připojení a zkuste znovu.';
+  String get errorsConnectionFailedSubtitle =>
+      'Zkuste to později, možná si jen dává kafe.';
 
   @override
-  String get errorsJidloNeniNaBurze => 'Jídlo není na burze';
+  String get errorsDishCancellationExpired => 'Objednávku nelze zrušit';
 
   @override
-  String get errorsLoad => 'Selhalo načítání jídelníčku';
+  String get errorsDishCancellationExpiredSubtitle =>
+      'Platnost objednávky vypršela, není už možné ji zrušit.';
+
+  @override
+  String get errorsDishCannotBeOrdered => 'Oběd nelze objednat';
+
+  @override
+  String get errorsDishCannotBeOrderedSubtitle =>
+      'Momentálně to není možné. Zkuste to za chvíli.';
+
+  @override
+  String get errorsDishNotInMarketplace => 'Jídlo není na burze';
+
+  @override
+  String get errorsDishNotInMarketplaceSubtitle =>
+      'Možná jste si vybrali něco, co tam už není. Zkuste jinou možnost.';
+
+  @override
+  String get errorsDishOrdering => 'Chyba při objednávání jídla';
+
+  @override
+  String get errorsDishOrderingSubtitle =>
+      'Něco se pokazilo při odesílání vaší objednávky. Zkuste to znovu.';
+
+  @override
+  String get errorsGotInternetConnection => 'Jste zpět online!';
+
+  @override
+  String get errorsGotInternetConnectionSubtitle =>
+      'Síť je v pořádku. Pokračujeme!';
+
+  @override
+  String get errorsInsufficientCredit => 'Nedostatečný kredit';
+
+  @override
+  String get errorsInsufficientCreditSubtitle =>
+      'Chcete-li objednat, přidejte kredit. Bez něj to nepůjde.';
 
   @override
   String get errorsLoadingData => 'Nastala chyba při načítání dat';
 
   @override
-  String get errorsLoginFailed => 'Přihlašování selhalo';
+  String get errorsMenuLoadingFailed => 'Chyba při načítání jídelníčku';
 
   @override
-  String errorsLoginFailedDetail(String error) {
-    return 'Při přihlašování došlo k chybě: $error';
-  }
+  String get errorsMenuLoadingFailedSubtitle =>
+      'Něco se zadrhlo při načítání nabídky. Zkuste to později.';
 
   @override
-  String get errorsNelzeObjednat => 'Oběd nelze objednat';
+  String get errorsNoInternetConnection => 'Žádné připojení k internetu';
 
   @override
-  String get errorsNelzeObjednatKredit =>
-      'Oběd nelze objednat - Nedostatečný kredit.';
+  String get errorsNoInternetConnectionSubtitle =>
+      'Kontrolujeme síť... ujistěte se, že jste online.';
 
   @override
-  String get errorsNoInternet => 'Nemáte připojení k internetu';
+  String get errorsWrongCredentials => 'Špatné údaje, špatný den?';
 
   @override
-  String get errorsObedNelzeZrusit =>
-      'Oběd nelze zrušit. Platnost objednávky vypršela.';
+  String get errorsWrongCredentialsSubtitle =>
+      'Zkuste to znovu – nebo si je změňte.';
 
   @override
-  String get errorsObjednavaniJidla => 'Nastala chyba při objednávání jídla';
+  String get errorsWrongCredentialsTextField =>
+      'Přihlašovací údaje jsou nesprávné.';
 
   @override
-  String get errorsUndefined => 'Nastala Chyba';
+  String get errorsWrongUrl => 'Špatná adresa';
 
   @override
-  String get errorsUpdatingData => 'Nastala chyba při aktualizaci dat';
+  String get errorsWrongUrlSubtitle =>
+      'Tahle cesta nikam nevede. Zkontrolujte adresu.';
 
   @override
   String get experimental => 'Experimentální';
 
   @override
   String get gettingDataNotifications => 'Získávám data pro oznámení';
-
-  @override
-  String internetConnectionState(String arg) {
-    String _temp0 = intl.Intl.selectLogic(
-      arg,
-      {
-        'other': 'Odpojeno od internetu',
-        'true': 'Připojeno k internetu',
-      },
-    );
-    return '$_temp0';
-  }
 
   @override
   String jidloChannelDescription(String username) {
@@ -278,24 +306,28 @@ class TextsCs extends Texts {
   String get login => 'Přihlásit se';
 
   @override
-  String get loginButton => 'Přihlásit se';
-
-  @override
-  String get loginPasswordFieldHint => 'Zadejte prosím své heslo';
+  String get loginPasswordFieldHint => 'Zadejte heslo';
 
   @override
   String get loginPasswordFieldLabel => 'Heslo';
 
   @override
-  String get loginUrlFieldHint =>
-      'Zadejte prosím url stránky icanteen - např. jidelna.trebesin.cz';
+  String get loginSuccess => 'Přihlášení úspěšné!';
+
+  @override
+  String loginSuccessSubtitle(String username) {
+    return 'Vítejte zpět, $username!';
+  }
+
+  @override
+  String get loginUrlFieldHint => 'Zadejte adresu stránky icanteen';
 
   @override
   String get loginUrlFieldLabel =>
-      'Url stránky icanteen - např. jidelna.trebesin.cz';
+      'Adresa stránky icanteen - např. jidelna.trebesin.cz';
 
   @override
-  String get loginUserFieldHint => 'Zadejte prosím své uživatelské jméno';
+  String get loginUserFieldHint => 'Zadejte uživatelské jméno';
 
   @override
   String get loginUserFieldLabel => 'Uživatelské jméno';
@@ -328,20 +360,6 @@ class TextsCs extends Texts {
   String get nedostatekKreditu => 'Nedostatek kreditu';
 
   @override
-  String get neededPermission => 'Potřebné oprávnění';
-
-  @override
-  String get neededPermissionDescription_1 =>
-      'Pro automatickou instalaci aktualizace je potřeba povolit oprávnění pro instalaci aplikací z neznámých zdrojů.';
-
-  @override
-  String get neededPermissionDescription_2 => 'Ta může vypadat takto:';
-
-  @override
-  String get neededPermissionDescription_3 =>
-      'Toto oprávnění používáme pouze k aktualizaci aplikace. Pokud si nepřejete oprávnění povolit můžete stále stáhnout apk z githubu.';
-
-  @override
   String get nelzeObjednat => 'Nelze objednat';
 
   @override
@@ -357,16 +375,16 @@ class TextsCs extends Texts {
   String get notificationDochaziVamKredit => 'Dochází vám kredit!';
 
   @override
-  String notificationKreditPro(String first, String last, String ammount) {
-    return 'Kredit pro $first $last: $ammount Kč';
+  String notificationKreditPro(String username, String ammount) {
+    return 'Kredit pro $username: $ammount Kč';
   }
 
   @override
   String get notificationObjednejteSi => 'Objednejte si na příští týden';
 
   @override
-  String notificationObjednejteSiDetail(String first, String last) {
-    return 'Uživatel $first $last si stále ještě neobjenal na příští týden';
+  String notificationObjednejteSiDetail(String username) {
+    return 'Uživatel $username si stále ještě neobjenal na příští týden';
   }
 
   @override
@@ -404,14 +422,6 @@ class TextsCs extends Texts {
   String get ok => 'OK';
 
   @override
-  String get orders => 'Objednávky';
-
-  @override
-  String ordersWithAutojidelna(int ammount) {
-    return 'Objednávky s Autojídelnou: $ammount';
-  }
-
-  @override
   String get other => 'Ostatní';
 
   @override
@@ -436,26 +446,6 @@ class TextsCs extends Texts {
   String get pickLocation => 'Vyberte výdejnu:';
 
   @override
-  String get popupChangelogNotAvailable => 'Changelog není k dispozici';
-
-  @override
-  String get popupNewUpdateInfo => 'Nová verze přináší: ';
-
-  @override
-  String popupNewVersionAvailable(String version) {
-    return 'Nová verze aplikace - $version';
-  }
-
-  @override
-  String get popupNotNow => 'Teď ne';
-
-  @override
-  String get popupShowOnGithub => 'Zobrazit na Githubu';
-
-  @override
-  String get popupUpdate => 'Aktualizovat';
-
-  @override
   String get privacyPolicy => 'Zásady ochrany osobních údajů';
 
   @override
@@ -465,59 +455,12 @@ class TextsCs extends Texts {
   String get settings => 'Nastavení';
 
   @override
-  String get settingsAmoled => 'AMOLED mód';
-
-  @override
-  String get settingsAmoledSub => 'Přidej se k temné straně síly!';
-
-  @override
-  String get settingsAnotherOptions => 'Další možnosti v nastavení systému...';
-
-  @override
-  String get settingsAppearence => 'Vzhled';
-
-  @override
-  String get settingsCalendarBigMarkers => 'Velké ukazatele v kalendáři';
-
-  @override
-  String get settingsDataCollection => 'Shromažďování údajů';
-
-  @override
-  String get settingsDataCollectionDescription_1 =>
-      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
-
-  @override
-  String get settingsDataCollectionDescription_2 => 'Zdrojovém kódu';
-
-  @override
-  String get settingsDataCollectionDescription_3 => ' nebo v ';
-
-  @override
-  String get settingsDataCollectionDescription_4 =>
-      'Zásadách ochrany osobních údajů.';
-
-  @override
-  String get settingsDebugForceNotifications => 'Force send notifications';
-
-  @override
-  String get settingsDebugNotifications => 'Send Notifications';
-
-  @override
-  String get settingsDebugOptions => 'Debug Options';
-
-  @override
-  String get settingsDisplay => 'Zobrazení';
-
-  @override
   String get settingsNemateObjednano => 'Nemáte objednáno na příští týden';
 
   @override
   String settingsNotificationFor(String username) {
     return 'Oznámení pro $username';
   }
-
-  @override
-  String get settingsNotificationTime => 'Čas oznámení: ';
 
   @override
   String get settingsRelativeTimestamps => 'Relativní časové značky';
@@ -574,9 +517,6 @@ class TextsCs extends Texts {
   String get stopAnalytics => 'Zastavit sledování analytických služeb';
 
   @override
-  String get switchAccountPanelTitle => 'Účty';
-
-  @override
   String get systemThemeMode => 'Systém';
 
   @override
@@ -610,29 +550,10 @@ class TextsCs extends Texts {
   String get themeModeSystem => 'Systém';
 
   @override
-  String get toastExit => 'Zmáčkněte tlačítko zpět pro ukončení aplikace';
-
-  @override
   String get tryAgain => 'Zkusit znovu';
 
   @override
   String get typeCrash => 'Napište \"crash\" pro pád aplikace';
-
-  @override
-  String get updateSnackbarDownloaded =>
-      'Aktualizace byla stažena, instalování';
-
-  @override
-  String updateSnackbarDownloading(int value) {
-    return 'Nová Aktualizace se stahuje - $value%';
-  }
-
-  @override
-  String get updateSnackbarError =>
-      'Došlo k chybě při stahování. Ověřte připojení a zkuste to znovu';
-
-  @override
-  String get updateSnackbarWaiting => 'Aktualizace - Čeká se na oprávnění';
 
   @override
   String get variableSymbol => 'Variabilní symbol';
