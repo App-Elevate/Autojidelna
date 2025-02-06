@@ -9,7 +9,7 @@ import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/auth_service.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
+import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 import 'package:background_fetch/background_fetch.dart';
@@ -158,6 +158,7 @@ Future<void> doNotifications({bool force = false}) async {
   //TODO: add more langueages
   final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
+  AuthService authService = AuthService();
   List<Account> limitedAccounts = await AuthService().getLimitedAccounts();
   AwesomeNotifications().createNotification(
     content: NotificationContent(
@@ -217,7 +218,8 @@ Future<void> doNotifications({bool force = false}) async {
     box.put(HiveKeys.lastNotificationCheck(limitedAccounts[i].username, limitedAccounts[i].url), nowString);
 
     try {
-      await loggedInCanteen.changeAccount(''); // Fix
+      await authService.changeAccount(limitedAccounts[i].username);
+      final User? user = await authService.loginByUsername(limitedAccounts[i].username);
       if (jidloDne || force) {
         Jidelnicek jidelnicek = await loggedInCanteen.getLunchesForDay(now);
         if (jidelnicek.jidla.isNotEmpty) {
@@ -229,11 +231,11 @@ Future<void> doNotifications({bool force = false}) async {
               AwesomeNotifications().createNotification(
                 content: NotificationContent(
                   id: 1024 - i,
-                  channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+                  channelKey: NotificationIds.dnesniJidloChannel(user!.username, user.canteenUrl),
                   actionType: ActionType.Default,
                   title: NotificationsTexts.jidloChannelName,
                   payload: {
-                    NotificationIds.payloadUser: limitedAccounts[i].username,
+                    NotificationIds.payloadUser: user.username,
                     NotificationIds.payloadIndex: k.toString(),
                     NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
@@ -246,11 +248,11 @@ Future<void> doNotifications({bool force = false}) async {
             AwesomeNotifications().createNotification(
               content: NotificationContent(
                 id: 1024 - i,
-                channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+                channelKey: NotificationIds.dnesniJidloChannel(user!.username, user.canteenUrl),
                 actionType: ActionType.Default,
                 title: NotificationsTexts.jidloChannelName,
                 payload: {
-                  NotificationIds.payloadUser: limitedAccounts[i].username,
+                  NotificationIds.payloadUser: user.username,
                   NotificationIds.payloadIndex: k.toString(),
                   NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
@@ -263,11 +265,11 @@ Future<void> doNotifications({bool force = false}) async {
           AwesomeNotifications().createNotification(
             content: NotificationContent(
               id: 1024,
-              channelKey: NotificationIds.dnesniJidloChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+              channelKey: NotificationIds.dnesniJidloChannel(user!.username, user.canteenUrl),
               actionType: ActionType.Default,
               title: NotificationsTexts.jidloChannelName,
               payload: {
-                NotificationIds.payloadUser: limitedAccounts[i].username,
+                NotificationIds.payloadUser: user.username,
               },
               body: lang.noFood,
             ),
@@ -276,7 +278,7 @@ Future<void> doNotifications({bool force = false}) async {
           AwesomeNotifications().cancel(1024);
         }
       }
-      Uzivatel uzivatel = (await loggedInCanteen.canteenData).uzivatel;
+      Uzivatel uzivatel = user!.data;
       //7 is limit for how many lunches we are gonna search for
       int objednano = 0;
       int cena = 0;
@@ -302,7 +304,7 @@ Future<void> doNotifications({bool force = false}) async {
         }
       }
       //parse ignore date to DateTime
-      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(limitedAccounts[i].username, limitedAccounts[i].url));
+      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(user.username, user.canteenUrl));
       DateTime ignoreDate;
       switch (ignoreDateStr) {
         //not ignored
@@ -323,10 +325,10 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: 512 - i,
-            channelKey: NotificationIds.kreditChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+            channelKey: NotificationIds.kreditChannel(user.username, user.canteenUrl),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationDochaziVamKredit,
-            payload: {NotificationIds.payloadUser: limitedAccounts[i].username},
+            payload: {NotificationIds.payloadUser: user.username},
             body: NotificationsTexts.notificationKreditPro(
               uzivatel.jmeno ?? '',
               uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? '',
@@ -335,7 +337,7 @@ Future<void> doNotifications({bool force = false}) async {
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.kreditChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+              key: NotificationIds.kreditChannel(user.username, user.canteenUrl),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,
@@ -345,7 +347,7 @@ Future<void> doNotifications({bool force = false}) async {
       }
       //pokud chybí aspoň 3 obědy z příštích 10 dní
       //parse ignore date to DateTime
-      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(limitedAccounts[i].username, limitedAccounts[i].url));
+      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(user.username, user.canteenUrl));
       DateTime ignoreDateObjednano;
       switch (ignoreDateStrObjednano) {
         //not ignored
@@ -366,22 +368,22 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: i,
-            channelKey: NotificationIds.objednanoChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+            channelKey: NotificationIds.objednanoChannel(user.username, user.canteenUrl),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationObjednejteSi,
-            payload: {NotificationIds.payloadUser: limitedAccounts[i].username},
+            payload: {NotificationIds.payloadUser: user.username},
             body: NotificationsTexts.notificationObjednejteSiDetail(uzivatel.jmeno ?? '', uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? ''),
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.objednatButton(limitedAccounts[i].username, limitedAccounts[i].url),
+              key: NotificationIds.objednatButton(user.username, user.canteenUrl),
               label: NotificationsTexts.objednatAction,
               isDangerousOption: false,
               actionType: ActionType.Default,
               enabled: true,
             ),
             NotificationActionButton(
-              key: NotificationIds.objednanoChannel(limitedAccounts[i].username, limitedAccounts[i].url),
+              key: NotificationIds.objednanoChannel(user.username, user.canteenUrl),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,
