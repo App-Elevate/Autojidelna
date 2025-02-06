@@ -14,12 +14,19 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+SafeAccount _$SafeAccountFromJson(Map<String, dynamic> json) {
+  return _SafeAccount.fromJson(json);
+}
+
 /// @nodoc
 mixin _$SafeAccount {
   @JsonKey(name: 'username')
   String get username => throw _privateConstructorUsedError;
   @JsonKey(name: 'url')
   String get url => throw _privateConstructorUsedError;
+
+  /// Serializes this SafeAccount to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of SafeAccount
   /// with the given fields replaced by the non-null parameter values.
@@ -113,12 +120,15 @@ class __$$SafeAccountImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$SafeAccountImpl extends _SafeAccount with DiagnosticableTreeMixin {
   const _$SafeAccountImpl(
       {@JsonKey(name: 'username') required this.username,
       @JsonKey(name: 'url') required this.url})
       : super._();
+
+  factory _$SafeAccountImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SafeAccountImplFromJson(json);
 
   @override
   @JsonKey(name: 'username')
@@ -151,6 +161,7 @@ class _$SafeAccountImpl extends _SafeAccount with DiagnosticableTreeMixin {
             (identical(other.url, url) || other.url == url));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, username, url);
 
@@ -161,6 +172,13 @@ class _$SafeAccountImpl extends _SafeAccount with DiagnosticableTreeMixin {
   @pragma('vm:prefer-inline')
   _$$SafeAccountImplCopyWith<_$SafeAccountImpl> get copyWith =>
       __$$SafeAccountImplCopyWithImpl<_$SafeAccountImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SafeAccountImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _SafeAccount extends SafeAccount {
@@ -168,6 +186,9 @@ abstract class _SafeAccount extends SafeAccount {
       {@JsonKey(name: 'username') required final String username,
       @JsonKey(name: 'url') required final String url}) = _$SafeAccountImpl;
   const _SafeAccount._() : super._();
+
+  factory _SafeAccount.fromJson(Map<String, dynamic> json) =
+      _$SafeAccountImpl.fromJson;
 
   @override
   @JsonKey(name: 'username')
