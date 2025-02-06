@@ -2,7 +2,6 @@ import 'package:autojidelna/firebase_options.dart';
 import 'package:autojidelna/src/_conf/tokens.dart';
 import 'package:autojidelna/src/_global/init_app.dart';
 import 'package:autojidelna/src/ui/material_app.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -51,9 +50,7 @@ void main() async {
 void runMyApp() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   // We don't want to send crash reports while in development. Web is not supported yet by Crashlytics.
   if (!kDebugMode && !kProfileMode && !kIsWeb && !kReleaseMode) {
@@ -80,7 +77,7 @@ void runMyApp() async {
   }
 
   await InitApp.init();
-  AwesomeNotifications().requestPermissionToSendNotifications();
+  // TODO: make a nice page for this: AwesomeNotifications().requestPermissionToSendNotifications();
 
   if (!kDebugMode) {
     runApp(
