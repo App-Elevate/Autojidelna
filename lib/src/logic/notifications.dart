@@ -437,14 +437,8 @@ class NotificationController {
       }
     }
     //přepnutí účtu, když uživatel klikne na notifikaci
-    if (receivedAction?.payload?[NotificationIds.payloadUser] != null) {
-      LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
-      for (Account uzivatel in loginData.accounts) {
-        if (uzivatel.username == receivedAction?.payload?[NotificationIds.payloadUser]) {
-          await loggedInCanteen.switchAccount(uzivatel.username);
-          break;
-        }
-      }
+    if (receivedAction != null && receivedAction.payload != null && receivedAction.payload![NotificationIds.payloadUser] != null) {
+      AuthService().changeAccount(receivedAction.payload![NotificationIds.payloadUser]!);
     }
     /*
     if (receivedAction?.payload?[NotificationIds.payloadIndex] != null) {
