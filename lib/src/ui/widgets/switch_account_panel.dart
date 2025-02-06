@@ -11,14 +11,9 @@ import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SwitchAccountPanel extends StatefulWidget {
+class SwitchAccountPanel extends StatelessWidget {
   const SwitchAccountPanel({super.key});
 
-  @override
-  State<SwitchAccountPanel> createState() => _SwitchAccountPanelState();
-}
-
-class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
@@ -33,7 +28,7 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
             List<Widget> accounts = [];
 
             for (int i = 0; i < prov.loggedInAccounts.length; i++) {
-              accounts.add(accountRow(context, prov.loggedInAccounts[i], currentAccount: prov.loggedInAccounts[i].username == prov.user!.username));
+              accounts.add(accountRow(context, prov.loggedInAccounts[i]));
             }
 
             return Flexible(
@@ -59,7 +54,10 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     );
   }
 
-  Widget accountRow(BuildContext context, SafeAccount safeAccount, {bool currentAccount = false}) {
+  Widget accountRow(BuildContext context, SafeAccount safeAccount) {
+    UserProvider prov = context.read<UserProvider>();
+    bool currentAccount = safeAccount == SafeAccount(username: prov.user!.username, url: prov.user!.canteenUrl);
+
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,19 +72,18 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         onPressed: () async {
           if (!context.mounted) return;
           if (!currentAccount) {
-            context.read<UserProvider>().logout(safeAccount);
+            prov.logout(safeAccount);
           } else {
             configuredDialog(
               context,
               builder: (BuildContext context) => logoutDialog(context, safeAccount),
             );
           }
-          setState(() {});
         },
       ),
       onTap: () async {
         if (currentAccount) return;
-        await context.read<UserProvider>().changeUser(safeAccount);
+        await prov.changeUser(safeAccount);
         if (context.mounted) context.router.replaceAll([const LoginLoading()]);
       },
     );
