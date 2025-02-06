@@ -70,7 +70,7 @@ class AuthService {
       }
     }
 
-    if (await _checkForDuplicates(account)) await _saveAccountToStorage(account);
+    if (!await _hasDuplicates(account)) await _saveAccountToStorage(account);
 
     try {
       user = User(
@@ -162,7 +162,7 @@ class AuthService {
   /// Checks for duplicates in logged accounts.
   ///
   /// Compares [Account.url] and [Account.username]
-  Future<bool> _checkForDuplicates(Account account) async {
+  Future<bool> _hasDuplicates(Account account) async {
     LoggedAccounts loginData = await _getDataFromStorage();
     for (Account loggedAccount in loginData.accounts) {
       if (loggedAccount.isSame(account)) return true;

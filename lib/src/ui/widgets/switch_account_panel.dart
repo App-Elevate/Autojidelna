@@ -31,8 +31,9 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
             if (prov.user == null) return const Flexible(child: SizedBox());
 
             List<Widget> accounts = [];
-            for (int i = 0; i < prov.usernames.length; i++) {
-              accounts.add(accountRow(context, prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
+
+            for (int i = 0; i < prov.loggedInAccounts.length; i++) {
+              accounts.add(accountRow(context, prov.loggedInAccounts[i], currentAccount: prov.loggedInAccounts[i].username == prov.user!.username));
             }
 
             return Flexible(

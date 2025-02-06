@@ -13,7 +13,7 @@ class UserProvider extends ChangeNotifier {
   List<SafeAccount> _loggedSafeAccounts = [];
 
   User? get user => _user;
-  List<SafeAccount> get usernames => _loggedSafeAccounts;
+  List<SafeAccount> get loggedInAccounts => _loggedSafeAccounts;
 
   Future<void> login(Account account) async {
     final user = await _authService.login(account);
