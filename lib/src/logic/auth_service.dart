@@ -60,7 +60,6 @@ class AuthService {
     }
 
     if (duplicates.isEmpty) await _saveAccountToStorage(account);
-    await loggedInCanteen.login(url, account.username, account.password); // TODO:temporary
 
     try {
       user = User(
@@ -74,6 +73,8 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
+
+    await loggedInCanteen.login(user); // TODO:temporary
 
     return user;
   }
