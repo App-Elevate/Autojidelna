@@ -16,7 +16,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-late Canteen canteen;
+late final Canteen _canteen;
 
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
@@ -38,7 +38,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
 
   ordering.ordering = true;
   try {
-    canteen = App.getIt<Canteen>();
+    _canteen = App.getIt<Canteen>();
   } catch (e) {
     showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
     return;
@@ -58,10 +58,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.neobjednano:
       {
         try {
-          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
+          Jidelnicek jidelnicek = await _canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == false) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await _canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
           StatisticsService().addStatistic(StatisticType.order);
@@ -80,13 +80,13 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
             if (jidloNaBurze.den == den && jidloNaBurze.varianta == varianta) {
               try {
                 // first try
-                Jidelnicek jidelnicek = await canteen.objednatZBurzy(jidloNaBurze);
+                Jidelnicek jidelnicek = await _canteen.objednatZBurzy(jidloNaBurze);
                 if (jidelnicek.jidla[dishIndex].objednano == false) {
-                  List<Burza> burza = await canteen.ziskatBurzu();
+                  List<Burza> burza = await _canteen.ziskatBurzu();
                   for (var jidloNaBurze in burza) {
                     if (jidloNaBurze.den == den && jidloNaBurze.varianta == varianta) {
                       // second try
-                      jidelnicek = await canteen.objednatZBurzy(jidloNaBurze);
+                      jidelnicek = await _canteen.objednatZBurzy(jidloNaBurze);
                     }
                   }
                 }
@@ -113,10 +113,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.objednanoNelzeOdebrat:
       {
         try {
-          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
+          Jidelnicek jidelnicek = await _canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == false) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await _canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
@@ -144,10 +144,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.objednano:
       {
         try {
-          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
+          Jidelnicek jidelnicek = await _canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == true) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await _canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
@@ -158,10 +158,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.naBurze:
       {
         try {
-          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
+          Jidelnicek jidelnicek = await _canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == true) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await _canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
