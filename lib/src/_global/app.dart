@@ -75,9 +75,9 @@ class App {
       try {
         List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
 
-        for (SafeAccount uzivatel in limitedAccounts) {
-          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
-          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
+        for (SafeAccount safeAccount in limitedAccounts) {
+          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(safeAccount));
+          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(safeAccount));
         }
       } catch (e) {
         //do nothing

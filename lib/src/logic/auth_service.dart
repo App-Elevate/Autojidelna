@@ -139,7 +139,7 @@ class AuthService {
     throwIf(account == null, AuthErrors.accountNotFound);
 
     await _removeAccountFromStorage(account!);
-    NotificationService().removeNotifications(account);
+    NotificationService().removeNotifications(SafeAccount.fromAccount(account));
 
     // TODO: move to analytics service or something
     if (analyticsEnabledGlobally && analytics != null) analytics!.logEvent(name: AnalyticsNames.logout);
@@ -149,8 +149,8 @@ class AuthService {
   Future<void> logoutEveryone() async {
     LoggedAccounts loginData = await _getDataFromStorage();
 
-    for (var account in loginData.accounts) {
-      NotificationService().removeNotifications(account);
+    for (Account account in loginData.accounts) {
+      NotificationService().removeNotifications(SafeAccount.fromAccount(account));
     }
 
     await _saveDataToStorage(LoggedAccounts());
