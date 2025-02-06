@@ -1,6 +1,7 @@
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_alert_dialog.dart';
@@ -78,7 +79,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
                 // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 User user = context.read<UserProvider>().user!;
-                Hive.box(Boxes.appState).put(HiveKeys.location(user.data.uzivatelskeJmeno ?? '', user.canteenUrl), i);
+                Hive.box(Boxes.appState).put(HiveKeys.location(SafeAccount(username: user.username, url: user.canteenUrl)), i);
               },
             ),
           ),

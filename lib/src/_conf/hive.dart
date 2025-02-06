@@ -1,3 +1,5 @@
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
+
 /// Hive boxes. Use these values to open a box.
 class Boxes {
   static const String appState = 'appState';
@@ -17,7 +19,7 @@ class HiveKeys {
   static const String firstTime = 'firstTime';
   static const String url = 'url';
   static const String hideBurzaAlertDialog = 'hideBurzaAlertDialog';
-  static String location(String userName, String url) => 'location_${userName}_$url';
+  static String location(SafeAccount account) => 'location_${account.username}_${account.url}';
 
   // theme box
   static const String themeMode = 'themeMode';
@@ -40,13 +42,13 @@ class HiveKeys {
   static const String analytics = 'analytics';
 
   // notification box
-  static String lastNotificationCheck(String userName, String url) => 'lastCheck_${userName}_$url';
-  static String lastJidloDneCheck(String userName, String url) => 'lastJidloDneCheck_${userName}_$url';
-  static String nemateObjednanoNotifications(String userName, String url) => 'ignore_objednat_${userName}_$url';
+  static String lastNotificationCheck(SafeAccount account) => 'lastCheck_${account.username}_${account.url}';
+  static String lastJidloDneCheck(SafeAccount account) => 'lastJidloDneCheck_${account.username}_${account.url}';
+  static String nemateObjednanoNotifications(SafeAccount account) => 'ignore_objednat_${account.username}_${account.url}';
   static const String onlyNemateObjednanoNotifications = 'ignore_objednat_';
-  static String kreditNotifications(String userName, String url) => 'ignore_kredit_${userName}_$url';
+  static String kreditNotifications(SafeAccount account) => 'ignore_kredit_${account.username}_${account.url}';
   static const String onlykreditNotifications = 'ignore_kredit_';
-  static String dailyFoodInfo(String userName, String url) => 'sendFoodInfo_${userName}_$url';
+  static String dailyFoodInfo(SafeAccount account) => 'sendFoodInfo_${account.username}_${account.url}';
 
   // statistics box
   static const String statistikaObjednavka = 'statistika:objednavka';

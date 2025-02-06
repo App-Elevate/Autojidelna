@@ -97,7 +97,8 @@ class LoggedInCanteen {
       return Future.error(AuthErrors.connectionFailed);
     }
     if (indexLunches) {
-      int vydejna = (Hive.box(Boxes.appState).get(HiveKeys.location(user.username, user.canteenUrl), defaultValue: 0)) + 1;
+      int vydejna =
+          (Hive.box(Boxes.appState).get(HiveKeys.location(SafeAccount(username: user.username, url: user.canteenUrl)), defaultValue: 0)) + 1;
       (await canteenInstance).vydejna = vydejna;
       await _indexLunchesMonth();
       smartPreIndexing(DateTime.now());
