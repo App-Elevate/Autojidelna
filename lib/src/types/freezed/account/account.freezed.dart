@@ -132,11 +132,12 @@ class __$$AccountImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$AccountImpl with DiagnosticableTreeMixin implements _Account {
+class _$AccountImpl extends _Account with DiagnosticableTreeMixin {
   const _$AccountImpl(
       {@JsonKey(name: 'username') required this.username,
       @JsonKey(name: 'password') required this.password,
-      @JsonKey(name: 'url') required this.url});
+      @JsonKey(name: 'url') required this.url})
+      : super._();
 
   factory _$AccountImpl.fromJson(Map<String, dynamic> json) =>
       _$$AccountImplFromJson(json);
@@ -198,11 +199,12 @@ class _$AccountImpl with DiagnosticableTreeMixin implements _Account {
   }
 }
 
-abstract class _Account implements Account {
+abstract class _Account extends Account {
   const factory _Account(
       {@JsonKey(name: 'username') required final String username,
       @JsonKey(name: 'password') required final String password,
       @JsonKey(name: 'url') required final String url}) = _$AccountImpl;
+  const _Account._() : super._();
 
   factory _Account.fromJson(Map<String, dynamic> json) = _$AccountImpl.fromJson;
 

@@ -7,6 +7,8 @@ part 'account.g.dart';
 
 @freezed
 class Account with _$Account {
+  const Account._();
+
   const factory Account({
     @JsonKey(name: 'username') required String username,
     @JsonKey(name: 'password') required String password,
