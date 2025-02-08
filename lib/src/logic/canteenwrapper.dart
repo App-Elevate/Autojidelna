@@ -82,7 +82,6 @@ class LoggedInCanteen {
       _canteenData = CanteenData(
         id: (safetyId ?? 0) + 1,
         pocetJidel: {},
-        username: user.accountData.username,
         url: user.accountData.username,
         uzivatel:
             _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: user.accountData.username) : user.data,
