@@ -19,7 +19,7 @@ class OrderDishButton extends StatelessWidget {
       child: Consumer<DishesOfTheDay>(
         builder: (context, data, ___) {
           Jidelnicek? menu = data.getMenu(convertDateTimeToIndex(dish.den));
-          Jidlo updatedDish = menu!.jidla.where((e) => e.nazev == dish.nazev).first;
+          Jidlo updatedDish = menu!.jidla.firstWhere((e) => e == dish);
 
           return Consumer<Ordering>(
             builder: (context, prov, ___) {
