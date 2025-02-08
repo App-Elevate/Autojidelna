@@ -1,3 +1,4 @@
+import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
@@ -30,8 +31,9 @@ class _PageViewCanteenState extends State<PageViewCanteen> {
       },
       child: PageView.builder(
         controller: App.pageController,
-        onPageChanged: context.read<CanteenProvider>().setDayIndex,
         scrollDirection: Axis.horizontal,
+        itemCount: Dates.maximalDate.difference(Dates.minimalDate).inDays,
+        onPageChanged: context.read<CanteenProvider>().setDayIndex,
         itemBuilder: (_, index) => MenuOfTheDay(index),
       ),
     );
