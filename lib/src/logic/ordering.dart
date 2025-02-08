@@ -4,7 +4,6 @@ import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
-import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
@@ -21,7 +20,6 @@ late final Canteen _canteen;
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
   final prov = context.read<CanteenProvider>();
-  Ordering ordering = context.read<Ordering>();
   Uzivatel uzivatel = context.read<UserProvider>().user!.data;
 
   DateTime day = dish.den;
@@ -34,9 +32,9 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     prov.setNumberOfDishes(dayIndex, menu.jidla.length);
   }
 
-  if (ordering.ordering) return;
+  if (prov.ordering) return;
 
-  ordering.ordering = true;
+  prov.ordering = true;
   try {
     _canteen = App.getIt<Canteen>();
   } catch (e) {
@@ -49,7 +47,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     jidloSafe = (await loggedInCanteen.getLunchesForDay(day, requireNew: true)).jidla[dishIndex];
   } catch (e) {
     showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
-    if (context.mounted) ordering.ordering = false;
+    if (context.mounted) prov.ordering = false;
 
     return;
   }
@@ -170,7 +168,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       }
       break;
   }
-  if (context.mounted) ordering.ordering = false;
+  if (context.mounted) prov.ordering = false;
 }
 
 void cannotBeOrderedFix(BuildContext context, int dayIndex) async {

@@ -6,6 +6,7 @@ class CanteenProvider with ChangeNotifier {
   Map<int, Jidelnicek> _menus = {}; // Store menus by day index
   Map<int, int> _numberOfDishes = {};
   int _dayIndex = DateTime.now().difference(Dates.minimalDate).inDays; // Store day index separately if needed
+  bool _ordering = false;
 
   Map<int, Jidelnicek> get allMenus => _menus;
 
@@ -16,6 +17,8 @@ class CanteenProvider with ChangeNotifier {
   int? getNumberOfDishes(int dayIndex) => _numberOfDishes[dayIndex];
 
   int get dayIndex => _dayIndex;
+
+  bool get ordering => _ordering;
 
   void reset() {
     _menus = {};
@@ -43,6 +46,12 @@ class CanteenProvider with ChangeNotifier {
   void setDayIndex(int dayIndex) {
     if (_dayIndex == dayIndex) return;
     _dayIndex = dayIndex;
+    notifyListeners();
+  }
+
+  set ordering(bool ordering) {
+    if (_ordering == ordering) return;
+    _ordering = ordering;
     notifyListeners();
   }
 }
