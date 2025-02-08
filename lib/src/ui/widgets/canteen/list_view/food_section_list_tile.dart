@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
@@ -49,7 +49,7 @@ class _DishListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return Consumer<DishesOfTheDay>(
+    return Consumer<CanteenProvider>(
       builder: (context, data, ___) {
         Jidelnicek? menu = data.getMenu(convertDateTimeToIndex(dish.den));
         Jidlo updatedDish = menu!.jidla.where((e) => e.nazev == dish.nazev).first;

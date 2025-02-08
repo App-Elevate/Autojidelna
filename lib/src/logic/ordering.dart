@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
@@ -20,7 +20,7 @@ late final Canteen _canteen;
 
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
-  final prov = context.read<DishesOfTheDay>();
+  final prov = context.read<CanteenProvider>();
   Ordering ordering = context.read<Ordering>();
   Uzivatel uzivatel = context.read<UserProvider>().user!.data;
 
@@ -178,7 +178,7 @@ void cannotBeOrderedFix(BuildContext context, int dayIndex) async {
   await Future.delayed(const Duration(milliseconds: 200));
   try {
     if (!convertIndexToDatetime(dayIndex).isBefore(DateTime.now()) && context.mounted) {
-      final DishesOfTheDay dishesOfTheDay = context.read<DishesOfTheDay>();
+      final CanteenProvider dishesOfTheDay = context.read<CanteenProvider>();
       Jidelnicek jidelnicekCheck = await loggedInCanteen.getLunchesForDay(convertIndexToDatetime(dayIndex), requireNew: true);
 
       for (int i = 0; i < jidelnicekCheck.jidla.length; i++) {
@@ -228,7 +228,7 @@ bool isButtonEnabled(StavJidla stavJidla) {
 String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
   final lang = context.l10n;
   int dayIndex = convertDateTimeToIndex(dish.den);
-  Jidelnicek menu = context.select<DishesOfTheDay, Jidelnicek>((data) => data.getMenu(dayIndex)!);
+  Jidelnicek menu = context.select<CanteenProvider, Jidelnicek>((data) => data.getMenu(dayIndex)!);
   DateTime day = convertIndexToDatetime(dayIndex);
   switch (stavJidla) {
     case StavJidla.objednano:

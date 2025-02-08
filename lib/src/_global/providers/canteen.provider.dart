@@ -2,7 +2,7 @@ import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 
-class DishesOfTheDay with ChangeNotifier {
+class CanteenProvider with ChangeNotifier {
   Map<int, Jidelnicek> _menus = {}; // Store menus by day index
   Map<int, int> _numberOfDishes = {};
   int _dayIndex = DateTime.now().difference(Dates.minimalDate).inDays; // Store day index separately if needed

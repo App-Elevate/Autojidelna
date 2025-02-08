@@ -1,4 +1,4 @@
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/ordering.dart';
@@ -16,7 +16,7 @@ class OrderDishButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
-      child: Consumer<DishesOfTheDay>(
+      child: Consumer<CanteenProvider>(
         builder: (context, data, ___) {
           Jidelnicek? menu = data.getMenu(convertDateTimeToIndex(dish.den));
           Jidlo updatedDish = menu!.jidla.firstWhere((e) => e == dish);

@@ -1,4 +1,4 @@
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
@@ -13,7 +13,7 @@ class CalendarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int dayIndex = context.select<DishesOfTheDay, int>((prov) => prov.dayIndex);
+    final int dayIndex = context.select<CanteenProvider, int>((prov) => prov.dayIndex);
     final DateTime currentDate = convertIndexToDatetime(dayIndex);
 
     return SizedBox(

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
@@ -34,7 +34,7 @@ class _DayCardState extends State<DayCard> {
     _futureMenu = loggedInCanteen.getLunchesForDay(convertIndexToDatetime(widget.dayIndex));
     unawaited(
       _futureMenu!.then((menu) {
-        if (mounted) context.read<DishesOfTheDay>().setMenu(widget.dayIndex, menu);
+        if (mounted) context.read<CanteenProvider>().setMenu(widget.dayIndex, menu);
       }),
     );
   }
@@ -61,7 +61,7 @@ class _DayCard extends StatelessWidget {
   final int dayIndex;
   @override
   Widget build(BuildContext context) {
-    return Selector<DishesOfTheDay, Jidelnicek? Function(int)>(
+    return Selector<CanteenProvider, Jidelnicek? Function(int)>(
       selector: (_, p1) => p1.getMenu,
       builder: (_, getMenu, ___) {
         Jidelnicek? menu = getMenu(dayIndex);

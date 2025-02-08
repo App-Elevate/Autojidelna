@@ -3,7 +3,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_global/providers/date_picker_provider.dart';
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/change_date.dart';
@@ -27,7 +27,7 @@ showCustomDatePicker(BuildContext context) {
   String locale = Localizations.localeOf(context).toLanguageTag();
 
   bool bigMarkersEnabled = context.read<Settings>().bigCalendarMarkers;
-  DateTime currentDate = convertIndexToDatetime(context.read<DishesOfTheDay>().dayIndex);
+  DateTime currentDate = convertIndexToDatetime(context.read<CanteenProvider>().dayIndex);
 
   ColorScheme colorScheme = Theme.of(context).colorScheme;
   final TextStyle defaultTextStyle = AppThemes.textTheme.titleMedium!;
@@ -37,7 +37,7 @@ showCustomDatePicker(BuildContext context) {
   List<DateTime> availableFoodDays = [];
 
   List<dynamic> eventLoader(DateTime day) {
-    Jidelnicek? menu = context.read<DishesOfTheDay>().getMenu(convertDateTimeToIndex(day));
+    Jidelnicek? menu = context.read<CanteenProvider>().getMenu(convertDateTimeToIndex(day));
 
     if (menu == null) return [];
     if (!bigMarkersEnabled) return menu.jidla;
