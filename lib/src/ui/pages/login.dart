@@ -9,7 +9,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/password_state.dart';
+import 'package:autojidelna/src/types/freezed/password_state.dart/password_state.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/gestures.dart';
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
       case LoginFormErrorField.url:
         urlErrorText.value = text;
         usernameErrorState.value = false;
-        passwordNotifier.value = state.copyWith(errorText: text);
+        passwordNotifier.value = state.copyWith(errorText: null);
         break;
       default:
         urlErrorText.value = null;
