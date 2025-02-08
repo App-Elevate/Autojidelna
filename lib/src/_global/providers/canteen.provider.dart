@@ -20,15 +20,6 @@ class CanteenProvider with ChangeNotifier {
 
   bool get ordering => _ordering;
 
-  void reset() {
-    _menus = {};
-    _numberOfDishes = {};
-  }
-
-  void resetMenu() {
-    _menus = {};
-  }
-
   void setMenu(int dayIndex, Jidelnicek menu) {
     if (_menus[dayIndex] == menu) return;
     _menus.update(dayIndex, (_) => menu, ifAbsent: () => menu);
