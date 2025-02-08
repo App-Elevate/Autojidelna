@@ -208,6 +208,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void loginFieldCheck(BuildContext context, Texts lang) async {
+    FocusManager.instance.primaryFocus?.unfocus();
     if (!LoginPage._formKey.currentState!.validate()) return;
 
     // If the form is valid, save the form fields.
