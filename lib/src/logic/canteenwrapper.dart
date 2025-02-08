@@ -43,7 +43,6 @@ class LoggedInCanteen {
   CanteenData? _canteenData;
   Canteen? _canteenInstance;
 
-  /// Can throw ConnectionErrors
   Future<Canteen> get canteenInstance async {
     if (_canteenInstance != null && _canteenInstance!.prihlasen) {
       return _canteenInstance!;
@@ -51,7 +50,6 @@ class LoggedInCanteen {
     return _canteenInstance!;
   }
 
-  /// Can throw ConnectionErrors
   Future<CanteenData> get canteenData async {
     if (_canteenData != null && _canteenInstance!.prihlasen) {
       return _canteenData!;
