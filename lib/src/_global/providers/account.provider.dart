@@ -27,7 +27,7 @@ class UserProvider extends ChangeNotifier {
     if (user == null) return;
     await _authService.logout(safeAccount);
     _loggedSafeAccounts = List.from(_loggedSafeAccounts)..remove(safeAccount);
-    if (_user!.username == safeAccount.username) _user = null;
+    if (_user!.accountData.username == safeAccount.username) _user = null;
     notifyListeners();
   }
 

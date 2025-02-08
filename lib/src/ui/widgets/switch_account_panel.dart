@@ -56,7 +56,7 @@ class SwitchAccountPanel extends StatelessWidget {
 
   Widget accountRow(BuildContext context, SafeAccount safeAccount) {
     UserProvider prov = context.read<UserProvider>();
-    bool currentAccount = safeAccount == SafeAccount(username: prov.user!.username, url: prov.user!.canteenUrl);
+    bool currentAccount = safeAccount == prov.user!.accountData;
 
     return ListTile(
       title: Row(

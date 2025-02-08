@@ -84,9 +84,10 @@ class LoggedInCanteen {
       _canteenData = CanteenData(
         id: (safetyId ?? 0) + 1,
         pocetJidel: {},
-        username: user.username,
-        url: user.canteenUrl,
-        uzivatel: _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: user.username) : user.data,
+        username: user.accountData.username,
+        url: user.accountData.username,
+        uzivatel:
+            _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: user.accountData.username) : user.data,
         jidlaNaBurze: _canteenInstance!.missingFeatures.contains(Features.burza) ? const [] : await _canteenInstance!.ziskatBurzu(),
         currentlyLoading: {},
         jidelnicky: {},
@@ -97,8 +98,7 @@ class LoggedInCanteen {
       return Future.error(AuthErrors.connectionFailed);
     }
     if (indexLunches) {
-      int vydejna =
-          (Hive.box(Boxes.appState).get(HiveKeys.location(SafeAccount(username: user.username, url: user.canteenUrl)), defaultValue: 0)) + 1;
+      int vydejna = (Hive.box(Boxes.appState).get(HiveKeys.location(user.accountData), defaultValue: 0)) + 1;
       (await canteenInstance).vydejna = vydejna;
       await _indexLunchesMonth();
       smartPreIndexing(DateTime.now());

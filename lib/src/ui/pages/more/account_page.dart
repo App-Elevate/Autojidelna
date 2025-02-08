@@ -33,7 +33,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(lang.account),
-        actions: [_appBarLogoutButton(context, SafeAccount(username: provUser.username, url: provUser.canteenUrl))],
+        actions: [_appBarLogoutButton(context, provUser.accountData)],
       ),
       body: ListView(
         children: [

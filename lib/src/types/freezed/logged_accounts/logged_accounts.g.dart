@@ -21,6 +21,6 @@ _$LoggedAccountsImpl _$$LoggedAccountsImplFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$$LoggedAccountsImplToJson(
         _$LoggedAccountsImpl instance) =>
     <String, dynamic>{
-      'logged_in_account': instance.loggedInAccount,
-      'accounts': instance.accounts,
+      'logged_in_account': instance.loggedInAccount?.toJson(),
+      'accounts': instance.accounts.map((e) => e.toJson()).toList(),
     };

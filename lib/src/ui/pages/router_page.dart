@@ -42,7 +42,7 @@ class _RouterPageState extends State<RouterPage> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance.addPostFrameCallback((_) => showLoginSuccessSnackBar(context.read<UserProvider>().user!.username));
+    SchedulerBinding.instance.addPostFrameCallback((_) => showLoginSuccessSnackBar(context.read<UserProvider>().user!.accountData.username));
   }
 
   @override

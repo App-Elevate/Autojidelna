@@ -76,8 +76,7 @@ class AuthService {
 
     try {
       user = User(
-        username: account.username,
-        canteenUrl: url,
+        accountData: SafeAccount.fromAccount(account),
         canteenLocations: (await instance.jidelnicekDen()).vydejny,
         data: instance.missingFeatures.contains(Features.ziskatUzivatele)
             ? Uzivatel(uzivatelskeJmeno: account.username)
