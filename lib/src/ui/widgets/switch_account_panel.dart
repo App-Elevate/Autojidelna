@@ -6,7 +6,7 @@ import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dar
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
-import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
