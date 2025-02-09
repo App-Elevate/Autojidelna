@@ -10,17 +10,17 @@ import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
 import 'package:autojidelna/src/logic/statistics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-late final Canteen _canteen;
-
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   final lang = context.l10n;
   final prov = context.read<CanteenProvider>();
   Uzivatel uzivatel = context.read<UserProvider>().user!.data;
+  final Canteen canteen;
 
   DateTime day = dish.den;
   int dayIndex = convertDateTimeToIndex(day);
@@ -36,9 +36,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
 
   prov.ordering = true;
   try {
-    _canteen = App.getIt<Canteen>();
+    canteen = App.getIt<Canteen>();
   } catch (e) {
     showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
+    prov.ordering = false;
     return;
   }
 
@@ -46,9 +47,8 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   try {
     jidloSafe = (await loggedInCanteen.getLunchesForDay(day, requireNew: true)).jidla[dishIndex];
   } catch (e) {
-    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
-    if (context.mounted) prov.ordering = false;
-
+    showInternetConnectionSnackBar();
+    prov.ordering = false;
     return;
   }
 
@@ -56,10 +56,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.neobjednano:
       {
         try {
-          Jidelnicek jidelnicek = await _canteen.objednat(jidloSafe);
+          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == false) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await _canteen.objednat(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
           StatisticsService().addStatistic(StatisticType.order);
@@ -78,13 +78,13 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
             if (jidloNaBurze.den == den && jidloNaBurze.varianta == varianta) {
               try {
                 // first try
-                Jidelnicek jidelnicek = await _canteen.objednatZBurzy(jidloNaBurze);
+                Jidelnicek jidelnicek = await canteen.objednatZBurzy(jidloNaBurze);
                 if (jidelnicek.jidla[dishIndex].objednano == false) {
-                  List<Burza> burza = await _canteen.ziskatBurzu();
+                  List<Burza> burza = await canteen.ziskatBurzu();
                   for (var jidloNaBurze in burza) {
                     if (jidloNaBurze.den == den && jidloNaBurze.varianta == varianta) {
                       // second try
-                      jidelnicek = await _canteen.objednatZBurzy(jidloNaBurze);
+                      jidelnicek = await canteen.objednatZBurzy(jidloNaBurze);
                     }
                   }
                 }
@@ -104,17 +104,15 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       }
       break;
     case StavJidla.objednanoVyprsenaPlatnost:
-      {
-        showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
-      }
+      showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
       break;
     case StavJidla.objednanoNelzeOdebrat:
       {
         try {
-          Jidelnicek jidelnicek = await _canteen.doBurzy(jidloSafe);
+          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == false) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await _canteen.doBurzy(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
@@ -142,10 +140,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.objednano:
       {
         try {
-          Jidelnicek jidelnicek = await _canteen.objednat(jidloSafe);
+          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == true) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await _canteen.objednat(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {
@@ -156,10 +154,10 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.naBurze:
       {
         try {
-          Jidelnicek jidelnicek = await _canteen.doBurzy(jidloSafe);
+          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == true) {
             jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
-            jidelnicek = await _canteen.doBurzy(jidelnicek.jidla[dishIndex]);
+            jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
         } catch (e) {

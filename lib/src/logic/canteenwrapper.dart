@@ -189,7 +189,7 @@ class LoggedInCanteen {
       return _canteenData!.currentlyLoading[date]!.future;
     }
     if (!await InternetConnectionChecker().hasConnection) {
-      return Future.error(AuthErrors.connectionFailed);
+      return Future.error(AuthErrors.noInternetConnection);
     }
     Jidelnicek jidelnicek = await _ziskatJidelnicekDen(date);
 
