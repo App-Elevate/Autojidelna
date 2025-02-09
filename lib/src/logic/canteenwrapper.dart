@@ -36,7 +36,6 @@ class LoggedInCanteen {
   LoggedInCanteen();
   Map<DateTime, Completer<Jidelnicek>> _currentlyLoading = {};
   Map<DateTime, bool> checked = {};
-  Completer<void>? _loginCompleter;
 
   Completer<void> _indexingCompleter = Completer<void>();
 
@@ -69,11 +68,6 @@ class LoggedInCanteen {
   ///
   /// [AuthErrors.connectionFailed] - connection to the canteen server failed
   Future<void> login(User user, {int? safetyId, bool indexLunches = true}) async {
-    if (_loginCompleter == null || _loginCompleter!.isCompleted) {
-      _loginCompleter = Completer();
-    } else {
-      return _loginCompleter!.future;
-    }
     _canteenInstance = App.getIt<Canteen>();
 
     try {
@@ -82,7 +76,6 @@ class LoggedInCanteen {
       _canteenData = CanteenData(
         id: (safetyId ?? 0) + 1,
         pocetJidel: {},
-        url: user.accountData.username,
         uzivatel:
             _canteenInstance!.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: user.accountData.username) : user.data,
         jidlaNaBurze: _canteenInstance!.missingFeatures.contains(Features.burza) ? const [] : await _canteenInstance!.ziskatBurzu(),
@@ -91,7 +84,6 @@ class LoggedInCanteen {
         vydejny: (await _canteenInstance!.jidelnicekDen()).vydejny,
       );
     } catch (e) {
-      _loginCompleter!.completeError(AuthErrors.connectionFailed);
       return Future.error(AuthErrors.connectionFailed);
     }
     if (indexLunches) {
@@ -100,7 +92,6 @@ class LoggedInCanteen {
       await _indexLunchesMonth();
       smartPreIndexing(DateTime.now());
     }
-    _loginCompleter!.complete();
   }
 
   Future<void> _indexLunchesMonth() async {
