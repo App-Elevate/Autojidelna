@@ -6,9 +6,9 @@ import 'package:provider/provider.dart';
 
 changeDate(BuildContext context, DateTime newDate, {bool animate = true}) async {
   if (!App.pageController.hasClients) return;
-  final int dayIndex = convertDateTimeToIndex(newDate);
 
-  context.read<CanteenProvider>().setDayIndex(dayIndex);
+  context.read<CanteenProvider>().setSelectedDate(newDate);
+  final int dayIndex = convertDateTimeToIndex(newDate);
 
   if (!animate) {
     App.pageController.jumpToPage(dayIndex);

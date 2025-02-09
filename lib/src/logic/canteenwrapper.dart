@@ -35,7 +35,6 @@ LoggedInCanteen loggedInCanteen = LoggedInCanteen();
 class LoggedInCanteen {
   LoggedInCanteen();
   Map<DateTime, Completer<Jidelnicek>> _currentlyLoading = {};
-  Map<DateTime, bool> checked = {};
 
   Completer<void> _indexingCompleter = Completer<void>();
 
@@ -71,7 +70,6 @@ class LoggedInCanteen {
     _canteenInstance = App.getIt<Canteen>();
 
     try {
-      checked = {};
       _currentlyLoading = {};
       _canteenData = CanteenData(
         id: (safetyId ?? 0) + 1,

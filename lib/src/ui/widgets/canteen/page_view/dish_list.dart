@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DishList extends StatelessWidget {
-  const DishList(this.dayIndex, {super.key});
-  final int dayIndex;
+  const DishList(this.date, {super.key});
+  final DateTime date;
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class DishList extends StatelessWidget {
       },
       child: Consumer<CanteenProvider>(
         builder: (_, data, child) {
-          Jidelnicek? menu = data.getMenu(dayIndex);
+          Jidelnicek? menu = data.getMenu(date);
           if (menu == null) return const Center(child: CircularProgressIndicator());
           List<Jidlo> dishList = menu.jidla;
 

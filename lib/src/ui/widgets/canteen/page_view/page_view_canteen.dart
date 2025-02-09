@@ -34,7 +34,7 @@ class _PageViewCanteenState extends State<PageViewCanteen> {
         scrollDirection: Axis.horizontal,
         itemCount: Dates.maximalDate.difference(Dates.minimalDate).inDays,
         onPageChanged: context.read<CanteenProvider>().setDayIndex,
-        itemBuilder: (_, index) => MenuOfTheDay(index),
+        itemBuilder: (_, index) => MenuOfTheDay(convertIndexToDatetime(index)),
       ),
     );
   }

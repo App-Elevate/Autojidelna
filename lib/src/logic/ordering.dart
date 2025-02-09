@@ -6,7 +6,6 @@ import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
-import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
 import 'package:autojidelna/src/logic/services/statistics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
@@ -22,14 +21,13 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   Uzivatel uzivatel = context.read<UserProvider>().user!.data;
   final Canteen canteen;
 
-  DateTime day = dish.den;
-  int dayIndex = convertDateTimeToIndex(day);
-  int dishIndex = prov.getMenu(dayIndex)!.jidla.indexOf(dish);
+  DateTime date = dish.den;
+  int dishIndex = prov.getMenu(date)!.jidla.indexOf(dish);
 
   void updateJidelnicek(Jidelnicek jidelnicek) {
-    Jidelnicek menu = prov.getMenu(dayIndex)!;
-    prov.setMenu(dayIndex, jidelnicek);
-    prov.setNumberOfDishes(dayIndex, menu.jidla.length);
+    Jidelnicek menu = prov.getMenu(date)!;
+    prov.setMenu(date, jidelnicek);
+    prov.setNumberOfDishes(date, menu.jidla.length);
   }
 
   if (prov.ordering) return;
@@ -45,7 +43,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
 
   Jidlo jidloSafe;
   try {
-    jidloSafe = (await loggedInCanteen.getLunchesForDay(day, requireNew: true)).jidla[dishIndex];
+    jidloSafe = (await loggedInCanteen.getLunchesForDay(date, requireNew: true)).jidla[dishIndex];
   } catch (e) {
     showInternetConnectionSnackBar();
     prov.ordering = false;
@@ -58,7 +56,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
         try {
           Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == false) {
-            jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
+            jidelnicek = await loggedInCanteen.getLunchesForDay(date, requireNew: true);
             jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
@@ -111,7 +109,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
         try {
           Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == false) {
-            jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
+            jidelnicek = await loggedInCanteen.getLunchesForDay(date, requireNew: true);
             jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
@@ -122,7 +120,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       break;
     case StavJidla.nedostupne:
       {
-        if (day.isBefore(DateTime.now())) {
+        if (date.isBefore(DateTime.now())) {
           showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
           break;
         }
@@ -142,7 +140,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
         try {
           Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
           if (jidelnicek.jidla[dishIndex].objednano == true) {
-            jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
+            jidelnicek = await loggedInCanteen.getLunchesForDay(date, requireNew: true);
             jidelnicek = await canteen.objednat(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
@@ -156,7 +154,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
         try {
           Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
           if (jidelnicek.jidla[dishIndex].naBurze == true) {
-            jidelnicek = await loggedInCanteen.getLunchesForDay(day, requireNew: true);
+            jidelnicek = await loggedInCanteen.getLunchesForDay(date, requireNew: true);
             jidelnicek = await canteen.doBurzy(jidelnicek.jidla[dishIndex]);
           }
           updateJidelnicek(jidelnicek);
@@ -169,17 +167,17 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
   if (context.mounted) prov.ordering = false;
 }
 
-void cannotBeOrderedFix(BuildContext context, int dayIndex) async {
+void cannotBeOrderedFix(BuildContext context, DateTime date) async {
   final lang = context.l10n;
   await Future.delayed(const Duration(milliseconds: 200));
   try {
-    if (!convertIndexToDatetime(dayIndex).isBefore(DateTime.now()) && context.mounted) {
+    if (!date.isBefore(DateTime.now()) && context.mounted) {
       final CanteenProvider dishesOfTheDay = context.read<CanteenProvider>();
-      Jidelnicek jidelnicekCheck = await loggedInCanteen.getLunchesForDay(convertIndexToDatetime(dayIndex), requireNew: true);
+      Jidelnicek jidelnicekCheck = await loggedInCanteen.getLunchesForDay(date, requireNew: true);
 
       for (int i = 0; i < jidelnicekCheck.jidla.length; i++) {
-        if (dishesOfTheDay.getMenu(dayIndex)!.jidla[i].lzeObjednat != jidelnicekCheck.jidla[i].lzeObjednat) {
-          dishesOfTheDay.setMenu(dayIndex, jidelnicekCheck);
+        if (dishesOfTheDay.getMenu(date)!.jidla[i].lzeObjednat != jidelnicekCheck.jidla[i].lzeObjednat) {
+          dishesOfTheDay.setMenu(date, jidelnicekCheck);
           return;
         }
       }
@@ -223,9 +221,8 @@ bool isButtonEnabled(StavJidla stavJidla) {
 
 String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
   final lang = context.l10n;
-  int dayIndex = convertDateTimeToIndex(dish.den);
-  Jidelnicek menu = context.select<CanteenProvider, Jidelnicek>((data) => data.getMenu(dayIndex)!);
-  DateTime day = convertIndexToDatetime(dayIndex);
+  DateTime date = dish.den;
+  Jidelnicek menu = context.select<CanteenProvider, Jidelnicek>((data) => data.getMenu(date)!);
   switch (stavJidla) {
     case StavJidla.objednano:
       return lang.cancel;
@@ -255,14 +252,14 @@ String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
             prvniIndex = i;
           }
         }
-        if (!jeVeDneDostupnyObed && prvniIndex == menu.jidla.indexOf(dish)) cannotBeOrderedFix(context, dayIndex);
+        if (!jeVeDneDostupnyObed && prvniIndex == menu.jidla.indexOf(dish)) cannotBeOrderedFix(context, date);
       } catch (e) {
         if (analyticsEnabledGlobally && analytics != null) unawaited(FirebaseCrashlytics.instance.recordError(e, StackTrace.current));
 
         //hope it's not important
       }
       Uzivatel uzivatel = context.read<UserProvider>().user!.data;
-      if (uzivatel.kredit < dish.cena! && !day.isBefore(DateTime.now())) {
+      if (uzivatel.kredit < dish.cena! && !date.isBefore(DateTime.now())) {
         return lang.nedostatekKreditu;
       } else {
         return lang.nelzeObjednat;

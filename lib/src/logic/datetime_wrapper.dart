@@ -8,11 +8,15 @@ DateTime convertIndexToDatetime(int index) {
   while (newDate.hour != 0 && newDate.hour < 12) {
     newDate = newDate.subtract(const Duration(hours: 1));
   }
-  return newDate;
+  return newDate.normalize;
 }
 
 int convertDateTimeToIndex(DateTime date) => Dates.minimalDate.difference(date).inDays.abs();
 
 extension IsWeekend on DateTime {
   bool get isWeekend => weekday > 5;
+}
+
+extension Normalize on DateTime {
+  DateTime get normalize => DateTime(year, month, day);
 }

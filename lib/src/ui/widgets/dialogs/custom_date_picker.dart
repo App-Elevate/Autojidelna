@@ -7,7 +7,6 @@ import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/change_date.dart';
-import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/ordering.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
 import 'package:autojidelna/src/types/all.dart';
@@ -27,7 +26,7 @@ showCustomDatePicker(BuildContext context) {
   String locale = Localizations.localeOf(context).toLanguageTag();
 
   bool bigMarkersEnabled = context.read<Settings>().bigCalendarMarkers;
-  DateTime currentDate = convertIndexToDatetime(context.read<CanteenProvider>().dayIndex);
+  DateTime selectedDate = context.read<CanteenProvider>().selectedDate;
 
   ColorScheme colorScheme = Theme.of(context).colorScheme;
   final TextStyle defaultTextStyle = AppThemes.textTheme.titleMedium!;
@@ -37,7 +36,7 @@ showCustomDatePicker(BuildContext context) {
   List<DateTime> availableFoodDays = [];
 
   List<dynamic> eventLoader(DateTime day) {
-    Jidelnicek? menu = context.read<CanteenProvider>().getMenu(convertDateTimeToIndex(day));
+    Jidelnicek? menu = context.read<CanteenProvider>().getMenu(day);
 
     if (menu == null) return [];
     if (!bigMarkersEnabled) return menu.jidla;
@@ -62,9 +61,9 @@ showCustomDatePicker(BuildContext context) {
     context,
     builder: (context) => ChangeNotifierProvider(
       create: (_) => DatePickerProvider()
-        ..appFocusedDate = currentDate
-        ..userFocusedDate = currentDate
-        ..visibleMonth = currentDate.month,
+        ..appFocusedDate = selectedDate
+        ..userFocusedDate = selectedDate
+        ..visibleMonth = selectedDate.month,
       child: Dialog(
         child: Consumer<DatePickerProvider>(
           builder: (context, prov, ___) {
@@ -124,9 +123,9 @@ showCustomDatePicker(BuildContext context) {
                   eventLoader: eventLoader,
                   calendarBuilders: CalendarBuilders(
                     headerTitleBuilder: (context, day) => _headerTitle(locale, day, context),
+                    singleMarkerBuilder: !bigMarkersEnabled ? (context, __, dish) => _markerTemplate(context, dish as Jidlo) : null,
                     selectedBuilder: (context, day, ___) => _cellTemplate(context, prov.userFocusedDate, state: CellState.selected),
                     todayBuilder: (context, day, ___) => _cellTemplate(context, day, state: CellState.today),
-                    singleMarkerBuilder: !bigMarkersEnabled ? (context, __, dish) => _markerTemplate(context, dish as Jidlo) : null,
                     defaultBuilder: (context, day, ___) {
                       if (!bigMarkersEnabled) return null;
                       if (orderedFoodDays.contains(day)) return _cellTemplate(context, day, state: CellState.ordered);
