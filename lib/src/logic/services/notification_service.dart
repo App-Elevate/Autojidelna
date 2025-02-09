@@ -1,5 +1,5 @@
 import 'package:autojidelna/src/_conf/notifications.dart';
-import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';

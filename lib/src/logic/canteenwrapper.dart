@@ -8,7 +8,7 @@ import 'dart:math';
 
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
-import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/canteen_data/canteen_data.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';

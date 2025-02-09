@@ -8,7 +8,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
-import 'package:autojidelna/src/logic/statistics_service.dart';
+import 'package:autojidelna/src/logic/services/statistics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
