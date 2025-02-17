@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
-  if (stav != StavJidla.objednanoNelzeOdebrat || Hive.box(Boxes.appState).get(HiveKeys.hideBurzaAlertDialog, defaultValue: false)) {
+  if (stav != StavJidla.objednanoPouzeNaBurzu || Hive.box(Boxes.appState).get(HiveKeys.hideBurzaAlertDialog, defaultValue: false)) {
     pressed(context, updatedDish, stav);
     return;
   }

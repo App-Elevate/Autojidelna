@@ -104,7 +104,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
     case StavJidla.objednanoVyprsenaPlatnost:
       showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
       break;
-    case StavJidla.objednanoNelzeOdebrat:
+    case StavJidla.objednanoPouzeNaBurzu:
       {
         try {
           Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
@@ -149,7 +149,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
         }
       }
       break;
-    case StavJidla.naBurze:
+    case StavJidla.vlozenoNaBurze:
       {
         try {
           Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
@@ -190,14 +190,14 @@ void cannotBeOrderedFix(BuildContext context, DateTime date) async {
 StavJidla getStavJidla(Jidlo dish) {
   if (dish.naBurze) {
     //pokud je od nás vloženo na burze, tak není potřeba kontrolovat nic jiného
-    return StavJidla.naBurze;
+    return StavJidla.vlozenoNaBurze;
   } else if (dish.objednano && dish.lzeObjednat) {
     return StavJidla.objednano;
   } else if (dish.objednano && !dish.lzeObjednat && (dish.burzaUrl == null || dish.burzaUrl!.isEmpty)) {
     //pokud nelze dát na burzu, tak už je po platnosti (nic už s tím neuděláme)
     return StavJidla.objednanoVyprsenaPlatnost;
   } else if (dish.objednano && !dish.lzeObjednat) {
-    return StavJidla.objednanoNelzeOdebrat;
+    return StavJidla.objednanoPouzeNaBurzu;
   } else if (!dish.objednano && dish.lzeObjednat) {
     return StavJidla.neobjednano;
   } else if (loggedInCanteen.jeJidloNaBurze(dish)) {
@@ -209,10 +209,10 @@ StavJidla getStavJidla(Jidlo dish) {
 bool isButtonEnabled(StavJidla stavJidla) {
   switch (stavJidla) {
     case StavJidla.dostupneNaBurze:
-    case StavJidla.naBurze:
+    case StavJidla.vlozenoNaBurze:
     case StavJidla.neobjednano:
     case StavJidla.objednano:
-    case StavJidla.objednanoNelzeOdebrat:
+    case StavJidla.objednanoPouzeNaBurzu:
       return true;
     default:
       return false;
@@ -230,11 +230,11 @@ String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
       return lang.objednat;
     case StavJidla.objednanoVyprsenaPlatnost:
       return lang.nelzeZrusit;
-    case StavJidla.objednanoNelzeOdebrat:
+    case StavJidla.objednanoPouzeNaBurzu:
       return lang.vlozitNaBurzu;
     case StavJidla.dostupneNaBurze:
       return lang.objednatZBurzy;
-    case StavJidla.naBurze:
+    case StavJidla.vlozenoNaBurze:
       return lang.odebratZBurzy;
     case StavJidla.nedostupne:
       try {
@@ -272,7 +272,7 @@ String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
 bool getPrimaryState(StavJidla stavJidla) {
   switch (stavJidla) {
     case StavJidla.objednano:
-    case StavJidla.objednanoNelzeOdebrat:
+    case StavJidla.objednanoPouzeNaBurzu:
     case StavJidla.objednanoVyprsenaPlatnost:
       return true;
     default:

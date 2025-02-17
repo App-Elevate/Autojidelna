@@ -4,13 +4,13 @@ enum StavJidla {
   objednano,
 
   /// je objednano a lze pouze dát na burzu
-  objednanoNelzeOdebrat,
+  objednanoPouzeNaBurzu,
 
   /// bylo objednano a pravděpodobně snězeno ;)
   objednanoVyprsenaPlatnost,
 
   /// nabízíme jídlo na burze
-  naBurze,
+  vlozenoNaBurze,
 
   /// jídlo nemáme objednané, ale je dostupné na burze
   dostupneNaBurze,
@@ -20,15 +20,4 @@ enum StavJidla {
 
   /// jídlo nemáme objednané a není dostupné na burze, vypršela platnost nebo nemá uživatel dostatečný kredit
   nedostupne
-}
-
-enum TypStatistiky {
-  /// normální objednávky
-  objednavka,
-
-  /// automatické objednávky
-  auto,
-
-  /// objednávky chycené burzaCatherem
-  burzaCatcher
 }
