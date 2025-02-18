@@ -78,7 +78,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
                 // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 User user = context.read<UserProvider>().user!;
-                Hive.box(Boxes.appState).put(HiveKeys.location(user.data.uzivatelskeJmeno ?? '', user.canteenUrl), i);
+                Hive.box(Boxes.appState).put(HiveKeys.location(user.accountData), i);
               },
             ),
           ),

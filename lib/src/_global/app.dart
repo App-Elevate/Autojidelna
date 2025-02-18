@@ -3,10 +3,10 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
+import 'package:autojidelna/src/logic/services/auth_service.dart';
+import 'package:autojidelna/src/logic/services/notification_service.dart';
 import 'package:autojidelna/src/logic/notifications.dart';
-import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -74,11 +74,11 @@ class App {
       Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
 
       try {
-        LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+        List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
 
-        for (Account uzivatel in loginData.accounts) {
-          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(uzivatel.username, uzivatel.url));
-          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(uzivatel.username, uzivatel.url));
+        for (SafeAccount safeAccount in limitedAccounts) {
+          AwesomeNotifications().removeChannel(NotificationIds.kreditChannel(safeAccount));
+          await AwesomeNotifications().removeChannel(NotificationIds.objednanoChannel(safeAccount));
         }
       } catch (e) {
         //do nothing
@@ -87,22 +87,22 @@ class App {
     }
 
     // Initialize the notifications
-    initAwesome();
+    NotificationService().initAwesome();
 
     // Setting listeners for when the app is running and notification button is clicked
-    AwesomeNotifications().setListeners(
+    /* TODO: AwesomeNotifications().setListeners(
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
       onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
       onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
       onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod,
-    );
+    );*/
 
     // Detecting if the app was opened from a notification and handling it if it was
     ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
-    await NotificationController.handleNotificationAction(receivedAction);
+    // TODO: await NotificationController.handleNotificationAction(receivedAction);
 
     // Initializing the background fetch
-    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    // TODO: BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
     _initNotificationsExecuted = true;
   }
 

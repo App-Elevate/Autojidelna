@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
+import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
-import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/more/account_overview_card.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:canteenlib/canteenlib.dart';
@@ -18,7 +20,8 @@ class AccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-    final Uzivatel user = context.read<UserProvider>().user!.data;
+    final User provUser = context.read<UserProvider>().user!;
+    final Uzivatel user = provUser.data;
 
     bool firstName = user.jmeno != null && user.jmeno!.trim().isNotEmpty;
     bool lastName = user.prijmeni != null && user.prijmeni!.trim().isNotEmpty;
@@ -30,7 +33,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(lang.account),
-        actions: [_appBarLogoutButton(context, user.uzivatelskeJmeno!)],
+        actions: [_appBarLogoutButton(context, provUser.accountData)],
       ),
       body: ListView(
         children: [
@@ -72,11 +75,11 @@ class AccountPage extends StatelessWidget {
     );
   }
 
-  Padding _appBarLogoutButton(BuildContext context, String username) {
+  Padding _appBarLogoutButton(BuildContext context, SafeAccount safeAccount) {
     return Padding(
       padding: const EdgeInsets.only(right: 8.0),
       child: IconButton(
-        onPressed: () => configuredDialog(context, builder: (BuildContext context) => logoutDialog(context, username)),
+        onPressed: () => configuredDialog(context, builder: (BuildContext context) => logoutDialog(context, safeAccount)),
         icon: const Icon(Icons.logout),
       ),
     );

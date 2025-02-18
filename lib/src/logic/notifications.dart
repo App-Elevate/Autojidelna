@@ -1,14 +1,17 @@
 // File containing all code for notifications. This includes background fetch and awesome notifications.
 //TODO: fix
 
+/*import 'dart:convert';
+
 import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
+import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
-import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/freezed/logged_accounts/logged_accounts.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
+import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 import 'package:background_fetch/background_fetch.dart';
@@ -18,44 +21,6 @@ import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-
-// Platform messages are asynchronous, so we initialize in an async method.
-Future<void> initPlatformState() async {
-  // Configure BackgroundFetch.
-  await BackgroundFetch.configure(
-      BackgroundFetchConfig(
-        minimumFetchInterval: 120,
-        stopOnTerminate: false,
-        enableHeadless: true,
-        requiresBatteryNotLow: false,
-        requiresCharging: false,
-        requiresStorageNotLow: false,
-        requiresDeviceIdle: false,
-        startOnBoot: true,
-        requiredNetworkType: NetworkType.ANY,
-      ), (String taskId) async {
-    // <-- Event handler
-    // This is the fetch-event callback.
-    if (kDebugMode) {
-      print('[BackgroundFetch] Event received $taskId');
-    }
-    // IMPORTANT:  You must signal completion of your task or the OS can punish your app
-    // for taking too long in the background.
-    await doNotifications();
-    BackgroundFetch.finish(taskId);
-  }, (String taskId) async {
-    // <-- Task timeout handler.
-    // This task has exceeded its allowed running-time.  You must stop what you're doing and immediately .finish(taskId)
-    if (kDebugMode) {
-      print('[BackgroundFetch] TASK TIMEOUT taskId: $taskId');
-    }
-    BackgroundFetch.finish(taskId);
-  });
-
-  // If the widget was removed from the tree while the asynchronous platform
-  // message was in flight, we want to discard the reply rather than calling
-  // setState to update our non-existent appearance.
-}
 
 // [Android-only] This "Headless Task" is run when the Android app is terminated with `enableHeadless: true`
 // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
@@ -79,85 +44,12 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   BackgroundFetch.finish(taskId);
 }
 
-Future<bool> initAwesome() async {
-  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
-  List<NotificationChannelGroup> notificationChannelGroups = [];
-  List<NotificationChannel> notificationChannels = [];
-  for (int i = 0; i < loginData.accounts.length; i++) {
-    Account user = loginData.accounts[i];
-    notificationChannelGroups.add(
-      NotificationChannelGroup(
-        channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
-        channelGroupName: NotificationsTexts.notificationsFor(user.username),
-      ),
-    );
-    notificationChannels.add(
-      NotificationChannel(
-        channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
-        channelKey: NotificationIds.dnesniJidloChannel(user.username, user.url),
-        channelName: NotificationsTexts.jidloChannelName,
-        channelShowBadge: true,
-        channelDescription: NotificationsTexts.jidloChannelDescription(user.username),
-        defaultColor: const Color(0xFF9D50DD),
-        ledColor: Colors.white,
-      ),
-    );
-    notificationChannels.add(
-      NotificationChannel(
-        channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
-        channelKey: NotificationIds.kreditChannel(user.username, user.url),
-        channelName: NotificationsTexts.dochazejiciKreditChannelName,
-        channelShowBadge: true,
-        channelDescription: NotificationsTexts.dochazejiciKreditChannelDescription(user.username),
-        defaultColor: const Color(0xFF9D50DD),
-        ledColor: Colors.white,
-      ),
-    );
-    notificationChannels.add(
-      NotificationChannel(
-        channelGroupKey: NotificationIds.channelGroup(user.username, user.url),
-        channelKey: NotificationIds.objednanoChannel(user.username, user.url),
-        channelName: NotificationsTexts.objednanoChannelName,
-        channelShowBadge: true,
-        channelDescription: NotificationsTexts.objednanoChannelDescription(user.username),
-        defaultColor: const Color(0xFF9D50DD),
-        ledColor: Colors.white,
-      ),
-    );
-  }
-  notificationChannelGroups.add(
-    NotificationChannelGroup(
-      channelGroupKey: NotificationIds.channelGroupElse,
-      channelGroupName: NotificationsTexts.notificationOther,
-    ),
-  );
-  notificationChannels.add(
-    NotificationChannel(
-      channelGroupKey: NotificationIds.channelGroupElse,
-      channelKey: NotificationIds.channelElse,
-      channelName: NotificationsTexts.notificationOther,
-      channelDescription: NotificationsTexts.notificationOtherDescription,
-      importance: NotificationImportance.Min,
-      playSound: false,
-    ),
-  );
-  return await AwesomeNotifications().initialize(
-    // set the icon to null if you want to use the default app icon
-    null,
-
-    notificationChannels,
-
-    channelGroups: notificationChannelGroups,
-    // Channel groups are only visual and are not required
-    debug: false,
-  );
-}
-
 Future<void> doNotifications({bool force = false}) async {
   //TODO: add more langueages
   final lang = lookupTexts(Locales.cs);
   LoggedInCanteen loggedInCanteen = LoggedInCanteen();
-  LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
+  AuthService authService = AuthService();
+  List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
   AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: 588,
@@ -168,7 +60,9 @@ Future<void> doNotifications({bool force = false}) async {
     ),
   );
   // Don't send notifications before 9 and after 22
-  for (int i = 0; i < loginData.accounts.length && !((DateTime.now().hour < 9 || DateTime.now().hour > 22) && !force); i++) {
+  for (int i = 0; i < limitedAccounts.length && !((DateTime.now().hour < 9 || DateTime.now().hour > 22) && !force); i++) {
+    final SafeAccount safeAccount = limitedAccounts[i];
+
     //ensuring we only send the notifications once a day
     bool jidloDne = true;
     bool kredit = true;
@@ -182,18 +76,18 @@ Future<void> doNotifications({bool force = false}) async {
 
     Box box = Hive.box(Boxes.notifications);
     //difference from time of day to now
-    box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url));
-    if ((box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url)) == nowString ||
-            box.get(HiveKeys.dailyFoodInfo(loginData.accounts[i].username, loginData.accounts[i].url)) != '1' ||
+    box.get(HiveKeys.lastNotificationCheck(safeAccount));
+    if ((box.get(HiveKeys.lastNotificationCheck(safeAccount)) == nowString ||
+            box.get(HiveKeys.dailyFoodInfo(safeAccount)) != '1' ||
             difference > 120 ||
             difference < -120) &&
         !force) {
       jidloDne = false;
     } else {
-      box.put(HiveKeys.lastJidloDneCheck(loginData.accounts[i].username, loginData.accounts[i].url), nowString);
+      box.put(HiveKeys.lastJidloDneCheck(safeAccount), nowString);
     }
 
-    if (box.get(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url)) == nowString && !force) {
+    if (box.get(HiveKeys.lastNotificationCheck(safeAccount)) == nowString && !force) {
       kredit = false;
       objednavka = false;
     }
@@ -213,10 +107,12 @@ Future<void> doNotifications({bool force = false}) async {
       continue;
     }
 
-    box.put(HiveKeys.lastNotificationCheck(loginData.accounts[i].username, loginData.accounts[i].url), nowString);
+    box.put(HiveKeys.lastNotificationCheck(safeAccount), nowString);
 
     try {
-      await loggedInCanteen.changeAccount(''); // Fix
+      await authService.changeAccount(safeAccount);
+      final User? user = await authService.loginBySafeAccount(safeAccount);
+
       if (jidloDne || force) {
         Jidelnicek jidelnicek = await loggedInCanteen.getLunchesForDay(now);
         if (jidelnicek.jidla.isNotEmpty) {
@@ -228,11 +124,11 @@ Future<void> doNotifications({bool force = false}) async {
               AwesomeNotifications().createNotification(
                 content: NotificationContent(
                   id: 1024 - i,
-                  channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+                  channelKey: NotificationIds.dnesniJidloChannel(safeAccount),
                   actionType: ActionType.Default,
                   title: NotificationsTexts.jidloChannelName,
                   payload: {
-                    NotificationIds.payloadUser: loginData.accounts[i].username,
+                    NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
                     NotificationIds.payloadIndex: k.toString(),
                     NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                   },
@@ -245,11 +141,11 @@ Future<void> doNotifications({bool force = false}) async {
             AwesomeNotifications().createNotification(
               content: NotificationContent(
                 id: 1024 - i,
-                channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+                channelKey: NotificationIds.dnesniJidloChannel(safeAccount),
                 actionType: ActionType.Default,
                 title: NotificationsTexts.jidloChannelName,
                 payload: {
-                  NotificationIds.payloadUser: loginData.accounts[i].username,
+                  NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
                   NotificationIds.payloadIndex: k.toString(),
                   NotificationIds.payloadIndexDne: jidelnicek.den.difference(Dates.minimalDate).inDays.toString(),
                 },
@@ -262,11 +158,11 @@ Future<void> doNotifications({bool force = false}) async {
           AwesomeNotifications().createNotification(
             content: NotificationContent(
               id: 1024,
-              channelKey: NotificationIds.dnesniJidloChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              channelKey: NotificationIds.dnesniJidloChannel(safeAccount),
               actionType: ActionType.Default,
               title: NotificationsTexts.jidloChannelName,
               payload: {
-                NotificationIds.payloadUser: loginData.accounts[i].username,
+                NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson()),
               },
               body: lang.noFood,
             ),
@@ -275,7 +171,7 @@ Future<void> doNotifications({bool force = false}) async {
           AwesomeNotifications().cancel(1024);
         }
       }
-      Uzivatel uzivatel = (await loggedInCanteen.canteenData).uzivatel;
+      Uzivatel uzivatel = user!.data;
       //7 is limit for how many lunches we are gonna search for
       int objednano = 0;
       int cena = 0;
@@ -301,7 +197,7 @@ Future<void> doNotifications({bool force = false}) async {
         }
       }
       //parse ignore date to DateTime
-      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(loginData.accounts[i].username, loginData.accounts[i].url));
+      String? ignoreDateStr = box.get(HiveKeys.kreditNotifications(safeAccount));
       DateTime ignoreDate;
       switch (ignoreDateStr) {
         //not ignored
@@ -322,10 +218,10 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: 512 - i,
-            channelKey: NotificationIds.kreditChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+            channelKey: NotificationIds.kreditChannel(safeAccount),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationDochaziVamKredit,
-            payload: {NotificationIds.payloadUser: loginData.accounts[i].username},
+            payload: {NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson())},
             body: NotificationsTexts.notificationKreditPro(
               uzivatel.jmeno ?? '',
               uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? '',
@@ -334,7 +230,7 @@ Future<void> doNotifications({bool force = false}) async {
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.kreditChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.kreditChannel(safeAccount),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,
@@ -344,7 +240,7 @@ Future<void> doNotifications({bool force = false}) async {
       }
       //pokud chybí aspoň 3 obědy z příštích 10 dní
       //parse ignore date to DateTime
-      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(loginData.accounts[i].username, loginData.accounts[i].url));
+      String? ignoreDateStrObjednano = box.get(HiveKeys.nemateObjednanoNotifications(safeAccount));
       DateTime ignoreDateObjednano;
       switch (ignoreDateStrObjednano) {
         //not ignored
@@ -365,22 +261,22 @@ Future<void> doNotifications({bool force = false}) async {
         AwesomeNotifications().createNotification(
           content: NotificationContent(
             id: i,
-            channelKey: NotificationIds.objednanoChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+            channelKey: NotificationIds.objednanoChannel(safeAccount),
             actionType: ActionType.Default,
             title: NotificationsTexts.notificationObjednejteSi,
-            payload: {NotificationIds.payloadUser: loginData.accounts[i].username},
+            payload: {NotificationIds.payloadUser: jsonEncode(limitedAccounts[i].toJson())},
             body: NotificationsTexts.notificationObjednejteSiDetail(uzivatel.jmeno ?? '', uzivatel.prijmeni ?? uzivatel.uzivatelskeJmeno ?? ''),
           ),
           actionButtons: [
             NotificationActionButton(
-              key: NotificationIds.objednatButton(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.objednatButton(safeAccount),
               label: NotificationsTexts.objednatAction,
               isDangerousOption: false,
               actionType: ActionType.Default,
               enabled: true,
             ),
             NotificationActionButton(
-              key: NotificationIds.objednanoChannel(loginData.accounts[i].username, loginData.accounts[i].url),
+              key: NotificationIds.objednanoChannel(safeAccount),
               label: NotificationsTexts.notificationZtlumit,
               actionType: ActionType.Default,
               enabled: true,
@@ -427,23 +323,17 @@ class NotificationController {
           '${dateTillIgnore.year}-${dateTillIgnore.month.toString().padLeft(2, '0')}-${dateTillIgnore.day.toString().padLeft(2, '0')}',
         );
       } else if (receivedAction.buttonKeyPressed.substring(0, 9) == NotificationIds.onlyObjednatButton) {
-        String username = receivedAction.buttonKeyPressed.substring(9).split('_')[0];
+        /*String username = receivedAction.buttonKeyPressed.substring(9).split('_')[0];
         LoggedInCanteen tempLoggedInCanteen = LoggedInCanteen();
         if (loggedInCanteen.uzivatel != null && loggedInCanteen.uzivatel?.uzivatelskeJmeno == username) {
           tempLoggedInCanteen = loggedInCanteen;
         }
-        await tempLoggedInCanteen.quickOrder(receivedAction.buttonKeyPressed.substring(9).split('_')[0]);
+        await tempLoggedInCanteen.quickOrder((SafeAccount.fromJson(jsonDecode(receivedAction.buttonKeyPressed.substring(9).split('_')[0]))));*/
       }
     }
     //přepnutí účtu, když uživatel klikne na notifikaci
-    if (receivedAction?.payload?[NotificationIds.payloadUser] != null) {
-      LoggedAccounts loginData = await loggedInCanteen.getLoginDataFromSecureStorage();
-      for (Account uzivatel in loginData.accounts) {
-        if (uzivatel.username == receivedAction?.payload?[NotificationIds.payloadUser]) {
-          await loggedInCanteen.switchAccount(uzivatel.username);
-          break;
-        }
-      }
+    if (receivedAction != null && receivedAction.payload != null && receivedAction.payload![NotificationIds.payloadUser] != null) {
+      AuthService().changeAccount(SafeAccount.fromJson(jsonDecode(receivedAction.payload![NotificationIds.payloadUser]!)));
     }
     /*
     if (receivedAction?.payload?[NotificationIds.payloadIndex] != null) {
@@ -476,3 +366,4 @@ class NotificationController {
     handleNotificationAction(receivedAction);
   }
 }
+*/

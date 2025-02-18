@@ -1,9 +1,7 @@
 import 'dart:async';
 
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
-import 'package:autojidelna/src/logic/canteenwrapper.dart';
-import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
 import 'package:autojidelna/src/types/theme.dart';
@@ -16,36 +14,36 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DayCard extends StatefulWidget {
-  const DayCard(this.dayIndex, {super.key});
-  final int dayIndex;
+  const DayCard(this.date, {super.key});
+  final DateTime date;
 
   @override
   State<DayCard> createState() => _DayCardState();
 }
 
 class _DayCardState extends State<DayCard> {
-  Future<Jidelnicek>? _futureMenu;
+  Future<void>? fetchMenu;
 
   @override
   void initState() {
     super.initState();
     // Fetch the data in initState to avoid context issues
     // ignore: discarded_futures
-    _futureMenu = loggedInCanteen.getLunchesForDay(convertIndexToDatetime(widget.dayIndex));
-    unawaited(
-      _futureMenu!.then((menu) {
-        if (mounted) context.read<DishesOfTheDay>().setMenu(widget.dayIndex, menu);
-      }),
-    );
+    fetchMenu = Future(() async {
+      if (!mounted) return;
+      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
+      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
+      return;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Jidelnicek>(
-      future: _futureMenu,
+    return FutureBuilder<void>(
+      future: fetchMenu,
       builder: (context, snapshot) {
         if (snapshot.hasError) return const ErrorLoadingData();
-        if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.dayIndex);
+        if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.date);
 
         return SizedBox(
           height: MediaQuery.sizeOf(context).height * .4,
@@ -57,14 +55,14 @@ class _DayCardState extends State<DayCard> {
 }
 
 class _DayCard extends StatelessWidget {
-  const _DayCard(this.dayIndex);
-  final int dayIndex;
+  const _DayCard(this.date);
+  final DateTime date;
   @override
   Widget build(BuildContext context) {
-    return Selector<DishesOfTheDay, Jidelnicek? Function(int)>(
-      selector: (_, p1) => p1.getMenu,
-      builder: (_, getMenu, ___) {
-        Jidelnicek? menu = getMenu(dayIndex);
+    return Selector<CanteenProvider, Jidelnicek? Function(DateTime)>(
+      selector: (_, p1) => p1.getCachedMenu,
+      builder: (_, getCachedMenu, ___) {
+        Jidelnicek? menu = getCachedMenu(date);
         if (menu == null) return const Center(child: CircularProgressIndicator());
 
         Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);

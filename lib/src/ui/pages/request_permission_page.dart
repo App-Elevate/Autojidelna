@@ -17,6 +17,7 @@ class RequestPermissionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return PopScope(
+      // ignore: deprecated_member_use
       onPopInvoked: (didPop) {
         if (didPop && onResult != null) {
           onResult!(false);

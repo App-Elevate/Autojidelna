@@ -2,22 +2,18 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/dialogs/configured_dialog.dart';
-import 'package:autojidelna/src/ui/widgets/logout_dialog.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/logout_dialog.dart';
 import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SwitchAccountPanel extends StatefulWidget {
+class SwitchAccountPanel extends StatelessWidget {
   const SwitchAccountPanel({super.key});
 
-  @override
-  State<SwitchAccountPanel> createState() => _SwitchAccountPanelState();
-}
-
-class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
@@ -30,8 +26,9 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
             if (prov.user == null) return const Flexible(child: SizedBox());
 
             List<Widget> accounts = [];
-            for (int i = 0; i < prov.usernames.length; i++) {
-              accounts.add(accountRow(context, i, username: prov.usernames[i], currentAccount: prov.usernames[i] == prov.user!.username));
+
+            for (int i = 0; i < prov.loggedInAccounts.length; i++) {
+              accounts.add(accountRow(context, prov.loggedInAccounts[i]));
             }
 
             return Flexible(
@@ -57,12 +54,15 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
     );
   }
 
-  Widget accountRow(BuildContext context, int id, {String username = '', bool currentAccount = false}) {
+  Widget accountRow(BuildContext context, SafeAccount safeAccount) {
+    UserProvider prov = context.read<UserProvider>();
+    bool currentAccount = safeAccount == prov.user!.accountData;
+
     return ListTile(
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
+          Text(safeAccount.username, style: currentAccount ? AppThemes.textTheme.titleMedium : null),
           if (currentAccount) const Icon(Icons.check, size: 30),
         ],
       ),
@@ -72,19 +72,18 @@ class _SwitchAccountPanelState extends State<SwitchAccountPanel> {
         onPressed: () async {
           if (!context.mounted) return;
           if (!currentAccount) {
-            context.read<UserProvider>().removeUsernameFromUsernames(username);
+            prov.logout(safeAccount);
           } else {
             configuredDialog(
               context,
-              builder: (BuildContext context) => logoutDialog(context, username),
+              builder: (BuildContext context) => logoutDialog(context, safeAccount),
             );
           }
-          setState(() {});
         },
       ),
       onTap: () async {
         if (currentAccount) return;
-        await context.read<UserProvider>().changeUser(username);
+        await prov.changeUser(safeAccount);
         if (context.mounted) context.router.replaceAll([const LoginLoading()]);
       },
     );
