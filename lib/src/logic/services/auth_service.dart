@@ -85,9 +85,6 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
-
-    await loggedInCanteen.login(user); // TODO:temporary
-
     return user;
   }
 
