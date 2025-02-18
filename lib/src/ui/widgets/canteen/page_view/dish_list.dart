@@ -23,13 +23,10 @@ class DishList extends StatelessWidget {
 
           if (dishList.isEmpty) return child!;
 
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Column(
-                children: dishList.map((d) => PageViewFoodCard(d)).toList(),
-              ),
-            ),
+          return ListView.builder(
+            padding: const EdgeInsets.symmetric(vertical: 24),
+            itemCount: dishList.length,
+            itemBuilder: (context, index) => PageViewFoodCard(dishList[index]),
           );
         },
         child: SingleChildScrollView(
