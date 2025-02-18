@@ -14,9 +14,7 @@ class DishList extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return RefreshIndicator(
-      onRefresh: () async {
-        //TODO
-      },
+      onRefresh: context.read<CanteenProvider>().refreshCurrentPage,
       child: Consumer<CanteenProvider>(
         builder: (_, data, child) {
           Jidelnicek? menu = data.getCachedMenu(date);

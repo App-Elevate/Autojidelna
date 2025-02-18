@@ -159,4 +159,6 @@ class CanteenProvider with ChangeNotifier {
     }
     return null;
   }
+
+  Future<void> refreshCurrentPage() async => getMenu(selectedDate);
 }

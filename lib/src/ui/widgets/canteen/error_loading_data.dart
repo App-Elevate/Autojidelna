@@ -1,7 +1,9 @@
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'package:material_symbols_icons/symbols.dart';
+import 'package:provider/provider.dart';
 
 class ErrorLoadingData extends StatelessWidget {
   const ErrorLoadingData({super.key});
@@ -10,15 +12,14 @@ class ErrorLoadingData extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = context.l10n;
     return RefreshIndicator(
-      onRefresh: () async {
-        //TODO
-      },
+      onRefresh: context.read<CanteenProvider>().refreshCurrentPage,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.15),
               Icon(
                 Symbols.sentiment_sad,
                 size: 250,

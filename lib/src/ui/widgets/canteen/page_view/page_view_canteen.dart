@@ -26,9 +26,7 @@ class _PageViewCanteenState extends State<PageViewCanteen> {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        //TODO: Implement refresh
-      },
+      onRefresh: context.read<CanteenProvider>().refreshCurrentPage,
       child: PageView.builder(
         controller: App.pageController,
         scrollDirection: Axis.horizontal,
