@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/page_view/dish_list.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/error_loading_data.dart';
+import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +25,9 @@ class _MenuOfTheDayState extends State<MenuOfTheDay> {
     // ignore: discarded_futures
     fetchMenu = Future(() async {
       if (!mounted) return;
-      await context.read<CanteenProvider>().getMenu(widget.date);
+      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
+      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
+      return;
     });
   }
 

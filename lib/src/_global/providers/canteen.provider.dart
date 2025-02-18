@@ -34,7 +34,7 @@ class CanteenProvider with ChangeNotifier {
       }
     }
 
-    Jidelnicek? menu = await _canteenService.getDailyJidelnicek(date);
+    Jidelnicek? menu = await _canteenService.getDailyJidelnicek(date.normalize);
     if (menu == null) return;
     _menus[date] = menu;
     notifyListeners();
@@ -64,8 +64,8 @@ class CanteenProvider with ChangeNotifier {
     }
 
     // Otherwise, use smart pre-indexing around the target date
-    targetDate ??= DateTime.now().normalize;
-    await _smartPreIndexing(targetDate);
+    targetDate ??= DateTime.now();
+    await _smartPreIndexing(targetDate.normalize);
   }
 
   Future<void> _smartPreIndexing(DateTime targetDate) async {
@@ -84,7 +84,7 @@ class CanteenProvider with ChangeNotifier {
 
   Future<void> preIndexLunchesRange(DateTime start, int howManyDays) async {
     for (int i = 0; i < howManyDays; i++) {
-      DateTime date = start.add(Duration(days: i));
+      DateTime date = start.add(Duration(days: i)).normalize;
       if (!_menus.containsKey(date)) {
         Jidelnicek? menu = await _canteenService.getDailyJidelnicek(date);
         if (menu != null) {
@@ -160,5 +160,5 @@ class CanteenProvider with ChangeNotifier {
     return null;
   }
 
-  Future<void> refreshCurrentPage() async => getMenu(selectedDate);
+  Future<void> refreshCurrentPage() async => getMenu(selectedDate.normalize);
 }

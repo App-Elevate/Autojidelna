@@ -31,7 +31,9 @@ class _DayCardState extends State<DayCard> {
     // ignore: discarded_futures
     fetchMenu = Future(() async {
       if (!mounted) return;
-      await context.read<CanteenProvider>().getMenu(widget.date);
+      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
+      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
+      return;
     });
   }
 
