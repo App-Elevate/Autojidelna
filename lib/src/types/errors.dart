@@ -26,3 +26,14 @@ enum AuthErrors {
   /// User has entered wrong url
   wrongUrl,
 }
+
+enum CanteenErrors {
+  /// A user is trying to do something without loging in
+  needToLogin,
+
+  /// User is not connected to the internet
+  noInternetConnection,
+
+  /// Selected feature is not available
+  unsuportedFeature,
+}
