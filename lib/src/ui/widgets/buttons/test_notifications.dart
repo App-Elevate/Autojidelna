@@ -8,8 +8,8 @@ class NotificationActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ListTile(onTap: () async => doNotifications(force: true), title: const Text('Notifications Force')),
-        ListTile(onTap: () async => doNotifications(), title: const Text('Notifications')),
+        ListTile(onTap: null /* TODO: () async => doNotifications(force: true), title: const Text('Notifications Force')*/),
+        ListTile(onTap: null /* TODO: () async => doNotifications(), title: const Text('Notifications')*/),
       ],
     );
   }

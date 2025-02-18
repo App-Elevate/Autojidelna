@@ -36,7 +36,7 @@ class NotificationService {
 
       // IMPORTANT:  You must signal completion of your task or the OS can punish your app
       // for taking too long in the background.
-      await doNotifications();
+      // TODO: await doNotifications();
       BackgroundFetch.finish(taskId);
     }, (String taskId) async {
       // <-- Task timeout handler.

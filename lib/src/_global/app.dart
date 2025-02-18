@@ -90,19 +90,19 @@ class App {
     NotificationService().initAwesome();
 
     // Setting listeners for when the app is running and notification button is clicked
-    AwesomeNotifications().setListeners(
+    /* TODO: AwesomeNotifications().setListeners(
       onActionReceivedMethod: NotificationController.onActionReceivedMethod,
       onNotificationCreatedMethod: NotificationController.onNotificationCreatedMethod,
       onNotificationDisplayedMethod: NotificationController.onNotificationDisplayedMethod,
       onDismissActionReceivedMethod: NotificationController.onDismissActionReceivedMethod,
-    );
+    );*/
 
     // Detecting if the app was opened from a notification and handling it if it was
     ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
-    await NotificationController.handleNotificationAction(receivedAction);
+    // TODO: await NotificationController.handleNotificationAction(receivedAction);
 
     // Initializing the background fetch
-    BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+    // TODO: BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
     _initNotificationsExecuted = true;
   }
 

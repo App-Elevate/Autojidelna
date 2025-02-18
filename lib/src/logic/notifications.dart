@@ -1,7 +1,7 @@
 // File containing all code for notifications. This includes background fetch and awesome notifications.
 //TODO: fix
 
-import 'dart:convert';
+/*import 'dart:convert';
 
 import 'package:autojidelna/src/_conf/dates.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
@@ -323,12 +323,12 @@ class NotificationController {
           '${dateTillIgnore.year}-${dateTillIgnore.month.toString().padLeft(2, '0')}-${dateTillIgnore.day.toString().padLeft(2, '0')}',
         );
       } else if (receivedAction.buttonKeyPressed.substring(0, 9) == NotificationIds.onlyObjednatButton) {
-        String username = receivedAction.buttonKeyPressed.substring(9).split('_')[0];
+        /*String username = receivedAction.buttonKeyPressed.substring(9).split('_')[0];
         LoggedInCanteen tempLoggedInCanteen = LoggedInCanteen();
         if (loggedInCanteen.uzivatel != null && loggedInCanteen.uzivatel?.uzivatelskeJmeno == username) {
           tempLoggedInCanteen = loggedInCanteen;
         }
-        await tempLoggedInCanteen.quickOrder((SafeAccount.fromJson(jsonDecode(receivedAction.buttonKeyPressed.substring(9).split('_')[0]))));
+        await tempLoggedInCanteen.quickOrder((SafeAccount.fromJson(jsonDecode(receivedAction.buttonKeyPressed.substring(9).split('_')[0]))));*/
       }
     }
     //přepnutí účtu, když uživatel klikne na notifikaci
@@ -366,3 +366,4 @@ class NotificationController {
     handleNotificationAction(receivedAction);
   }
 }
+*/
