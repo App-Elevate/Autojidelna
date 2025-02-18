@@ -102,6 +102,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       }
       break;
   }
+  if (context.mounted) context.read<UserProvider>().updateUserData();
   prov.ordering = false;
 }
 
