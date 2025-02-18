@@ -120,9 +120,10 @@ class CanteenProvider with ChangeNotifier {
     if (notify) notifyListeners();
   }
 
-  void setSelectedDate(DateTime selectedDate) {
+  void setSelectedDate(DateTime selectedDate) async {
     if (_selectedDate == selectedDate.normalize) return;
     _selectedDate = selectedDate.normalize;
+    preIndexMenus(targetDate: selectedDate);
     notifyListeners();
   }
 

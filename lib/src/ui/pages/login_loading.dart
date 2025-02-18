@@ -25,8 +25,8 @@ class _LoginLoadingState extends State<LoginLoading> {
     BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext!;
     final Texts lang = ctx.l10n;
     try {
-      await context.read<UserProvider>().loadUser();
-      await context.read<CanteenProvider>().preIndexMenus();
+      if (mounted) await context.read<UserProvider>().loadUser();
+      if (mounted) await context.read<CanteenProvider>().preIndexMenus();
     } catch (e) {
       switch (e) {
         case AuthErrors.accountNotFound:

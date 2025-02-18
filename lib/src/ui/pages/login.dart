@@ -222,9 +222,9 @@ class _LoginPageState extends State<LoginPage> {
       url: LoginPage._urlController.text,
     );
     try {
-      await context.read<UserProvider>().login(account);
+      if (mounted) await context.read<UserProvider>().login(account);
       Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
-      await context.read<CanteenProvider>().preIndexMenus();
+      if (mounted && context.mounted) await context.read<CanteenProvider>().preIndexMenus();
       if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
     } catch (e) {
       switch (e) {
