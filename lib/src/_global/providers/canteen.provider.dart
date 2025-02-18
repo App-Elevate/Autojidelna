@@ -5,6 +5,7 @@ import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/services/canteen_service.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 
 class CanteenProvider with ChangeNotifier {
   CanteenProvider(this._canteenService);
@@ -19,7 +20,7 @@ class CanteenProvider with ChangeNotifier {
   /// Stores number of dishes per day index
   Map<DateTime, int> _numberOfDishes = {};
 
-  List<Burza> _dishMarketplace = [];
+  final List<Burza> _dishMarketplace = [];
 
   /// DayIndex
   DateTime _selectedDate = DateTime.now().normalize;
@@ -27,8 +28,6 @@ class CanteenProvider with ChangeNotifier {
   int _locationId = 1;
 
   Future<void> getMenu(DateTime date) async {
-    if (_menus[date] != null) return Future.value(_menus[date]);
-
     if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
       if (await getMonthlyMenu()) {
         notifyListeners();
@@ -123,7 +122,7 @@ class CanteenProvider with ChangeNotifier {
   void setSelectedDate(DateTime selectedDate) async {
     if (_selectedDate == selectedDate.normalize) return;
     _selectedDate = selectedDate.normalize;
-    preIndexMenus(targetDate: selectedDate);
+    if (await InternetConnectionChecker().hasConnection) preIndexMenus(targetDate: selectedDate);
     notifyListeners();
   }
 
