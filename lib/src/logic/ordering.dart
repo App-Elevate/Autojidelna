@@ -13,58 +13,37 @@ import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_sn
 import 'package:canteenlib/canteenlib.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
 void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
-  final lang = context.l10n;
-  final prov = context.read<CanteenProvider>();
-  Uzivatel uzivatel = context.read<UserProvider>().user!.data;
-  final Canteen canteen;
-
-  DateTime date = dish.den;
-  int dishIndex = prov.getCachedMenu(date)!.jidla.indexOf(dish);
-
-  void updateJidelnicek(Jidelnicek jidelnicek) {
-    Jidelnicek menu = prov.getCachedMenu(date)!;
-    prov.setMenu(jidelnicek);
-    prov.setNumberOfDishes(menu);
-  }
+  final CanteenProvider prov = context.read<CanteenProvider>();
+  final Uzivatel uzivatel = context.read<UserProvider>().user!.data;
+  final Canteen canteen = App.getIt<Canteen>();
+  final Texts lang = context.l10n;
+  final DateTime date = dish.den;
 
   if (prov.ordering) return;
-
   prov.ordering = true;
-  try {
-    canteen = App.getIt<Canteen>();
-  } catch (e) {
-    showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
-    prov.ordering = false;
-    return;
-  }
 
-  Jidlo jidloSafe;
-  try {
-    // We can do this bcs this function is called only if the user sees a button, the button renders only if the menu exists
-    jidloSafe = prov.getCachedMenu(date)!.jidla[dishIndex];
-  } catch (e) {
-    showInternetConnectionSnackBar();
-    prov.ordering = false;
-    return;
+  if (!await InternetConnectionChecker().hasConnection) {
+    final bool value = await showInternetConnectionSnackBar();
+    if (value && context.mounted) pressed(context, dish, stavJidla);
   }
 
   switch (stavJidla) {
     case StavJidla.neobjednano:
-      {
-        try {
-          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
-          updateJidelnicek(jidelnicek);
-          StatisticsService().addStatistic(StatisticType.order);
-        } catch (e) {
-          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
-        }
+      try {
+        Jidelnicek menu = await canteen.objednat(dish);
+        prov.updateMenu(menu);
+        StatisticsService().addStatistic(StatisticType.order);
+      } catch (e) {
+        showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
       }
       break;
+
     case StavJidla.dostupneNaBurze:
-      Burza? burza = prov.getMarketplaceTypeDish(jidloSafe);
+      Burza? burza = prov.getMarketplaceTypeDish(dish);
 
       if (burza == null) {
         showErrorSnackBar(SnackBarOrderingErrors.dishNotInMarketplace(lang));
@@ -72,66 +51,58 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       }
 
       try {
-        Jidelnicek jidelnicek = await canteen.objednatZBurzy(burza);
-        updateJidelnicek(jidelnicek);
+        Jidelnicek menu = await canteen.objednatZBurzy(burza);
+        prov.updateMenu(menu);
         StatisticsService().addStatistic(StatisticType.order);
       } catch (e) {
         showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
       }
-
       break;
+
     case StavJidla.objednanoVyprsenaPlatnost:
       showErrorSnackBar(SnackBarOrderingErrors.dishCancellationExpired(lang));
       break;
+
     case StavJidla.objednanoPouzeNaBurzu:
-      {
-        try {
-          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
-          updateJidelnicek(jidelnicek);
-        } catch (e) {
-          showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
-        }
+      try {
+        Jidelnicek menu = await canteen.doBurzy(dish);
+        prov.updateMenu(menu);
+      } catch (e) {
+        showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
       }
       break;
+
     case StavJidla.nedostupne:
-      {
-        if (date.isBefore(DateTime.now())) {
-          showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
-          break;
-        }
-        try {
-          if (uzivatel.kredit < jidloSafe.cena!) {
-            showErrorSnackBar(SnackBarOrderingErrors.insufficientCredit(lang));
-            break;
-          }
-        } catch (e) {
-          //pokud se nepodaří načíst kredit, tak to necháme být
-        }
+      if (date.isBefore(DateTime.now())) {
         showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
+        break;
       }
+      if (uzivatel.kredit < dish.cena!) {
+        showErrorSnackBar(SnackBarOrderingErrors.insufficientCredit(lang));
+        break;
+      }
+      showErrorSnackBar(SnackBarOrderingErrors.dishCannotBeOrdered(lang));
       break;
+
     case StavJidla.objednano:
-      {
-        try {
-          Jidelnicek jidelnicek = await canteen.objednat(jidloSafe);
-          updateJidelnicek(jidelnicek);
-        } catch (e) {
-          showErrorSnackBar(SnackBarOrderingErrors.cancelingOrder(lang));
-        }
+      try {
+        Jidelnicek jidelnicek = await canteen.objednat(dish);
+        prov.updateMenu(jidelnicek);
+      } catch (e) {
+        showErrorSnackBar(SnackBarOrderingErrors.cancelingOrder(lang));
       }
       break;
+
     case StavJidla.vlozenoNaBurze:
-      {
-        try {
-          Jidelnicek jidelnicek = await canteen.doBurzy(jidloSafe);
-          updateJidelnicek(jidelnicek);
-        } catch (e) {
-          showErrorSnackBar(SnackBarOrderingErrors.addingToMarketplace(lang));
-        }
+      try {
+        Jidelnicek jidelnicek = await canteen.doBurzy(dish);
+        prov.updateMenu(jidelnicek);
+      } catch (e) {
+        showErrorSnackBar(SnackBarOrderingErrors.addingToMarketplace(lang));
       }
       break;
   }
-  if (context.mounted) prov.ordering = false;
+  prov.ordering = false;
 }
 
 void cannotBeOrderedFix(BuildContext context, DateTime date) async {
@@ -189,7 +160,7 @@ bool isButtonEnabled(StavJidla stavJidla) {
 String getObedText(BuildContext context, Jidlo dish, StavJidla stavJidla) {
   final lang = context.l10n;
   DateTime date = dish.den;
-  Jidelnicek menu = context.select<CanteenProvider, Jidelnicek>((data) => data.getCachedMenu(date)!);
+  Jidelnicek menu = context.read<CanteenProvider>().getCachedMenu(date)!;
   switch (stavJidla) {
     case StavJidla.objednano:
       return lang.cancel;
