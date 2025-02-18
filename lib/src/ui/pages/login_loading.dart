@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
@@ -25,6 +26,7 @@ class _LoginLoadingState extends State<LoginLoading> {
     final Texts lang = ctx.l10n;
     try {
       await context.read<UserProvider>().loadUser();
+      await context.read<CanteenProvider>().preIndexMenus();
     } catch (e) {
       switch (e) {
         case AuthErrors.accountNotFound:

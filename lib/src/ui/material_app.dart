@@ -11,6 +11,7 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
+import 'package:autojidelna/src/logic/services/canteen_service.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -89,9 +90,9 @@ class MyAppWrapper extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
         ChangeNotifierProvider(create: (_) => UserProvider(AuthService())),
+        ChangeNotifierProvider(create: (_) => CanteenProvider(CanteenService())),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => Settings()),
-        ChangeNotifierProvider(create: (_) => CanteenProvider()),
       ],
       child: const MyApp(),
     );

@@ -19,7 +19,7 @@ class OrderDishButton extends StatelessWidget {
       child: Selector<CanteenProvider, bool>(
         selector: (_, p1) => p1.ordering,
         builder: (context, ordering, ___) {
-          StavJidla stav = getStavJidla(dish);
+          StavJidla stav = getStavJidla(context, dish);
           bool isPrimary = getPrimaryState(stav);
 
           return FilledButton(

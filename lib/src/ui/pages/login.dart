@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
@@ -223,6 +224,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await context.read<UserProvider>().login(account);
       Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
+      await context.read<CanteenProvider>().preIndexMenus();
       if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
     } catch (e) {
       switch (e) {

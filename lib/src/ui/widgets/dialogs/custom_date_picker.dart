@@ -36,7 +36,7 @@ showCustomDatePicker(BuildContext context) {
   List<DateTime> availableFoodDays = [];
 
   List<dynamic> eventLoader(DateTime day) {
-    Jidelnicek? menu = context.read<CanteenProvider>().getMenu(day);
+    Jidelnicek? menu = context.read<CanteenProvider>().getCachedMenu(day);
 
     if (menu == null) return [];
     if (!bigMarkersEnabled) return menu.jidla;
@@ -200,7 +200,7 @@ Center _cellTemplate(BuildContext context, DateTime date, {CellState? state}) {
 Widget? _markerTemplate(BuildContext context, Jidlo dish) {
   final ColorScheme colorScheme = Theme.of(context).colorScheme;
   double size = 10;
-  final StavJidla stavJidla = getStavJidla(dish);
+  final StavJidla stavJidla = getStavJidla(context, dish);
   final bool ordered = getPrimaryState(stavJidla);
 
   if (!isButtonEnabled(stavJidla) && !ordered) return const SizedBox();
