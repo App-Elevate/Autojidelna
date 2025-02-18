@@ -20,7 +20,7 @@ class CanteenProvider with ChangeNotifier {
   /// Stores number of dishes per day index
   Map<DateTime, int> _numberOfDishes = {};
 
-  final List<Burza> _dishMarketplace = [];
+  List<Burza> _dishMarketplace = [];
 
   /// DayIndex
   DateTime _selectedDate = DateTime.now().normalize;
@@ -34,14 +34,14 @@ class CanteenProvider with ChangeNotifier {
       }
     }
 
-    Jidelnicek? menu = await _canteenService.getDailyJidelnicek(date.normalize);
+    Jidelnicek? menu = await _canteenService.getDailyMenu(date.normalize);
     if (menu == null) return;
     _menus[date] = menu;
     notifyListeners();
   }
 
   Future<bool> getMonthlyMenu() async {
-    List<Jidelnicek>? menuList = await _canteenService.getMonthlyJidelnicek();
+    List<Jidelnicek>? menuList = await _canteenService.getMonthlyMenu();
     if (menuList == null || menuList.isEmpty) return false;
     for (Jidelnicek m in menuList) {
       _menus[m.den.normalize] = m;
@@ -69,24 +69,24 @@ class CanteenProvider with ChangeNotifier {
   }
 
   Future<void> _smartPreIndexing(DateTime targetDate) async {
-    await preIndexLunchesRange(targetDate, 3);
-    await preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
-    await preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
-    await preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
-    await preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
+    await _preIndexLunchesRange(targetDate, 3);
+    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
+    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
+    await _preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
+    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
   }
 
-  Future<void> preIndexLunchesRange(DateTime start, int howManyDays) async {
+  Future<void> _preIndexLunchesRange(DateTime start, int howManyDays) async {
     for (int i = 0; i < howManyDays; i++) {
       DateTime date = start.add(Duration(days: i)).normalize;
       if (!_menus.containsKey(date)) {
-        Jidelnicek? menu = await _canteenService.getDailyJidelnicek(date);
+        Jidelnicek? menu = await _canteenService.getDailyMenu(date);
         if (menu != null) {
           _menus[date] = menu;
           notifyListeners();

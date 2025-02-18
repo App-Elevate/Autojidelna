@@ -20,16 +20,15 @@ import 'package:http/http.dart' as http;
 
 class AuthService {
   /// Main logic for loging in.
-  /// Can throw errors:
+  /// Can throw:
+  ///
+  /// [AuthErrors.connectionFailed] - Connection to the canteen server failed
+  ///
+  /// [AuthErrors.noInternetConnection] - The user doesn't have an internet connection
   ///
   /// [AuthErrors.wrongCredentials] - The user has entered incorrect credentials
   ///
   /// [AuthErrors.wrongUrl] - The user has entered an invalid URL
-  ///
-  /// [AuthErrors.noInternetConnection] - The user doesn't have an internet connection
-  ///
-  /// [AuthErrors.connectionFailed] - connection to the canteen server failed
-  ///
   Future<User?> login(Account account) async {
     String url = Url.clean(account.url);
     User? user;
@@ -89,9 +88,9 @@ class AuthService {
   }
 
   /// Logs in by provided [safeAccount]
-  /// /// Can throw:
+  /// Can throw:
   ///
-  /// [AuthErrors.accountNotFound] if a matching [Account] is not found
+  /// [AuthErrors.accountNotFound] - A matching [Account] was not found
   Future<User?> loginBySafeAccount(SafeAccount safeAccount) async {
     Account? account = await _findBySafeAccount(safeAccount);
     throwIf(account == null, AuthErrors.accountNotFound);
@@ -103,9 +102,9 @@ class AuthService {
   ///
   /// Can throw:
   ///
-  /// [AuthErrors.accountNotFound] if a matching [Account] is not found
+  /// [AuthErrors.accountNotFound] - A matching [Account] was not found
   ///
-  ///[AuthErrors.missingCredentials] if a there aren't any credentials saved in Secure storage
+  /// [AuthErrors.missingCredentials] - Secure storage doesn't contain any credentials
   Future<User?> loginFromStorage() async {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
@@ -114,7 +113,6 @@ class AuthService {
     return await loginBySafeAccount(loginData.loggedInAccount!);
   }
 
-  /// Returns a list of logged in accounts stripped of their passwords
   Future<List<SafeAccount>> getLimitedAccounts() async {
     return (await _getDataFromStorage()).accounts.map(SafeAccount.fromAccount).toList();
   }
@@ -131,7 +129,9 @@ class AuthService {
 
   /// Logs out a specific user
   ///
-  /// Can throw [AuthErrors.accountNotFound] if a matching [Account] is not found
+  /// Can throw:
+  ///
+  /// [AuthErrors.accountNotFound] - A matching [Account] was not found
   Future<void> logout(SafeAccount safeAccount) async {
     Account? account = await _findBySafeAccount(safeAccount);
     throwIf(account == null, AuthErrors.accountNotFound);

@@ -15,7 +15,15 @@ class CanteenService {
 
   int getLocation() => _canteen().vydejna;
 
-  Future<Jidelnicek?> getDailyJidelnicek(DateTime date) async {
+  /// Gets [Jidelnicek] for a specified day
+  /// Can throw:
+  ///
+  /// [CanteenErrors.needToLogin] - A user is not logged in
+  ///
+  /// [CanteenErrors.noInternetConnection] - The user doesn't have an internet connection
+  ///
+  /// [CanteenErrors.unsuportedFeature] - The feature is not supported by current icanteen version
+  Future<Jidelnicek?> getDailyMenu(DateTime date) async {
     // Check for internet connectivity
     if (!await InternetConnectionChecker().hasConnection) {
       return Future.error(CanteenErrors.noInternetConnection);
@@ -32,7 +40,15 @@ class CanteenService {
     return menu;
   }
 
-  Future<List<Jidelnicek>?> getMonthlyJidelnicek() async {
+  /// Gets [List] of [Jidelnicek] for the current month
+  /// Can throw:
+  ///
+  /// [CanteenErrors.needToLogin] - A user is not logged in
+  ///
+  /// [CanteenErrors.noInternetConnection] - The user doesn't have an internet connection
+  ///
+  /// [CanteenErrors.unsuportedFeature] - The feature is not supported by current icanteen version
+  Future<List<Jidelnicek>?> getMonthlyMenu() async {
     // Check for internet connectivity
     if (!await InternetConnectionChecker().hasConnection) {
       return Future.error(CanteenErrors.noInternetConnection);
@@ -49,7 +65,15 @@ class CanteenService {
     return menu;
   }
 
-  Future<List<Burza>> getBurza() async {
+  /// Gets the current marketplace
+  /// Can throw:
+  ///
+  /// [CanteenErrors.needToLogin] - A user is not logged in
+  ///
+  /// [CanteenErrors.noInternetConnection] - The user doesn't have an internet connection
+  ///
+  /// [CanteenErrors.unsuportedFeature] - The feature is not supported by current icanteen version
+  Future<List<Burza>> getMarketplace() async {
     // Check for internet connectivity
     if (!await InternetConnectionChecker().hasConnection) {
       return Future.error(CanteenErrors.noInternetConnection);
