@@ -77,9 +77,7 @@ class AuthService {
       user = User(
         accountData: SafeAccount.fromAccount(account),
         canteenLocations: (await instance.jidelnicekDen()).vydejny,
-        data: instance.missingFeatures.contains(Features.ziskatUzivatele)
-            ? Uzivatel(uzivatelskeJmeno: account.username)
-            : await instance.ziskejUzivatele(),
+        data: await fetchUserData(account.username),
       );
     } catch (e) {
       rethrow;
@@ -125,6 +123,11 @@ class AuthService {
     throwIf(!loginData.accounts.any((account) => SafeAccount.fromAccount(account) == saveAccount), AuthErrors.accountNotFound);
     LoggedAccounts updatedData = LoggedAccounts(accounts: loginData.accounts, loggedInAccount: saveAccount);
     await _saveDataToStorage(updatedData);
+  }
+
+  Future<Uzivatel> fetchUserData(String username) async {
+    Canteen instance = App.getIt<Canteen>();
+    return instance.missingFeatures.contains(Features.ziskatUzivatele) ? Uzivatel(uzivatelskeJmeno: username) : await instance.ziskejUzivatele();
   }
 
   /// Logs out a specific user
