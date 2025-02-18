@@ -19,16 +19,19 @@ class DishList extends StatelessWidget {
       },
       child: Consumer<CanteenProvider>(
         builder: (_, data, child) {
-          Jidelnicek? menu = data.getMenu(date);
+          Jidelnicek? menu = data.getCachedMenu(date);
           if (menu == null) return const Center(child: CircularProgressIndicator());
           List<Jidlo> dishList = menu.jidla;
 
           if (dishList.isEmpty) return child!;
 
-          return ListView.builder(
-            itemCount: dishList.length,
-            padding: const EdgeInsets.symmetric(vertical: 24),
-            itemBuilder: (_, index) => PageViewFoodCard(dishList[index]),
+          return SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: Column(
+                children: dishList.map((d) => PageViewFoodCard(d)).toList(),
+              ),
+            ),
           );
         },
         child: SingleChildScrollView(

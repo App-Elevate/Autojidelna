@@ -50,7 +50,7 @@ class _DishListTile extends StatelessWidget {
     return Selector<CanteenProvider, bool>(
       selector: (_, p1) => p1.ordering,
       builder: (context, ordering, ___) {
-        final StavJidla stav = getStavJidla(dish);
+        final StavJidla stav = getStavJidla(context, dish);
         final bool enabled = ordering || !isButtonEnabled(stav);
         final bool selected = getPrimaryState(stav);
         final onTap = burzaAlertDialog(context, dish, stav);
