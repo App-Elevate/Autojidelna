@@ -427,5 +427,19 @@
   "view": "Zobrazení",
   "@view": {},
   "vlozitNaBurzu": "Vložit na burzu",
-  "@vlozitNaBurzu": {}
+  "@vlozitNaBurzu": {},
+  "welcome": "Vítejte!",
+  "@welcome": {},
+  "onboardingSubtitle": "Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.",
+  "@onboardingSubtitle": {},
+  "allowNotifications": "Povolit oznámení",
+  "@allowNotifications": {},
+  "allowNotifcitaionsReasons": "Dáme vám vědět o důležitých informacích, jako je nízký kredit nebo připomenutí objednávky.",
+  "@allowNotifcitaionsReasons": {},
+  "grant": "Udělit",
+  "@grant": {},
+  "next": "Další",
+  "@next": {},
+  "getStarted": "Začínáme",
+  "@getStarted": {}
 }

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
+import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/permissions_onboarding.dart';
@@ -10,7 +12,8 @@ import 'package:provider/provider.dart';
 
 @RoutePage()
 class OnboardingPage extends StatefulWidget {
-  const OnboardingPage({super.key});
+  const OnboardingPage({super.key, this.onCompletedCallback});
+  final void Function(bool onSuccess)? onCompletedCallback;
 
   @override
   State<OnboardingPage> createState() => _OnboardingPageState();
@@ -26,14 +29,18 @@ class _OnboardingPageState extends State<OnboardingPage> {
   ];
 
   void _nextPage() async {
-    if (_currentPage <= pages.length - 1) {
+    if (_currentPage < pages.length - 1) {
       _pageController.nextPage(
         duration: Durations.medium1,
         curve: Curves.easeInOut,
       );
     } else {
-      // TODO: Navigate to home or login screen or account picker
-      print("Onboarding Complete!");
+      // TODO: Navigate to home, login screen or account picker
+      if (widget.onCompletedCallback == null) {
+        context.router.maybePop();
+        return;
+      }
+      widget.onCompletedCallback!(true);
     }
   }
 
@@ -49,7 +56,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void seemlessLogin() async {
     final UserProvider prov = context.read<UserProvider>();
     try {
-      if (prov.user == null) prov.loadUser();
+      if (prov.user == null) await prov.loadUser();
+      try {
+        if (mounted) context.read<CanteenProvider>().preIndexMenus();
+      } catch (_) {} // Just QoL
     } catch (_) {} // This can be solved later by AuthGuard()
   }
 
@@ -62,6 +72,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Texts lang = context.l10n;
     return PopScope(
       canPop: _currentPage == 0,
       child: Scaffold(
@@ -74,8 +85,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
               child: Icon(Icons.rocket_launch_outlined, size: 55, color: Theme.of(context).colorScheme.primary),
             ),
             ListTile(
-              title: Text('Title', style: AppThemes.textTheme.displaySmall),
-              subtitle: Text('Subtitle', style: AppThemes.textTheme.titleMedium),
+              title: Text(lang.welcome, style: AppThemes.textTheme.displaySmall),
+              subtitle: Text(lang.onboardingSubtitle, style: AppThemes.textTheme.titleMedium),
             ),
             const CustomDivider(height: 8),
             Card(
@@ -104,7 +115,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Expanded(
                 child: FilledButton(
                   onPressed: _nextPage,
-                  child: Text(_currentPage == pages.length - 1 ? "Get Started" : "Next"),
+                  child: Text(_currentPage == pages.length - 1 ? lang.getStarted : lang.next),
                 ),
               ),
             ],

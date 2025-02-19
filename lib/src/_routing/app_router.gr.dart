@@ -247,10 +247,17 @@ class MorePage extends _i16.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.OnboardingPage]
-class OnboardingPage extends _i16.PageRouteInfo<void> {
-  const OnboardingPage({List<_i16.PageRouteInfo>? children})
-      : super(
+class OnboardingPage extends _i16.PageRouteInfo<OnboardingPageArgs> {
+  OnboardingPage({
+    _i17.Key? key,
+    void Function(bool)? onCompletedCallback,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
           OnboardingPage.name,
+          args: OnboardingPageArgs(
+            key: key,
+            onCompletedCallback: onCompletedCallback,
+          ),
           initialChildren: children,
         );
 
@@ -259,9 +266,30 @@ class OnboardingPage extends _i16.PageRouteInfo<void> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i11.OnboardingPage();
+      final args = data.argsAs<OnboardingPageArgs>(
+          orElse: () => const OnboardingPageArgs());
+      return _i11.OnboardingPage(
+        key: args.key,
+        onCompletedCallback: args.onCompletedCallback,
+      );
     },
   );
+}
+
+class OnboardingPageArgs {
+  const OnboardingPageArgs({
+    this.key,
+    this.onCompletedCallback,
+  });
+
+  final _i17.Key? key;
+
+  final void Function(bool)? onCompletedCallback;
+
+  @override
+  String toString() {
+    return 'OnboardingPageArgs{key: $key, onCompletedCallback: $onCompletedCallback}';
+  }
 }
 
 /// generated route for

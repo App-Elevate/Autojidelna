@@ -578,4 +578,27 @@ class TextsCs extends Texts {
 
   @override
   String get vlozitNaBurzu => 'Vložit na burzu';
+
+  @override
+  String get welcome => 'Vítejte!';
+
+  @override
+  String get onboardingSubtitle =>
+      'Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.';
+
+  @override
+  String get allowNotifications => 'Povolit oznámení';
+
+  @override
+  String get allowNotifcitaionsReasons =>
+      'Dáme vám vědět o důležitých informacích, jako je nízký kredit nebo připomenutí objednávky.';
+
+  @override
+  String get grant => 'Udělit';
+
+  @override
+  String get next => 'Další';
+
+  @override
+  String get getStarted => 'Začínáme';
 }

@@ -1082,6 +1082,48 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Vložit na burzu'**
   String get vlozitNaBurzu;
+
+  /// No description provided for @welcome.
+  ///
+  /// In cs, this message translates to:
+  /// **'Vítejte!'**
+  String get welcome;
+
+  /// No description provided for @onboardingSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.'**
+  String get onboardingSubtitle;
+
+  /// No description provided for @allowNotifications.
+  ///
+  /// In cs, this message translates to:
+  /// **'Povolit oznámení'**
+  String get allowNotifications;
+
+  /// No description provided for @allowNotifcitaionsReasons.
+  ///
+  /// In cs, this message translates to:
+  /// **'Dáme vám vědět o důležitých informacích, jako je nízký kredit nebo připomenutí objednávky.'**
+  String get allowNotifcitaionsReasons;
+
+  /// No description provided for @grant.
+  ///
+  /// In cs, this message translates to:
+  /// **'Udělit'**
+  String get grant;
+
+  /// No description provided for @next.
+  ///
+  /// In cs, this message translates to:
+  /// **'Další'**
+  String get next;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In cs, this message translates to:
+  /// **'Začínáme'**
+  String get getStarted;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {
