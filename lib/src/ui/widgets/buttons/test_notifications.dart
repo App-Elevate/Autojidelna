@@ -1,4 +1,3 @@
-import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:flutter/material.dart';
 
 class NotificationActionButton extends StatelessWidget {

@@ -5,10 +5,8 @@ import 'package:autojidelna/src/_global/providers/remote_config.dart';
 import 'package:autojidelna/src/lang/supported_locales.dart';
 import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/services/notification_service.dart';
-import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
-import 'package:background_fetch/background_fetch.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
@@ -98,7 +96,7 @@ class App {
     );*/
 
     // Detecting if the app was opened from a notification and handling it if it was
-    ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
+    //ReceivedAction? receivedAction = await AwesomeNotifications().getInitialNotificationAction(removeFromActionEvents: false);
     // TODO: await NotificationController.handleNotificationAction(receivedAction);
 
     // Initializing the background fetch
