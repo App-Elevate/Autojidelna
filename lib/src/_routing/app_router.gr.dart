@@ -202,7 +202,7 @@ class LoginPage extends _i16.PageRouteInfo<void> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return const _i8.LoginPage();
+      return _i16.WrappedRoute(child: const _i8.LoginPage());
     },
   );
 }
