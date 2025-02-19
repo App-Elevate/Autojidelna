@@ -57,4 +57,9 @@ class UserProvider extends ChangeNotifier {
     _user = _user!.copyWith(data: await _authService.fetchUserData(_user!.accountData.username));
     notifyListeners();
   }
+
+  Future<void> updateLoggedSafeAccounts() async {
+    _loggedSafeAccounts = await _authService.getLimitedAccounts();
+    notifyListeners();
+  }
 }
