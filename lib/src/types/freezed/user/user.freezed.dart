@@ -37,6 +37,7 @@ abstract class $UserCopyWith<$Res> {
       Map<int, String> canteenLocations});
 
   $SafeAccountCopyWith<$Res> get accountData;
+  $UzivatelCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -83,6 +84,16 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
       return _then(_value.copyWith(accountData: value) as $Val);
     });
   }
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UzivatelCopyWith<$Res> get data {
+    return $UzivatelCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -99,6 +110,8 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
 
   @override
   $SafeAccountCopyWith<$Res> get accountData;
+  @override
+  $UzivatelCopyWith<$Res> get data;
 }
 
 /// @nodoc

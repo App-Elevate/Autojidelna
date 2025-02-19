@@ -80,6 +80,8 @@ abstract class $CanteenDataCopyWith<$Res> {
       Map<DateTime, Jidelnicek> jidelnicky,
       Map<DateTime, int> pocetJidel,
       Map<int, String>? vydejny});
+
+  $UzivatelCopyWith<$Res> get uzivatel;
 }
 
 /// @nodoc
@@ -136,6 +138,16 @@ class _$CanteenDataCopyWithImpl<$Res, $Val extends CanteenData>
               as Map<int, String>?,
     ) as $Val);
   }
+
+  /// Create a copy of CanteenData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UzivatelCopyWith<$Res> get uzivatel {
+    return $UzivatelCopyWith<$Res>(_value.uzivatel, (value) {
+      return _then(_value.copyWith(uzivatel: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -154,6 +166,9 @@ abstract class _$$CanteenDataImplCopyWith<$Res>
       Map<DateTime, Jidelnicek> jidelnicky,
       Map<DateTime, int> pocetJidel,
       Map<int, String>? vydejny});
+
+  @override
+  $UzivatelCopyWith<$Res> get uzivatel;
 }
 
 /// @nodoc
