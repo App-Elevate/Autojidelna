@@ -3,42 +3,46 @@ import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
-import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
+import 'package:autojidelna/src/types/app_context.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-@RoutePage()
-class LoginLoading extends StatefulWidget {
-  const LoginLoading({super.key});
-
+class AuthGuard extends AutoRouteGuard {
   @override
-  State<LoginLoading> createState() => _LoginLoadingState();
-}
-
-class _LoginLoadingState extends State<LoginLoading> {
-  void login() async {
-    BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext!;
+  void onNavigation(NavigationResolver resolver, StackRouter router) async {
+    BuildContext? ctx = App.getIt<AppContext>().context;
+    if (ctx == null && !ctx!.mounted) return;
     final Texts lang = ctx.l10n;
+
+    if (ctx.read<UserProvider>().user != null) resolver.next(true);
+
     try {
-      if (mounted) await context.read<UserProvider>().loadUser();
-      if (mounted) await context.read<CanteenProvider>().preIndexMenus();
+      await ctx.read<UserProvider>().loadUser();
+      try {
+        if (ctx.mounted) await ctx.read<CanteenProvider>().preIndexMenus();
+      } catch (_) {
+        // Just QoL
+      }
+      resolver.next(true); // Allow navigation
     } catch (e) {
       switch (e) {
         case AuthErrors.accountNotFound:
-          // showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
-          // TODO: show a list of other logged accounts
+          // TODO: Show list of other logged-in accounts
           break;
         case AuthErrors.connectionFailed:
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
         case AuthErrors.noInternetConnection:
-          bool value = await showInternetConnectionSnackBar();
-          if (value) login();
+          bool retry = await showInternetConnectionSnackBar();
+          if (retry) {
+            onNavigation(resolver, router); // Retry login
+            return;
+          }
           break;
         case AuthErrors.wrongCredentials:
           showErrorSnackBar(SnackBarAuthErrors.wrongCredentials(lang));
@@ -48,20 +52,8 @@ class _LoginLoadingState extends State<LoginLoading> {
           break;
         default:
       }
-      if (mounted) context.router.replaceAll([const LoginPage()]);
-      return;
+
+      resolver.redirect(const LoginPage(), replace: true);
     }
-    if (mounted) context.router.replaceAll([const RouterPage()]);
-  }
-
-  @override
-  void initState() {
-    login();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

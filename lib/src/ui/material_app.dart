@@ -12,6 +12,7 @@ import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
 import 'package:autojidelna/src/logic/services/canteen_service.dart';
+import 'package:autojidelna/src/types/app_context.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,6 +75,10 @@ class _MyAppState extends State<MyApp> {
             includePrefixMatches: true,
             navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
             deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
+            placeholder: (context) {
+              App.getIt<AppContext>().setContext(context);
+              return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            },
           ),
         );
       },

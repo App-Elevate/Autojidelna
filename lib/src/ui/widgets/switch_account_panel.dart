@@ -84,7 +84,7 @@ class SwitchAccountPanel extends StatelessWidget {
       onTap: () async {
         if (currentAccount) return;
         await prov.changeUser(safeAccount);
-        if (context.mounted) context.router.replaceAll([const LoginLoading()]);
+        if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
       },
     );
   }
