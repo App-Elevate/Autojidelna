@@ -186,13 +186,12 @@ class AppThemes {
       // Inputs
       inputDecorationTheme: InputDecorationTheme(
         alignLabelWithHint: true,
-        isDense: true,
         errorMaxLines: 1,
-        labelStyle: textTheme.bodyMedium,
         floatingLabelAlignment: FloatingLabelAlignment.start,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelStyle: textTheme.bodyMedium,
         hintStyle: textTheme.bodyMedium,
         helperStyle: textTheme.bodyMedium,
-        border: const OutlineInputBorder(),
       ),
 
       // List tiles
