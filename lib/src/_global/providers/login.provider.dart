@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
@@ -25,9 +26,18 @@ class LoginProvider extends ChangeNotifier {
   bool usernameError = false;
   String? passwordError;
   bool hidePassword = true;
+  SafeAccount? _pickedAccount;
 
   LoginProvider() {
     setLastUrl();
+  }
+
+  SafeAccount? get pickedAccount => _pickedAccount;
+
+  void setPickedAccount(SafeAccount account) {
+    if (_pickedAccount == account) return;
+    _pickedAccount = account;
+    notifyListeners();
   }
 
   void changePasswordVisibility() {
