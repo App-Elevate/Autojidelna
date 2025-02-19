@@ -19,7 +19,7 @@ class AuthGuard extends AutoRouteGuard {
     if (ctx == null && !ctx!.mounted) return;
     final Texts lang = ctx.l10n;
 
-    if (ctx.read<UserProvider>().user != null) resolver.next(true);
+    if (ctx.read<UserProvider>().user != null) resolver.next(true); // if logged in during onboarding
 
     try {
       await ctx.read<UserProvider>().loadUser();
