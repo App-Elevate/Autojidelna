@@ -233,7 +233,7 @@ class AppThemes {
           }),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
-            return colorScheme.onSurface;
+            return colorScheme.onPrimary;
           }),
           fixedSize: const WidgetStatePropertyAll(Size.fromHeight(45)),
           shadowColor: const WidgetStatePropertyAll(Colors.transparent),
