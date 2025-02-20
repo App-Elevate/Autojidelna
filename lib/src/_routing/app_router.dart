@@ -2,9 +2,17 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/_routing/guards/auth_guard.dart';
 import 'package:autojidelna/src/_routing/guards/onboarding_guard.dart';
+import 'package:flutter/material.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
+  @override
+  RouteType get defaultRouteType => RouteType.custom(
+        transitionsBuilder: TransitionsBuilders.fadeIn,
+        durationInMilliseconds: Durations.short3.inMilliseconds,
+        reverseDurationInMilliseconds: Durations.short3.inMilliseconds,
+      );
+
   @override
   List<AutoRoute> get routes => staticRoutes;
   static final List<AutoRoute> staticRoutes = [
