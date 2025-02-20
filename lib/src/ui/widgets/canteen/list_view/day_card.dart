@@ -23,24 +23,24 @@ class DayCard extends StatefulWidget {
 
 class _DayCardState extends State<DayCard> {
   Future<void>? fetchMenu;
+  Jidelnicek? cachedMenu;
 
   @override
   void initState() {
     super.initState();
-    // Fetch the data in initState to avoid context issues
-    // ignore: discarded_futures
+    cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
     fetchMenu = Future(() async {
-      if (!mounted) return;
-      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
-      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
-      return;
+      if (mounted) await context.read<CanteenProvider>().getMenu(widget.date);
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (cachedMenu != null) return _DayCard(widget.date);
     return FutureBuilder<void>(
-      future: fetchMenu,
+      future: Future(() async {
+        if (context.mounted) await context.read<CanteenProvider>().getMenu(widget.date);
+      }),
       builder: (context, snapshot) {
         if (snapshot.hasError) return const ErrorLoadingData();
         if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.date);

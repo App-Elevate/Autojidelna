@@ -30,6 +30,7 @@ class _ListViewCanteenState extends State<ListViewCanteen> {
       scrollDirection: Axis.vertical,
       maxItemCount: Dates.maximalDate.difference(Dates.minimalDate).inDays,
       itemBuilder: (BuildContext context, int index) => DayCard(convertIndexToDatetime(index)),
+      emptyItemBuilder: (context, index) => const SizedBox(),
     );
   }
 }
