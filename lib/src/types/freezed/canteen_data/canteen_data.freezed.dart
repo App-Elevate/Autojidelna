@@ -22,18 +22,6 @@ mixin _$CanteenData {
   /// id, aby se nám neindexovaly špatně jídelníčky
   set id(int value) => throw _privateConstructorUsedError;
 
-  /// login uživatele
-  String get username => throw _privateConstructorUsedError;
-
-  /// login uživatele
-  set username(String value) => throw _privateConstructorUsedError;
-
-  /// url kantýny
-  String get url => throw _privateConstructorUsedError;
-
-  /// url kantýny
-  set url(String value) => throw _privateConstructorUsedError;
-
   /// info o uživateli - např kredit,jméno,příjmení...
   Uzivatel get uzivatel => throw _privateConstructorUsedError;
 
@@ -86,14 +74,14 @@ abstract class $CanteenDataCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String username,
-      String url,
       Uzivatel uzivatel,
       List<Burza> jidlaNaBurze,
       Map<DateTime, Completer<Jidelnicek>> currentlyLoading,
       Map<DateTime, Jidelnicek> jidelnicky,
       Map<DateTime, int> pocetJidel,
       Map<int, String>? vydejny});
+
+  $UzivatelCopyWith<$Res> get uzivatel;
 }
 
 /// @nodoc
@@ -112,8 +100,6 @@ class _$CanteenDataCopyWithImpl<$Res, $Val extends CanteenData>
   @override
   $Res call({
     Object? id = null,
-    Object? username = null,
-    Object? url = null,
     Object? uzivatel = null,
     Object? jidlaNaBurze = null,
     Object? currentlyLoading = null,
@@ -126,14 +112,6 @@ class _$CanteenDataCopyWithImpl<$Res, $Val extends CanteenData>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
       uzivatel: null == uzivatel
           ? _value.uzivatel
           : uzivatel // ignore: cast_nullable_to_non_nullable
@@ -160,6 +138,16 @@ class _$CanteenDataCopyWithImpl<$Res, $Val extends CanteenData>
               as Map<int, String>?,
     ) as $Val);
   }
+
+  /// Create a copy of CanteenData
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UzivatelCopyWith<$Res> get uzivatel {
+    return $UzivatelCopyWith<$Res>(_value.uzivatel, (value) {
+      return _then(_value.copyWith(uzivatel: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -172,14 +160,15 @@ abstract class _$$CanteenDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String username,
-      String url,
       Uzivatel uzivatel,
       List<Burza> jidlaNaBurze,
       Map<DateTime, Completer<Jidelnicek>> currentlyLoading,
       Map<DateTime, Jidelnicek> jidelnicky,
       Map<DateTime, int> pocetJidel,
       Map<int, String>? vydejny});
+
+  @override
+  $UzivatelCopyWith<$Res> get uzivatel;
 }
 
 /// @nodoc
@@ -196,8 +185,6 @@ class __$$CanteenDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? username = null,
-    Object? url = null,
     Object? uzivatel = null,
     Object? jidlaNaBurze = null,
     Object? currentlyLoading = null,
@@ -210,14 +197,6 @@ class __$$CanteenDataImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
       uzivatel: null == uzivatel
           ? _value.uzivatel
           : uzivatel // ignore: cast_nullable_to_non_nullable
@@ -251,8 +230,6 @@ class __$$CanteenDataImplCopyWithImpl<$Res>
 class _$CanteenDataImpl with DiagnosticableTreeMixin implements _CanteenData {
   _$CanteenDataImpl(
       {this.id = 0,
-      required this.username,
-      required this.url,
       required this.uzivatel,
       required this.jidlaNaBurze,
       required this.currentlyLoading,
@@ -264,14 +241,6 @@ class _$CanteenDataImpl with DiagnosticableTreeMixin implements _CanteenData {
   @override
   @JsonKey()
   int id;
-
-  /// login uživatele
-  @override
-  String username;
-
-  /// url kantýny
-  @override
-  String url;
 
   /// info o uživateli - např kredit,jméno,příjmení...
   @override
@@ -297,7 +266,7 @@ class _$CanteenDataImpl with DiagnosticableTreeMixin implements _CanteenData {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CanteenData(id: $id, username: $username, url: $url, uzivatel: $uzivatel, jidlaNaBurze: $jidlaNaBurze, currentlyLoading: $currentlyLoading, jidelnicky: $jidelnicky, pocetJidel: $pocetJidel, vydejny: $vydejny)';
+    return 'CanteenData(id: $id, uzivatel: $uzivatel, jidlaNaBurze: $jidlaNaBurze, currentlyLoading: $currentlyLoading, jidelnicky: $jidelnicky, pocetJidel: $pocetJidel, vydejny: $vydejny)';
   }
 
   @override
@@ -306,8 +275,6 @@ class _$CanteenDataImpl with DiagnosticableTreeMixin implements _CanteenData {
     properties
       ..add(DiagnosticsProperty('type', 'CanteenData'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('username', username))
-      ..add(DiagnosticsProperty('url', url))
       ..add(DiagnosticsProperty('uzivatel', uzivatel))
       ..add(DiagnosticsProperty('jidlaNaBurze', jidlaNaBurze))
       ..add(DiagnosticsProperty('currentlyLoading', currentlyLoading))
@@ -328,8 +295,6 @@ class _$CanteenDataImpl with DiagnosticableTreeMixin implements _CanteenData {
 abstract class _CanteenData implements CanteenData {
   factory _CanteenData(
       {int id,
-      required String username,
-      required String url,
       required Uzivatel uzivatel,
       required List<Burza> jidlaNaBurze,
       required Map<DateTime, Completer<Jidelnicek>> currentlyLoading,
@@ -343,20 +308,6 @@ abstract class _CanteenData implements CanteenData {
 
   /// id, aby se nám neindexovaly špatně jídelníčky
   set id(int value);
-
-  /// login uživatele
-  @override
-  String get username;
-
-  /// login uživatele
-  set username(String value);
-
-  /// url kantýny
-  @override
-  String get url;
-
-  /// url kantýny
-  set url(String value);
 
   /// info o uživateli - např kredit,jméno,příjmení...
   @override

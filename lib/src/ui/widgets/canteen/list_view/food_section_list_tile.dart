@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
-import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
-import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/ordering.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/burza_alert_dialog.dart';
@@ -49,31 +47,31 @@ class _DishListTile extends StatelessWidget {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return Consumer<DishesOfTheDay>(
-      builder: (context, data, ___) {
-        Jidelnicek? menu = data.getMenu(convertDateTimeToIndex(dish.den));
-        Jidlo updatedDish = menu!.jidla.where((e) => e.nazev == dish.nazev).first;
-        StavJidla stav = getStavJidla(updatedDish);
+    return Selector<CanteenProvider, bool>(
+      selector: (_, p1) => p1.ordering,
+      builder: (context, ordering, ___) {
+        final StavJidla stav = getStavJidla(context, dish);
+        final bool enabled = ordering || !isButtonEnabled(stav);
+        final bool selected = getPrimaryState(stav);
+        final onTap = burzaAlertDialog(context, dish, stav);
 
-        return Consumer<Ordering>(
-          builder: (context, prov, ___) => ListTile(
-            enabled: !prov.ordering && isButtonEnabled(stav),
-            selected: getPrimaryState(stav),
-            contentPadding: EdgeInsets.zero,
-            selectedColor: theme.colorScheme.primary,
-            titleTextStyle: theme.textTheme.bodyMedium,
-            onTap: prov.ordering || !isButtonEnabled(stav) ? null : () => burzaAlertDialog(context, updatedDish, stav),
-            leading: Radio<bool>(
-              toggleable: true,
-              groupValue: true,
-              value: getPrimaryState(stav),
-              onChanged: prov.ordering || !isButtonEnabled(stav) ? null : (_) => burzaAlertDialog(context, updatedDish, stav),
-              activeColor: theme.colorScheme.primary,
-            ),
-            title: Text(title),
-            subtitle: _subtitle(context, updatedDish.cena),
-            trailing: _detailButton(context),
+        return ListTile(
+          enabled: ordering && isButtonEnabled(stav),
+          selected: selected,
+          contentPadding: EdgeInsets.zero,
+          selectedColor: theme.colorScheme.primary,
+          titleTextStyle: theme.textTheme.bodyMedium,
+          onTap: enabled ? null : () => onTap,
+          leading: Radio<bool>(
+            toggleable: true,
+            groupValue: true,
+            value: selected,
+            onChanged: enabled ? null : (_) => onTap,
+            activeColor: theme.colorScheme.primary,
           ),
+          title: Text(title),
+          subtitle: _subtitle(context, dish.cena),
+          trailing: _detailButton(context),
         );
       },
     );

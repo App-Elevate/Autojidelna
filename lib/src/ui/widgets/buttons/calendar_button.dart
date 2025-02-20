@@ -1,9 +1,8 @@
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
-import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/types/theme.dart';
-import 'package:autojidelna/src/ui/widgets/custom_date_picker.dart';
+import 'package:autojidelna/src/ui/widgets/dialogs/custom_date_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -13,8 +12,7 @@ class CalendarButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final int dayIndex = context.select<DishesOfTheDay, int>((prov) => prov.dayIndex);
-    final DateTime currentDate = convertIndexToDatetime(dayIndex);
+    final DateTime selectedDate = context.select<CanteenProvider, DateTime>((prov) => prov.selectedDate);
 
     return SizedBox(
       height: 37.5,
@@ -34,8 +32,8 @@ class CalendarButton extends StatelessWidget {
             Selector<Settings, DateFormatOptions>(
               selector: (_, p1) => p1.dateFormat,
               builder: (context, dateFormat, _) {
-                String day = DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag()).format(currentDate);
-                String date = getCorrectDateString(dateFormat, date: currentDate);
+                String day = DateFormat(DateFormat.ABBR_WEEKDAY, Localizations.localeOf(context).toLanguageTag()).format(selectedDate);
+                String date = getCorrectDateString(dateFormat, date: selectedDate);
                 return Text('$day - $date');
               },
             ),

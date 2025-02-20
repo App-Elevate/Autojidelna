@@ -1,245 +1,126 @@
-// Purpose: Login screen for the app
-
 import 'package:auto_route/auto_route.dart';
-import 'package:autojidelna/src/_conf/errors.dart';
-import 'package:autojidelna/src/_conf/hive.dart';
-import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/logic/show_snack_bar.dart';
-import 'package:autojidelna/src/types/errors.dart';
-import 'package:autojidelna/src/types/freezed/account/account.dart';
-import 'package:autojidelna/src/types/password_state.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
-import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
-import 'package:flutter/gestures.dart';
+import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/canteen_url_onboarding.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/login_onboarding.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
-
-import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
-  // Static is fix for keyboard disapearing when this screen is pushed (problem with rebuilding the widget)
-  static final _formKey = GlobalKey<FormState>();
-  // Without static the text in the textfields would be deleted for the same reasons.
-  static final _usernameController = TextEditingController();
-  static final _passwordController = TextEditingController();
-  static final _urlController = TextEditingController();
+class LoginPage extends StatefulWidget implements AutoRouteWrapper {
+  const LoginPage({super.key, this.onCompletedCallback});
+  final void Function(bool onSuccess)? onCompletedCallback;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
+
+  @override
+  Widget wrappedRoute(BuildContext context) => ChangeNotifierProvider(create: (_) => LoginProvider(), child: this);
 }
 
 class _LoginPageState extends State<LoginPage> {
-  /// First value is error text, second is if it the password is visible
-  final ValueNotifier<PasswordState> passwordNotifier = ValueNotifier(const PasswordState(errorText: null, isVisible: false));
-  final ValueNotifier<bool> usernameErrorState = ValueNotifier(false);
-  final ValueNotifier<String?> urlErrorText = ValueNotifier(null);
-  final ValueNotifier<bool> loggingIn = ValueNotifier(false);
+  late final PageController _pageController;
+  int _currentPage = 0;
+
+  final List<OnboardingStep> pages = [
+    const CanteenUrlOnboarding(),
+    const LoginOnboarding(),
+  ];
+
+  void _nextPage() async {
+    if (!await pages[_currentPage].onNextPage(context)) return;
+    if (_currentPage >= pages.length - 1) {
+      if (!mounted) return;
+      if (widget.onCompletedCallback == null) {
+        context.router.replaceAll([const RouterPage()]);
+        return;
+      }
+      widget.onCompletedCallback!(true);
+      return;
+    }
+
+    _pageController.nextPage(duration: Durations.medium1, curve: Curves.easeInOut);
+  }
+
+  void _previousPage() async {
+    if (_currentPage == 0) {
+      context.router.maybePop();
+      return;
+    }
+    _pageController.previousPage(duration: Durations.medium1, curve: Curves.easeInOut);
+  }
 
   @override
   void initState() {
-    setLastUrl();
-    LoginPage._usernameController.text = '';
-    LoginPage._passwordController.text = '';
     super.initState();
+    _pageController = PageController();
   }
 
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(forceMaterialTransparency: true),
-      body: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height - MediaQuery.viewInsetsOf(context).bottom),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(top: kToolbarHeight),
-              child: Text(lang.appName, style: AppThemes.textTheme.displayLarge),
-            ),
-            loginForm(context, lang),
-          ],
-        ),
-      ),
-    );
-  }
-
-  void _setErrorText(String? text, LoginFormErrorField? field) {
-    PasswordState state = passwordNotifier.value;
-    switch (field) {
-      case LoginFormErrorField.credentials:
-        urlErrorText.value = null;
-        usernameErrorState.value = true;
-        passwordNotifier.value = state.copyWith(errorText: text);
-        break;
-      case LoginFormErrorField.url:
-        urlErrorText.value = text;
-        usernameErrorState.value = false;
-        passwordNotifier.value = state.copyWith(errorText: text);
-        break;
-      default:
-        urlErrorText.value = null;
-        usernameErrorState.value = false;
-        passwordNotifier.value = state.copyWith(errorText: null);
-    }
-  }
-
-  void setLastUrl() async {
-    LoginPage._urlController.text = Hive.box(Boxes.appState).get(HiveKeys.url, defaultValue: '');
-  }
-
-  Form loginForm(context, Texts lang) {
-    return Form(
-      key: LoginPage._formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 34),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: ValueListenableBuilder(
-                valueListenable: urlErrorText,
-                builder: (_, errorText, ___) {
-                  return TextFormField(
-                    controller: LoginPage._urlController,
-                    autocorrect: false,
-                    textInputAction: TextInputAction.next,
-                    autofillHints: const [AutofillHints.url],
-                    decoration: InputDecoration(labelText: lang.loginUrlFieldLabel, errorText: errorText),
-                    validator: (value) => value == null || value.isEmpty ? lang.loginUrlFieldHint : null,
-                  );
-                },
+    return PopScope(
+      canPop: _currentPage == 0,
+      child: Scaffold(
+        appBar: AppBar(forceMaterialTransparency: true, automaticallyImplyLeading: false),
+        body: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Icon(Icons.rocket_launch_outlined, size: 55, color: Theme.of(context).colorScheme.surface),
               ),
-            ),
-            AutofillGroup(
-              child: Column(
+              ListTile(
+                title: Text(lang.appName, style: AppThemes.textTheme.displaySmall),
+                subtitle: Text(pages[_currentPage].description(context), style: AppThemes.textTheme.titleMedium),
+              ),
+              const CustomDivider(height: 32),
+              Card(
+                child: ExpandablePageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (value) => setState(() {
+                    _currentPage = value;
+                  }),
+                  children: pages.map((e) => e as Widget).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 0,
+          child: Consumer<LoginProvider>(
+            builder: (context, provider, ___) {
+              ThemeData theme = Theme.of(context);
+              return Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: ValueListenableBuilder(
-                      valueListenable: usernameErrorState,
-                      builder: (context, errorState, _) {
-                        return TextFormField(
-                          controller: LoginPage._usernameController,
-                          autocorrect: false,
-                          textInputAction: TextInputAction.next,
-                          autofillHints: const [AutofillHints.username],
-                          decoration: InputDecoration(labelText: lang.loginUserFieldLabel, error: errorState ? const SizedBox() : null),
-                          validator: (value) {
-                            String? validator;
-                            if (value != null && value.isNotEmpty) return validator;
-                            if (!errorState) return lang.loginUserFieldHint;
-                            return validator;
-                          },
-                        );
-                      },
+                  if (context.router.canNavigateBack || _currentPage > 0)
+                    FilledButton(
+                      style: theme.filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(theme.disabledColor)),
+                      onPressed: provider.loggingIn ? null : _previousPage,
+                      child: const Icon(Icons.arrow_back_outlined),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    child: ValueListenableBuilder(
-                      valueListenable: passwordNotifier,
-                      builder: (context, value, child) {
-                        return TextFormField(
-                          controller: LoginPage._passwordController,
-                          autocorrect: false,
-                          obscureText: !value.isVisible,
-                          textInputAction: TextInputAction.done,
-                          autofillHints: const [AutofillHints.password],
-                          decoration: InputDecoration(
-                            labelText: lang.loginPasswordFieldLabel,
-                            errorText: value.errorText,
-                            suffixIcon: IconButton(
-                              onPressed: () => passwordNotifier.value = value.copyWith(isVisible: !value.isVisible),
-                              icon: Icon(value.isVisible ? Icons.visibility : Icons.visibility_off),
-                            ),
-                          ),
-                          validator: (value) => value == null || value.isEmpty ? lang.loginPasswordFieldHint : null,
-                        );
-                      },
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: provider.loggingIn ? null : _nextPage,
+                      child: Text(pages[_currentPage].buttonText(context)),
                     ),
                   ),
                 ],
-              ),
-            ),
-            loginSubmitButton(context, lang),
-            RichText(
-              text: TextSpan(
-                text: lang.dataCollectionAgreement,
-                style: AppThemes.textTheme.bodySmall!.copyWith(color: Theme.of(context).dividerColor),
-                children: [
-                  TextSpan(
-                    text: lang.moreInfo,
-                    style: AppThemes.textTheme.bodySmall!.copyWith(
-                      color: Colors.blue,
-                      decoration: TextDecoration.underline,
-                    ),
-                    recognizer: TapGestureRecognizer()..onTap = () async => context.router.navigate(const AnalyticsPage()),
-                  ),
-                ],
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ),
       ),
     );
-  }
-
-  Container loginSubmitButton(context, Texts lang) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 10),
-      width: 400,
-      child: ValueListenableBuilder(
-        valueListenable: loggingIn,
-        builder: (context, loggingIn, __) {
-          return FilledButton(
-            onPressed: loggingIn ? null : () => loginFieldCheck(context, lang),
-            child: Text(lang.login),
-          );
-        },
-      ),
-    );
-  }
-
-  void loginFieldCheck(BuildContext context, Texts lang) async {
-    if (!LoginPage._formKey.currentState!.validate()) return;
-
-    // If the form is valid, save the form fields.
-    LoginPage._formKey.currentState!.save();
-    _setErrorText(null, null);
-    loggingIn.value = true;
-    final Account account = Account(
-      username: LoginPage._usernameController.text,
-      password: LoginPage._passwordController.text,
-      url: LoginPage._urlController.text,
-    );
-    try {
-      await context.read<UserProvider>().login(account);
-      Hive.box(Boxes.appState).put(HiveKeys.url, LoginPage._urlController.text);
-      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
-    } catch (e) {
-      switch (e) {
-        case AuthErrors.noInternetConnection:
-          _setErrorText(null, null);
-          bool value = await showInternetConnectionSnackBar();
-          if (value && context.mounted) loginFieldCheck(context, lang);
-          break;
-        case AuthErrors.wrongCredentials:
-          _setErrorText(lang.errorsWrongCredentialsTextField, LoginFormErrorField.credentials);
-          break;
-        case AuthErrors.wrongUrl:
-          _setErrorText(lang.errorsWrongUrl, LoginFormErrorField.url);
-          break;
-        default:
-          showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
-      }
-    }
-    loggingIn.value = false;
   }
 }

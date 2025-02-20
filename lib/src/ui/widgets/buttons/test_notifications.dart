@@ -1,4 +1,3 @@
-import 'package:autojidelna/src/logic/notifications.dart';
 import 'package:flutter/material.dart';
 
 class NotificationActionButton extends StatelessWidget {
@@ -6,10 +5,10 @@ class NotificationActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return const Column(
       children: [
-        FilledButton(onPressed: () async => doNotifications(force: true), child: const Text('Notifications Force')),
-        FilledButton(onPressed: () async => doNotifications(), child: const Text('Notifications')),
+        ListTile(onTap: null /* TODO: () async => doNotifications(force: true), title: const Text('Notifications Force')*/),
+        ListTile(onTap: null /* TODO: () async => doNotifications(), title: const Text('Notifications')*/),
       ],
     );
   }

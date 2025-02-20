@@ -1,8 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/crash_logic.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
+import 'package:autojidelna/src/ui/widgets/buttons/test_notifications.dart';
 import 'package:flutter/material.dart';
 
 @RoutePage()
@@ -31,6 +33,11 @@ class DebugPage extends StatelessWidget {
             title: const Text('Show info Snack Bar'),
             onTap: () => showInfoSnackBar(Icons.wifi_off_rounded, lang.appName, lang.appDescription),
           ),
+          ListTile(
+            title: Text('Onboarding guide'),
+            onTap: () async => context.router.push(OnboardingPage()),
+          ),
+          const NotificationActionButton(),
         ],
       ),
     );

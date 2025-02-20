@@ -74,11 +74,11 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
               trailing: selectedLocation == i ? const Icon(Icons.check) : null,
               onTap: () async {
                 updatePicked(i);
-                // TODO
+                // TODO: should be in canteenProvider, also read the location from storage on app start
                 // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 User user = context.read<UserProvider>().user!;
-                Hive.box(Boxes.appState).put(HiveKeys.location(user.data.uzivatelskeJmeno ?? '', user.canteenUrl), i);
+                Hive.box(Boxes.appState).put(HiveKeys.location(user.accountData), i);
               },
             ),
           ),

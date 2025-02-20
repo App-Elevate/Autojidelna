@@ -13,12 +13,6 @@ class CanteenData with _$CanteenData {
     /// id, aby se nám neindexovaly špatně jídelníčky
     @Default(0) int id,
 
-    /// login uživatele
-    required String username,
-
-    /// url kantýny
-    required String url,
-
     /// info o uživateli - např kredit,jméno,příjmení...
     required Uzivatel uzivatel,
 

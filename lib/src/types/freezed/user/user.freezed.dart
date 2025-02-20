@@ -16,10 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$User {
-  String get username => throw _privateConstructorUsedError;
+  SafeAccount get accountData => throw _privateConstructorUsedError;
   Uzivatel get data => throw _privateConstructorUsedError;
   Map<int, String> get canteenLocations => throw _privateConstructorUsedError;
-  String get canteenUrl => throw _privateConstructorUsedError;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -33,10 +32,12 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res, User>;
   @useResult
   $Res call(
-      {String username,
+      {SafeAccount accountData,
       Uzivatel data,
-      Map<int, String> canteenLocations,
-      String canteenUrl});
+      Map<int, String> canteenLocations});
+
+  $SafeAccountCopyWith<$Res> get accountData;
+  $UzivatelCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -54,16 +55,15 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? accountData = null,
     Object? data = null,
     Object? canteenLocations = null,
-    Object? canteenUrl = null,
   }) {
     return _then(_value.copyWith(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
+      accountData: null == accountData
+          ? _value.accountData
+          : accountData // ignore: cast_nullable_to_non_nullable
+              as SafeAccount,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -72,11 +72,27 @@ class _$UserCopyWithImpl<$Res, $Val extends User>
           ? _value.canteenLocations
           : canteenLocations // ignore: cast_nullable_to_non_nullable
               as Map<int, String>,
-      canteenUrl: null == canteenUrl
-          ? _value.canteenUrl
-          : canteenUrl // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
+  }
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SafeAccountCopyWith<$Res> get accountData {
+    return $SafeAccountCopyWith<$Res>(_value.accountData, (value) {
+      return _then(_value.copyWith(accountData: value) as $Val);
+    });
+  }
+
+  /// Create a copy of User
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UzivatelCopyWith<$Res> get data {
+    return $UzivatelCopyWith<$Res>(_value.data, (value) {
+      return _then(_value.copyWith(data: value) as $Val);
+    });
   }
 }
 
@@ -88,10 +104,14 @@ abstract class _$$UserImplCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String username,
+      {SafeAccount accountData,
       Uzivatel data,
-      Map<int, String> canteenLocations,
-      String canteenUrl});
+      Map<int, String> canteenLocations});
+
+  @override
+  $SafeAccountCopyWith<$Res> get accountData;
+  @override
+  $UzivatelCopyWith<$Res> get data;
 }
 
 /// @nodoc
@@ -106,16 +126,15 @@ class __$$UserImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? username = null,
+    Object? accountData = null,
     Object? data = null,
     Object? canteenLocations = null,
-    Object? canteenUrl = null,
   }) {
     return _then(_$UserImpl(
-      username: null == username
-          ? _value.username
-          : username // ignore: cast_nullable_to_non_nullable
-              as String,
+      accountData: null == accountData
+          ? _value.accountData
+          : accountData // ignore: cast_nullable_to_non_nullable
+              as SafeAccount,
       data: null == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -124,10 +143,6 @@ class __$$UserImplCopyWithImpl<$Res>
           ? _value._canteenLocations
           : canteenLocations // ignore: cast_nullable_to_non_nullable
               as Map<int, String>,
-      canteenUrl: null == canteenUrl
-          ? _value.canteenUrl
-          : canteenUrl // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -136,14 +151,13 @@ class __$$UserImplCopyWithImpl<$Res>
 
 class _$UserImpl with DiagnosticableTreeMixin implements _User {
   const _$UserImpl(
-      {required this.username,
+      {required this.accountData,
       required this.data,
-      required final Map<int, String> canteenLocations,
-      required this.canteenUrl})
+      required final Map<int, String> canteenLocations})
       : _canteenLocations = canteenLocations;
 
   @override
-  final String username;
+  final SafeAccount accountData;
   @override
   final Uzivatel data;
   final Map<int, String> _canteenLocations;
@@ -155,11 +169,8 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
   }
 
   @override
-  final String canteenUrl;
-
-  @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(username: $username, data: $data, canteenLocations: $canteenLocations, canteenUrl: $canteenUrl)';
+    return 'User(accountData: $accountData, data: $data, canteenLocations: $canteenLocations)';
   }
 
   @override
@@ -167,10 +178,9 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'User'))
-      ..add(DiagnosticsProperty('username', username))
+      ..add(DiagnosticsProperty('accountData', accountData))
       ..add(DiagnosticsProperty('data', data))
-      ..add(DiagnosticsProperty('canteenLocations', canteenLocations))
-      ..add(DiagnosticsProperty('canteenUrl', canteenUrl));
+      ..add(DiagnosticsProperty('canteenLocations', canteenLocations));
   }
 
   @override
@@ -178,18 +188,16 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserImpl &&
-            (identical(other.username, username) ||
-                other.username == username) &&
+            (identical(other.accountData, accountData) ||
+                other.accountData == accountData) &&
             (identical(other.data, data) || other.data == data) &&
             const DeepCollectionEquality()
-                .equals(other._canteenLocations, _canteenLocations) &&
-            (identical(other.canteenUrl, canteenUrl) ||
-                other.canteenUrl == canteenUrl));
+                .equals(other._canteenLocations, _canteenLocations));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, username, data,
-      const DeepCollectionEquality().hash(_canteenLocations), canteenUrl);
+  int get hashCode => Object.hash(runtimeType, accountData, data,
+      const DeepCollectionEquality().hash(_canteenLocations));
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.
@@ -202,19 +210,16 @@ class _$UserImpl with DiagnosticableTreeMixin implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required final String username,
+      {required final SafeAccount accountData,
       required final Uzivatel data,
-      required final Map<int, String> canteenLocations,
-      required final String canteenUrl}) = _$UserImpl;
+      required final Map<int, String> canteenLocations}) = _$UserImpl;
 
   @override
-  String get username;
+  SafeAccount get accountData;
   @override
   Uzivatel get data;
   @override
   Map<int, String> get canteenLocations;
-  @override
-  String get canteenUrl;
 
   /// Create a copy of User
   /// with the given fields replaced by the non-null parameter values.

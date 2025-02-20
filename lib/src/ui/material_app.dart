@@ -3,15 +3,16 @@ import 'dart:async';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
-import 'package:autojidelna/src/_global/providers/dishes_of_the_day_provider.dart';
-import 'package:autojidelna/src/_global/providers/ordering_notifier.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
 import 'package:autojidelna/src/_sentry/sentry.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
-import 'package:autojidelna/src/logic/auth_service.dart';
+import 'package:autojidelna/src/logic/services/auth_service.dart';
 import 'package:autojidelna/src/logic/deep_link_transformer_logic.dart';
+import 'package:autojidelna/src/logic/services/canteen_service.dart';
+import 'package:autojidelna/src/types/app_context.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -74,6 +75,10 @@ class _MyAppState extends State<MyApp> {
             includePrefixMatches: true,
             navigatorObservers: () => [SentryNavigatorObserver(), SentryTabObserver()],
             deepLinkTransformer: (uri) async => deepLinkTransformer(uri),
+            placeholder: (context) {
+              App.getIt<AppContext>().setContext(context);
+              return const Scaffold(body: Center(child: CircularProgressIndicator()));
+            },
           ),
         );
       },
@@ -90,10 +95,9 @@ class MyAppWrapper extends StatelessWidget {
       providers: [
         ChangeNotifierProvider.value(value: App.remoteConfigProvider),
         ChangeNotifierProvider(create: (_) => UserProvider(AuthService())),
+        ChangeNotifierProvider(create: (_) => CanteenProvider(CanteenService())),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
         ChangeNotifierProvider(create: (_) => Settings()),
-        ChangeNotifierProvider(create: (_) => DishesOfTheDay()),
-        ChangeNotifierProvider(create: (_) => Ordering()),
       ],
       child: const MyApp(),
     );

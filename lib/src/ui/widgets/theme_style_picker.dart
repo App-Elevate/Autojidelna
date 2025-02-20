@@ -30,6 +30,7 @@ class ThemeStylePicker extends StatelessWidget {
           BorderRadius radius = BorderRadius.circular(16);
 
           ButtonStyle style = OutlinedButton.styleFrom(
+            backgroundColor: theme.scaffoldBackgroundColor,
             shape: RoundedRectangleBorder(borderRadius: radius),
             fixedSize: const Size.fromWidth(125),
             padding: EdgeInsets.zero,
