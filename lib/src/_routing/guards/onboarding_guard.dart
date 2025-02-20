@@ -12,7 +12,7 @@ class OnboardingGuard extends AutoRouteGuard {
       resolver.redirect(
         OnboardingPage(
           onCompletedCallback: (onSuccess) {
-            Hive.box(Boxes.appState).put(HiveKeys.firstTime, false);
+            Hive.box(Boxes.appState).put(HiveKeys.firstTime, !onSuccess);
             resolver.next(onSuccess);
           },
         ),

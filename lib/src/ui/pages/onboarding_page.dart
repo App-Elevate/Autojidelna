@@ -148,7 +148,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton(
-                      onPressed: provider.loggingIn ? null : _nextPage,
+                      onPressed: provider.loggingIn ||
+                              (pages.last is AccountPickerOnboarding && _currentPage == pages.length - 1 && provider.pickedAccount == null)
+                          ? null
+                          : _nextPage,
                       child: Text(pages[_currentPage].buttonText(context)),
                     ),
                   ),

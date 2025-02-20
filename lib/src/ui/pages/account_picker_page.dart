@@ -70,7 +70,7 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton(
-                      onPressed: provider.loggingIn ? null : () => _nextPage(context),
+                      onPressed: provider.loggingIn || provider.pickedAccount == null ? null : () => _nextPage(context),
                       child: Text(page.buttonText(context)),
                     ),
                   ),
