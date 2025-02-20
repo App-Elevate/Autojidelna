@@ -37,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
     if (_currentPage >= pages.length - 1) {
       if (!mounted) return;
       if (widget.onCompletedCallback == null) {
-        context.router.replaceAll([const RouterPage()]);
+        context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
         return;
       }
       widget.onCompletedCallback!(true);

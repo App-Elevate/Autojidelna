@@ -19,7 +19,7 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
   void _nextPage(BuildContext context) async {
     if (!await page.onNextPage(context)) return;
     if (onCompletedCallback == null) {
-      if (context.mounted) context.router.replaceAll([const RouterPage()]);
+      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
       return;
     }
     onCompletedCallback!(true);
