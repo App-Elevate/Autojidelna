@@ -53,7 +53,7 @@ class _DishListTile extends StatelessWidget {
         final StavJidla stav = getStavJidla(context, dish);
         final bool enabled = ordering || !isButtonEnabled(stav);
         final bool selected = getPrimaryState(stav);
-        final onTap = burzaAlertDialog(context, dish, stav);
+        const onTap = burzaAlertDialog;
 
         return ListTile(
           enabled: ordering && isButtonEnabled(stav),
@@ -61,12 +61,12 @@ class _DishListTile extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           selectedColor: theme.colorScheme.primary,
           titleTextStyle: theme.textTheme.bodyMedium,
-          onTap: enabled ? null : () => onTap,
+          onTap: enabled ? null : () => onTap(context, dish, stav),
           leading: Radio<bool>(
             toggleable: true,
             groupValue: true,
             value: selected,
-            onChanged: enabled ? null : (_) => onTap,
+            onChanged: enabled ? null : (_) => onTap(context, dish, stav),
             activeColor: theme.colorScheme.primary,
           ),
           title: Text(title),
