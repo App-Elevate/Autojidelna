@@ -61,7 +61,7 @@ class _PermissionsOnboardingState extends State<PermissionsOnboarding> {
             ),
           ),
           const CustomDivider(isTransparent: false),
-          // TODO: fix when analitics are done
+          // TODO: fix when analytics are done
           const SwitchListTile(title: Text('Posilat crash logy'), subtitle: Text('crash log'), value: true, onChanged: null),
           const SwitchListTile(title: Text('Posilat data'), subtitle: Text('data'), value: true, onChanged: null),
         ],

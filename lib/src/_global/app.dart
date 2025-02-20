@@ -156,7 +156,7 @@ class App {
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
     await Hive.openBox(Boxes.appState);
-    await Hive.openBox(Boxes.statistics);
+    await Hive.openBox(Boxes.analytics);
     await Hive.openBox(Boxes.notifications);
 
     _initHiveExecuted = true;

@@ -6,7 +6,7 @@ class Boxes {
   static const String theme = 'theme';
   static const String settings = 'settings';
   static const String cache = 'cache';
-  static const String statistics = 'statistics';
+  static const String analytics = 'analytics';
   static const String notifications = 'notifications';
 }
 
@@ -41,7 +41,6 @@ class HiveKeys {
   static const String sendTodaysFood = 'sendTodaysFood';
   static const String lowCredit = 'lowCredit';
   static const String weekLongFamine = 'weekLongFamine';
-  static const String analytics = 'analytics';
 
   // notification box
   static String lastNotificationCheck(SafeAccount account) => 'lastCheck_${account.username}_${account.url}';
@@ -52,8 +51,9 @@ class HiveKeys {
   static const String onlykreditNotifications = 'ignore_kredit_';
   static String dailyFoodInfo(SafeAccount account) => 'sendFoodInfo_${account.username}_${account.url}';
 
-  // statistics box
+  // analytics box
   static const String statistikaObjednavka = 'statistika:objednavka';
   static const String statistikaAuto = 'statistika:auto';
   static const String statistikaBurzaCatcher = 'statistika:burzaCatcher';
+  static const String allowAnalytics = 'allowAnalytics';
 }

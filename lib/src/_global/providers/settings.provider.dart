@@ -16,7 +16,6 @@ class Settings with ChangeNotifier {
   bool _skipWeekends = box.get(HiveKeys.skipWeekends, defaultValue: false);
   DateFormatOptions _dateFormat = box.get(HiveKeys.dateFormat, defaultValue: DateFormatOptions.dMy);
   bool _relTimeStamps = box.get(HiveKeys.relTimeStamps, defaultValue: false);
-  bool _disableAnalytics = box.get(HiveKeys.analytics, defaultValue: false);
 
   /// Theme style getter
   ThemeStyle get themeStyle => _themeStyle;
@@ -41,9 +40,6 @@ class Settings with ChangeNotifier {
 
   /// Relative TimeStamps getter
   bool get relTimeStamps => _relTimeStamps;
-
-  /// Analytics getter
-  bool get disableAnalytics => _disableAnalytics;
 
   /// Setter for theme style
   void setThemeStyle(ThemeStyle themeStyle) {
@@ -99,13 +95,6 @@ class Settings with ChangeNotifier {
   void setSkipWeekends(bool privateSkipWeekends) {
     _skipWeekends = privateSkipWeekends;
     unawaited(box.put(HiveKeys.skipWeekends, _skipWeekends));
-    notifyListeners();
-  }
-
-  /// Setter for analytics
-  void setAnalytics(bool disabled) {
-    _disableAnalytics = disabled;
-    unawaited(box.put(HiveKeys.analytics, _disableAnalytics));
     notifyListeners();
   }
 }

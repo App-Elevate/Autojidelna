@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/notifications.dart';
-import 'package:autojidelna/src/_global/providers/settings.provider.dart';
+import 'package:autojidelna/src/_global/providers/analytics.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
@@ -27,8 +27,8 @@ class AnalyticsPage extends StatelessWidget {
       body: ScrollViewColumn(
         children: [
           SectionTitle(lang.analytics),
-          Selector<Settings, ({bool read, void Function(bool) set})>(
-            selector: (_, p1) => (read: p1.disableAnalytics, set: p1.setAnalytics),
+          Selector<AnalyticsProvider, ({bool read, void Function(bool) set})>(
+            selector: (_, p1) => (read: p1.allowAnalytics, set: p1.setAllowAnalytics),
             builder: (_, analytics, ___) {
               return SwitchListTile(
                 title: Text(lang.stopAnalytics),
