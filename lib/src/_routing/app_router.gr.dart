@@ -268,10 +268,11 @@ class OnboardingPage extends _i16.PageRouteInfo<OnboardingPageArgs> {
     builder: (data) {
       final args = data.argsAs<OnboardingPageArgs>(
           orElse: () => const OnboardingPageArgs());
-      return _i11.OnboardingPage(
+      return _i16.WrappedRoute(
+          child: _i11.OnboardingPage(
         key: args.key,
         onCompletedCallback: args.onCompletedCallback,
-      );
+      ));
     },
   );
 }
