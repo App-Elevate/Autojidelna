@@ -59,19 +59,23 @@ class _DayCard extends StatelessWidget {
   final DateTime date;
   @override
   Widget build(BuildContext context) {
-    Jidelnicek? menu = context.read<CanteenProvider>().getCachedMenu(date);
-    if (menu == null) return const Center(child: CircularProgressIndicator());
+    return Consumer<CanteenProvider>(
+      builder: (_, data, ___) {
+        Jidelnicek? menu = data.getCachedMenu(date);
+        if (menu == null) return const Center(child: CircularProgressIndicator());
 
-    Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
-    return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      child: Column(
-        children: [
-          DayCardheader(date: menu.den),
-          if (menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
-          ...sortedDishes.entries.map((e) => FoodSectionListTile(title: e.key.toUpperCase(), selection: e.value)),
-        ],
-      ),
+        Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
+        return Card(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          child: Column(
+            children: [
+              DayCardheader(date: menu.den),
+              if (menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
+              ...sortedDishes.entries.map((e) => FoodSectionListTile(title: e.key.toUpperCase(), selection: e.value)),
+            ],
+          ),
+        );
+      },
     );
   }
 }

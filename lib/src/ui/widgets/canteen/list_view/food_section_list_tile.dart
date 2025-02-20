@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
@@ -56,7 +54,7 @@ class _DishListTile extends StatelessWidget {
         const onTap = burzaAlertDialog;
 
         return ListTile(
-          enabled: ordering && isButtonEnabled(stav),
+          enabled: !enabled,
           selected: selected,
           contentPadding: EdgeInsets.zero,
           selectedColor: theme.colorScheme.primary,
@@ -84,7 +82,7 @@ class _DishListTile extends StatelessWidget {
 
   IconButton _detailButton(BuildContext context) {
     return IconButton(
-      onPressed: () => unawaited(context.router.navigate(DishDetailPage(dish: dish))),
+      onPressed: () async => context.router.navigate(DishDetailPage(dish: dish)),
       icon: Icon(
         Icons.info_outline,
         color: Theme.of(context).listTileTheme.subtitleTextStyle!.color,
