@@ -14,6 +14,7 @@ class LoginOnboarding extends StatelessWidget implements OnboardingStep {
 
     return Consumer<LoginProvider>(
       builder: (context, provider, ___) {
+        final MapEntry<String, String> url = provider.urls.entries.firstWhere((e) => e.value == provider.urlController.text);
         return Padding(
           padding: const EdgeInsets.all(8),
           child: Form(
@@ -21,6 +22,8 @@ class LoginOnboarding extends StatelessWidget implements OnboardingStep {
             child: AutofillGroup(
               child: Column(
                 children: [
+                  ListTile(title: Text(url.key), subtitle: Text(url.value)),
+                  const CustomDivider(isTransparent: false),
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 16),
                     child: TextFormField(
