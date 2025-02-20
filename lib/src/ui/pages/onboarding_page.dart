@@ -72,7 +72,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
   void updatePageList() async {
     await context.read<UserProvider>().updateLoggedSafeAccounts();
     if (!mounted) return;
-    int loggedInAccounts = context.read<UserProvider>().loggedInAccounts.length - 1;
+    int loggedInAccounts = context.read<UserProvider>().loggedInAccounts.length;
     List<OnboardingStep> newPages = [const ThemeOnboarding(), const PermissionsOnboarding()];
 
     if (loggedInAccounts > 1) {
