@@ -2,6 +2,7 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:hive/hive.dart';
 
+// TODO
 class AnalyticsService {
   void addStatistic(StatisticType type) async {
     Box box = Hive.box(Boxes.analytics);

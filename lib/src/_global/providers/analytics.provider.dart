@@ -4,6 +4,7 @@ import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
+// TODO
 class AnalyticsProvider extends ChangeNotifier {
   static Box box = Hive.box(Boxes.analytics);
 
