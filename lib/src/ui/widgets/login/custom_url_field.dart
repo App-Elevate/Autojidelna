@@ -31,6 +31,7 @@ class _CustomUrlFieldState extends State<CustomUrlField> {
             labelText: lang.loginUrlFieldLabel,
             hintText: 'např. jidelna.trebesin.cz',
             errorText: provider.urlError,
+            suffixIcon: const Icon(Icons.edit_rounded),
           ),
           onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
           validator: (value) => value == null || value.isEmpty ? lang.loginUrlFieldHint : null,
