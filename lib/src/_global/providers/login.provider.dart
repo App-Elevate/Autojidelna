@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
@@ -8,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
-import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
@@ -68,6 +66,7 @@ class LoginProvider extends ChangeNotifier {
 
     FocusManager.instance.primaryFocus?.unfocus();
     _setErrors(null, null, null);
+    bool value = false;
     _loggingIn = true;
     notifyListeners();
 
@@ -81,13 +80,13 @@ class LoginProvider extends ChangeNotifier {
       await context.read<UserProvider>().login(account);
       Hive.box(Boxes.appState).put(HiveKeys.url, urlController.text);
       if (context.mounted) await context.read<CanteenProvider>().preIndexMenus();
-      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+      value = true;
     } catch (e) {
       if (context.mounted) handleAuthError(context, e);
     }
     _loggingIn = false;
     notifyListeners();
-    return true;
+    return value;
   }
 
   void handleAuthError(BuildContext context, dynamic e) async {
