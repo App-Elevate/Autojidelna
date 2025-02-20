@@ -19,7 +19,8 @@ class LoginProvider extends ChangeNotifier {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController urlController = TextEditingController();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> urlForm = GlobalKey<FormState>();
+  final GlobalKey<FormState> credentialsForm = GlobalKey<FormState>();
 
   bool loggingIn = false;
   String? urlError;
@@ -49,8 +50,8 @@ class LoginProvider extends ChangeNotifier {
     urlController.text = Hive.box(Boxes.appState).get(HiveKeys.url, defaultValue: '');
   }
 
-  void login(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
+  Future<bool> login(BuildContext context) async {
+    if (!credentialsForm.currentState!.validate()) return false;
 
     FocusManager.instance.primaryFocus?.unfocus();
     _setErrors(null, null, null);
@@ -73,6 +74,7 @@ class LoginProvider extends ChangeNotifier {
     }
     loggingIn = false;
     notifyListeners();
+    return true;
   }
 
   void handleAuthError(BuildContext context, dynamic e) async {
