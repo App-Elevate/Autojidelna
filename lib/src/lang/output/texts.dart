@@ -690,7 +690,7 @@ abstract class Texts {
   /// No description provided for @moreInfo.
   ///
   /// In cs, this message translates to:
-  /// **'Více informací.'**
+  /// **'Více informací'**
   String get moreInfo;
 
   /// No description provided for @name.
@@ -993,11 +993,29 @@ abstract class Texts {
   /// **'Statistiky'**
   String get statistics;
 
-  /// No description provided for @stopAnalytics.
+  /// No description provided for @allowAnalytics.
   ///
   /// In cs, this message translates to:
-  /// **'Zastavit sledování analytických služeb'**
-  String get stopAnalytics;
+  /// **'Povolit analytické služby'**
+  String get allowAnalytics;
+
+  /// No description provided for @allowAnalyticsSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílejte anonymizované údaje o používání ke zlepšení aplikace'**
+  String get allowAnalyticsSubtitle;
+
+  /// No description provided for @sendCrashLogs.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílat crash logy'**
+  String get sendCrashLogs;
+
+  /// No description provided for @sendCrashLogsSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílejte anonymizovaných crash logů vývojářům'**
+  String get sendCrashLogsSubtitle;
 
   /// No description provided for @systemThemeMode.
   ///

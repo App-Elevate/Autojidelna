@@ -347,7 +347,7 @@ class TextsCs extends Texts {
   String get more => 'Více';
 
   @override
-  String get moreInfo => 'Více informací.';
+  String get moreInfo => 'Více informací';
 
   @override
   String get name => 'Jméno';
@@ -513,7 +513,18 @@ class TextsCs extends Texts {
   String get statistics => 'Statistiky';
 
   @override
-  String get stopAnalytics => 'Zastavit sledování analytických služeb';
+  String get allowAnalytics => 'Povolit analytické služby';
+
+  @override
+  String get allowAnalyticsSubtitle =>
+      'Odesílejte anonymizované údaje o používání ke zlepšení aplikace';
+
+  @override
+  String get sendCrashLogs => 'Odesílat crash logy';
+
+  @override
+  String get sendCrashLogsSubtitle =>
+      'Odesílejte anonymizovaných crash logů vývojářům';
 
   @override
   String get systemThemeMode => 'Systém';
