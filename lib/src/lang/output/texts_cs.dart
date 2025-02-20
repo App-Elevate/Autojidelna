@@ -442,7 +442,7 @@ class TextsCs extends Texts {
   String get personalInfo => 'Osobní Údaje';
 
   @override
-  String get pickLocation => 'Vyberte výdejnu:';
+  String get pickLocation => 'Vyberte výdejnu';
 
   @override
   String get privacyPolicy => 'Zásady ochrany osobních údajů';

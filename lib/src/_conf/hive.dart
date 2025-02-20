@@ -19,6 +19,8 @@ class HiveKeys {
   static const String firstTime = 'firstTime';
   static const String url = 'url';
   static const String hideBurzaAlertDialog = 'hideBurzaAlertDialog';
+
+  // cache box
   static String location(SafeAccount account) => 'location_${account.username}_${account.url}';
 
   // theme box

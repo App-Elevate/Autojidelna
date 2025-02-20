@@ -864,7 +864,7 @@ abstract class Texts {
   /// No description provided for @pickLocation.
   ///
   /// In cs, this message translates to:
-  /// **'Vyberte výdejnu:'**
+  /// **'Vyberte výdejnu'**
   String get pickLocation;
 
   /// No description provided for @privacyPolicy.

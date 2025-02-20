@@ -1,5 +1,6 @@
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/types/freezed/user/user.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
@@ -19,12 +20,6 @@ class LocationPickerCard extends StatefulWidget {
 }
 
 class _LocationPickerCardState extends State<LocationPickerCard> {
-  int selectedLocation = 1;
-
-  void updatePicked(int i) => setState(() {
-        selectedLocation = i;
-      });
-
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
@@ -36,7 +31,6 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
           alignment: AlignmentDirectional.center,
           children: [
             LinedCard(
-              smallButton: false,
               title: lang.location,
               footer: locations.length > 1 ? lang.pickLocation : null,
               footerTextAlign: TextAlign.end,
@@ -44,7 +38,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 visualDensity: const VisualDensity(vertical: -4),
-                title: Text(locations[selectedLocation + 1] ?? locations[1] ?? ''),
+                title: Text(locations[context.read<CanteenProvider>().locationId + 1] ?? locations[1] ?? lang.locationsUnknown),
               ),
             ),
             if (locations.isEmpty) lockedCover(context),
@@ -56,6 +50,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
 
   void pickerDialog(BuildContext context, Map<int, String> locations) {
     final Texts lang = context.l10n;
+    final CanteenProvider provider = context.read<CanteenProvider>();
     configuredDialog(
       context,
       builder: (context) => ConfiguredAlertDialog(
@@ -71,9 +66,11 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              trailing: selectedLocation == i ? const Icon(Icons.check) : null,
+              trailing: provider.locationId == i ? const Icon(Icons.check) : null,
               onTap: () async {
-                updatePicked(i);
+                provider.changeLocation(i);
+                provider.preIndexMenus();
+
                 // TODO: should be in canteenProvider, also read the location from storage on app start
                 // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);

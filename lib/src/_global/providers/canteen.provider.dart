@@ -65,7 +65,7 @@ class CanteenProvider with ChangeNotifier {
     }
 
     // Otherwise, use smart pre-indexing around the target date
-    targetDate ??= DateTime.now();
+    targetDate ??= _selectedDate;
     await _smartPreIndexing(targetDate.normalize);
   }
 
