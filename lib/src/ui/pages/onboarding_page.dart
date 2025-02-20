@@ -120,6 +120,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               Card(
                 child: ExpandablePageView(
                   controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
                   onPageChanged: (value) => setState(() {
                     _currentPage = value;
                   }),
