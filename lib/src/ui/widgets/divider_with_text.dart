@@ -33,10 +33,6 @@ class DividerWithText extends StatelessWidget {
         if (textAlign != TextAlign.start && textAlign != TextAlign.left && textAlign != TextAlign.justify)
           Flexible(child: CustomDivider(isTransparent: transparentDivider, hasIndent: false)),
         //
-        if (text.trim().isNotEmpty && textAlign == TextAlign.end && onPressed != null) ...[
-          Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Theme.of(context).listTileTheme.subtitleTextStyle!.color),
-          const SizedBox(width: 5),
-        ],
         //
         Text(text, style: AppThemes.textTheme.labelLarge!.copyWith(color: Theme.of(context).dividerColor)),
         //
