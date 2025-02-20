@@ -1,5 +1,4 @@
-import 'package:autojidelna/src/ui/theme/app_themes.dart';
-import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/divider_with_text.dart';
 import 'package:flutter/material.dart';
 
 /// Creates a card with a horizontal bar at the top and bottom
@@ -54,7 +53,7 @@ class LinedCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              dividerWithText(context, text: title, textAlign: titleTextAlign, transparentDivider: transparentTitleDivider),
+              DividerWithText(text: title ?? '', textAlign: titleTextAlign, transparentDivider: transparentTitleDivider),
               child ?? const SizedBox(),
               footerButton(context),
             ],
@@ -65,7 +64,7 @@ class LinedCard extends StatelessWidget {
   }
 
   Widget footerButton(BuildContext context) {
-    Widget divider = dividerWithText(context, text: footer, textAlign: footerTextAlign, transparentDivider: transparentFooterDivider);
+    Widget divider = DividerWithText(text: footer ?? '', textAlign: footerTextAlign, transparentDivider: transparentFooterDivider);
     if (!smallButton) return divider;
 
     return MaterialButton(
@@ -78,23 +77,6 @@ class LinedCard extends StatelessWidget {
       textColor: Theme.of(context).colorScheme.primary,
       onPressed: onPressed,
       child: divider,
-    );
-  }
-
-  Widget dividerWithText(BuildContext context, {String? text, TextAlign? textAlign, bool transparentDivider = false}) {
-    if (text == null || text.trim().isEmpty) return CustomDivider(isTransparent: transparentDivider, hasIndent: false, hasEndIndent: false);
-    return Row(
-      children: [
-        if (textAlign != TextAlign.start && textAlign != TextAlign.left && textAlign != TextAlign.justify)
-          Flexible(child: CustomDivider(isTransparent: transparentDivider, hasIndent: false)),
-        if (text == footer && footerTextAlign == TextAlign.end && onPressed != null) ...[
-          Icon(Icons.arrow_forward_ios_rounded, size: 15, color: Theme.of(context).listTileTheme.subtitleTextStyle!.color),
-          const SizedBox(width: 5),
-        ],
-        Text(text, style: AppThemes.textTheme.labelLarge!.copyWith(color: Theme.of(context).dividerColor)),
-        if (textAlign != TextAlign.end && textAlign != TextAlign.right)
-          Flexible(child: CustomDivider(isTransparent: transparentDivider, hasEndIndent: false)),
-      ],
     );
   }
 }

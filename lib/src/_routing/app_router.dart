@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
+import 'package:autojidelna/src/_routing/guards/auth_guard.dart';
+import 'package:autojidelna/src/_routing/guards/onboarding_guard.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Screen,Route')
 class AppRouter extends RootStackRouter {
@@ -8,14 +10,16 @@ class AppRouter extends RootStackRouter {
   static final List<AutoRoute> staticRoutes = [
     AutoRoute(
       page: RouterPage.page,
-      path: '/home',
-      initial: false,
+      path: '/',
+      initial: true,
+      guards: [OnboardingGuard(), AuthGuard()],
       children: <AutoRoute>[
         AutoRoute(page: MenuPage.page, path: 'menu', initial: true),
         AutoRoute(page: MorePage.page, path: 'more'),
       ],
     ),
-    AutoRoute(page: LoginLoading.page, path: '/', initial: true),
+    AutoRoute(page: OnboardingPage.page, path: '/onboarding'),
+    AutoRoute(page: AccountPickerPage.page, path: '/accounts'),
     AutoRoute(page: DishDetailPage.page, path: '/detail'),
     AutoRoute(page: LoginPage.page, path: '/login'),
     AutoRoute(page: AccountPage.page, path: '/account'),

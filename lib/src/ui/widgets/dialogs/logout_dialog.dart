@@ -17,7 +17,7 @@ Widget logoutDialog(BuildContext context, SafeAccount safeAccount) {
       TextButton(
         onPressed: () async {
           await context.read<UserProvider>().logout(safeAccount);
-          if (context.mounted) context.router.replaceAll([const LoginLoading()]);
+          if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
         },
         child: Text(lang.logoutConfirm),
       ),

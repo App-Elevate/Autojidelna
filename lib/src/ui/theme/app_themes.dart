@@ -186,13 +186,12 @@ class AppThemes {
       // Inputs
       inputDecorationTheme: InputDecorationTheme(
         alignLabelWithHint: true,
-        isDense: true,
         errorMaxLines: 1,
-        labelStyle: textTheme.bodyMedium,
         floatingLabelAlignment: FloatingLabelAlignment.start,
+        floatingLabelBehavior: FloatingLabelBehavior.always,
+        labelStyle: textTheme.bodyMedium,
         hintStyle: textTheme.bodyMedium,
         helperStyle: textTheme.bodyMedium,
-        border: const OutlineInputBorder(),
       ),
 
       // List tiles
@@ -233,7 +232,7 @@ class AppThemes {
           }),
           foregroundColor: WidgetStateProperty.resolveWith((states) {
             if (states.contains(WidgetState.disabled)) return colorScheme.onSurfaceVariant;
-            return colorScheme.onSurface;
+            return colorScheme.onPrimary;
           }),
           fixedSize: const WidgetStatePropertyAll(Size.fromHeight(45)),
           shadowColor: const WidgetStatePropertyAll(Colors.transparent),

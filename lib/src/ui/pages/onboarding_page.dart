@@ -1,35 +1,40 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/account_picker_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/canteen_url_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/login_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/permissions_onboarding.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/theme_onboarding.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
-class LoginPage extends StatefulWidget implements AutoRouteWrapper {
-  const LoginPage({super.key, this.onCompletedCallback});
+class OnboardingPage extends StatefulWidget implements AutoRouteWrapper {
+  const OnboardingPage({super.key, this.onCompletedCallback});
   final void Function(bool onSuccess)? onCompletedCallback;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<OnboardingPage> createState() => _OnboardingPageState();
 
   @override
   Widget wrappedRoute(BuildContext context) => ChangeNotifierProvider(create: (_) => LoginProvider(), child: this);
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _OnboardingPageState extends State<OnboardingPage> {
   late final PageController _pageController;
   int _currentPage = 0;
 
   final List<OnboardingStep> pages = [
-    const CanteenUrlOnboarding(),
-    const LoginOnboarding(),
+    const ThemeOnboarding(),
+    const PermissionsOnboarding(),
   ];
 
   void _nextPage() async {
@@ -52,13 +57,45 @@ class _LoginPageState extends State<LoginPage> {
       context.router.maybePop();
       return;
     }
+
     _pageController.previousPage(duration: Durations.medium1, curve: Curves.easeInOut);
+  }
+
+  void seemlessLogin() async {
+    final UserProvider prov = context.read<UserProvider>();
+    try {
+      if (prov.user == null) await prov.loadUser();
+      try {
+        if (mounted) context.read<CanteenProvider>().preIndexMenus();
+      } catch (_) {} // Just QoL
+    } catch (_) {} // This can be solved later by AuthGuard()
+  }
+
+  void updatePageList() async {
+    await context.read<UserProvider>().updateLoggedSafeAccounts();
+    if (!mounted) return;
+    int loggedInAccounts = context.read<UserProvider>().loggedInAccounts.length;
+    List<OnboardingStep> newPages = [const ThemeOnboarding(), const PermissionsOnboarding()];
+
+    if (loggedInAccounts > 1) {
+      newPages.add(const AccountPickerOnboarding());
+    } else if (loggedInAccounts == 1) {
+      seemlessLogin();
+    } else {
+      newPages.addAll([const CanteenUrlOnboarding(), const LoginOnboarding()]);
+    }
+
+    setState(() {
+      pages.clear();
+      pages.addAll(newPages);
+    });
   }
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
+    updatePageList();
   }
 
   @override
@@ -75,10 +112,10 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(Icons.rocket_launch_outlined, size: 55, color: Theme.of(context).colorScheme.surface),
+                child: Icon(Icons.rocket_launch_outlined, size: 55, color: Theme.of(context).colorScheme.primary),
               ),
               ListTile(
-                title: Text(lang.appName, style: AppThemes.textTheme.displaySmall),
+                title: Text(lang.welcome, style: AppThemes.textTheme.displaySmall),
                 subtitle: Text(pages[_currentPage].description(context), style: AppThemes.textTheme.titleMedium),
               ),
               const CustomDivider(height: 32),

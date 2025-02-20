@@ -47,7 +47,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> changeUser(SafeAccount safeAccount) async {
-    if (_user == null) return;
+    _user = null;
     await _authService.changeAccount(safeAccount);
     notifyListeners();
   }
@@ -55,6 +55,11 @@ class UserProvider extends ChangeNotifier {
   Future<void> updateUserData() async {
     if (_user == null) return;
     _user = _user!.copyWith(data: await _authService.fetchUserData(_user!.accountData.username));
+    notifyListeners();
+  }
+
+  Future<void> updateLoggedSafeAccounts() async {
+    _loggedSafeAccounts = await _authService.getLimitedAccounts();
     notifyListeners();
   }
 }

@@ -1,7 +1,9 @@
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
+import 'package:autojidelna/src/logic/migration/migration_manager.dart';
+import 'package:autojidelna/src/types/app_context.dart';
 import 'package:canteenlib/canteenlib.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 /// Initialize the app
 class InitApp {
@@ -16,6 +18,7 @@ class InitApp {
     await App.initHive();
     await App.initRemoteConfig();
     App.getIt.registerSingleton<AppRouter>(AppRouter());
+    App.getIt.registerSingleton<AppContext>(AppContext());
     await Future.wait([
       App.initLocalization(),
       App.initSecureStorage(),
@@ -24,6 +27,7 @@ class InitApp {
       App.initCodePush(),
       App.initNotifications(),
     ]);
+    await MigrationManager.runMigrations();
     // Stop the stopwatch
     stopwatch.stop();
 

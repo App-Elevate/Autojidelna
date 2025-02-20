@@ -37,12 +37,12 @@ class AuthService {
     Canteen instance = App.getIt<Canteen>();
 
     try {
-      // First login attempt
+      // First login attempt (with cleaned URL)
       if (!await instance.login(account.username, account.password)) {
         return Future.error(AuthErrors.wrongCredentials);
       }
     } catch (_) {
-      // Second login attempt (with cleaned URL)
+      // Second login attempt
       url = account.url;
       InitApp().registerCanteen(url);
       instance = App.getIt<Canteen>();
@@ -107,7 +107,7 @@ class AuthService {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
     throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
-    throwIf(loginData.loggedInAccount == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
+    throwIf(loginData.loggedInAccount == null, AuthErrors.accountNotSelected);
     return await loginBySafeAccount(loginData.loggedInAccount!);
   }
 

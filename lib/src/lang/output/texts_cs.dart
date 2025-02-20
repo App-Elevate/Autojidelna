@@ -323,8 +323,7 @@ class TextsCs extends Texts {
   String get loginUrlFieldHint => 'Zadejte adresu stránky icanteen';
 
   @override
-  String get loginUrlFieldLabel =>
-      'Adresa stránky icanteen - např. jidelna.trebesin.cz';
+  String get loginUrlFieldLabel => 'Adresa stránky icanteen';
 
   @override
   String get loginUserFieldHint => 'Zadejte uživatelské jméno';
@@ -578,4 +577,31 @@ class TextsCs extends Texts {
 
   @override
   String get vlozitNaBurzu => 'Vložit na burzu';
+
+  @override
+  String get welcome => 'Vítejte!';
+
+  @override
+  String get onboardingSubtitle =>
+      'Pojďme nastavit nějaké věci. Později je můžete změnit v nastavení.';
+
+  @override
+  String get allowNotifications => 'Povolit oznámení';
+
+  @override
+  String get allowNotifcitaionsReasons =>
+      'Dáme vám vědět o důležitých informacích, jako je nízký kredit nebo připomenutí objednávky.';
+
+  @override
+  String get grant => 'Udělit';
+
+  @override
+  String get next => 'Další';
+
+  @override
+  String get getStarted => 'Začínáme';
+
+  @override
+  String get loginSubtitle =>
+      'Přihlaste se a můžeme začít. Užijte si všechny funkce aplikace!';
 }

@@ -50,7 +50,7 @@ class SwitchAccountPanel extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.add),
       title: Text(lang.addAccount),
-      onTap: () async => context.router.navigate(const LoginPage()),
+      onTap: () async => context.router.navigate(LoginPage()),
     );
   }
 
@@ -84,7 +84,7 @@ class SwitchAccountPanel extends StatelessWidget {
       onTap: () async {
         if (currentAccount) return;
         await prov.changeUser(safeAccount);
-        if (context.mounted) context.router.replaceAll([const LoginLoading()]);
+        if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
       },
     );
   }

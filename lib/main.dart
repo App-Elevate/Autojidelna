@@ -77,7 +77,6 @@ void runMyApp() async {
   }
 
   await InitApp.init();
-  // TODO: make a nice page for this: AwesomeNotifications().requestPermissionToSendNotifications();
 
   if (!kDebugMode) {
     runApp(
