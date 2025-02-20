@@ -37,6 +37,16 @@ class AnalyticsPage extends StatelessWidget {
               );
             },
           ),
+          Selector<AnalyticsProvider, ({bool read, void Function(bool) set})>(
+            selector: (_, p1) => (read: p1.sendCrashLogs, set: p1.setSendCrashLogs),
+            builder: (_, analytics, ___) {
+              return SwitchListTile(
+                title: Text(lang.stopAnalytics),
+                value: analytics.read,
+                onChanged: analytics.set,
+              );
+            },
+          ),
           const CustomDivider(height: 8),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),

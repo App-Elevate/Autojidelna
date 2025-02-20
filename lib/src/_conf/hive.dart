@@ -56,4 +56,5 @@ class HiveKeys {
   static const String statistikaAuto = 'statistika:auto';
   static const String statistikaBurzaCatcher = 'statistika:burzaCatcher';
   static const String allowAnalytics = 'allowAnalytics';
+  static const String sendCrashLogs = 'sendCrashLogs';
 }
