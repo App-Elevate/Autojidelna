@@ -16,22 +16,23 @@ class AuthGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
     BuildContext? ctx = App.getIt<AppContext>().context;
-    if (ctx == null && !ctx!.mounted) return;
+    if (ctx == null) return;
+    final UserProvider userProvider = ctx.read<UserProvider>();
     final Texts lang = ctx.l10n;
 
-    if (ctx.read<UserProvider>().user != null) return resolver.next(true); // if logged in during onboarding
+    if (userProvider.user != null) return resolver.next(true); // if logged in during onboarding
 
     try {
-      await ctx.read<UserProvider>().loadUser();
+      await userProvider.loadUser();
       try {
         if (ctx.mounted) await ctx.read<CanteenProvider>().preIndexMenus();
       } catch (_) {} // Just QoL
       resolver.next(true); // Allow navigation
     } catch (e) {
       switch (e) {
-        case AuthErrors.accountNotFound:
-          // TODO: Show list of other logged-in accounts
-          break;
+        case AuthErrors.accountNotSelected:
+          showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
+          if (ctx.mounted) await userProvider.updateLoggedSafeAccounts();
         case AuthErrors.connectionFailed:
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
@@ -49,8 +50,11 @@ class AuthGuard extends AutoRouteGuard {
           break;
         default:
       }
-
-      resolver.redirect(LoginPage(), replace: true);
+      if (userProvider.loggedInAccounts.isNotEmpty) {
+        resolver.redirect(AccountPickerPage(onCompletedCallback: (p0) => onNavigation(resolver, router)), replace: true);
+        return;
+      }
+      resolver.redirect(LoginPage(onCompletedCallback: (p0) => resolver.next()), replace: true);
     }
   }
 }

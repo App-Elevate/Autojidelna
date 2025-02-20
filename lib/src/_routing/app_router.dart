@@ -19,6 +19,7 @@ class AppRouter extends RootStackRouter {
       ],
     ),
     AutoRoute(page: OnboardingPage.page, path: '/onboarding'),
+    AutoRoute(page: AccountPickerPage.page, path: '/accounts'),
     AutoRoute(page: DishDetailPage.page, path: '/detail'),
     AutoRoute(page: LoginPage.page, path: '/login'),
     AutoRoute(page: AccountPage.page, path: '/account'),
