@@ -11,6 +11,9 @@ enum AuthErrors {
   /// Account wasn't found in secure storage
   accountNotFound,
 
+  /// There are accounts in storage but the user hasn't selected one to log in with
+  accountNotSelected,
+
   /// Connection to the canteen server failed
   connectionFailed,
 

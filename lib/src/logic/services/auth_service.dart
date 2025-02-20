@@ -107,7 +107,7 @@ class AuthService {
     final LoggedAccounts loginData = await _getDataFromStorage();
 
     throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
-    throwIf(loginData.loggedInAccount == null && loginData.accounts.isNotEmpty, AuthErrors.accountNotFound);
+    throwIf(loginData.loggedInAccount == null, AuthErrors.accountNotSelected);
     return await loginBySafeAccount(loginData.loggedInAccount!);
   }
 

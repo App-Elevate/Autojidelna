@@ -3,7 +3,6 @@ import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
-import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/account_picker_onboarding.dart';
@@ -45,8 +44,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
         context.router.maybePop();
         return;
       }
-      SafeAccount? account = context.read<LoginProvider>().pickedAccount;
-      if (account != null && context.read<UserProvider>().loggedInAccounts.length == 1) context.read<UserProvider>().changeUser(account);
       widget.onCompletedCallback!(true);
       return;
     }

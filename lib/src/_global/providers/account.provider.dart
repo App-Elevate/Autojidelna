@@ -47,7 +47,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<void> changeUser(SafeAccount safeAccount) async {
-    if (_user == null) return;
+    _user = null;
     await _authService.changeAccount(safeAccount);
     notifyListeners();
   }
