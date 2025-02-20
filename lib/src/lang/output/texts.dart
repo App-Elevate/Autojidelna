@@ -642,7 +642,7 @@ abstract class Texts {
   /// No description provided for @loginUrlFieldLabel.
   ///
   /// In cs, this message translates to:
-  /// **'Adresa stránky icanteen - např. jidelna.trebesin.cz'**
+  /// **'Adresa stránky icanteen'**
   String get loginUrlFieldLabel;
 
   /// No description provided for @loginUserFieldHint.
@@ -1092,7 +1092,7 @@ abstract class Texts {
   /// No description provided for @onboardingSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.'**
+  /// **'Pojďme nastavit nějaké věci. Později je můžete změnit v nastavení.'**
   String get onboardingSubtitle;
 
   /// No description provided for @allowNotifications.
@@ -1124,6 +1124,12 @@ abstract class Texts {
   /// In cs, this message translates to:
   /// **'Začínáme'**
   String get getStarted;
+
+  /// No description provided for @loginSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Přihlaste se a můžeme začít. Užijte si všechny funkce aplikace!'**
+  String get loginSubtitle;
 }
 
 class _TextsDelegate extends LocalizationsDelegate<Texts> {

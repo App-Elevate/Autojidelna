@@ -323,8 +323,7 @@ class TextsCs extends Texts {
   String get loginUrlFieldHint => 'Zadejte adresu stránky icanteen';
 
   @override
-  String get loginUrlFieldLabel =>
-      'Adresa stránky icanteen - např. jidelna.trebesin.cz';
+  String get loginUrlFieldLabel => 'Adresa stránky icanteen';
 
   @override
   String get loginUserFieldHint => 'Zadejte uživatelské jméno';
@@ -584,7 +583,7 @@ class TextsCs extends Texts {
 
   @override
   String get onboardingSubtitle =>
-      'Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.';
+      'Pojďme nastavit nějaké věci. Později je můžete změnit v nastavení.';
 
   @override
   String get allowNotifications => 'Povolit oznámení';
@@ -601,4 +600,8 @@ class TextsCs extends Texts {
 
   @override
   String get getStarted => 'Začínáme';
+
+  @override
+  String get loginSubtitle =>
+      'Přihlaste se a můžeme začít. Užijte si všechny funkce aplikace!';
 }

@@ -222,7 +222,7 @@
   },
   "loginUrlFieldHint": "Zadejte adresu stránky icanteen",
   "@loginUrlFieldHint": {},
-  "loginUrlFieldLabel": "Adresa stránky icanteen - např. jidelna.trebesin.cz",
+  "loginUrlFieldLabel": "Adresa stránky icanteen",
   "@loginUrlFieldLabel": {},
   "loginUserFieldHint": "Zadejte uživatelské jméno",
   "@loginUserFieldHint": {},
@@ -430,7 +430,7 @@
   "@vlozitNaBurzu": {},
   "welcome": "Vítejte!",
   "@welcome": {},
-  "onboardingSubtitle": "Pojďme nastavit nějaké věci. Později je můžete kdykoli změnit v nastavení.",
+  "onboardingSubtitle": "Pojďme nastavit nějaké věci. Později je můžete změnit v nastavení.",
   "@onboardingSubtitle": {},
   "allowNotifications": "Povolit oznámení",
   "@allowNotifications": {},
@@ -441,5 +441,7 @@
   "next": "Další",
   "@next": {},
   "getStarted": "Začínáme",
-  "@getStarted": {}
+  "@getStarted": {},
+  "loginSubtitle": "Přihlaste se a můžeme začít. Užijte si všechny funkce aplikace!",
+  "@loginSubtitle": {}
 }
