@@ -515,7 +515,7 @@ class TextsCs extends Texts {
 
   @override
   String get sendCrashLogsSubtitle =>
-      'Odesílejte anonymizovaných crash logů vývojářům';
+      'Odesílejte anonymizované crash logy vývojářům';
 
   @override
   String get systemThemeMode => 'Systém';

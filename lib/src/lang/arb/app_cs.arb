@@ -379,7 +379,7 @@
   "@allowAnalyticsSubtitle": {},
   "sendCrashLogs": "Odesílat crash logy",
   "@sendCrashLogs": {},
-  "sendCrashLogsSubtitle": "Odesílejte anonymizovaných crash logů vývojářům",
+  "sendCrashLogsSubtitle": "Odesílejte anonymizované crash logy vývojářům",
   "@sendCrashLogsSubtitle": {},
   "systemThemeMode": "Systém",
   "@systemThemeMode": {},

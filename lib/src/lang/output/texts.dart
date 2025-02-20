@@ -996,7 +996,7 @@ abstract class Texts {
   /// No description provided for @sendCrashLogsSubtitle.
   ///
   /// In cs, this message translates to:
-  /// **'Odesílejte anonymizovaných crash logů vývojářům'**
+  /// **'Odesílejte anonymizované crash logy vývojářům'**
   String get sendCrashLogsSubtitle;
 
   /// No description provided for @systemThemeMode.
