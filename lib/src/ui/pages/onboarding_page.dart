@@ -152,7 +152,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                               (pages.last is AccountPickerOnboarding && _currentPage == pages.length - 1 && provider.pickedAccount == null)
                           ? null
                           : _nextPage,
-                      child: Text(pages[_currentPage].buttonText(context)),
+                      child: Text(
+                        pages.last is PermissionsOnboarding && _currentPage == pages.length - 1
+                            ? lang.getStarted
+                            : pages[_currentPage].buttonText(context),
+                      ),
                     ),
                   ),
                 ],

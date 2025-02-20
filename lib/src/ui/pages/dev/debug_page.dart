@@ -34,7 +34,7 @@ class DebugPage extends StatelessWidget {
             onTap: () => showInfoSnackBar(Icons.wifi_off_rounded, lang.appName, lang.appDescription),
           ),
           ListTile(
-            title: Text('Onboarding guide'),
+            title: const Text('Onboarding guide'),
             onTap: () async => context.router.push(OnboardingPage()),
           ),
           const NotificationActionButton(),
