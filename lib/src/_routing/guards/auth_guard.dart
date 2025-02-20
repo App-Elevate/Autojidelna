@@ -51,7 +51,7 @@ class AuthGuard extends AutoRouteGuard {
         default:
       }
 
-      resolver.redirect(const LoginPage(), replace: true);
+      resolver.redirect(LoginPage(), replace: true);
     }
   }
 }

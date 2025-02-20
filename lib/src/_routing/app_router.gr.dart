@@ -190,10 +190,17 @@ class DishDetailPageArgs {
 
 /// generated route for
 /// [_i8.LoginPage]
-class LoginPage extends _i16.PageRouteInfo<void> {
-  const LoginPage({List<_i16.PageRouteInfo>? children})
-      : super(
+class LoginPage extends _i16.PageRouteInfo<LoginPageArgs> {
+  LoginPage({
+    _i17.Key? key,
+    void Function(bool)? onCompletedCallback,
+    List<_i16.PageRouteInfo>? children,
+  }) : super(
           LoginPage.name,
+          args: LoginPageArgs(
+            key: key,
+            onCompletedCallback: onCompletedCallback,
+          ),
           initialChildren: children,
         );
 
@@ -202,9 +209,31 @@ class LoginPage extends _i16.PageRouteInfo<void> {
   static _i16.PageInfo page = _i16.PageInfo(
     name,
     builder: (data) {
-      return _i16.WrappedRoute(child: const _i8.LoginPage());
+      final args =
+          data.argsAs<LoginPageArgs>(orElse: () => const LoginPageArgs());
+      return _i16.WrappedRoute(
+          child: _i8.LoginPage(
+        key: args.key,
+        onCompletedCallback: args.onCompletedCallback,
+      ));
     },
   );
+}
+
+class LoginPageArgs {
+  const LoginPageArgs({
+    this.key,
+    this.onCompletedCallback,
+  });
+
+  final _i17.Key? key;
+
+  final void Function(bool)? onCompletedCallback;
+
+  @override
+  String toString() {
+    return 'LoginPageArgs{key: $key, onCompletedCallback: $onCompletedCallback}';
+  }
 }
 
 /// generated route for

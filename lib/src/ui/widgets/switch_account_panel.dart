@@ -50,7 +50,7 @@ class SwitchAccountPanel extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.add),
       title: Text(lang.addAccount),
-      onTap: () async => context.router.navigate(const LoginPage()),
+      onTap: () async => context.router.navigate(LoginPage()),
     );
   }
 
