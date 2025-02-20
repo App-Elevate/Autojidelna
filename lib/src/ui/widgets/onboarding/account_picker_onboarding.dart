@@ -44,6 +44,7 @@ class AccountPickerOnboarding extends StatelessWidget implements OnboardingStep 
   @override
   Future<bool> onNextPage(BuildContext context) async {
     if (context.read<LoginProvider>().pickedAccount == null) return false;
+    context.read<LoginProvider>().loggingIn = true;
     await context.read<UserProvider>().changeUser(context.read<LoginProvider>().pickedAccount!);
     return true;
   }
