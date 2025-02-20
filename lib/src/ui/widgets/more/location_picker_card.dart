@@ -71,8 +71,6 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
                 provider.changeLocation(i);
                 provider.preIndexMenus();
 
-                // TODO: should be in canteenProvider, also read the location from storage on app start
-                // loggedInCanteen.zmenitVydejnu(i + 1);
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 User user = context.read<UserProvider>().user!;
                 Hive.box(Boxes.appState).put(HiveKeys.location(user.accountData), i);
