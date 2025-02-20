@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
@@ -17,7 +18,11 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
 
   void _nextPage(BuildContext context) async {
     if (!await page.onNextPage(context)) return;
-    if (onCompletedCallback != null) onCompletedCallback!(true);
+    if (onCompletedCallback == null) {
+      if (context.mounted) context.router.replaceAll([const RouterPage()]);
+      return;
+    }
+    onCompletedCallback!(true);
   }
 
   void _previousPage(BuildContext context) async {

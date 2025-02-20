@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
@@ -41,7 +42,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
     if (_currentPage >= pages.length - 1) {
       if (!mounted) return;
       if (widget.onCompletedCallback == null) {
-        context.router.maybePop();
+        context.router.replaceAll([const RouterPage()]);
         return;
       }
       widget.onCompletedCallback!(true);
