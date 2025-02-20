@@ -36,8 +36,7 @@ class AuthGuard extends AutoRouteGuard {
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
         case AuthErrors.noInternetConnection:
-          bool retry = await showInternetConnectionSnackBar();
-          if (retry) {
+          if (await showInternetConnectionSnackBar()) {
             onNavigation(resolver, router); // Retry login
             return;
           }

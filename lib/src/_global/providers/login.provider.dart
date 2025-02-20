@@ -22,18 +22,31 @@ class LoginProvider extends ChangeNotifier {
   final GlobalKey<FormState> urlForm = GlobalKey<FormState>();
   final GlobalKey<FormState> credentialsForm = GlobalKey<FormState>();
 
-  bool loggingIn = false;
+  bool _loggingIn = false;
   String? urlError;
   bool usernameError = false;
   String? passwordError;
   bool hidePassword = true;
   SafeAccount? _pickedAccount;
 
+  final Map<String, String> urls = {
+    'Střední průmyslová škola a Gymnázium Třebešín': 'jidelna.trebesin.cz',
+    'Základní škola Ostrava': 'obedy.zs-mat5.cz',
+    'Česká zemědělská akademie v Humpolci': 'jidelna.cza-hu.cz',
+  };
+
   LoginProvider() {
     setLastUrl();
   }
 
+  bool get loggingIn => _loggingIn;
   SafeAccount? get pickedAccount => _pickedAccount;
+
+  set loggingIn(bool value) {
+    if (_loggingIn == value) return;
+    _loggingIn = value;
+    notifyListeners();
+  }
 
   void setPickedAccount(SafeAccount account) {
     if (_pickedAccount == account) return;
@@ -55,7 +68,7 @@ class LoginProvider extends ChangeNotifier {
 
     FocusManager.instance.primaryFocus?.unfocus();
     _setErrors(null, null, null);
-    loggingIn = true;
+    _loggingIn = true;
     notifyListeners();
 
     final account = Account(
@@ -72,7 +85,7 @@ class LoginProvider extends ChangeNotifier {
     } catch (e) {
       if (context.mounted) handleAuthError(context, e);
     }
-    loggingIn = false;
+    _loggingIn = false;
     notifyListeners();
     return true;
   }

@@ -100,21 +100,27 @@ class _LoginPageState extends State<LoginPage> {
         ),
         bottomNavigationBar: BottomAppBar(
           elevation: 0,
-          child: Row(
-            children: [
-              FilledButton(
-                style: Theme.of(context).filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(Theme.of(context).disabledColor)),
-                onPressed: context.watch<LoginProvider>().loggingIn ? null : _previousPage,
-                child: const Icon(Icons.arrow_back_outlined),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: FilledButton(
-                  onPressed: context.watch<LoginProvider>().loggingIn ? null : _nextPage,
-                  child: Text(pages[_currentPage].buttonText(context)),
-                ),
-              ),
-            ],
+          child: Consumer<LoginProvider>(
+            builder: (context, provider, ___) {
+              ThemeData theme = Theme.of(context);
+              return Row(
+                children: [
+                  if (context.router.canNavigateBack || _currentPage > 0)
+                    FilledButton(
+                      style: theme.filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(theme.disabledColor)),
+                      onPressed: provider.loggingIn ? null : _previousPage,
+                      child: const Icon(Icons.arrow_back_outlined),
+                    ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: FilledButton(
+                      onPressed: provider.loggingIn ? null : _nextPage,
+                      child: Text(pages[_currentPage].buttonText(context)),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

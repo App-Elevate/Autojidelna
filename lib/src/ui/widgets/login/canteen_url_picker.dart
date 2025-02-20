@@ -6,25 +6,19 @@ import 'package:provider/provider.dart';
 class CanteenUrlPicker extends StatelessWidget {
   const CanteenUrlPicker({super.key});
 
-  static const Map<String, String> _urls = {
-    'Střední průmyslová škola a Gymnázium Třebešín': 'jidelna.trebesin.cz',
-    'Základní škola Ostrava': 'obedy.zs-mat5.cz',
-    'Česká zemědělská akademie v Humpolci': 'jidelna.cza-hu.cz',
-  };
-
   @override
   Widget build(BuildContext context) {
     final LoginProvider provider = context.read<LoginProvider>();
-
+    Map<String, String> urls = provider.urls;
     return ValueListenableBuilder<TextEditingValue>(
       valueListenable: provider.urlController,
       builder: (_, urlController, ___) {
         return ListView.builder(
           shrinkWrap: true,
-          itemCount: _urls.length,
+          itemCount: urls.length,
           itemBuilder: (_, index) {
-            String title = _urls.entries.elementAt(index).key;
-            String url = _urls.entries.elementAt(index).value;
+            String title = urls.entries.elementAt(index).key;
+            String url = urls.entries.elementAt(index).value;
 
             return ListTile(
               title: Text(title),
