@@ -21,7 +21,7 @@ class SectionTitle extends StatelessWidget {
               Text(title, style: AppThemes.textTheme.titleMedium!.copyWith(color: Theme.of(context).colorScheme.primary)),
               if (moreInfo != null)
                 GestureDetector(
-                  onTap: () => moreInfo,
+                  onTap: moreInfo,
                   child: Icon(
                     Icons.info_outline_rounded,
                     size: AppThemes.textTheme.titleMedium!.fontSize! + 7,
