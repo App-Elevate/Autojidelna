@@ -6,8 +6,6 @@ import 'package:hive/hive.dart';
 class OnboardingGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    // TODO: migration compatible
-    // Hive.box(Boxes.appState).put(HiveKeys.firstTime, true);
     bool isFirstTime = Hive.box(Boxes.appState).get(HiveKeys.firstTime, defaultValue: true);
 
     if (isFirstTime) {
