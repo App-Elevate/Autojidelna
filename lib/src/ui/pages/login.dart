@@ -1,106 +1,121 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
+import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/canteen_url_onboarding.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/login_onboarding.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 @RoutePage()
-class LoginPage extends StatelessWidget implements AutoRouteWrapper {
-  const LoginPage({super.key});
+class LoginPage extends StatefulWidget implements AutoRouteWrapper {
+  const LoginPage({super.key, this.onCompletedCallback});
+  final void Function(bool onSuccess)? onCompletedCallback;
+
+  @override
+  State<LoginPage> createState() => _LoginPageState();
 
   @override
   Widget wrappedRoute(BuildContext context) => ChangeNotifierProvider(create: (_) => LoginProvider(), child: this);
+}
+
+class _LoginPageState extends State<LoginPage> {
+  late final PageController _pageController;
+  int _currentPage = 0;
+
+  final List<OnboardingStep> pages = [
+    const CanteenUrlOnboarding(),
+    const LoginOnboarding(),
+  ];
+
+  void _nextPage() async {
+    if (!await pages[_currentPage].onNextPage(context)) return;
+    if (_currentPage >= pages.length - 1) {
+      if (!mounted) return;
+      if (widget.onCompletedCallback == null) {
+        context.router.maybePop();
+        return;
+      }
+      SafeAccount? account = context.read<LoginProvider>().pickedAccount;
+      if (account != null && context.read<UserProvider>().loggedInAccounts.length == 1) context.read<UserProvider>().changeUser(account);
+      widget.onCompletedCallback!(true);
+      return;
+    }
+
+    _pageController.nextPage(duration: Durations.medium1, curve: Curves.easeInOut);
+  }
+
+  void _previousPage() async {
+    if (_currentPage == 0) {
+      context.router.maybePop();
+      return;
+    }
+    _pageController.previousPage(duration: Durations.medium1, curve: Curves.easeInOut);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(forceMaterialTransparency: true),
-      body: Consumer<LoginProvider>(
-        builder: (context, loginProvider, child) {
-          return ConstrainedBox(
-            constraints: BoxConstraints(minHeight: MediaQuery.sizeOf(context).height - MediaQuery.viewInsetsOf(context).bottom),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: kToolbarHeight),
-                  child: Text(context.l10n.appName, style: AppThemes.textTheme.displayLarge),
-                ),
-                _loginForm(context, loginProvider),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _loginForm(BuildContext context, LoginProvider provider) {
-    final lang = context.l10n;
-    return Form(
-      key: provider.formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 34),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              child: TextFormField(
-                controller: provider.urlController,
-                autocorrect: false,
-                textInputAction: TextInputAction.next,
-                autofillHints: const [AutofillHints.url],
-                decoration: InputDecoration(labelText: lang.loginUrlFieldLabel, errorText: provider.urlError),
-                validator: (value) => value == null || value.isEmpty ? lang.loginUrlFieldHint : null,
+    final Texts lang = context.l10n;
+    return PopScope(
+      canPop: _currentPage == 0,
+      child: Scaffold(
+        appBar: AppBar(forceMaterialTransparency: true, automaticallyImplyLeading: false),
+        body: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Icon(Icons.rocket_launch_outlined, size: 55, color: Theme.of(context).colorScheme.surface),
               ),
-            ),
-            AutofillGroup(
-                child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: TextFormField(
-                    controller: provider.usernameController,
-                    autocorrect: false,
-                    textInputAction: TextInputAction.next,
-                    autofillHints: const [AutofillHints.username],
-                    decoration: InputDecoration(labelText: lang.loginUserFieldLabel, errorText: provider.usernameError ? '' : null),
-                    validator: (value) => (value?.isEmpty ?? true) ? lang.loginUserFieldHint : null,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  child: TextFormField(
-                    controller: provider.passwordController,
-                    autocorrect: false,
-                    obscureText: provider.hidePassword,
-                    textInputAction: TextInputAction.done,
-                    autofillHints: const [AutofillHints.password],
-                    decoration: InputDecoration(
-                      labelText: lang.loginPasswordFieldLabel,
-                      errorText: provider.passwordError,
-                      suffixIcon: IconButton(
-                        onPressed: provider.changePasswordVisibility,
-                        icon: Icon(provider.hidePassword ? Icons.visibility_off : Icons.visibility),
-                      ),
-                    ),
-                    validator: (value) => (value?.isEmpty ?? true) ? lang.loginPasswordFieldHint : null,
-                  ),
-                ),
-              ],
-            )),
-            const SizedBox(height: 10),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              width: 400,
-              child: FilledButton(
-                onPressed: provider.loggingIn ? null : () async => provider.login(context),
-                child: Text(lang.login),
+              ListTile(
+                title: Text(lang.appName, style: AppThemes.textTheme.displaySmall),
+                subtitle: Text(pages[_currentPage].description(context), style: AppThemes.textTheme.titleMedium),
               ),
-            ),
-          ],
+              const CustomDivider(height: 32),
+              Card(
+                child: ExpandablePageView(
+                  controller: _pageController,
+                  physics: const NeverScrollableScrollPhysics(),
+                  onPageChanged: (value) => setState(() {
+                    _currentPage = value;
+                  }),
+                  children: pages.map((e) => e as Widget).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
+        bottomNavigationBar: BottomAppBar(
+          elevation: 0,
+          child: Row(
+            children: [
+              FilledButton(
+                style: Theme.of(context).filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(Theme.of(context).disabledColor)),
+                onPressed: context.watch<LoginProvider>().loggingIn ? null : _previousPage,
+                child: const Icon(Icons.arrow_back_outlined),
+              ),
+              const SizedBox(width: 8),
+              Expanded(
+                child: FilledButton(
+                  onPressed: context.watch<LoginProvider>().loggingIn ? null : _nextPage,
+                  child: Text(pages[_currentPage].buttonText(context)),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
