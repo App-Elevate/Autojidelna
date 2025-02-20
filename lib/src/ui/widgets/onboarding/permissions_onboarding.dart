@@ -1,13 +1,23 @@
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
-class PermissionsOnboarding extends StatefulWidget {
+class PermissionsOnboarding extends StatefulWidget implements OnboardingStep {
   const PermissionsOnboarding({super.key});
 
   @override
   State<PermissionsOnboarding> createState() => _PermissionsOnboardingState();
+
+  @override
+  Future<bool> onNextPage(BuildContext context) async => true;
+
+  @override
+  String buttonText(BuildContext context) => context.l10n.next;
+
+  @override
+  String description(BuildContext context) => context.l10n.onboardingSubtitle;
 }
 
 class _PermissionsOnboardingState extends State<PermissionsOnboarding> {
