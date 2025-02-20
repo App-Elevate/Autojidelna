@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:indexed_list_view/indexed_list_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
@@ -197,5 +198,6 @@ class App {
   /// Do not call this before MaterialApp is built.
   static late Function(Locale? language) translate;
 
-  static late PageController pageController;
+  static PageController pageController = PageController();
+  static IndexedScrollController listController = IndexedScrollController();
 }
