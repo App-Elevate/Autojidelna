@@ -33,6 +33,7 @@ class AuthGuard extends AutoRouteGuard {
         case AuthErrors.accountNotSelected:
           showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));
           if (ctx.mounted) await userProvider.updateLoggedSafeAccounts();
+          break;
         case AuthErrors.connectionFailed:
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
@@ -54,7 +55,7 @@ class AuthGuard extends AutoRouteGuard {
         resolver.redirect(AccountPickerPage(onCompletedCallback: (p0) => onNavigation(resolver, router)), replace: true);
         return;
       }
-      resolver.redirect(LoginPage(onCompletedCallback: (p0) => resolver.next()), replace: true);
+      resolver.redirect(LoginPage(onCompletedCallback: resolver.next), replace: true);
     }
   }
 }
