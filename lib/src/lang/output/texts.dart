@@ -159,29 +159,11 @@ abstract class Texts {
   /// **'Shromažďování údajů'**
   String get analytics;
 
-  /// No description provided for @analyticsDescription_1.
+  /// No description provided for @analyticsMoreInfo.
   ///
   /// In cs, this message translates to:
-  /// **'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve '**
-  String get analyticsDescription_1;
-
-  /// No description provided for @analyticsDescription_2.
-  ///
-  /// In cs, this message translates to:
-  /// **'Zdrojovém kódu'**
-  String get analyticsDescription_2;
-
-  /// No description provided for @analyticsDescription_3.
-  ///
-  /// In cs, this message translates to:
-  /// **' nebo v '**
-  String get analyticsDescription_3;
-
-  /// No description provided for @analyticsDescription_4.
-  ///
-  /// In cs, this message translates to:
-  /// **'Zásadách ochrany osobních údajů.'**
-  String get analyticsDescription_4;
+  /// **'Informace shromažďujeme výhradně za účelem identifikace a opravy chyb v aplikaci, zlepšení výkonu a udržování základních statistických údajů.\n\nVšechna data jsou odesílána anonymně.'**
+  String get analyticsMoreInfo;
 
   /// No description provided for @appDescription.
   ///

@@ -47,17 +47,8 @@ class TextsCs extends Texts {
   String get analytics => 'Shromažďování údajů';
 
   @override
-  String get analyticsDescription_1 =>
-      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
-
-  @override
-  String get analyticsDescription_2 => 'Zdrojovém kódu';
-
-  @override
-  String get analyticsDescription_3 => ' nebo v ';
-
-  @override
-  String get analyticsDescription_4 => 'Zásadách ochrany osobních údajů.';
+  String get analyticsMoreInfo =>
+      'Informace shromažďujeme výhradně za účelem identifikace a opravy chyb v aplikaci, zlepšení výkonu a udržování základních statistických údajů.\n\nVšechna data jsou odesílána anonymně.';
 
   @override
   String get appDescription =>
