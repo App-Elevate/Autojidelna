@@ -46,7 +46,7 @@ class _DayCardState extends State<DayCard> {
         if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.date);
 
         return SizedBox(
-          height: MediaQuery.sizeOf(context).height * .4,
+          height: MediaQuery.sizeOf(context).height * .3,
           child: const Center(child: CircularProgressIndicator()),
         );
       },
@@ -59,24 +59,19 @@ class _DayCard extends StatelessWidget {
   final DateTime date;
   @override
   Widget build(BuildContext context) {
-    return Selector<CanteenProvider, Jidelnicek? Function(DateTime)>(
-      selector: (_, p1) => p1.getCachedMenu,
-      builder: (_, getCachedMenu, ___) {
-        Jidelnicek? menu = getCachedMenu(date);
-        if (menu == null) return const Center(child: CircularProgressIndicator());
+    Jidelnicek? menu = context.read<CanteenProvider>().getCachedMenu(date);
+    if (menu == null) return const Center(child: CircularProgressIndicator());
 
-        Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
-        return Card(
-          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Column(
-            children: [
-              DayCardheader(date: menu.den),
-              if (menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
-              ...sortedDishes.entries.map((e) => FoodSectionListTile(title: e.key.toUpperCase(), selection: e.value)),
-            ],
-          ),
-        );
-      },
+    Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
+    return Card(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+      child: Column(
+        children: [
+          DayCardheader(date: menu.den),
+          if (menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
+          ...sortedDishes.entries.map((e) => FoodSectionListTile(title: e.key.toUpperCase(), selection: e.value)),
+        ],
+      ),
     );
   }
 }
