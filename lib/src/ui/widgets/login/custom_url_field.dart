@@ -1,5 +1,6 @@
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,10 +15,11 @@ class _CustomUrlFieldState extends State<CustomUrlField> {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
-    final LoginProvider provider = context.read<LoginProvider>();
+    final LoginProvider provider = context.watch<LoginProvider>();
+    final ThemeData theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 5, 16, 0),
+      padding: EdgeInsets.fromLTRB(16, 5, 16, provider.urlError == null ? 0 : 5),
       child: Form(
         key: provider.urlForm,
         child: TextFormField(
@@ -29,6 +31,7 @@ class _CustomUrlFieldState extends State<CustomUrlField> {
             border: InputBorder.none,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             labelText: lang.loginUrlFieldLabel,
+            errorStyle: AppThemes.textTheme.bodySmall!.copyWith(color: theme.colorScheme.error, height: .04),
             errorText: provider.urlError,
             suffixIcon: const Icon(Icons.edit_rounded),
           ),

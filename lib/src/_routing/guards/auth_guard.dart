@@ -29,7 +29,6 @@ class AuthGuard extends AutoRouteGuard {
       } catch (_) {} // Just QoL
       resolver.next(true); // Allow navigation
     } catch (e) {
-      print(e);
       switch (e) {
         case AuthErrors.accountNotSelected:
           showErrorSnackBar(SnackBarAuthErrors.accountNotFound(lang));

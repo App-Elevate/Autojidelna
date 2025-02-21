@@ -65,7 +65,7 @@ class LoginProvider extends ChangeNotifier {
     if (!credentialsForm.currentState!.validate()) return false;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    _setErrors(null, null, null);
+    setErrors(null, null, null);
     bool value = false;
     _loggingIn = true;
     notifyListeners();
@@ -97,17 +97,17 @@ class LoginProvider extends ChangeNotifier {
         if (retry && context.mounted) login(context);
         break;
       case AuthErrors.wrongCredentials:
-        _setErrors(lang.errorsWrongCredentialsTextField, true, null);
+        setErrors(lang.errorsWrongCredentialsTextField, true, null);
         break;
       case AuthErrors.wrongUrl:
-        _setErrors(null, null, lang.errorsWrongUrl);
+        setErrors(null, null, lang.errorsWrongUrl);
         break;
       default:
         showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
     }
   }
 
-  void _setErrors(String? passwordErr, bool? usernameErr, String? urlErr) {
+  void setErrors(String? passwordErr, bool? usernameErr, String? urlErr) {
     passwordError = passwordErr;
     usernameError = usernameErr ?? false;
     urlError = urlErr;
