@@ -22,10 +22,11 @@ class DayCard extends StatelessWidget {
       builder: (_, menu, ___) {
         Map<String, List<Jidlo>> sortedDishes = {};
         if (menu == null) {
-          // ignore: discarded_futures
           try {
+            // ignore: discarded_futures
             context.read<CanteenProvider>().getMenu(date);
           } catch (e) {
+            // ignore: discarded_futures
             showInternetConnectionSnackBar();
           }
         } else {
