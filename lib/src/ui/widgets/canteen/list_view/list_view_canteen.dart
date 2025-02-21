@@ -49,13 +49,17 @@ class _ListViewCanteenState extends State<ListViewCanteen> {
 
   @override
   Widget build(BuildContext context) {
-    return FlutterListView(
-      controller: App.listController,
-      scrollDirection: Axis.vertical,
-      delegate: FlutterListViewDelegate(
-        initIndex: convertDateTimeToIndex(DateTime.now()),
-        childCount: Dates.maximalDate.difference(Dates.minimalDate).inDays,
-        (BuildContext context, int index) => DayCard(convertIndexToDatetime(index)),
+    return RefreshIndicator(
+      onRefresh: context.read<CanteenProvider>().refreshList,
+      triggerMode: RefreshIndicatorTriggerMode.anywhere,
+      child: FlutterListView(
+        controller: App.listController,
+        scrollDirection: Axis.vertical,
+        delegate: FlutterListViewDelegate(
+          initIndex: convertDateTimeToIndex(DateTime.now()),
+          childCount: Dates.maximalDate.difference(Dates.minimalDate).inDays,
+          (BuildContext context, int index) => DayCard(convertIndexToDatetime(index)),
+        ),
       ),
     );
   }

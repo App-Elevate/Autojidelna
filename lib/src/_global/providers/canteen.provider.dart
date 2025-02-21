@@ -162,4 +162,18 @@ class CanteenProvider with ChangeNotifier {
   }
 
   Future<void> refreshCurrentPage() async => getMenu(selectedDate.normalize);
+
+  Future<void> refreshList() async {
+    List<DateTime> closest = [selectedDate]; // Add the middle date first
+
+    // Generate the 5 closest dates before and after the middle date
+    for (int i = 1; i <= 5; i++) {
+      closest.add(selectedDate.add(Duration(days: i))); // Dates after
+      if (i < 2) closest.add(selectedDate.subtract(Duration(days: i))); // Dates before
+    }
+
+    for (DateTime date in closest) {
+      await getMenu(date);
+    }
+  }
 }
