@@ -64,7 +64,7 @@ class AccountPickerOnboarding extends StatelessWidget implements OnboardingStep 
           showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
           break;
         case AuthErrors.noInternetConnection:
-          if (await showInternetConnectionSnackBar() && context.mounted) await onNextPage(context);
+          if (await showInternetConnectionSnackBar() && context.mounted) return await onNextPage(context);
           break;
         case AuthErrors.wrongCredentials:
           showErrorSnackBar(SnackBarAuthErrors.wrongCredentials(lang));
