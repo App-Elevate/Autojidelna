@@ -164,7 +164,8 @@ class App {
   }
 
   static Future<void> initSecureStorage() async {
-    secureStorage = const FlutterSecureStorage();
+    AndroidOptions android = const AndroidOptions(encryptedSharedPreferences: true);
+    secureStorage = FlutterSecureStorage(aOptions: android);
   }
 
   static late final FlutterSecureStorage secureStorage;
