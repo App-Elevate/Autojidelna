@@ -23,13 +23,12 @@ class _CustomUrlFieldState extends State<CustomUrlField> {
         child: TextFormField(
           controller: provider.urlController,
           autocorrect: false,
-          textInputAction: TextInputAction.next,
+          textInputAction: TextInputAction.done,
           autofillHints: const [AutofillHints.url],
           decoration: InputDecoration(
             border: InputBorder.none,
             floatingLabelBehavior: FloatingLabelBehavior.always,
             labelText: lang.loginUrlFieldLabel,
-            hintText: 'např. jidelna.trebesin.cz',
             errorText: provider.urlError,
             suffixIcon: const Icon(Icons.edit_rounded),
           ),
