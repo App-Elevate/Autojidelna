@@ -38,11 +38,11 @@ class ConveniencePage extends StatelessWidget {
             ),
           ),
           SectionTitle(lang.experimental),
-          // TODO: list UI
           Selector<Settings, ({bool read, Function(bool) set})>(
             selector: (_, p1) => (read: p1.isListUi, set: p1.setListUi),
             builder: (context, listUi, child) => SwitchListTile(
               title: Text(lang.listUi),
+              subtitle: Text(lang.listUiSubtitle),
               value: listUi.read,
               onChanged: listUi.set,
             ),

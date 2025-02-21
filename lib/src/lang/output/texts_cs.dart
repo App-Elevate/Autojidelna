@@ -285,7 +285,11 @@ class TextsCs extends Texts {
   String get lightThemeMode => 'Světlý';
 
   @override
-  String get listUi => 'List UI';
+  String get listUi => 'Seznamové zobrazení';
+
+  @override
+  String get listUiSubtitle =>
+      'Zobrazit jednotlivé dny ve vertikálním seznamu.';
 
   @override
   String get location => 'Výdejna';

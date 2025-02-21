@@ -570,8 +570,14 @@ abstract class Texts {
   /// No description provided for @listUi.
   ///
   /// In cs, this message translates to:
-  /// **'List UI'**
+  /// **'Seznamové zobrazení'**
   String get listUi;
+
+  /// No description provided for @listUiSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zobrazit jednotlivé dny ve vertikálním seznamu.'**
+  String get listUiSubtitle;
 
   /// No description provided for @location.
   ///
