@@ -35,6 +35,7 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
     bool canNavigateBack = context.read<UserProvider>().user != null;
+
     return PopScope(
       canPop: context.router.canNavigateBack,
       child: Scaffold(
