@@ -20,7 +20,12 @@ class AuthGuard extends AutoRouteGuard {
     final UserProvider userProvider = ctx.read<UserProvider>();
     final Texts lang = ctx.l10n;
 
-    if (userProvider.user != null) return resolver.next(true); // if logged in during onboarding
+    if (userProvider.user != null) {
+      try {
+        if (ctx.mounted) await ctx.read<CanteenProvider>().preIndexMenus();
+      } catch (_) {} // Just QoL
+      return resolver.next(true); // if logged in during onboarding
+    }
 
     try {
       await userProvider.loadUser();
@@ -52,7 +57,7 @@ class AuthGuard extends AutoRouteGuard {
       }
       if (ctx.mounted) await userProvider.updateLoggedSafeAccounts();
       if (userProvider.loggedInAccounts.isNotEmpty) {
-        resolver.redirect(AccountPickerPage(onCompletedCallback: (p0) => onNavigation(resolver, router)), replace: true);
+        resolver.redirect(AccountPickerPage(onCompletedCallback: (_) => onNavigation(resolver, router)), replace: true);
         return;
       }
       resolver.redirect(LoginPage(onCompletedCallback: resolver.next), replace: true);
