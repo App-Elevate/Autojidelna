@@ -60,19 +60,20 @@ class _DayCard extends StatelessWidget {
       selector: (p0, p1) => (getCachedMenu: p1.getCachedMenu),
       builder: (_, data, ___) {
         Jidelnicek? menu = data.getCachedMenu(date);
+        Map<String, List<Jidlo>> sortedDishes = {};
         if (menu == null) {
           // ignore: discarded_futures
           context.read<CanteenProvider>().getMenu(date);
-          return const Center(child: CircularProgressIndicator());
+        } else {
+          sortedDishes = mapDishesByVarianta(menu.jidla);
         }
 
-        Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
           child: Column(
             children: [
-              DayCardheader(date: menu.den),
-              if (menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
+              DayCardheader(date: date),
+              if (menu != null && menu.jidla.isNotEmpty) ...[const CustomDivider(isTransparent: false, height: 0), const SizedBox(height: 8)],
               ...sortedDishes.entries.map((e) => FoodSectionListTile(title: e.key.toUpperCase(), selection: e.value)),
             ],
           ),
