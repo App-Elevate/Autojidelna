@@ -1,69 +1,33 @@
-import 'dart:async';
-
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/logic/get_correct_date_string.dart';
 import 'package:autojidelna/src/logic/string_extension.dart';
 import 'package:autojidelna/src/types/theme.dart';
-import 'package:autojidelna/src/ui/widgets/canteen/error_loading_data.dart';
 import 'package:autojidelna/src/ui/widgets/canteen/list_view/food_section_list_tile.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-class DayCard extends StatefulWidget {
+class DayCard extends StatelessWidget {
   const DayCard(this.date, {super.key});
   final DateTime date;
 
   @override
-  State<DayCard> createState() => _DayCardState();
-}
-
-class _DayCardState extends State<DayCard> {
-  Future<void>? fetchMenu;
-
-  @override
-  void initState() {
-    super.initState();
-    fetchMenu = Future(() async {
-      if (!mounted) return;
-      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
-      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<void>(
-      future: fetchMenu,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) return const ErrorLoadingData();
-        if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.date);
-
-        return SizedBox(
-          height: MediaQuery.sizeOf(context).height * .3,
-          child: const Center(child: CircularProgressIndicator()),
-        );
-      },
-    );
-  }
-}
-
-class _DayCard extends StatelessWidget {
-  const _DayCard(this.date);
-  final DateTime date;
-  @override
-  Widget build(BuildContext context) {
-    return Selector<CanteenProvider, ({Jidelnicek? Function(DateTime) getCachedMenu})>(
-      selector: (p0, p1) => (getCachedMenu: p1.getCachedMenu),
-      builder: (_, data, ___) {
-        Jidelnicek? menu = data.getCachedMenu(date);
+    return Selector<CanteenProvider, Jidelnicek?>(
+      selector: (_, p1) => p1.getCachedMenu(date),
+      builder: (_, menu, ___) {
         Map<String, List<Jidlo>> sortedDishes = {};
         if (menu == null) {
           // ignore: discarded_futures
-          context.read<CanteenProvider>().getMenu(date);
+          try {
+            context.read<CanteenProvider>().getMenu(date);
+          } catch (e) {
+            showInternetConnectionSnackBar();
+          }
         } else {
           sortedDishes = mapDishesByVarianta(menu.jidla);
         }

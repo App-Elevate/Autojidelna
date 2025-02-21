@@ -1,8 +1,13 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/services/canteen_service.dart';
+import 'package:autojidelna/src/types/app_context.dart';
+import 'package:autojidelna/src/types/errors.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -28,17 +33,21 @@ class CanteenProvider with ChangeNotifier {
   int _locationId = 1;
 
   Future<void> getMenu(DateTime date) async {
-    _dishMarketplace = List.from(await _canteenService.getMarketplace());
-    if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
-      if (await _getMonthlyMenu()) {
-        notifyListeners();
+    try {
+      if (_dishMarketplace.isEmpty) _dishMarketplace = List.from(await _canteenService.getMarketplace());
+      if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
+        if (await _getMonthlyMenu()) {
+          notifyListeners();
+        }
       }
-    }
 
-    Jidelnicek? menu = await _canteenService.getDailyMenu(date.normalize);
-    if (menu == null) return;
-    _menus[date] = menu;
-    notifyListeners();
+      Jidelnicek? menu = await _canteenService.getDailyMenu(date.normalize);
+      if (menu == null) return;
+      _menus[date] = menu;
+      notifyListeners();
+    } catch (e) {
+      handleErrors(e);
+    }
   }
 
   Future<bool> _getMonthlyMenu() async {
@@ -57,16 +66,20 @@ class CanteenProvider with ChangeNotifier {
   int get locationId => _locationId;
 
   Future<void> preIndexMenus({DateTime? targetDate}) async {
-    // If monthly menu fetching is available, use it
-    if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
-      await _getMonthlyMenu();
-      notifyListeners();
-      return;
-    }
+    try {
+      // If monthly menu fetching is available, use it
+      if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
+        await _getMonthlyMenu();
+        notifyListeners();
+        return;
+      }
 
-    // Otherwise, use smart pre-indexing around the target date
-    targetDate ??= _selectedDate;
-    await _smartPreIndexing(targetDate.normalize);
+      // Otherwise, use smart pre-indexing around the target date
+      targetDate ??= _selectedDate;
+      await _smartPreIndexing(targetDate.normalize);
+    } catch (e) {
+      handleErrors(e);
+    }
   }
 
   Future<void> _smartPreIndexing(DateTime targetDate) async {
@@ -174,6 +187,19 @@ class CanteenProvider with ChangeNotifier {
 
     for (DateTime date in closest) {
       await getMenu(date);
+    }
+  }
+
+  void handleErrors(dynamic e) async {
+    switch (e) {
+      case CanteenErrors.needToLogin:
+        App.getIt<AppContext>().context!.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+        break;
+      case CanteenErrors.noInternetConnection:
+        ordering = true;
+        await showInternetConnectionSnackBar();
+        ordering = false;
+      default:
     }
   }
 }

@@ -5,9 +5,12 @@ import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+bool isVisible = false;
 Timer? _internetCheckTimer;
 
 Future<bool> showInternetConnectionSnackBar() async {
+  if (isVisible) return false;
+  isVisible = true;
   BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext;
   if (ctx == null) return false;
 
@@ -64,6 +67,7 @@ Future<bool> showInternetConnectionSnackBar() async {
         scaffoldMessenger.hideCurrentSnackBar();
 
         _internetCheckTimer?.cancel(); // Stop checking after reconnecting
+        isVisible = false;
         completer.complete(true); // Resolve future and return true
       }
     },
