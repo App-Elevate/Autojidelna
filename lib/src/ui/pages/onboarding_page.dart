@@ -139,7 +139,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ThemeData theme = Theme.of(context);
               return Row(
                 children: [
-                  if (context.router.canNavigateBack || _currentPage > 0)
+                  if (_currentPage > 0)
                     FilledButton(
                       style: theme.filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(theme.disabledColor)),
                       onPressed: provider.loggingIn ? null : _previousPage,
