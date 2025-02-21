@@ -31,7 +31,7 @@ class AccountPickerOnboarding extends StatelessWidget implements OnboardingStep 
                   title: Text(account.username),
                   subtitle: Text(account.url),
                   trailing: context.watch<LoginProvider>().pickedAccount == account ? const Icon(Icons.check) : null,
-                  onTap: () => context.read<LoginProvider>().setPickedAccount(account),
+                  onTap: context.read<LoginProvider>().loggingIn ? null : () => context.read<LoginProvider>().setPickedAccount(account),
                 );
               },
             ),
