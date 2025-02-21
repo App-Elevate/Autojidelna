@@ -33,7 +33,7 @@ class CanteenService {
     try {
       menu = await _canteen().jidelnicekDen(den: date.normalize);
     } catch (e) {
-      e as CanteenLibExceptions;
+      if (!await InternetConnectionChecker().hasConnection) return Future.error(CanteenErrors.noInternetConnection);
       if (e == CanteenLibExceptions.jePotrebaSePrihlasit) return Future.error(CanteenErrors.needToLogin);
       if (e == CanteenLibExceptions.featureNepodporovana) return Future.error(CanteenErrors.unsuportedFeature);
     }
@@ -58,7 +58,7 @@ class CanteenService {
     try {
       menu = await _canteen().jidelnicekMesic();
     } catch (e) {
-      e as CanteenLibExceptions;
+      if (!await InternetConnectionChecker().hasConnection) return Future.error(CanteenErrors.noInternetConnection);
       if (e == CanteenLibExceptions.jePotrebaSePrihlasit) return Future.error(CanteenErrors.needToLogin);
       if (e == CanteenLibExceptions.featureNepodporovana) return Future.error(CanteenErrors.unsuportedFeature);
     }
@@ -83,10 +83,7 @@ class CanteenService {
     try {
       menu = await _canteen().ziskatBurzu();
     } catch (e) {
-      e as CanteenLibExceptions;
-      // Check for internet connectivity
       if (!await InternetConnectionChecker().hasConnection) return Future.error(CanteenErrors.noInternetConnection);
-
       if (e == CanteenLibExceptions.jePotrebaSePrihlasit) return Future.error(CanteenErrors.needToLogin);
       if (e == CanteenLibExceptions.featureNepodporovana) return Future.error(CanteenErrors.unsuportedFeature);
     }

@@ -70,7 +70,7 @@ dependencies:
 
   table_calendar: ^3.0.9
   expandable_page_view: ^1.0.17
-  indexed_list_view: ^4.0.0
+  flutter_list_view: ^1.1.29
 
 dev_dependencies:
   flutter_test:

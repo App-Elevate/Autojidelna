@@ -23,24 +23,21 @@ class DayCard extends StatefulWidget {
 
 class _DayCardState extends State<DayCard> {
   Future<void>? fetchMenu;
-  Jidelnicek? cachedMenu;
 
   @override
   void initState() {
     super.initState();
-    cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
     fetchMenu = Future(() async {
-      if (mounted) await context.read<CanteenProvider>().getMenu(widget.date);
+      if (!mounted) return;
+      Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
+      if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (cachedMenu != null) return _DayCard(widget.date);
     return FutureBuilder<void>(
-      future: Future(() async {
-        if (context.mounted) await context.read<CanteenProvider>().getMenu(widget.date);
-      }),
+      future: fetchMenu,
       builder: (context, snapshot) {
         if (snapshot.hasError) return const ErrorLoadingData();
         if (snapshot.connectionState == ConnectionState.done) return _DayCard(widget.date);
@@ -59,10 +56,15 @@ class _DayCard extends StatelessWidget {
   final DateTime date;
   @override
   Widget build(BuildContext context) {
-    return Consumer<CanteenProvider>(
+    return Selector<CanteenProvider, ({Jidelnicek? Function(DateTime) getCachedMenu})>(
+      selector: (p0, p1) => (getCachedMenu: p1.getCachedMenu),
       builder: (_, data, ___) {
         Jidelnicek? menu = data.getCachedMenu(date);
-        if (menu == null) return const Center(child: CircularProgressIndicator());
+        if (menu == null) {
+          // ignore: discarded_futures
+          context.read<CanteenProvider>().getMenu(date);
+          return const Center(child: CircularProgressIndicator());
+        }
 
         Map<String, List<Jidlo>> sortedDishes = mapDishesByVarianta(menu.jidla);
         return Card(
