@@ -61,8 +61,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final appRouter = App.getIt<AppRouter>();
     return Consumer<ThemeProvider>(
-      // TODO: Wrap the pages not the whole material app for better performance.
-      // https://pub.dev/packages/auto_route#wrapping-routes
       builder: (context, theme, ___) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
