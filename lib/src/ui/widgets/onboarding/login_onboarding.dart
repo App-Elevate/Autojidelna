@@ -14,7 +14,10 @@ class LoginOnboarding extends StatelessWidget implements OnboardingStep {
 
     return Consumer<LoginProvider>(
       builder: (context, provider, ___) {
-        final MapEntry<String, String> url = provider.urls.entries.firstWhere((e) => e.value == provider.urlController.text);
+        final MapEntry<String, String> url = provider.urls.entries.firstWhere(
+          (e) => e.value == provider.urlController.text,
+          orElse: () => MapEntry(provider.urlController.text.split('.').reversed.elementAt(1), provider.urlController.text),
+        );
         return Padding(
           padding: const EdgeInsets.all(8),
           child: Form(
