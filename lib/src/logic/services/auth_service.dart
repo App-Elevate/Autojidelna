@@ -80,7 +80,7 @@ class AuthService {
 
     if (!await _hasDuplicates(account)) {
       await _saveAccountToStorage(account);
-      await NotificationService().initAwesome();
+      //await NotificationService().initAwesome();
     }
 
     return user;
