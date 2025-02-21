@@ -68,11 +68,6 @@ class AuthService {
       }
     }
 
-    if (!await _hasDuplicates(account)) {
-      await _saveAccountToStorage(account);
-      await NotificationService().initAwesome();
-    }
-
     try {
       user = User(
         accountData: SafeAccount.fromAccount(account),
@@ -82,6 +77,12 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
+
+    if (!await _hasDuplicates(account)) {
+      await _saveAccountToStorage(account);
+      await NotificationService().initAwesome();
+    }
+
     return user;
   }
 

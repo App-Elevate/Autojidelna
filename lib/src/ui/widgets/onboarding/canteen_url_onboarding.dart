@@ -45,7 +45,6 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
     try {
       await context.read<UserProvider>().login(Account(username: '', password: '', url: context.read<LoginProvider>().urlController.text));
     } catch (e) {
-      print(e);
       switch (e) {
         case AuthErrors.wrongUrl:
           if (context.mounted) {
