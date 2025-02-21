@@ -12,10 +12,10 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_list_view/flutter_list_view.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:indexed_list_view/indexed_list_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shorebird_code_push/shorebird_code_push.dart';
@@ -199,5 +199,5 @@ class App {
   static late Function(Locale? language) translate;
 
   static PageController pageController = PageController();
-  static IndexedScrollController listController = IndexedScrollController();
+  static FlutterListViewController listController = FlutterListViewController();
 }

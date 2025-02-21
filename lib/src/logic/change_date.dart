@@ -12,11 +12,11 @@ changeDate(BuildContext context, DateTime newDate, {bool animate = true}) async 
   final int dayIndex = convertDateTimeToIndex(newDate);
 
   if (!animate) {
-    context.read<Settings>().isListUi ? App.listController.jumpToIndex(dayIndex) : App.pageController.jumpToPage(dayIndex);
+    context.read<Settings>().isListUi ? App.listController.sliverController.jumpToIndex(dayIndex) : App.pageController.jumpToPage(dayIndex);
     return;
   }
 
   context.read<Settings>().isListUi
-      ? App.listController.animateToIndex(dayIndex, duration: Durations.medium1, curve: Curves.easeInOut)
+      ? App.listController.sliverController.animateToIndex(dayIndex, duration: Durations.medium1, curve: Curves.easeInOut)
       : App.pageController.animateToPage(dayIndex, duration: Durations.medium1, curve: Curves.easeInOut);
 }
