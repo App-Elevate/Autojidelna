@@ -37,7 +37,6 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: AppearancePage.page, path: '/settings/appearance'),
     AutoRoute(page: ConveniencePage.page, path: '/settings/convenience'),
     AutoRoute(page: AboutPage.page, path: '/about'),
-    AutoRoute(page: RequestPermissionPage.page, path: '/request-permission'),
     AutoRoute(page: DebugPage.page, path: '/demo/debug'),
     RedirectRoute(path: '*', redirectTo: '/'),
   ];
