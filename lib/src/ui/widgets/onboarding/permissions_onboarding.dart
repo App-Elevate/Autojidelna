@@ -25,9 +25,9 @@ class _PermissionsOnboardingState extends State<PermissionsOnboarding> {
   bool notificationsEnabled = false;
 
   void checkNotificationPermissions() async {
-    final permissions = await AwesomeNotifications().checkPermissionList();
+    final bool permissions = await AwesomeNotifications().isNotificationAllowed();
     setState(() {
-      notificationsEnabled = permissions.contains(NotificationPermission.Alert);
+      notificationsEnabled = permissions;
     });
   }
 
