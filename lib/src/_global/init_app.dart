@@ -35,8 +35,8 @@ class InitApp {
   }
 
   /// Call this after retrieving the URL
-  void registerCanteen(String url) async {
+  void registerCanteen(Canteen canteen) async {
     if (App.getIt.isRegistered<Canteen>()) App.getIt.unregister<Canteen>();
-    App.getIt.registerLazySingleton<Canteen>(() => Canteen(url));
+    App.getIt.registerLazySingleton<Canteen>(() => canteen);
   }
 }

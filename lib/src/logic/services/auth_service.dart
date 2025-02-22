@@ -33,8 +33,7 @@ class AuthService {
     String url = Url.clean(account.url);
     User? user;
 
-    InitApp().registerCanteen(url);
-    Canteen instance = App.getIt<Canteen>();
+    Canteen instance = Canteen(url);
 
     try {
       // First login attempt (with cleaned URL)
@@ -44,8 +43,7 @@ class AuthService {
     } catch (_) {
       // Second login attempt
       url = account.url;
-      InitApp().registerCanteen(url);
-      instance = App.getIt<Canteen>();
+      instance = Canteen(url);
 
       try {
         if (!await instance.login(account.username, account.password)) {
@@ -67,6 +65,8 @@ class AuthService {
         return Future.error(AuthErrors.connectionFailed);
       }
     }
+
+    InitApp().registerCanteen(instance);
 
     try {
       user = User(
