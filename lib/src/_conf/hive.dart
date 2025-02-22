@@ -3,7 +3,6 @@ import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dar
 /// Hive boxes. Use these values to open a box.
 class Boxes {
   static const String appState = 'appState';
-  static const String theme = 'theme';
   static const String settings = 'settings';
   static const String cache = 'cache';
   static const String analytics = 'analytics';
@@ -23,12 +22,10 @@ class HiveKeys {
   // cache box
   static String location(SafeAccount account) => 'location_${account.username}_${account.url}';
 
-  // theme box
+  // settings box
   static const String themeMode = 'themeMode';
   static const String themeStyle = 'themeStyle';
   static const String amoledMode = 'amoledMode';
-
-  // settings box
   static const String shouldAskForNotificationPermission = 'shouldAskForNotificationPermission';
   static const String webNotificationsAccepted = 'webNotificationsAccepted';
   static const String tabletUi = 'tabletUi';

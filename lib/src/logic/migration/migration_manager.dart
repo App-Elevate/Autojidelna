@@ -6,7 +6,6 @@ import 'package:package_info_plus/package_info_plus.dart';
 class MigrationManager {
   //static final Box _appStatebox = Hive.box(Boxes.appState);
   static final Box _settingsBox = Hive.box(Boxes.settings);
-  //static final Box _themeBox = Hive.box(Boxes.theme);
   //static final Box _notificationBox = Hive.box(Boxes.notifications);
   //static final Box _statisticsBox = Hive.box(Boxes.statistics);
 

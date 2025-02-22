@@ -153,7 +153,6 @@ class App {
     Hive.registerAdapter(ThemeModeAdapter());
     Hive.registerAdapter(ThemeStyleAdapter());
     Hive.registerAdapter(DateFormatOptionsAdapter());
-    await Hive.openBox(Boxes.theme);
     await Hive.openBox(Boxes.settings);
     await Hive.openBox(Boxes.cache);
     await Hive.openBox(Boxes.appState);
