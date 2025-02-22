@@ -62,7 +62,12 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
         default:
       }
     }
-    if (context.mounted) context.read<LoginProvider>().loggingIn = false;
+    if (context.mounted) {
+      context.read<LoginProvider>().loggingIn = false;
+      context.read<LoginProvider>().usernameController.clear();
+      context.read<LoginProvider>().passwordController.clear();
+    }
+
     return value;
   }
 
