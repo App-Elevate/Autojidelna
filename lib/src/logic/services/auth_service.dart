@@ -112,6 +112,13 @@ class AuthService {
     return await loginBySafeAccount(loginData.loggedInAccount!);
   }
 
+  /// Sets [LoggedAccounts.loggedInAccount] to null. Doesn't delete user credentials
+  Future<void> ghostLogout() async {
+    final LoggedAccounts loginData = await _getDataFromStorage();
+    loginData.loggedInAccount = null;
+    await _saveDataToStorage(loginData);
+  }
+
   Future<List<SafeAccount>> getLimitedAccounts() async {
     return (await _getDataFromStorage()).accounts.map(SafeAccount.fromAccount).toList();
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/services/canteen_service.dart';
@@ -11,6 +12,7 @@ import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_sn
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 class CanteenProvider with ChangeNotifier {
   CanteenProvider(this._canteenService);
@@ -46,7 +48,8 @@ class CanteenProvider with ChangeNotifier {
       _menus[date] = menu;
       notifyListeners();
     } catch (e) {
-      handleErrors(e);
+      await handleErrors(e);
+      getMenu(date);
     }
   }
 
@@ -78,22 +81,24 @@ class CanteenProvider with ChangeNotifier {
       targetDate ??= _selectedDate;
       await _smartPreIndexing(targetDate.normalize);
     } catch (e) {
-      handleErrors(e);
+      await handleErrors(e);
     }
   }
 
   Future<void> _smartPreIndexing(DateTime targetDate) async {
-    await _preIndexLunchesRange(targetDate, 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
+    try {
+      await _preIndexLunchesRange(targetDate, 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
+    } catch (_) {}
   }
 
   Future<void> _preIndexLunchesRange(DateTime start, int howManyDays) async {
@@ -190,10 +195,15 @@ class CanteenProvider with ChangeNotifier {
     }
   }
 
-  void handleErrors(dynamic e) async {
+  Future<void> handleErrors(dynamic e) async {
     switch (e) {
       case CanteenErrors.needToLogin:
-        App.getIt<AppContext>().context!.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+        try {
+          await App.getIt<AppContext>().context!.read<UserProvider>().loadUser();
+        } catch (e) {
+          await App.getIt<AppContext>().context!.read<UserProvider>().unloadUser();
+          App.getIt<AppContext>().context!.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+        }
         break;
       case CanteenErrors.noInternetConnection:
         ordering = true;
