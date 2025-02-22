@@ -45,11 +45,11 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
     try {
       await context.read<UserProvider>().login(Account(username: '', password: '', url: context.read<LoginProvider>().urlController.text));
     } catch (e) {
-      value = false;
       switch (e) {
         case AuthErrors.wrongUrl:
           if (context.mounted) {
             context.read<LoginProvider>().setErrors(null, false, context.l10n.errorsWrongUrl);
+            value = false;
           }
           break;
         case AuthErrors.noInternetConnection:
@@ -57,6 +57,7 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
           break;
         case AuthErrors.connectionFailed:
           if (context.mounted) showErrorSnackBar(SnackBarAuthErrors.connectionFailed(context.l10n));
+          value = false;
           break;
         default:
       }
