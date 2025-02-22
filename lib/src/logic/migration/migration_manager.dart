@@ -8,16 +8,21 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class MigrationManager {
-  static final Box _appStatebox = Hive.box(Boxes.appState);
-
   static Future<void> runMigrations() async {
+    Stopwatch stopwatch = Stopwatch();
+    stopwatch.start();
+
     final String currentVersion = App.packageInfo.version;
-    final String? lastKnownVersion = _appStatebox.get(HiveKeys.appState.lastVersion, defaultValue: '1.0.0');
+    final String? lastKnownVersion = Hive.box(Boxes.appState).get(HiveKeys.appState.lastVersion, defaultValue: '1.0.0');
 
     if (lastKnownVersion == null || _isNewerVersion(lastKnownVersion, currentVersion)) {
       await _runMigrationScripts(lastKnownVersion, currentVersion);
-      _appStatebox.put(HiveKeys.appState.lastVersion, currentVersion);
+      Hive.box(Boxes.appState).put(HiveKeys.appState.lastVersion, currentVersion);
     }
+
+    stopwatch.stop();
+    Duration elapsed = stopwatch.elapsed;
+    debugPrint('Migration took ${elapsed.inMilliseconds} ms');
   }
 
   static bool _isNewerVersion(String oldVersion, String newVersion) {
