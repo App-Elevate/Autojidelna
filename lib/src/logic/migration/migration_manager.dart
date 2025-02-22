@@ -12,11 +12,11 @@ class MigrationManager {
   static Future<void> runMigrations() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     final String currentVersion = packageInfo.version;
-    final String? lastKnownVersion = _settingsBox.get(HiveKeys.lastVersion) as String?;
+    final String? lastKnownVersion = _settingsBox.get(HiveKeys.appState.lastVersion) as String?;
 
     if (lastKnownVersion == null || _isNewerVersion(lastKnownVersion, currentVersion)) {
       await _runMigrationScripts(lastKnownVersion, currentVersion);
-      _settingsBox.put(HiveKeys.lastVersion, currentVersion); // Update stored version
+      _settingsBox.put(HiveKeys.appState.lastVersion, currentVersion); // Update stored version
     }
   }
 

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 
 void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
-  if (stav != StavJidla.objednanoPouzeNaBurzu || Hive.box(Boxes.appState).get(HiveKeys.hideBurzaAlertDialog, defaultValue: false)) {
+  if (stav != StavJidla.objednanoPouzeNaBurzu || Hive.box(Boxes.appState).get(HiveKeys.appState.hideBurzaAlertDialog, defaultValue: false)) {
     pressed(context, updatedDish, stav);
     return;
   }
@@ -37,7 +37,7 @@ void burzaAlertDialog(BuildContext context, Jidlo updatedDish, StavJidla stav) {
               value: value,
               onChanged: (data) async {
                 checkbox.value = data!; // Checkbox isn't tristate so it's save
-                Hive.box(Boxes.appState).put(HiveKeys.hideBurzaAlertDialog, data);
+                Hive.box(Boxes.appState).put(HiveKeys.appState.hideBurzaAlertDialog, data);
               },
               controlAffinity: ListTileControlAffinity.leading,
               title: Text(lang.dontShowAgain, style: Theme.of(context).listTileTheme.subtitleTextStyle),

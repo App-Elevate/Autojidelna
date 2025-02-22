@@ -58,7 +58,7 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void setLastUrl() {
-    urlController.text = Hive.box(Boxes.appState).get(HiveKeys.url, defaultValue: '');
+    urlController.text = Hive.box(Boxes.appState).get(HiveKeys.appState.url, defaultValue: '');
   }
 
   Future<bool> login(BuildContext context) async {
@@ -78,7 +78,7 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       await context.read<UserProvider>().login(account);
-      Hive.box(Boxes.appState).put(HiveKeys.url, urlController.text);
+      Hive.box(Boxes.appState).put(HiveKeys.appState.url, urlController.text);
       if (context.mounted) await context.read<CanteenProvider>().preIndexMenus();
       value = true;
     } catch (e) {

@@ -6,13 +6,13 @@ import 'package:hive/hive.dart';
 class OnboardingGuard extends AutoRouteGuard {
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    bool isFirstTime = Hive.box(Boxes.appState).get(HiveKeys.firstTime, defaultValue: true);
+    bool isFirstTime = Hive.box(Boxes.appState).get(HiveKeys.appState.firstTime, defaultValue: true);
 
     if (isFirstTime) {
       resolver.redirect(
         OnboardingPage(
           onCompletedCallback: (onSuccess) {
-            Hive.box(Boxes.appState).put(HiveKeys.firstTime, !onSuccess);
+            Hive.box(Boxes.appState).put(HiveKeys.appState.firstTime, !onSuccess);
             resolver.next(onSuccess);
           },
         ),

@@ -38,10 +38,10 @@ class _MyAppState extends State<MyApp> {
 
   void initLocale() {
     if (Texts.supportedLocales.contains(App.currentLocale)) {
-      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.locale, App.currentLocale.languageCode));
+      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, App.currentLocale.languageCode));
       _locale ??= App.currentLocale;
     } else {
-      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.locale, App.defaultLocale.languageCode));
+      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, App.defaultLocale.languageCode));
       _locale ??= App.defaultLocale;
       if (_locale == null) App.currentLocale = App.defaultLocale;
     }
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
 
   void _onTranslatedLanguage(Locale? locale) {
     locale ??= App.defaultLocale;
-    unawaited(Hive.box(Boxes.appState).put(HiveKeys.locale, locale.languageCode));
+    unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, locale.languageCode));
     App.currentLocale = locale;
     setState(() {
       _locale = locale;

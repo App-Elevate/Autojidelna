@@ -65,12 +65,12 @@ class App {
     if (_initNotificationsExecuted) return;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String version = packageInfo.version;
-    String? lastVersion = Hive.box(Boxes.appState).get(HiveKeys.lastVersion);
+    String? lastVersion = Hive.box(Boxes.appState).get(HiveKeys.appState.lastVersion);
 
     // Removing the already set notifications if we updated versions
     if (lastVersion != version) {
       // Set the new version
-      Hive.box(Boxes.appState).put(HiveKeys.lastVersion, version);
+      Hive.box(Boxes.appState).put(HiveKeys.appState.lastVersion, version);
 
       try {
         List<SafeAccount> limitedAccounts = await AuthService().getLimitedAccounts();
@@ -119,9 +119,9 @@ class App {
     if (_initLocalizationExecuted) return;
 
     final Box box = Hive.box(Boxes.appState);
-    String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
+    String locale = box.get(HiveKeys.appState.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
     currentLocale = Locale.fromSubtags(languageCode: locale);
-    box.put(HiveKeys.locale, locale);
+    box.put(HiveKeys.appState.locale, locale);
 
     _initLocalizationExecuted = true;
   }

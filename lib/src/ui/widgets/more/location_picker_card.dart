@@ -73,7 +73,7 @@ class _LocationPickerCardState extends State<LocationPickerCard> {
 
                 Navigator.of(context).popUntil((route) => route.isFirst);
                 User user = context.read<UserProvider>().user!;
-                Hive.box(Boxes.appState).put(HiveKeys.location(user.accountData), i);
+                Hive.box(Boxes.appState).put(HiveKeys.account.location(user.accountData), i);
               },
             ),
           ),
