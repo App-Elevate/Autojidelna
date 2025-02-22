@@ -1,6 +1,5 @@
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_routing/app_router.dart';
-import 'package:autojidelna/src/logic/migration/migration_manager.dart';
 import 'package:autojidelna/src/types/app_context.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
@@ -25,9 +24,8 @@ class InitApp {
       App.initPlatform(),
       App.initRotation(),
       App.initCodePush(),
-      App.initNotifications(),
+      //App.initNotifications(),
     ]);
-    await MigrationManager.runMigrations();
     // Stop the stopwatch
     stopwatch.stop();
 
@@ -37,8 +35,8 @@ class InitApp {
   }
 
   /// Call this after retrieving the URL
-  void registerCanteen(String url) async {
+  void registerCanteen(Canteen canteen) async {
     if (App.getIt.isRegistered<Canteen>()) App.getIt.unregister<Canteen>();
-    App.getIt.registerLazySingleton<Canteen>(() => Canteen(url));
+    App.getIt.registerLazySingleton<Canteen>(() => canteen);
   }
 }

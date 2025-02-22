@@ -16,10 +16,11 @@ class OrderDishButton extends StatelessWidget {
 
     return SizedBox(
       width: MediaQuery.sizeOf(context).width,
-      child: Selector<CanteenProvider, bool>(
-        selector: (_, p1) => p1.ordering,
-        builder: (context, ordering, ___) {
-          StavJidla stav = getStavJidla(context, dish);
+      child: Consumer<CanteenProvider>(
+        builder: (context, provider, ___) {
+          Jidelnicek? menu = provider.getCachedMenu(dish.den);
+          Jidlo updatedDish = menu!.jidla.firstWhere((j) => j.varianta == dish.varianta);
+          StavJidla stav = getStavJidla(context, updatedDish);
           bool isPrimary = getPrimaryState(stav);
 
           return FilledButton(
@@ -27,8 +28,8 @@ class OrderDishButton extends StatelessWidget {
               backgroundColor: isPrimary ? colorScheme.primary : colorScheme.secondary,
               foregroundColor: isPrimary ? colorScheme.onPrimary : colorScheme.onSecondary,
             ),
-            onPressed: ordering || !isButtonEnabled(stav) ? null : () => burzaAlertDialog(context, dish, stav),
-            child: Text(getObedText(context, dish, stav)),
+            onPressed: provider.ordering || !isButtonEnabled(stav) ? null : () => burzaAlertDialog(context, updatedDish, stav),
+            child: Text(getObedText(context, updatedDish, stav)),
           );
         },
       ),

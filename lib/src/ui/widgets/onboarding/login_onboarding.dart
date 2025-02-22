@@ -1,7 +1,7 @@
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,10 @@ class LoginOnboarding extends StatelessWidget implements OnboardingStep {
 
     return Consumer<LoginProvider>(
       builder: (context, provider, ___) {
-        final MapEntry<String, String> url = provider.urls.entries.firstWhere((e) => e.value == provider.urlController.text);
+        final MapEntry<String, String> url = provider.urls.entries.firstWhere(
+          (e) => e.value == provider.urlController.text,
+          orElse: () => MapEntry(provider.urlController.text.split('.').reversed.elementAt(1), provider.urlController.text),
+        );
         return Padding(
           padding: const EdgeInsets.all(8),
           child: Form(

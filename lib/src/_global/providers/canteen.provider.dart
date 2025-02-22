@@ -1,11 +1,18 @@
 import 'dart:async';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_global/app.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/logic/datetime_wrapper.dart';
 import 'package:autojidelna/src/logic/services/canteen_service.dart';
+import 'package:autojidelna/src/types/app_context.dart';
+import 'package:autojidelna/src/types/errors.dart';
+import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:provider/provider.dart';
 
 class CanteenProvider with ChangeNotifier {
   CanteenProvider(this._canteenService);
@@ -28,17 +35,22 @@ class CanteenProvider with ChangeNotifier {
   int _locationId = 1;
 
   Future<void> getMenu(DateTime date) async {
-    _dishMarketplace = List.from(await _canteenService.getMarketplace());
-    if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
-      if (await _getMonthlyMenu()) {
-        notifyListeners();
+    try {
+      if (_dishMarketplace.isEmpty) _dishMarketplace = List.from(await _canteenService.getMarketplace());
+      if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
+        if (await _getMonthlyMenu()) {
+          notifyListeners();
+        }
       }
-    }
 
-    Jidelnicek? menu = await _canteenService.getDailyMenu(date.normalize);
-    if (menu == null) return;
-    _menus[date] = menu;
-    notifyListeners();
+      Jidelnicek? menu = await _canteenService.getDailyMenu(date.normalize);
+      if (menu == null) return;
+      _menus[date] = menu;
+      notifyListeners();
+    } catch (e) {
+      await handleErrors(e);
+      getMenu(date);
+    }
   }
 
   Future<bool> _getMonthlyMenu() async {
@@ -57,30 +69,36 @@ class CanteenProvider with ChangeNotifier {
   int get locationId => _locationId;
 
   Future<void> preIndexMenus({DateTime? targetDate}) async {
-    // If monthly menu fetching is available, use it
-    if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
-      await _getMonthlyMenu();
-      notifyListeners();
-      return;
-    }
+    try {
+      // If monthly menu fetching is available, use it
+      if (!App.getIt<Canteen>().missingFeatures.contains(Features.jidelnicekMesic)) {
+        await _getMonthlyMenu();
+        notifyListeners();
+        return;
+      }
 
-    // Otherwise, use smart pre-indexing around the target date
-    targetDate ??= DateTime.now();
-    await _smartPreIndexing(targetDate.normalize);
+      // Otherwise, use smart pre-indexing around the target date
+      targetDate ??= _selectedDate;
+      await _smartPreIndexing(targetDate.normalize);
+    } catch (e) {
+      await handleErrors(e);
+    }
   }
 
   Future<void> _smartPreIndexing(DateTime targetDate) async {
-    await _preIndexLunchesRange(targetDate, 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
-    await _preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
-    await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
+    try {
+      await _preIndexLunchesRange(targetDate, 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 2)), 2);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 3)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 6)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 9)), 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 5)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 12)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 15)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 18)), 3);
+      await _preIndexLunchesRange(targetDate.add(const Duration(days: 21)), 3);
+      await _preIndexLunchesRange(targetDate.subtract(const Duration(days: 8)), 3);
+    } catch (_) {}
   }
 
   Future<void> _preIndexLunchesRange(DateTime start, int howManyDays) async {
@@ -162,4 +180,36 @@ class CanteenProvider with ChangeNotifier {
   }
 
   Future<void> refreshCurrentPage() async => getMenu(selectedDate.normalize);
+
+  Future<void> refreshList() async {
+    List<DateTime> closest = [selectedDate]; // Add the middle date first
+
+    // Generate the 5 closest dates before and after the middle date
+    for (int i = 1; i <= 5; i++) {
+      closest.add(selectedDate.add(Duration(days: i))); // Dates after
+      if (i < 2) closest.add(selectedDate.subtract(Duration(days: i))); // Dates before
+    }
+
+    for (DateTime date in closest) {
+      await getMenu(date);
+    }
+  }
+
+  Future<void> handleErrors(dynamic e) async {
+    switch (e) {
+      case CanteenErrors.needToLogin:
+        try {
+          await App.getIt<AppContext>().context!.read<UserProvider>().loadUser();
+        } catch (e) {
+          await App.getIt<AppContext>().context!.read<UserProvider>().unloadUser();
+          App.getIt<AppContext>().context!.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+        }
+        break;
+      case CanteenErrors.noInternetConnection:
+        ordering = true;
+        await showInternetConnectionSnackBar();
+        ordering = false;
+      default:
+    }
+  }
 }

@@ -55,28 +55,11 @@ class LinedCard extends StatelessWidget {
             children: [
               DividerWithText(text: title ?? '', textAlign: titleTextAlign, transparentDivider: transparentTitleDivider),
               child ?? const SizedBox(),
-              footerButton(context),
+              DividerWithText(text: footer ?? '', textAlign: footerTextAlign, transparentDivider: transparentFooterDivider, onPressed: onPressed),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget footerButton(BuildContext context) {
-    Widget divider = DividerWithText(text: footer ?? '', textAlign: footerTextAlign, transparentDivider: transparentFooterDivider);
-    if (!smallButton) return divider;
-
-    return MaterialButton(
-      visualDensity: const VisualDensity(vertical: -4),
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      padding: EdgeInsets.zero,
-      splashColor: Colors.transparent,
-      focusColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      textColor: Theme.of(context).colorScheme.primary,
-      onPressed: onPressed,
-      child: divider,
     );
   }
 }

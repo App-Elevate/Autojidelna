@@ -4,10 +4,11 @@ import 'package:autojidelna/src/ui/widgets/section_title.dart';
 import 'package:flutter/material.dart';
 
 class ConfiguredAlertDialog extends StatelessWidget {
-  const ConfiguredAlertDialog({super.key, required this.title, required this.content, this.actions = const []});
+  const ConfiguredAlertDialog({super.key, required this.title, required this.content, this.actions = const [], this.customCancelText});
   final String title;
   final Widget content;
   final List<Widget> actions;
+  final String? customCancelText;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,7 @@ class ConfiguredAlertDialog extends StatelessWidget {
                     visualDensity: const VisualDensity(vertical: -4),
                     padding: const EdgeInsets.only(right: 16),
                   ),
-                  child: Text(lang.cancel),
+                  child: Text(customCancelText != null && customCancelText!.trim().isNotEmpty ? customCancelText! : lang.cancel),
                 ),
               ],
             ),

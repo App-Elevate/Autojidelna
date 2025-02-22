@@ -47,17 +47,8 @@ class TextsCs extends Texts {
   String get analytics => 'Shromažďování údajů';
 
   @override
-  String get analyticsDescription_1 =>
-      'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve ';
-
-  @override
-  String get analyticsDescription_2 => 'Zdrojovém kódu';
-
-  @override
-  String get analyticsDescription_3 => ' nebo v ';
-
-  @override
-  String get analyticsDescription_4 => 'Zásadách ochrany osobních údajů.';
+  String get analyticsMoreInfo =>
+      'Informace shromažďujeme výhradně za účelem identifikace a opravy chyb v aplikaci, zlepšení výkonu a udržování základních statistických údajů.\n\nVšechna data jsou odesílána anonymně.';
 
   @override
   String get appDescription =>
@@ -294,7 +285,11 @@ class TextsCs extends Texts {
   String get lightThemeMode => 'Světlý';
 
   @override
-  String get listUi => 'List UI';
+  String get listUi => 'Seznamové zobrazení';
+
+  @override
+  String get listUiSubtitle =>
+      'Zobrazit jednotlivé dny ve vertikálním seznamu.';
 
   @override
   String get location => 'Výdejna';
@@ -347,7 +342,7 @@ class TextsCs extends Texts {
   String get more => 'Více';
 
   @override
-  String get moreInfo => 'Více informací.';
+  String get moreInfo => 'Více informací';
 
   @override
   String get name => 'Jméno';
@@ -442,7 +437,7 @@ class TextsCs extends Texts {
   String get personalInfo => 'Osobní Údaje';
 
   @override
-  String get pickLocation => 'Vyberte výdejnu:';
+  String get pickLocation => 'Vyberte výdejnu';
 
   @override
   String get privacyPolicy => 'Zásady ochrany osobních údajů';
@@ -513,7 +508,18 @@ class TextsCs extends Texts {
   String get statistics => 'Statistiky';
 
   @override
-  String get stopAnalytics => 'Zastavit sledování analytických služeb';
+  String get allowAnalytics => 'Povolit analytické služby';
+
+  @override
+  String get allowAnalyticsSubtitle =>
+      'Odesílejte anonymizované údaje o používání ke zlepšení aplikace';
+
+  @override
+  String get sendCrashLogs => 'Odesílat crash logy';
+
+  @override
+  String get sendCrashLogsSubtitle =>
+      'Odesílejte anonymizované crash logy vývojářům';
 
   @override
   String get systemThemeMode => 'Systém';

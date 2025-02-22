@@ -9,9 +9,9 @@ import 'package:hive/hive.dart';
 class ThemeProvider extends ChangeNotifier {
   static Box box = Hive.box(Boxes.settings);
 
-  ThemeStyle _themeStyle = box.get(HiveKeys.themeStyle, defaultValue: ThemeStyle.defaultStyle);
-  ThemeMode _themeMode = box.get(HiveKeys.themeMode, defaultValue: ThemeMode.system);
-  bool _amoledMode = box.get(HiveKeys.amoledMode, defaultValue: false);
+  ThemeStyle _themeStyle = box.get(HiveKeys.settings.themeStyle, defaultValue: ThemeStyle.defaultStyle);
+  ThemeMode _themeMode = box.get(HiveKeys.settings.themeMode, defaultValue: ThemeMode.system);
+  bool _amoledMode = box.get(HiveKeys.settings.amoledMode, defaultValue: false);
 
   /// Theme style getter
   ThemeStyle get themeStyle => _themeStyle;
@@ -26,21 +26,21 @@ class ThemeProvider extends ChangeNotifier {
   void setThemeStyle(ThemeStyle themeStyle) {
     if (_themeStyle == themeStyle) return;
     _themeStyle = themeStyle;
-    unawaited(box.put(HiveKeys.themeStyle, _themeStyle));
+    unawaited(box.put(HiveKeys.settings.themeStyle, _themeStyle));
     notifyListeners();
   }
 
   /// Setter for theme mode
   void setThemeMode(ThemeMode themeMode) {
     _themeMode = themeMode;
-    unawaited(box.put(HiveKeys.themeMode, _themeMode));
+    unawaited(box.put(HiveKeys.settings.themeMode, _themeMode));
     notifyListeners();
   }
 
   /// Setter for pure black
   void setAmoledMode(bool isPureBlack) {
     _amoledMode = isPureBlack;
-    unawaited(box.put(HiveKeys.amoledMode, _amoledMode));
+    unawaited(box.put(HiveKeys.settings.amoledMode, _amoledMode));
     notifyListeners();
   }
 

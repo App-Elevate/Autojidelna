@@ -1,6 +1,7 @@
 import 'package:autojidelna/firebase_options.dart';
 import 'package:autojidelna/src/_conf/tokens.dart';
 import 'package:autojidelna/src/_global/init_app.dart';
+import 'package:autojidelna/src/logic/migration/migration_manager.dart';
 import 'package:autojidelna/src/ui/material_app.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -77,6 +78,7 @@ void runMyApp() async {
   }
 
   await InitApp.init();
+  await MigrationManager.runMigrations();
 
   if (!kDebugMode) {
     runApp(

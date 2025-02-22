@@ -84,7 +84,7 @@ class Rmc extends ChangeNotifier {
         values[key] = newValue;
       }
     });
-    unawaited(Hive.box(Boxes.cache).put(HiveKeys.remoteConfigValues, value));
+    unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.remoteConfigValues, value));
     notifyListeners();
   }
 
@@ -104,7 +104,7 @@ class Rmc extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    final values = Hive.box(Boxes.cache).get(HiveKeys.remoteConfigValues, defaultValue: defaultValues);
+    final values = Hive.box(Boxes.appState).get(HiveKeys.appState.remoteConfigValues, defaultValue: defaultValues);
     value = Map.from(values);
     try {
       await App.remoteConfig.fetchAndActivate();

@@ -8,7 +8,7 @@ import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/ui/widgets/divider_with_text.dart';
 import 'package:autojidelna/src/ui/widgets/login/canteen_url_picker.dart';
 import 'package:autojidelna/src/ui/widgets/login/custom_url_field.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -39,6 +39,7 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
       context.read<LoginProvider>().loggingIn = false;
       return false;
     }
+    context.read<LoginProvider>().setErrors(null, false, null);
     context.read<LoginProvider>().loggingIn = true;
     bool value = true;
     try {
@@ -46,18 +47,27 @@ class CanteenUrlOnboarding extends StatelessWidget implements OnboardingStep {
     } catch (e) {
       switch (e) {
         case AuthErrors.wrongUrl:
-          value = false;
+          if (context.mounted) {
+            context.read<LoginProvider>().setErrors(null, false, context.l10n.errorsWrongUrl);
+            value = false;
+          }
           break;
         case AuthErrors.noInternetConnection:
           if (await showInternetConnectionSnackBar() && context.mounted) onNextPage(context);
           break;
         case AuthErrors.connectionFailed:
           if (context.mounted) showErrorSnackBar(SnackBarAuthErrors.connectionFailed(context.l10n));
+          value = false;
           break;
         default:
       }
     }
-    if (context.mounted) context.read<LoginProvider>().loggingIn = false;
+    if (context.mounted) {
+      context.read<LoginProvider>().loggingIn = false;
+      context.read<LoginProvider>().usernameController.clear();
+      context.read<LoginProvider>().passwordController.clear();
+    }
+
     return value;
   }
 

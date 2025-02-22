@@ -19,7 +19,7 @@ class ConveniencePage extends StatelessWidget {
       body: ScrollViewColumn(
         children: [
           SectionTitle(lang.convenience),
-          // skip weekends
+          // TODO: skip weekends
           Selector<Settings, ({bool read, Function(bool) set})>(
             selector: (_, p1) => (read: p1.getSkipWeekends, set: p1.setSkipWeekends),
             builder: (context, skipWeekends, child) => SwitchListTile(
@@ -38,11 +38,11 @@ class ConveniencePage extends StatelessWidget {
             ),
           ),
           SectionTitle(lang.experimental),
-          // list UI
           Selector<Settings, ({bool read, Function(bool) set})>(
             selector: (_, p1) => (read: p1.isListUi, set: p1.setListUi),
             builder: (context, listUi, child) => SwitchListTile(
               title: Text(lang.listUi),
+              subtitle: Text(lang.listUiSubtitle),
               value: listUi.read,
               onChanged: listUi.set,
             ),

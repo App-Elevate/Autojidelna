@@ -159,29 +159,11 @@ abstract class Texts {
   /// **'Shromažďování údajů'**
   String get analytics;
 
-  /// No description provided for @analyticsDescription_1.
+  /// No description provided for @analyticsMoreInfo.
   ///
   /// In cs, this message translates to:
-  /// **'Informace shromažďujeme výhradně za účelem oprav chyb v aplikaci a udržování základních statistických údajů. Nemůžeme vyzkoušet autojídelnu u jídelen, kde nemáme přístup, jsme na těchto informacích závislí. Podrobnější informace naleznete ve '**
-  String get analyticsDescription_1;
-
-  /// No description provided for @analyticsDescription_2.
-  ///
-  /// In cs, this message translates to:
-  /// **'Zdrojovém kódu'**
-  String get analyticsDescription_2;
-
-  /// No description provided for @analyticsDescription_3.
-  ///
-  /// In cs, this message translates to:
-  /// **' nebo v '**
-  String get analyticsDescription_3;
-
-  /// No description provided for @analyticsDescription_4.
-  ///
-  /// In cs, this message translates to:
-  /// **'Zásadách ochrany osobních údajů.'**
-  String get analyticsDescription_4;
+  /// **'Informace shromažďujeme výhradně za účelem identifikace a opravy chyb v aplikaci, zlepšení výkonu a udržování základních statistických údajů.\n\nVšechna data jsou odesílána anonymně.'**
+  String get analyticsMoreInfo;
 
   /// No description provided for @appDescription.
   ///
@@ -588,8 +570,14 @@ abstract class Texts {
   /// No description provided for @listUi.
   ///
   /// In cs, this message translates to:
-  /// **'List UI'**
+  /// **'Seznamové zobrazení'**
   String get listUi;
+
+  /// No description provided for @listUiSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Zobrazit jednotlivé dny ve vertikálním seznamu.'**
+  String get listUiSubtitle;
 
   /// No description provided for @location.
   ///
@@ -690,7 +678,7 @@ abstract class Texts {
   /// No description provided for @moreInfo.
   ///
   /// In cs, this message translates to:
-  /// **'Více informací.'**
+  /// **'Více informací'**
   String get moreInfo;
 
   /// No description provided for @name.
@@ -864,7 +852,7 @@ abstract class Texts {
   /// No description provided for @pickLocation.
   ///
   /// In cs, this message translates to:
-  /// **'Vyberte výdejnu:'**
+  /// **'Vyberte výdejnu'**
   String get pickLocation;
 
   /// No description provided for @privacyPolicy.
@@ -993,11 +981,29 @@ abstract class Texts {
   /// **'Statistiky'**
   String get statistics;
 
-  /// No description provided for @stopAnalytics.
+  /// No description provided for @allowAnalytics.
   ///
   /// In cs, this message translates to:
-  /// **'Zastavit sledování analytických služeb'**
-  String get stopAnalytics;
+  /// **'Povolit analytické služby'**
+  String get allowAnalytics;
+
+  /// No description provided for @allowAnalyticsSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílejte anonymizované údaje o používání ke zlepšení aplikace'**
+  String get allowAnalyticsSubtitle;
+
+  /// No description provided for @sendCrashLogs.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílat crash logy'**
+  String get sendCrashLogs;
+
+  /// No description provided for @sendCrashLogsSubtitle.
+  ///
+  /// In cs, this message translates to:
+  /// **'Odesílejte anonymizované crash logy vývojářům'**
+  String get sendCrashLogsSubtitle;
 
   /// No description provided for @systemThemeMode.
   ///

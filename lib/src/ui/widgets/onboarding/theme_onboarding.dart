@@ -1,6 +1,6 @@
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:autojidelna/src/ui/widgets/theme_mode_picker.dart';
 import 'package:autojidelna/src/ui/widgets/theme_style_picker.dart';
 import 'package:flutter/material.dart';

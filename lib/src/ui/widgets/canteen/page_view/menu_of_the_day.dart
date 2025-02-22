@@ -21,13 +21,10 @@ class _MenuOfTheDayState extends State<MenuOfTheDay> {
   @override
   void initState() {
     super.initState();
-    // Fetch the data in initState to avoid context issues
-    // ignore: discarded_futures
     fetchMenu = Future(() async {
       if (!mounted) return;
       Jidelnicek? cachedMenu = context.read<CanteenProvider>().getCachedMenu(widget.date);
       if (cachedMenu == null) await context.read<CanteenProvider>().getMenu(widget.date);
-      return;
     });
   }
 

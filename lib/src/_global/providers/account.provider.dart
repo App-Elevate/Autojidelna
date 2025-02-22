@@ -46,6 +46,12 @@ class UserProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> unloadUser() async {
+    await _authService.ghostLogout();
+    _user = null;
+    notifyListeners();
+  }
+
   Future<void> changeUser(SafeAccount safeAccount) async {
     _user = null;
     await _authService.changeAccount(safeAccount);

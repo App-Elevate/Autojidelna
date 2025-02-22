@@ -7,7 +7,7 @@ import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/logic/canteenwrapper.dart';
 import 'package:autojidelna/src/logic/show_snack_bar.dart';
-import 'package:autojidelna/src/logic/services/statistics_service.dart';
+import 'package:autojidelna/src/logic/services/analytics_service.dart';
 import 'package:autojidelna/src/types/all.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
 import 'package:canteenlib/canteenlib.dart';
@@ -36,7 +36,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       try {
         Jidelnicek menu = await canteen.objednat(dish);
         prov.updateMenu(menu);
-        StatisticsService().addStatistic(StatisticType.order);
+        AnalyticsService().addStatistic(StatisticType.order);
       } catch (e) {
         showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
       }
@@ -53,7 +53,7 @@ void pressed(BuildContext context, Jidlo dish, StavJidla stavJidla) async {
       try {
         Jidelnicek menu = await canteen.objednatZBurzy(burza);
         prov.updateMenu(menu);
-        StatisticsService().addStatistic(StatisticType.order);
+        AnalyticsService().addStatistic(StatisticType.order);
       } catch (e) {
         showErrorSnackBar(SnackBarOrderingErrors.dishOrdering(lang));
       }

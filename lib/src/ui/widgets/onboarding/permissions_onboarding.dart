@@ -1,6 +1,7 @@
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/ui/widgets/buttons/analytics_switches.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -24,9 +25,9 @@ class _PermissionsOnboardingState extends State<PermissionsOnboarding> {
   bool notificationsEnabled = false;
 
   void checkNotificationPermissions() async {
-    final permissions = await AwesomeNotifications().checkPermissionList();
+    final bool permissions = await AwesomeNotifications().isNotificationAllowed();
     setState(() {
-      notificationsEnabled = permissions.contains(NotificationPermission.Alert);
+      notificationsEnabled = permissions;
     });
   }
 
@@ -61,9 +62,7 @@ class _PermissionsOnboardingState extends State<PermissionsOnboarding> {
             ),
           ),
           const CustomDivider(isTransparent: false),
-          // TODO: fix when analitics are done
-          const SwitchListTile(title: Text('Posilat crash logy'), subtitle: Text('crash log'), value: true, onChanged: null),
-          const SwitchListTile(title: Text('Posilat data'), subtitle: Text('data'), value: true, onChanged: null),
+          const AnalyticsSwitches(),
         ],
       ),
     );

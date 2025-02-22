@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/app.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
+import 'package:autojidelna/src/_global/providers/analytics.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
 import 'package:autojidelna/src/_global/providers/settings.provider.dart';
 import 'package:autojidelna/src/_global/providers/theme.provider.dart';
@@ -37,10 +38,10 @@ class _MyAppState extends State<MyApp> {
 
   void initLocale() {
     if (Texts.supportedLocales.contains(App.currentLocale)) {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.currentLocale.languageCode));
+      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, App.currentLocale.languageCode));
       _locale ??= App.currentLocale;
     } else {
-      if (_locale == null) unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, App.defaultLocale.languageCode));
+      if (_locale == null) unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, App.defaultLocale.languageCode));
       _locale ??= App.defaultLocale;
       if (_locale == null) App.currentLocale = App.defaultLocale;
     }
@@ -49,7 +50,7 @@ class _MyAppState extends State<MyApp> {
 
   void _onTranslatedLanguage(Locale? locale) {
     locale ??= App.defaultLocale;
-    unawaited(Hive.box(Boxes.settings).put(HiveKeys.locale, locale.languageCode));
+    unawaited(Hive.box(Boxes.appState).put(HiveKeys.appState.locale, locale.languageCode));
     App.currentLocale = locale;
     setState(() {
       _locale = locale;
@@ -60,8 +61,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final appRouter = App.getIt<AppRouter>();
     return Consumer<ThemeProvider>(
-      // TODO: Wrap the pages not the whole material app for better performance.
-      // https://pub.dev/packages/auto_route#wrapping-routes
       builder: (context, theme, ___) {
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
@@ -97,6 +96,7 @@ class MyAppWrapper extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserProvider(AuthService())),
         ChangeNotifierProvider(create: (_) => CanteenProvider(CanteenService())),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => AnalyticsProvider()),
         ChangeNotifierProvider(create: (_) => Settings()),
       ],
       child: const MyApp(),

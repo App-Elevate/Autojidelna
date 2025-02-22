@@ -9,7 +9,7 @@ import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/account_picker_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/canteen_url_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/login_onboarding.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/permissions_onboarding.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/theme_onboarding.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
@@ -101,6 +101,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
+    bool canNavigateBack = context.read<UserProvider>().user != null;
+
     return PopScope(
       canPop: _currentPage == 0,
       child: Scaffold(
@@ -139,7 +141,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
               ThemeData theme = Theme.of(context);
               return Row(
                 children: [
-                  if (context.router.canNavigateBack || _currentPage > 0)
+                  if (canNavigateBack || _currentPage > 0)
                     FilledButton(
                       style: theme.filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(theme.disabledColor)),
                       onPressed: provider.loggingIn ? null : _previousPage,
@@ -148,8 +150,15 @@ class _OnboardingPageState extends State<OnboardingPage> {
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton(
-                      onPressed: provider.loggingIn ? null : _nextPage,
-                      child: Text(pages[_currentPage].buttonText(context)),
+                      onPressed: provider.loggingIn ||
+                              (pages.last is AccountPickerOnboarding && _currentPage == pages.length - 1 && provider.pickedAccount == null)
+                          ? null
+                          : _nextPage,
+                      child: Text(
+                        pages.last is PermissionsOnboarding && _currentPage == pages.length - 1
+                            ? lang.getStarted
+                            : pages[_currentPage].buttonText(context),
+                      ),
                     ),
                   ),
                 ],

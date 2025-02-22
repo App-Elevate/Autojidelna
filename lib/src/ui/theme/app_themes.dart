@@ -174,7 +174,7 @@ class AppThemes {
         alignment: Alignment.center,
         iconColor: colorScheme.onSurface,
         titleTextStyle: textTheme.titleLarge!.copyWith(color: colorScheme.onSurface),
-        contentTextStyle: textTheme.bodyMedium,
+        contentTextStyle: textTheme.bodyMedium!.copyWith(color: colorScheme.onSurface),
         actionsPadding: const EdgeInsets.fromLTRB(12, 0, 16, 7),
         clipBehavior: Clip.hardEdge,
         shape: RoundedRectangleBorder(

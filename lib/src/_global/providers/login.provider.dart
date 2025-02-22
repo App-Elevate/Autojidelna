@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:autojidelna/src/_conf/errors.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dart';
@@ -8,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:autojidelna/src/_conf/hive.dart';
 import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/canteen.provider.dart';
-import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/types/errors.dart';
 import 'package:autojidelna/src/types/freezed/account/account.dart';
 import 'package:autojidelna/src/ui/widgets/snackbars/show_internet_connection_snack_bar.dart';
@@ -60,14 +58,15 @@ class LoginProvider extends ChangeNotifier {
   }
 
   void setLastUrl() {
-    urlController.text = Hive.box(Boxes.appState).get(HiveKeys.url, defaultValue: '');
+    urlController.text = Hive.box(Boxes.appState).get(HiveKeys.appState.url, defaultValue: '');
   }
 
   Future<bool> login(BuildContext context) async {
     if (!credentialsForm.currentState!.validate()) return false;
 
     FocusManager.instance.primaryFocus?.unfocus();
-    _setErrors(null, null, null);
+    setErrors(null, null, null);
+    bool value = false;
     _loggingIn = true;
     notifyListeners();
 
@@ -79,15 +78,15 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       await context.read<UserProvider>().login(account);
-      Hive.box(Boxes.appState).put(HiveKeys.url, urlController.text);
+      Hive.box(Boxes.appState).put(HiveKeys.appState.url, urlController.text);
       if (context.mounted) await context.read<CanteenProvider>().preIndexMenus();
-      if (context.mounted) context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
+      value = true;
     } catch (e) {
       if (context.mounted) handleAuthError(context, e);
     }
     _loggingIn = false;
     notifyListeners();
-    return true;
+    return value;
   }
 
   void handleAuthError(BuildContext context, dynamic e) async {
@@ -98,17 +97,17 @@ class LoginProvider extends ChangeNotifier {
         if (retry && context.mounted) login(context);
         break;
       case AuthErrors.wrongCredentials:
-        _setErrors(lang.errorsWrongCredentialsTextField, true, null);
+        setErrors(lang.errorsWrongCredentialsTextField, true, null);
         break;
       case AuthErrors.wrongUrl:
-        _setErrors(null, null, lang.errorsWrongUrl);
+        setErrors(null, null, lang.errorsWrongUrl);
         break;
       default:
         showErrorSnackBar(SnackBarAuthErrors.connectionFailed(lang));
     }
   }
 
-  void _setErrors(String? passwordErr, bool? usernameErr, String? urlErr) {
+  void setErrors(String? passwordErr, bool? usernameErr, String? urlErr) {
     passwordError = passwordErr;
     usernameError = usernameErr ?? false;
     urlError = urlErr;

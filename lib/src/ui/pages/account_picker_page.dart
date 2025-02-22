@@ -1,11 +1,12 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:autojidelna/src/_global/providers/account.provider.dart';
 import 'package:autojidelna/src/_global/providers/login.provider.dart';
 import 'package:autojidelna/src/_routing/app_router.gr.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
 import 'package:autojidelna/src/ui/theme/app_themes.dart';
 import 'package:autojidelna/src/ui/widgets/custom_divider.dart';
 import 'package:autojidelna/src/ui/widgets/onboarding/account_picker_onboarding.dart';
-import 'package:autojidelna/src/ui/widgets/onboarding/onboarding_step.dart';
+import 'package:autojidelna/src/types/onboarding_step.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -18,8 +19,9 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
 
   void _nextPage(BuildContext context) async {
     if (!await page.onNextPage(context)) return;
+    if (!context.mounted) return;
     if (onCompletedCallback == null) {
-      if (context.mounted) context.router.replaceAll([const RouterPage()]);
+      context.router.replaceAll([const RouterPage()], updateExistingRoutes: false);
       return;
     }
     onCompletedCallback!(true);
@@ -32,6 +34,8 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     final Texts lang = context.l10n;
+    bool canNavigateBack = context.read<UserProvider>().user != null;
+
     return PopScope(
       canPop: context.router.canNavigateBack,
       child: Scaffold(
@@ -61,7 +65,7 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
               ThemeData theme = Theme.of(context);
               return Row(
                 children: [
-                  if (context.router.canNavigateBack)
+                  if (canNavigateBack)
                     FilledButton(
                       style: theme.filledButtonTheme.style!.copyWith(backgroundColor: WidgetStatePropertyAll(theme.disabledColor)),
                       onPressed: provider.loggingIn ? null : () => _previousPage(context),
@@ -70,7 +74,7 @@ class AccountPickerPage extends StatelessWidget implements AutoRouteWrapper {
                   const SizedBox(width: 8),
                   Expanded(
                     child: FilledButton(
-                      onPressed: provider.loggingIn ? null : () => _nextPage(context),
+                      onPressed: provider.loggingIn || provider.pickedAccount == null ? null : () => _nextPage(context),
                       child: Text(page.buttonText(context)),
                     ),
                   ),

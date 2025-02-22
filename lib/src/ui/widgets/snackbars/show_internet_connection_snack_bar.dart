@@ -1,14 +1,17 @@
 import 'dart:async';
 import 'package:autojidelna/src/_global/app.dart';
-import 'package:autojidelna/src/_routing/app_router.dart';
 import 'package:autojidelna/src/lang/l10n_context_extension.dart';
+import 'package:autojidelna/src/types/app_context.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 
+bool isVisible = false;
 Timer? _internetCheckTimer;
 
 Future<bool> showInternetConnectionSnackBar() async {
-  BuildContext? ctx = App.getIt<AppRouter>().navigatorKey.currentContext;
+  if (isVisible) return false;
+  isVisible = true;
+  BuildContext? ctx = App.getIt<AppContext>().context;
   if (ctx == null) return false;
 
   final Completer<bool> completer = Completer<bool>();
@@ -64,6 +67,7 @@ Future<bool> showInternetConnectionSnackBar() async {
         scaffoldMessenger.hideCurrentSnackBar();
 
         _internetCheckTimer?.cancel(); // Stop checking after reconnecting
+        isVisible = false;
         completer.complete(true); // Resolve future and return true
       }
     },

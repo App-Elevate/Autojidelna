@@ -2,56 +2,71 @@ import 'package:autojidelna/src/types/freezed/safe_account.dart/safe_account.dar
 
 /// Hive boxes. Use these values to open a box.
 class Boxes {
-  static const String appState = 'appState';
-  static const String theme = 'theme';
-  static const String settings = 'settings';
-  static const String cache = 'cache';
-  static const String statistics = 'statistics';
-  static const String notifications = 'notifications';
+  /// Box used to store everything related to an account
+  static String account(SafeAccount account) => _AccountBox.boxName(account);
+  static const String analytics = _AnalyticsBox.boxName;
+  static const String appState = _AppStateBox.boxName;
+  static const String notifications = _NotificationsBox.boxName;
+  static const String settings = _SettingsBox.boxName;
 }
 
-/// Hive keys. These are the keys used to store values in Hive.
+/// These are the keys used to store values in Hive.
 class HiveKeys {
-  static const String remoteConfigValues = 'remoteConfigValues';
-  // appState box
-  static const String locale = 'locale';
-  static const String lastVersion = 'lastVersion';
-  static const String firstTime = 'firstTime';
-  static const String url = 'url';
-  static const String hideBurzaAlertDialog = 'hideBurzaAlertDialog';
-  static String location(SafeAccount account) => 'location_${account.username}_${account.url}';
+  static final account = _AccountBox();
+  static final analytics = _AnalyticsBox();
+  static final appState = _AppStateBox();
+  static final notifications = _NotificationsBox();
+  static final settings = _SettingsBox();
+}
 
-  // theme box
-  static const String themeMode = 'themeMode';
-  static const String themeStyle = 'themeStyle';
-  static const String amoledMode = 'amoledMode';
+class _AccountBox {
+  static String boxName(SafeAccount account) => 'account_${account.username}_${account.url}';
 
-  // settings box
-  static const String shouldAskForNotificationPermission = 'shouldAskForNotificationPermission';
-  static const String webNotificationsAccepted = 'webNotificationsAccepted';
-  static const String tabletUi = 'tabletUi';
-  static const String listUi = 'listUi';
-  static const String bigCalendarMarkers = 'bigCalendarMarkers';
-  static const String dateFormat = 'dateFormat';
-  static const String relTimeStamps = 'relativeTimeStamps';
-  static const String skipWeekends = 'skipWeekends';
-  static const String todaysFood = 'todaysFood';
-  static const String sendTodaysFood = 'sendTodaysFood';
-  static const String lowCredit = 'lowCredit';
-  static const String weekLongFamine = 'weekLongFamine';
-  static const String analytics = 'analytics';
+  String location(SafeAccount account) => 'location_${account.username}_${account.url}';
+  String lastNotificationCheck(SafeAccount account) => 'last_check_${account.username}_${account.url}';
+  String lastJidloDneCheck(SafeAccount account) => 'last_jidlo_dne_check_${account.username}_${account.url}';
+  String nemateObjednanoNotifications(SafeAccount account) => 'ignore_objednat_${account.username}_${account.url}';
+  String dailyFoodInfo(SafeAccount account) => 'send_dish_info_${account.username}_${account.url}';
+  String kreditNotifications(SafeAccount account) => 'ignore_kredit_${account.username}_${account.url}';
+}
 
-  // notification box
-  static String lastNotificationCheck(SafeAccount account) => 'lastCheck_${account.username}_${account.url}';
-  static String lastJidloDneCheck(SafeAccount account) => 'lastJidloDneCheck_${account.username}_${account.url}';
-  static String nemateObjednanoNotifications(SafeAccount account) => 'ignore_objednat_${account.username}_${account.url}';
-  static const String onlyNemateObjednanoNotifications = 'ignore_objednat_';
-  static String kreditNotifications(SafeAccount account) => 'ignore_kredit_${account.username}_${account.url}';
-  static const String onlykreditNotifications = 'ignore_kredit_';
-  static String dailyFoodInfo(SafeAccount account) => 'sendFoodInfo_${account.username}_${account.url}';
+class _AnalyticsBox {
+  static const String boxName = 'analytics';
 
-  // statistics box
-  static const String statistikaObjednavka = 'statistika:objednavka';
-  static const String statistikaAuto = 'statistika:auto';
-  static const String statistikaBurzaCatcher = 'statistika:burzaCatcher';
+  final String statistikaObjednavka = 'order';
+  final String statistikaAuto = 'auto_order';
+  final String statistikaBurzaCatcher = 'burza_catcher';
+  final String allowAnalytics = 'allow_analytics';
+  final String sendCrashLogs = 'send_crash_logs';
+}
+
+class _AppStateBox {
+  static const String boxName = 'app_state';
+
+  final String locale = 'locale';
+  final String lastVersion = 'last_version';
+  final String firstTime = 'first_time';
+  final String url = 'last_used_icanteen_url';
+  final String hideBurzaAlertDialog = 'hide_burza_alert_dialog';
+  final String remoteConfigValues = 'remote_config_values';
+}
+
+class _NotificationsBox {
+  static const String boxName = 'notifications';
+
+  final String onlyNemateObjednanoNotifications = 'ignore_objednat_';
+  final String onlykreditNotifications = 'ignore_kredit_';
+}
+
+class _SettingsBox {
+  static const String boxName = 'settings';
+
+  final String themeMode = 'theme_mode';
+  final String themeStyle = 'theme_style';
+  final String amoledMode = 'amoled_mode';
+  final String listUi = 'list_ui';
+  final String bigCalendarMarkers = 'big_calendar_markers';
+  final String dateFormat = 'date_format';
+  final String relTimeStamps = 'relative_time_stamps';
+  final String skipWeekends = 'skip_weekends';
 }

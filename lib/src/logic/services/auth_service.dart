@@ -33,8 +33,7 @@ class AuthService {
     String url = Url.clean(account.url);
     User? user;
 
-    InitApp().registerCanteen(url);
-    Canteen instance = App.getIt<Canteen>();
+    Canteen instance = Canteen(url);
 
     try {
       // First login attempt (with cleaned URL)
@@ -44,8 +43,7 @@ class AuthService {
     } catch (_) {
       // Second login attempt
       url = account.url;
-      InitApp().registerCanteen(url);
-      instance = App.getIt<Canteen>();
+      instance = Canteen(url);
 
       try {
         if (!await instance.login(account.username, account.password)) {
@@ -68,10 +66,7 @@ class AuthService {
       }
     }
 
-    if (!await _hasDuplicates(account)) {
-      await _saveAccountToStorage(account);
-      await NotificationService().initAwesome();
-    }
+    InitApp().registerCanteen(instance);
 
     try {
       user = User(
@@ -82,6 +77,12 @@ class AuthService {
     } catch (e) {
       rethrow;
     }
+
+    if (!await _hasDuplicates(account)) {
+      await _saveAccountToStorage(account);
+      //await NotificationService().initAwesome();
+    }
+
     return user;
   }
 
@@ -109,6 +110,13 @@ class AuthService {
     throwIf(loginData.accounts.isEmpty, AuthErrors.missingCredentials);
     throwIf(loginData.loggedInAccount == null, AuthErrors.accountNotSelected);
     return await loginBySafeAccount(loginData.loggedInAccount!);
+  }
+
+  /// Sets [LoggedAccounts.loggedInAccount] to null. Doesn't delete user credentials
+  Future<void> ghostLogout() async {
+    final LoggedAccounts loginData = await _getDataFromStorage();
+    loginData.loggedInAccount = null;
+    await _saveDataToStorage(loginData);
   }
 
   Future<List<SafeAccount>> getLimitedAccounts() async {
