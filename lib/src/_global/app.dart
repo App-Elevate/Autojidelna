@@ -118,7 +118,7 @@ class App {
     assert(_initLocalizationExecuted == false, 'App.initLocalization() must be called only once');
     if (_initLocalizationExecuted) return;
 
-    final Box box = Hive.box(Boxes.settings);
+    final Box box = Hive.box(Boxes.appState);
     String locale = box.get(HiveKeys.locale, defaultValue: PlatformDispatcher.instance.locale.languageCode);
     currentLocale = Locale.fromSubtags(languageCode: locale);
     box.put(HiveKeys.locale, locale);
@@ -154,7 +154,6 @@ class App {
     Hive.registerAdapter(ThemeStyleAdapter());
     Hive.registerAdapter(DateFormatOptionsAdapter());
     await Hive.openBox(Boxes.settings);
-    await Hive.openBox(Boxes.cache);
     await Hive.openBox(Boxes.appState);
     await Hive.openBox(Boxes.analytics);
     await Hive.openBox(Boxes.notifications);
